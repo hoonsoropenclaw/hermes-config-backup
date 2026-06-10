@@ -419,6 +419,7 @@ main() {
     if ! tier1_github; then
       err "Tier 1 失敗、跳過 Tier 2（避免白做 285M secrets 加密）"
       err "詳細錯誤看上面訊息、或看 ~/.hermes/logs/$(date +%Y%m%d)_*.log"
+      exit_code=1
       return 1
     fi
     echo ""
