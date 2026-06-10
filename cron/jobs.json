@@ -22,15 +22,15 @@
       "schedule_display": "every 120m",
       "repeat": {
         "times": null,
-        "completed": 127
+        "completed": 128
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-30T11:56:33.423422+08:00",
-      "next_run_at": "2026-06-10T15:19:21.257683+08:00",
-      "last_run_at": "2026-06-10T13:19:21.257683+08:00",
+      "next_run_at": "2026-06-10T17:23:58.352301+08:00",
+      "last_run_at": "2026-06-10T15:23:58.352301+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -417,7 +417,45 @@
       "enabled_toolsets": null,
       "workdir": null,
       "profile": null
+    },
+    {
+      "id": "v4recovery2026",
+      "name": "v4-recovery-chain-verify-weekly",
+      "prompt": "Run verify-recovery-chain.sh from agent-system-backup skill to validate the v4.5 dual-layer GPG encryption chain end-to-end. This is a watchdog job — empty stdout = silent (all good), non-empty stdout = report PASS/FAIL status to user via Telegram. This validates that: 1) USER_KEY in ~/.hermes/config/.hermes-user-key still works, 2) Drive passphrase-recovery chain is intact, 3) secrets-bundle contains expected files (.env, auth.json, state.db). Run weekly on Sunday 23:00 to detect any key rotation or Drive corruption before next disaster.",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": "verify-recovery-chain.sh",
+      "no_agent": true,
+      "context_from": [],
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 23 * * 0",
+        "display": "0 23 * * 0"
+      },
+      "schedule_display": "0 23 * * 0",
+      "repeat": {
+        "times": null,
+        "completed": 0
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-06-10T16:20:00.000000+08:00",
+      "next_run_at": "2026-06-14T23:00:00+08:00",
+      "last_run_at": null,
+      "last_status": null,
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "telegram",
+      "origin": null,
+      "enabled_toolsets": null,
+      "workdir": null,
+      "profile": null
     }
   ],
-  "updated_at": "2026-06-10T13:19:21.257836+08:00"
+  "updated_at": "2026-06-10T16:20:00.000000+08:00"
 }

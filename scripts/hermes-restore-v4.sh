@@ -279,10 +279,18 @@ recover_passphrase_from_drive() {
   mv "/tmp/$latest" "$tmp_gpg"
   chmod 600 "$tmp_gpg"
 
-  # 4. 互動式問 USER_KEY（或從環境變數讀，cron 或 CI 模式用）
+  # 4. USER_KEY 取得順序（防止 cron 場景失敗）：
+  #    1. ${HERMES_USER_KEY} 環境變數
+  #    2. ~/.hermes/config/.hermes-user-key 環境變數檔(chmod 600)
+  #    3. 互動式 prompt(僅 -t 0)
   if [[ -n "${HERMES_USER_KEY:-}" ]]; then
     user_key="$HERMES_USER_KEY"
     log "USER_KEY 從 HERMES_USER_KEY 環境變數讀取（跳過互動 prompt）"
+  elif [[ -f "$HOME/.hermes/config/.hermes-user-key" ]]; then
+    user_key=$(cat "$HOME/.hermes/config/.hermes-user-key" 2>/dev/null | head -1)
+    if [[ -n "$user_key" ]]; then
+      log "USER_KEY 從 ~/.hermes/config/.hermes-user-key 讀取"
+    fi
   elif [[ -t 0 ]]; then
     echo ""
     echo "════════════════════════════════════════════════════════════"

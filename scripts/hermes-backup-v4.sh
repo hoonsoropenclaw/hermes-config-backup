@@ -72,13 +72,16 @@ tier1_github() {
 
   # 同步 agents/
   if [[ -d "$HERMES_HOME/agents" ]]; then
-    run_or_dry rsync -au --delete "$HERMES_HOME/agents/" "$STAGING/agents/"
+    run_or_dry rsync -au --delete \
+      --exclude='__DEPRECATED__*' \
+      "$HERMES_HOME/agents/" "$STAGING/agents/"
   fi
 
-  # 同步 memories/（排除 .bak / .lock / .clean）
+  # 同步 memories/（排除 .bak / .lock / .clean / __DEPRECATED__）
   if [[ -d "$HERMES_HOME/memories" ]]; then
     run_or_dry rsync -au --delete \
       --exclude='*.bak.*' --exclude='*.lock' --exclude='*.clean.*' \
+      --exclude='__DEPRECATED__*' \
       "$HERMES_HOME/memories/" "$STAGING/memories/"
   fi
 
@@ -86,6 +89,7 @@ tier1_github() {
   if [[ -d "$HERMES_HOME/scripts" ]]; then
     run_or_dry rsync -au --delete \
       --exclude='*.bak' --exclude='*.pyc' \
+      --exclude='__DEPRECATED__*' \
       "$HERMES_HOME/scripts/" "$STAGING/scripts/"
   fi
 
@@ -94,12 +98,15 @@ tier1_github() {
     run_or_dry rsync -au --delete \
       --exclude='*.bak' --exclude='*.bak.*' \
       --exclude='output/' \
+      --exclude='__DEPRECATED__*' \
       "$HERMES_HOME/cron/" "$STAGING/cron/"
   fi
 
   # 同步 docs/
   if [[ -d "$HERMES_HOME/docs" ]]; then
-    run_or_dry rsync -au --delete "$HERMES_HOME/docs/" "$STAGING/docs/"
+    run_or_dry rsync -au --delete \
+      --exclude='__DEPRECATED__*' \
+      "$HERMES_HOME/docs/" "$STAGING/docs/"
   fi
 
   # 同步 profiles/（v4.2：常駐子代理的整套配置 — persona/SOUL/ARCHITECTURE/skill庫/記憶）
@@ -112,6 +119,7 @@ tier1_github() {
       --exclude='state.db' --exclude='state.db-shm' --exclude='state.db-wal' \
       --exclude='*.tar.gz' --exclude='*.tar' --exclude='*.zip' --exclude='*.7z' \
       --exclude='models_dev_cache.json' --exclude='home/' --exclude='logs/' \
+      --exclude='__DEPRECATED__*' \
       "$HERMES_HOME/profiles/" "$STAGING/profiles/"
   fi
 
@@ -249,14 +257,26 @@ upload_drive_restore_readme() {
 }
 
 # v4.5：把 GPG passphrase 加密備份到 Drive 獨立目錄
-# USER_KEY 從環境變數 $HERMES_USER_KEY 讀（crontab 設定或互動式 prompt）
-# 若都沒有，跳過這步並警告
+# USER_KEY 取得順序（防止 cron 場景失敗）：
+#   1. ${HERMES_USER_KEY} 環境變數
+#   2. ~/.hermes/config/.hermes-user-key 環境變數檔(chmod 600)
+#   3. 互動式 prompt(僅 -t 0)
+# 若都沒有、跳過這步並警告
 backup_passphrase_recovery() {
   local passphrase_file="$HOME/Documents/hermes-keys/.hermes_backup_passphrase"
   local recovery_dir="$HOME/.cache/hermes-passphrase-recovery"
   local recovery_gpg="$recovery_dir/passphrase-recovery-$(date -u +%Y%m%d_%H%M%SZ).gpg"
   local drive_remote="hoonsorasus:hermes-backup/passphrase-recovery"
+  local user_key_env_file="$HOME/.hermes/config/.hermes-user-key"
   local user_key="${HERMES_USER_KEY:-}"
+
+  # 從環境變數檔讀（cron 場景）
+  if [[ -z "$user_key" ]] && [[ -f "$user_key_env_file" ]]; then
+    user_key=$(cat "$user_key_env_file" 2>/dev/null | head -1)
+    if [[ -n "$user_key" ]]; then
+      log "USER_KEY 從 $user_key_env_file 讀取"
+    fi
+  fi
 
   if [[ ! -f "$passphrase_file" ]]; then
     warn "找不到 passphrase 檔 $passphrase_file、跳過 passphrase 備份"

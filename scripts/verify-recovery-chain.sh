@@ -1,0 +1,1 @@
+/home/hoonsoropenclaw/.hermes/skills/agent-system-backup/scripts/verify-recovery-chain.sh
