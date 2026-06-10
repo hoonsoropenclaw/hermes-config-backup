@@ -49,7 +49,8 @@ hermes_backup_<ts>_full.tar.gz  (~134 MB)
     ├── hermes-agent/                # 1.1 GB 源碼（rsync 排除 venv/、.git/、__pycache__/）
     ├── sparc-methodology/           # 103 MB 外部 skill
     ├── alt_gh_tokens/               # GPG 加密的備用 PAT
-    ├── secrets/                     # GPG passphrase
+    ├── secrets/                     # GPG 加密的 .env + auth.json + state.db（需 passphrase 解）
+    ├── passphrase-recovery/         # v4.5 新增：GPG 加密的 passphrase（需 USER_KEY 解）
     ├── cache/、logs/、lsp/、bin/、sessions/   # 衍生資料
     └── models_dev_cache.json
 ```
@@ -194,12 +195,33 @@ N100 上**同時存在兩份備份腳本**：
 **Then** 跑前先 `head -50 hermes-backup-v4.sh` 確認 `--help` 介面
 **Then** `ls ~/.hermes/backups/` 看現有備份時間戳、預期格式 `hermes_backup_<YYYYMMDD_HHMMSS>_{public,full}.tar.gz`
 
-### 10.2 GPG 互動式 passphrase 強制 PTY（2026-06-10 踩坑，新加）
+### 10.2 GPG 加密方式：自動讀 passphrase 檔（2026-06-07 設計、2026-06-10 釐清）
 
-- `hermes-backup-v4.sh` 的 GPG 段落（行 168 附近）用 `gpg -c` 對稱加密、**passphrase 從互動式 prompt 輸入**
-- **不能用 `terminal` foreground 跑**（會卡在 passphrase prompt、5 分鐘 timeout 拿不到輸入）
-- **必須用 `pty=true` 跑**（PTY 模擬互動 TTY、prompt 出現時 agent 餵入 passphrase）
-- 餵入方式：`pty=true` 啟動 + 看到 "Enter passphrase" prompt 時用 `process(action='write', data='<passphrase>')` 餵入 + `process(action='write', data='\n')` 確認
+- `hermes-secrets-encrypt.sh` 用 `gpg --batch --yes --passphrase-file "$PASSPHRASE_FILE"` 從固定路徑讀,**完全不需要互動 prompt**
+- **不用 PTY**、**不用 process write 餵入**、**不用人工記密碼**
+- passphrase 自動產生 64 字元、存在 `~/Documents/hermes-keys/.hermes_backup_passphrase` (mode 600)
+- **如果有人問「GPG 密碼是什麼」** → 不要在對話打密碼、回他「在 `~/Documents/hermes-keys/.hermes_backup_passphrase`、64 字元自動產生的」
+- **驗證命令**：`cat ~/Documents/hermes-keys/.hermes_backup_passphrase | wc -c` 應回 65（含換行）
+- **如果未來要互動式**（罕見）才需要 PTY + process write
+
+### 10.2.1 v4.5 雙層 GPG 加密（2026-06-10 新增，必讀）
+
+**問題**：v4.0 ~ v4.4 完全沒備份 passphrase 檔（單靠本地 = 不是備份）。
+
+**v4.5 修法**：Tier 2 跑完後自動加跑 `backup_passphrase_recovery()`：
+1. 用 GPG 對稱加密 passphrase（使用者互動輸入 USER_KEY）
+2. 上傳 `hoonsorasus:hermes-backup/passphrase-recovery/`
+
+**異機還原**（`hermes-restore-v4.sh tier2` 自動）：
+- 偵測本地無 passphrase → 自動從 Drive `passphrase-recovery/` 還原
+- 互動式問 USER_KEY → GPG 解密 → 放回 `~/Documents/hermes-keys/.hermes_backup_passphrase` (mode 600)
+
+**USER_KEY 規則**：
+- 必須**跟 GPG passphrase 不同**（兩層加密才有意義）
+- 建議 = 1Password / Bitwarden 主密碼
+- 記在 1Password 的 `hermes-backup USER_KEY` 條目
+
+**為何需要第二個 layer？** 單一密碼 = 單點失敗。USER_KEY 在使用者腦中、跟 GPG passphrase 在本地檔、跟加密檔在 Drive = 3 個不同 failure domain。
 
 ### 10.3 跑完必須 `ls` 真實驗證（2026-06-10 踩坑，新加）
 
@@ -217,6 +239,118 @@ N100 上**同時存在兩份備份腳本**：
   1. cron job `timeout_seconds` 至少設 **3600**（給夠時間在 rate limit 下慢慢跑完）
   2. rclone sync/copy 命令加：`--transfers=1 --checkers=1 --tpslimit 5 --drive-pacer-min-sleep 100ms`
   3. **觸發信號**：log 裡速度從 MiB/s → KiB/s → B/s 指數衰退，就是 rate limit，不是網路問題
+
+### 🆕 10.5 v4 腳本 4 次修補（2026-06-10 14:xx，新加）
+
+`hermes-backup-v4.sh` 在 2026-06-10 14:xx 從 v4.1 升到 **v4.4**，**4 個修補**：
+
+| 版本 | 修補 | 為什麼 |
+|---|---|---|
+| **v4.2** | 加 `~/.hermes/profiles/` 同步段（18 個 exclude 旗標） | 原本只備 default profile，常駐子代理（consumer-researcher、product-planner）的整個 skill 庫/記憶/persona 都不會被備份 |
+| **v4.3** | `skills/` rsync 加 `--max-size=50m` | hermes 自動備份在 `~/.hermes/skills/.curator_backups/<日期>/skills.tar.gz` 是 125MB 單一 blob，**GitHub 拒絕 > 100MB 物件**會讓 push 卡 95% 後 server 端 disconnect |
+| **v4.3** | profiles rsync 加同樣 `--max-size=50m` | `~/.hermes/profiles/*/skills/.curator_backups/skills.tar.gz` 也是 125MB，v4.3 profiles 段必須同步加 |
+| **v4.4** | `skills/` rsync 加 `--exclude='sparc-methodology/v3/'` 跟 `'sparc-methodology/ruflo/'` | sparc-methodology 整體 78MB（v3 跟 ruflo 內含大量 wasm/gif/mp4）--max-size 排除單檔、但整體 push 量還在容易觸發 GitHub 卡頓 |
+
+**v4.4 profiles 同步段的完整 exclude 清單**（2026-06-10 14:xx 驗證必備）：
+
+```bash
+--exclude='*.bak.*' --exclude='*.lock' --exclude='*.clean.*' \
+--exclude='.curator_backups/' --exclude='.archive/' --exclude='.hub/' \
+--exclude='.usage.json' --exclude='.bundled_manifest' --exclude='.curator_state' \
+--exclude='__pycache__/' --exclude='*.pyc' --exclude='venv/' \
+--exclude='state.db' --exclude='state.db-shm' --exclude='state.db-wal' \
+--exclude='*.tar.gz' --exclude='*.tar' --exclude='*.zip' --exclude='*.7z' \
+--exclude='models_dev_cache.json' --exclude='home/' --exclude='logs/'
+```
+
+**If** 未來 v5 設計備份
+**Then** 必加 `--max-size=50m` 到所有 rsync 段（GitHub 物件限制 100MB、保險起見 50MB）
+**Then** 必加 `.curator_backups/` 到所有 rsync 排除清單（hermes 自動 backup 元件是遞迴 backup 陷阱）
+**Then** 必加 `state.db*` 排除（對話歷史會爆、且含敏感 metadata，該走 Tier 2 加密備份）
+
+### 🆕 10.6 GitHub push 125MB 卡死的根本解法（2026-06-10 14:xx 釐清，新加）
+
+**症狀**：`git push --progress origin main` 跑到 95% (40+ MiB) 後**突然被砍**、server 端 `send-pack: unexpected disconnect while reading sideband packet`、本地 `git rev-list --left-right --count main...origin/main` 顯示 `1 0` 或 `2 0`(本地領先)。
+
+**真凶**（必查 3 個）：
+1. `find .git/objects -type f -size +50M` 找 staging 內 > 50MB 的單一 blob
+2. `git verify-pack -v .git/objects/pack/*.pack | sort -k3 -rn | head -5` 找 pack 內最大物件
+3. `git log --all --pretty=format:"%H %s" --diff-filter=AM -- '**/skills.tar*'` 找哪個 commit 引入的
+
+**修法**（按優先順序）：
+
+1. **先修 v4 腳本排除清單**（見 10.5）
+2. **清空 staging**：`rm -rf .git profiles skills memories scripts cron docs config.yaml`
+3. **重建 staging**：`git init -b main && git config user.email/name && git remote add origin https://github.com/.../hermes-config-backup.git`
+4. **重跑 v4.4**：`bash ~/.hermes/scripts/hermes-backup-v4.sh --tier1`
+5. **force push**：`git push --force --progress origin main`（**注意**：新 init 的 .git 沒共同祖先，`--force-with-lease` 會被 reject，要用 `--force`）
+
+**If** 看到 push 進度條停在 95% 不動
+**Then** 不要相信 `git push` 沒報錯就是成功 → 必 `git rev-list --left-right --count main...origin/main` 驗證
+**Then** `0 0` = 成功、`1 0` 以上 = 有 commit 沒推上去、必查 blob 大小
+
+### 🆕 10.7 .gitconfig 帳號混亂 — `gh auth setup-git` 是正解（2026-06-10 14:xx 釐清，新加）
+
+**症狀**：`git push` 顯示成功但 `git rev-list` 確認沒推上去，或 `Permission to <repo> denied to <備用帳號>`。
+
+**真凶**：`.gitconfig` 設 `credential.helper = store --file ~/.git-credentials-raphael`，裡面存的是**舊 `hoonsor` 備用帳號的 token**。`gh auth switch` **不會**改 git 全域認證（只改 gh CLI 自己的 token）。
+
+**驗證**：
+```bash
+cat ~/.git-credentials-raphael   # 會看到 hoonsor:ghp_XXX@github.com
+gh auth status                  # 主帳號是 hoonsoropenclaw，但 git 不會用
+```
+
+**正解**：
+```bash
+gh auth setup-git   # 自動注入 [credential "https://github.com"] helper = !/usr/bin/gh auth git-credential
+```
+
+這會在 `.gitconfig` 加兩段（覆蓋全域設定）：
+
+```ini
+[credential "https://github.com"]
+    helper =
+    helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+    helper =
+    helper = !/usr/bin/gh auth git-credential
+```
+
+**規則**：
+- `gh auth switch --user <name>` 切換 gh CLI 帳號（不影響 git）
+- `gh auth setup-git` 讓 git 用 gh 當前 active 帳號的 token
+- **永遠先 `gh auth status` 看 active account 是誰**再 push
+
+**If** `git push` 失敗 + `Permission denied` + 主帳號是對的
+**Then** 跑 `gh auth setup-git` 一次、永久解決
+
+### 🆕 10.8 rclone "directory not found" 誤導錯誤（2026-06-10 14:xx 釐清，新加）
+
+**症狀**：`rclone copy <local-file> <remote>:<bucket>/<subdir>/` 報 `directory not found`，但 `rclone lsd <remote>:<bucket>` **明確看到 subdir 存在**。
+
+**真凶**：
+- Drive 端的子目錄**真的存在**（`rclone lsd` 看到）
+- rclone client 端的**路徑拼接錯誤**（少一個 `/`、多一個 `:`、特殊字元沒 escape）
+- 或 Drive API 回的錯誤被 rclone 包成誤導訊息
+
+**解法**：
+- `rclone tree <remote>:<bucket> --max-depth 2` 看完整結構
+- `rclone lsf <remote>:<bucket>/<subdir>/` 直接列 subdir 內容
+- `rclone copy -v <file> <remote>:<bucket>/<subdir>/` 開 verbose 看哪一步失敗
+- **130MB 加密檔 push 預期 5-10 分鐘**（231 KiB/s）—— 不要相信 `directory not found` 立刻放棄，先看 `rclone copy -v` 跑 30 秒有沒有進度
+
+**If** 看到 `directory not found` 但 lsd 確認目錄存在
+**Then** 直接 `rclone copy -v` 試一次，**不要相信錯誤訊息**
+
+### 🆕 10.9 備份用錯路徑的終極防呆（2026-06-10 14:xx 釐清，新加）
+
+- **2025-12 環境的備份路徑** `/media/hoonsoropenclaw/n100/backup-2025-12/` **在當前 N100 不存在**(`/media/` 是空的、沒 `hoonsoropenclaw` 子目錄)
+- 任何備份腳本要寫到 `/media/...` 路徑 → **必先 `ls /media/` 確認掛載存在**，不存在就 abort
+- 替代方案：`~/.hermes/backups/`(當前 v4 用的)或 `~/backups/`(本機磁碟、Drive 加密備份)
+
+**If** 看到備份腳本寫到 `/media/...` 或 `n100/backup-2026...` 開頭
+**Then** 先 `ls /media/hoonsoropenclaw/` 確認，**不存在就別跑**
 
 ## 11. 改進方向（未實作）
 

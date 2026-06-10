@@ -11,7 +11,7 @@ HERMES 沒有內建 user-defined macro、keyword 觸發是 **agent-level 行為*
 | Keyword | 觸發行為 | 注意事項 |
 |---------|---------|---------|
 | **`@學習`** | 1. 掃此次對話紀錄的試誤 → 跟 `trial-and-error` skill 既有條目去重 → 只新增沒重複的 L2 條目到 `references/by-category/` 對應分類<br>2. 對話摘要篩出「跨 session 重要事項」→ 視情況更新 MEMORY.md / AGENTS.md<br>3. 結束時**統一報告**改了哪些檔 | 採 B 模式：agent 有把握的「真新教訓」直寫、結尾報告；沒把握的問使用者確認。會話內關鍵詞、不需寫進 cron。**完整 SOP 見 `references/sops/keyword-triggers-sop.md`** |
-| **`@專案`** | 1. 觸發「跨 profile handoff pipeline」：**赫米斯（default）當 orchestrator**，**根據任務需求動態決定要串接哪幾個常駐代理**（現有：`market-strategist`、`product-planner`；未來可加：`engineering-lead`、`designer` 等），每段把上個代理的產出寫到 `~/.hermes/handoff/<slug>/`、再交給下個代理<br>2. **會話中**用戶說「這個用 `@專案` 跑」或「走 handoff 流程」即啟動；`@專案` 適合「市場調研→PRD→工程實作→視覺設計」這類**多階段、需要角色分工**的任務（**鏈的長度、順序、起點終點全部由任務內容動態決定**，上述只是常見的典型範例之一）<br>3. 結束時報告每段代理的產出位置 + 串接結果 | 採 A 模式：default 赫米斯跑 N 次工具呼叫串接（**N = 鏈上代理數**；**新增常駐代理後 N 自動增加、不需改 SOP**）。**不是全自動**——使用者會看到工具呼叫、且每段代理要等跑完才能接下段。**完整 SOP 見 `references/sops/keyword-triggers-sop.md`**「@專案 SOP 段」 |
+| **`@專案`** | 1. 觸發「跨 profile handoff pipeline」：**赫米斯（default）當 orchestrator**，**根據任務需求動態決定要串接哪幾個常駐代理**（現有：`consumer-researcher`、`product-planner`；**已刪除**：`market-strategist`（2026-06-10 重塑為 consumer-researcher）；未來可加：`engineering-lead`、`designer` 等），每段把上個代理的產出寫到 `~/.hermes/handoff/<slug>/`、再交給下個代理<br>2. **會話中**用戶說「這個用 `@專案` 跑」或「走 handoff 流程」即啟動；`@專案` 適合「消費者調研→PRD→工程實作→視覺設計」這類**多階段、需要角色分工**的任務（**鏈的長度、順序、起點終點全部由任務內容動態決定**，上述只是常見的典型範例之一）<br>3. 結束時報告每段代理的產出位置 + 串接結果 | 採 A 模式：default 赫米斯跑 N 次工具呼叫串接（**N = 鏈上代理數**；**新增常駐代理後 N 自動增加、不需改 SOP**）。**不是全自動**——使用者會看到工具呼叫、且每段代理要等跑完才能接下段。**完整 SOP 見 `references/sops/keyword-triggers-sop.md`**「@專案 SOP 段」 |
 
 **If** 收到帶 `@` 前綴的訊息 **Then** 觸發對應 SOP
 **If** 使用者說「以後說 X 觸發 Y」**Then** 當下在此表新增一行、跑 `grep` 驗證寫入

@@ -106,19 +106,25 @@ tier1() {
 tier2() {
   log "=== Tier 2: Drive secrets decrypt ==="
 
+  # v4.5：先檢查 passphrase 檔,不存在時自動從 Drive 還原
   if [[ ! -f "$PASSPHRASE_FILE" ]]; then
-    err "找不到 passphrase: $PASSPHRASE_FILE"
-    err "（這是 Drive 加密 secrets 的解密金鑰、第一次跑要先從備份位置複製）"
-    err ""
-    err "找不到 passphrase 常見原因："
-    err "  1. 全新主機、從來沒複製過 passphrase 過來"
-    err "     解法：從舊機器或密碼管理器（1Password / Bitwarden）取得"
-    err "     預設位置：$HOME/Documents/hermes-keys/.hermes_backup_passphrase"
-    err "  2. Passphrase 檔存在但權限錯（不是 600）"
-    err "     解法：chmod 600 $HOME/Documents/hermes-keys/.hermes_backup_passphrase"
-    err "  3. 加密時的 passphrase 跟還原時不一樣"
-    err "     症狀：gpg 會報 'decryption failed'"
-    err "     解法：找出原始 passphrase（從備份密碼管理器）"
+    warn "找不到本地 passphrase 檔 $PASSPHRASE_FILE"
+    warn "嘗試從 Drive passphrase-recovery/ 還原..."
+
+    if ! recover_passphrase_from_drive; then
+      err "passphrase 還原失敗、無法繼續"
+      err ""
+      err "請手動確認："
+      err "  1. Drive 上有 passphrase-recovery/ 目錄嗎？（v4.5 之後才有）"
+      err "  2. 你記得 USER_KEY 嗎？（v4 backup 時互動式輸入的那組）"
+      err "  3. 或者從 1Password / Bitwarden 找 'hermes-backup USER_KEY'"
+      return 1
+    fi
+  fi
+
+  # 雙重保險：再次確認
+  if [[ ! -f "$PASSPHRASE_FILE" ]]; then
+    err "passphrase 還是找不到 $PASSPHRASE_FILE、退出"
     return 1
   fi
 
@@ -240,6 +246,73 @@ main() {
   echo "驗證指令："
   echo "  ls -la $TARGET_DIR/    # 看 .env 權限 600"
   echo "  diff -r $HERMES_HOME_SRC/ $TARGET_DIR/ 2>&1 | head -20"
+}
+
+# v4.5：從 Drive passphrase-recovery/ 還原 GPG passphrase
+# 流程：Drive 下載加密的 passphrase-recovery-*.gpg → 互動式問 USER_KEY → GPG 解密 → 放到 $PASSPHRASE_FILE
+recover_passphrase_from_drive() {
+  local recovery_remote="hoonsorasus:hermes-backup/passphrase-recovery"
+  local tmp_gpg="/tmp/hermes-passphrase-recovery-$$.gpg"
+  local user_key=""
+
+  # 1. 驗證 Drive 連線
+  if ! rclone lsd "${recovery_remote%/*}" --config "$RCLONE_CONF" 2>&1 | head -1 >/dev/null; then
+    err "無法連線到 Drive ${recovery_remote%/*}"
+    return 1
+  fi
+
+  # 2. 找最新的 passphrase-recovery
+  local latest=$(rclone lsf "$recovery_remote/" --config "$RCLONE_CONF" --files-only 2>/dev/null \
+    | grep 'passphrase-recovery-.*\.gpg' | sort -r | head -1)
+  if [[ -z "$latest" ]]; then
+    err "Drive $recovery_remote 上找不到 passphrase-recovery-*.gpg"
+    return 1
+  fi
+  log "找到 Drive passphrase-recovery: $latest"
+
+  # 3. 下載
+  rclone copy "${recovery_remote}/$latest" /tmp/ --config "$RCLONE_CONF" 2>&1 | tail -2
+  if [[ ! -f "/tmp/$latest" ]]; then
+    err "下載失敗"
+    return 1
+  fi
+  mv "/tmp/$latest" "$tmp_gpg"
+  chmod 600 "$tmp_gpg"
+
+  # 4. 互動式問 USER_KEY
+  if [[ -t 0 ]]; then
+    echo ""
+    echo "════════════════════════════════════════════════════════════"
+    echo "  Passphrase 自動還原 (v4.5)"
+    echo ""
+    echo "  這是 v4 backup 時互動式輸入的 USER_KEY"
+    echo "  應該跟你的密碼管理器（1Password）主密碼相同"
+    echo "  或記在 1Password 的 'hermes-backup USER_KEY' 條目"
+    echo ""
+    read -r -s -p "  請輸入 USER_KEY: " user_key
+    echo ""
+  else
+    err "非互動式模式、USER_KEY 無法輸入"
+    err "請手動跑 hermes-restore-v4.sh tier2（互動式）"
+    rm -f "$tmp_gpg"
+    return 1
+  fi
+
+  # 5. GPG 解密 → 放 $PASSPHRASE_FILE
+  mkdir -p "$(dirname "$PASSPHRASE_FILE")"
+  if ! gpg --batch --yes --pinentry-mode loopback \
+      --passphrase "$user_key" \
+      --decrypt "$tmp_gpg" > "$PASSPHRASE_FILE" 2>/tmp/gpg-err.log; then
+    err "USER_KEY 錯誤、解密失敗"
+    cat /tmp/gpg-err.log | head -3
+    rm -f "$tmp_gpg"
+    return 1
+  fi
+  chmod 600 "$PASSPHRASE_FILE"
+  rm -f "$tmp_gpg" /tmp/gpg-err.log
+
+  ok "Passphrase 還原成功 → $PASSPHRASE_FILE"
+  return 0
 }
 
 main

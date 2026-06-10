@@ -79,6 +79,130 @@
 - **驗證**:4 個 worker 全部 ~10 分鐘延遲送達通知(常態值)
 - **推廣**:**任何 hermes background process,通知延遲 10-14 分鐘是正常,不是 bug**
 
+### GPG passphrase 不用手動設定,64 字元自動產生存在固定路徑(2026-06-10 14:xx 釐清)
+- **情境**:使用者問「GPG 密碼在哪、是不是抓 rclone.conf 密碼」、還主動打了 12 字元密碼到對話
+- **失敗原因**:我之前以為 GPG passphrase 要使用者手動設定、不知道已經自動產生了
+- **真相**:
+  1. **2026-06-07 v4 自動跑 `--rotate`** 產生 **64 字元高熵密碼**
+  2. 存在 `~/Documents/hermes-keys/.hermes_backup_passphrase`（mode 600）
+  3. `hermes-secrets-encrypt.sh` 用 `gpg --passphrase-file "$PASSPHRASE_FILE"` 從檔讀、**完全不需要互動輸入**
+  4. 使用者打的「xm3fm065ji6」**不符合 rclone.conf 內的 crypt password 也不符合 GPG passphrase**——可能是密碼管理員主密碼
+- **正確做法**:
+  1. **不要在對話打 GPG 密碼**(就算使用者主動給,也不接)
+  2. 回答「在 ~/Documents/hermes-keys/.hermes_backup_passphrase、64 字元自動產生的、Tier 2 用 --passphrase-file 從檔讀」
+  3. 驗證命令:`cat ~/Documents/hermes-keys/.hermes_backup_passphrase | wc -c` 應回 65
+- **驗證**:2026-06-10 14:xx 跑 `bash ~/.hermes/scripts/hermes-secrets-encrypt.sh`,GPG 自動從檔讀、零互動完成加密
+- **推廣**:**任何「備份 / 加密」任務,Tier 2 用 `--passphrase-file` 自動讀、不要互動輸入**
+
+### .gitconfig 帳號混亂 — `gh auth setup-git` 是正解(2026-06-10 14:xx 釐清)
+- **情境**:`git push` 顯示進度跑到 95% 但 `git rev-list --left-right --count main...origin/main` 顯示 `1 0`(本地領先),或 `Permission to <repo> denied to <備用帳號>`
+- **失敗原因**:`~/.gitconfig` 設 `credential.helper = store --file ~/.git-credentials-raphael`,裡面存的是**舊 `hoonsor` 備用帳號的 token**(前任拉斐爾 OpenClaw 套件時代留下)。`gh auth switch` **不會**改 git 全域認證
+- **正確做法**:
+  1. **跑 `gh auth setup-git` 一次**:自動注入 `[credential "https://github.com"] helper = !/usr/bin/gh auth git-credential` 到 `.gitconfig`
+  2. 推 push 前**永遠先 `gh auth status` 看 active account 是誰**
+  3. **`gh auth switch` 切換 gh CLI 帳號**;`gh auth setup-git` 讓 git 用 gh token
+- **驗證**:
+  - `cat ~/.git-credentials-raphael` 看到 `hoonsor:ghp_XXX@github.com` = 確認中
+  - `gh auth status` 主帳號是 `hoonsoropenclaw`(對的)
+  - **但 git push 仍用 hoonsor token** ← 這就是 bug
+  - 跑 `gh auth setup-git` 後:.gitconfig 多出 `[credential "https://github.com"]` section、push 成功
+- **推廣**:**任何 git push 失敗 + 主帳號是對的 + 顯示 Permission denied to <備用帳號> → 必跑 gh auth setup-git**
+
+### v4 備份腳本 4 次修補的必要性(2026-06-10 14:xx 觀察)
+- **情境**:`hermes-backup-v4.sh` 在 2026-06-10 14:xx 從 v4.1 升到 v4.4,**4 個修補**才解決 push 卡死
+- **4 個修補**:
+  1. **v4.2**:加 `~/.hermes/profiles/` 同步段(18 個 exclude)→ 原本只備 default,常駐子代理不被備份
+  2. **v4.3**:`skills/` rsync 加 `--max-size=50m` → hermes 自動 backup 在 `.curator_backups/skills.tar.gz` 是 125MB 單一 blob、GitHub 拒絕
+  3. **v4.3**:profiles rsync 同步加 `--max-size=50m`(profiles/*/skills/.curator_backups/ 也有 125MB)
+  4. **v4.4**:`--exclude='sparc-methodology/v3/'` 跟 `'sparc-methodology/ruflo/'` → 整體 78MB、--max-size 只擋單檔
+- **失敗原因**:
+  1. **staging 內累積 125MB blob** → 已經 commit 進 git history,`--force-with-lease` 還會被 reject(沒共同祖先)
+  2. **必須 rm -rf .git 重 init** + `git push --force` 重建 history
+  3. **`.curator_backups/` 是 hermes 自動 backup 元件** → 備份的備份 = 遞迴爆炸陷阱
+- **正確做法**(v5 設計必加):
+  1. 必加 `--max-size=50m` 到所有 rsync 段(GitHub 物件限制 100MB、保險 50MB)
+  2. 必加 `.curator_backups/` 到所有排除清單
+  3. 必加 `state.db*` 排除(對話歷史爆、含敏感 metadata,該走 Tier 2)
+  4. v4 profiles 段完整 exclude 清單(18 個)見 `agent-system-backup` 10.5 段
+- **驗證**:v4.4 跑完 → `git rev-list --left-right --count main...origin/main` 回 `0 0` = 完全同步
+- **推廣**:**任何「備份整個 hermes_home」腳本,必加 .curator_backups/ + state.db* + --max-size 50m 三層過濾**
+
+### rclone "directory not found" 是誤導錯誤(2026-06-10 14:xx 釐清)
+- **情境**:`rclone copy <file> hoonsorasus:hermes-backup/secrets/` 報 `directory not found`,但 `rclone lsd hoonsorasus:hermes-backup` 明確看到 `secrets/` 存在(裡面還有 3 個 2026-06-07 的備份)
+- **失敗原因**:
+  1. Drive 端目錄**真的存在**(`rclone lsd` 證實)
+  2. rclone client 端的**路徑拼接錯誤**(少一個 `/`、多一個 `:`、特殊字元沒 escape)
+  3. **rclone 的錯誤訊息是誤導**——其實是別的問題但被包成 "directory not found"
+- **正確做法**:
+  1. `rclone tree <remote>:<bucket> --max-depth 2` 看完整結構
+  2. `rclone lsf <remote>:<bucket>/<subdir>/` 直接列 subdir 內容
+  3. `rclone copy -v <file> <remote>:<bucket>/<subdir>/` 開 verbose 看哪一步失敗
+  4. **130MB 加密檔 push 預期 5-10 分鐘**(231 KiB/s)——看到錯誤別立刻放棄,先看 30 秒有沒有進度
+- **驗證**:背景跑 `rclone copy -v --transfers=1 --checkers=1 --tpslimit 5 ...` 確實有進度(231 KiB/s)
+- **推廣**:**任何 rclone 報錯,先用 verbose + 直接 lsd 確認,不要相信錯誤訊息字面**
+
+### v4.5 雙層 GPG 加密修補 passphrase 沒備份的致命漏洞(2026-06-10 14:xx 釐清)
+- **情境**:`hermes-secrets-encrypt.sh` 把 .env/auth.json/state.db 用 GPG 加密成 `secrets-bundle-*.tar.gpg` 推到 Drive,解密金鑰是 `~/Documents/hermes-keys/.hermes_backup_passphrase`(64 字元 auto-gen)。但**v4.0 ~ v4.4 完全沒備份這個 passphrase 檔**——如果 N100 硬碟壞掉,**使用者完全無法異機還原 Drive 上 130MB 加密檔**
+- **失敗原因**:v4 設計的「雙目錄分離原則」(加密檔 vs passphrase 嚴格分開)只考慮到「本地兩處分開放」,**沒考慮「passphrase 也需要離線備份」**
+- **正確做法**(v4.5 新增):
+  1. Tier 2 跑完後**自動**加跑 `backup_passphrase_recovery()`:
+     - 用 GPG 對稱加密 passphrase 檔(使用者互動輸入 USER_KEY)
+     - 上傳到 `hoonsorasus:hermes-backup/passphrase-recovery/`
+  2. `hermes-restore-v4.sh tier2` 偵測本地無 passphrase 檔時:
+     - 自動從 Drive `passphrase-recovery/` 下載最新加密檔
+     - 互動式問 USER_KEY
+     - GPG 解密 → 放到 `~/Documents/hermes-keys/.hermes_backup_passphrase` (mode 600)
+     - 然後才解 `secrets/*.tar.gpg`
+  3. **USER_KEY 跟 GPG passphrase 必須不同**(兩層加密才有意義)
+  4. **USER_KEY 必須使用者記住**(建議 = 1Password 主密碼)
+- **驗證**:`rclone lsf hoonsorasus:hermes-backup/passphrase-recovery/` 看到新檔案
+- **推廣**:**任何「GPG 對稱加密 + 加密檔推到雲端」設計,金鑰檔也必須有離線副本——單靠本地金鑰不算「備份」**
+
+### Market-strategist → consumer-researcher 身份重塑:連帶 handoff 命名都要改(2026-06-10 釐清)
+- **情境**:2026-06-10 把 `market-strategist` profile 整個**重塑**為 `consumer-researcher`(身份語意完全反轉),但**忘記同步更新**:
+  1. AGENTS.md `@專案` keyword 表格還寫「`market-strategist`、`product-planner`」(AGENTS 是工作區規範唯一持久化位置)
+  2. `references/sops/keyword-triggers-sop.md` 的 `@專案` SOP 段可能也殘留舊名
+  3. handoff 命名從 `market-research-<slug>.md` 改為 `consumer-needs-research-<slug>.md`
+- **失敗原因**:身份重塑時**只想到「profile 設定」**,沒想到**所有指向這個身份的外部引用都要同步掃**:
+  - 跨 profile 寫入(skills、handoff 範本、SOUL.md)
+  - 工作區文件(AGENTS.md、IDENTITY.md、USER.md、TOOLS.md、HEARTBEAT.md、keyword SOPs)
+  - 下游代理的 persona.md(persona 引用舊 handoff 命名)
+- **正確做法**(2026-06-10 重塑時已跑):
+  1. **profile 設定**:新 profile clone 過來 + 改 persona.md/SOUL.md
+  2. **跨 profile skills**:web-worker-template/summarizer-worker-template 加 `cross_profile=true` 寫入
+  3. **AGENTS.md 表格**:`@專案` 觸發段同步更新代理清單
+  4. **keyword SOPs**:`keyword-triggers-sop.md` 的 `@專案` 範例從「市場調研」改「消費者調研」
+  5. **下游 product-planner persona**:讀 handoff 路徑、MoSCoW 來源、版本標頭都從 `market-research` 改 `consumer-needs-research`
+  6. **刪除舊 profile**:`hermes profile delete market-strategist`(用 stdin 餵確認字串繞過 PTY)
+- **驗證**:`hermes profile list` 看不到 `market-strategist`、`grep -r "market-strategist" ~/.hermes/{skills,memories,profiles}` 應該 0 個 false-positive
+- **推廣**:**任何「身份重塑」(不是「身份繼承」!)要全工作區 grep 同步掃 6 個位置(profile + skills + AGENTS + keyword SOPs + 下游 persona + 範本檔)——不是只改 profile 設定就以為完成**
+
+
+### GitHub push 95% 卡死是「單一大物件被 server 拒絕」的副作用(2026-06-10 14:xx 釐清)
+- **情境**:`git push --progress origin main` 跑到 95% (40+ MiB) 後**突然被砍**,server 端 `send-pack: unexpected disconnect while reading sideband packet`,本地 `git rev-list` 顯示 `1 0` 或 `2 0`
+- **失敗原因**:
+  1. **GitHub 對單一 push 內的大物件有限制**(~100MB)、push 進度條看起來 95% 是本地 send 完 95% 的物件,但 server 端**中途 disconnect**
+  2. **不要相信 `git push` 沒報錯就是成功** → 必 `git rev-list --left-right --count main...origin/main` 驗證
+- **正確做法**:
+  1. `find .git/objects -type f -size +50M` 找 staging 內 > 50MB 的單一 blob
+  2. `git verify-pack -v .git/objects/pack/*.pack | sort -k3 -rn | head -5` 找 pack 內最大物件
+  3. `git log --all --pretty=format:"%H %s" --diff-filter=AM -- '**/skills.tar*'` 找哪個 commit 引入
+  4. 找到就 `git filter-repo` / `git filter-branch` 移除,**或** `rm -rf .git` 重 init + force push 重建 history
+- **驗證**:`0 0` = 成功、`1 0` 以上 = 有 commit 沒推上去、必查 blob 大小
+- **推廣**:**任何 git push,跑完必 `git rev-list` 驗證;95% 卡死 = 單一大物件被 server 拒絕**
+
+### 舊備份路徑 2025-12 在當前 N100 不存在,backup-all.sh 寫死會無聲失敗(2026-06-10 14:xx 釐清)
+- **情境**:`backup-all.sh` 寫死 `BACKUP_DIR="/media/hoonsoropenclaw/n100/backup-2025-12/"`,pty 跑完顯示「12 個項目成功」但實際目錄不存在
+- **失敗原因**:
+  1. **2025-12 環境的掛載點 `/media/hoonsoropenclaw/n100/`** 在當前 N100 **不存在**(`/media/` 是空的)
+  2. 任何備份腳本要寫到 `/media/...` 路徑 → **必先 `ls /media/` 確認掛載存在**,不存在就 abort
+- **正確做法**:
+  1. 跑前 `test -d <BACKUP_DIR> && echo OK || echo MISSING`
+  2. 不存在就用替代方案:`~/.hermes/backups/`(v4 用的)或 `~/backups/`
+  3. **跑完必 ls 驗證**(`ls -la <BACKUP_DIR>`)——別只信 pty 輸出
+- **驗證**:`ls /media/hoonsoropenclaw/` 報 `No such file or directory` = 確認 v3 backup-all.sh 不能用
+- **推廣**:**任何備份腳本寫到 `/media/...` 或 `n100/backup-2026...` 開頭,先 ls 確認,不存在就別跑**
+
 ---
 
 ## 2026-06-08 之前

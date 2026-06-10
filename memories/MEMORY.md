@@ -157,6 +157,16 @@
 - **If** 卸載指令沒 `--dry-run` **Then** 至少先 `which X` + `readlink -f $(which X)` + `dpkg -L X | head` 知道會被動到哪些檔
 - 套件卸載後看到 systemd `not-found inactive dead` 但 unit 檔還在 = **套件卸載 bug,手動清**（`rm -f unit 檔` + `daemon-reload` + `reset-failed`）
 
+### 「單靠本地金鑰不算備份」(2026-06-10,從 v4.5 雙層 GPG 加密修補歸納)
+- **情境**:v4.0 ~ v4.4 把 .env / auth.json / state.db 用 GPG 加密成 `secrets-bundle-*.tar.gpg` 推到 Drive,金鑰是本地 `~/Documents/hermes-keys/.hermes_backup_passphrase`。**但 passphrase 檔從未備份**——N100 硬碟壞掉時,130MB 加密檔**完全無法解開**
+- **If** 設計任何「加密檔推雲端、金鑰留本地」的架構 **Then** 必加 **第二層離線副本**:金鑰也加密備份到雲端獨立目錄(或實體離線媒介),金鑰的金鑰(USER_KEY)由使用者記憶
+- 推廣:**任何 backup 設計,recovery chain 必須形成迴路——每一層都必須有「不在同一個 failure domain」的副本**
+
+### 「備份腳本要同步過濾『同形但不同位置』的目錄」(2026-06-10,從 v4.2 4 修補歸納)
+- **情境**:v4 rsync 用 `~/.hermes/skills/` 排除清單保護 `.curator_backups/` 不進 staging,**但** 沒想到 `~/.hermes/profiles/*/skills/.curator_backups/` 也有這個目錄,結果 125MB `skills.tar.gz` 透過 profiles 漏進 git history、push 卡 95%
+- **If** 寫 rsync 排除清單 **Then** **所有「同形子目錄」都要列**:不只是 `skills/.curator_backups/`,還要 `profiles/*/skills/.curator_backups/`
+- 推廣:**rsync 的 `--exclude` 不支援 glob 跨層級**——`*/skills/.curator_backups/` 也不會匹配,必須明確列每個路徑,**或** 用 `--max-size=50m` 從大小端加一層保險
+
 ### LLM sub-agent 是無狀態的——必抓清單 + _plan.md 是 Orchestrator 跟 sub-agent 的介面契約（2026-06-10）
 - 觀察:Orchestrator + Worker 平行架構跑 4 個 web-worker + 1 個 summarizer,summarizer **自動從 _raw/ 歸納 Persona** 換掉 v1 推測的「跨國」「退休族」客群,並**漏掉 SkillSwap.io**(v1 有、v2 原始漏)
 - 根因:LLM sub-agent 看到 prompt 只看 prompt 內列的內容、**不會主動繼承 Orchestrator 還沒寫進 prompt 的「使用者原意」**,也不會主動補抓 prompt 沒列的「必抓清單」

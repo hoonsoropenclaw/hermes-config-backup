@@ -216,6 +216,86 @@ tier2_drive() {
   else
     "$encrypt_script" "${args[@]}"
   fi
+
+  # v4.5：Tier 2 完成後，把 passphrase 檔也用 GPG 對稱加密備份到 Drive 獨立目錄
+  # 解決「passphrase 沒備份、災難時無法異機還原」的致命漏洞
+  # 雙目錄分離保留：secrets/ 還是被 GPG 加密的 .env 等、passphrase-recovery/ 是加密的 passphrase
+  # 解 passphrase-recovery 需 USER_KEY(使用者記住的單一密碼,跟 GPG passphrase 不同)
+  if ! $DRY_RUN; then
+    backup_passphrase_recovery
+  fi
+}
+
+# v4.5：把 GPG passphrase 加密備份到 Drive 獨立目錄
+# USER_KEY 從環境變數 $HERMES_USER_KEY 讀（crontab 設定或互動式 prompt）
+# 若都沒有，跳過這步並警告
+backup_passphrase_recovery() {
+  local passphrase_file="$HOME/Documents/hermes-keys/.hermes_backup_passphrase"
+  local recovery_dir="$HOME/.cache/hermes-passphrase-recovery"
+  local recovery_gpg="$recovery_dir/passphrase-recovery-$(date -u +%Y%m%d_%H%M%SZ).gpg"
+  local drive_remote="hoonsorasus:hermes-backup/passphrase-recovery"
+  local user_key="${HERMES_USER_KEY:-}"
+
+  if [[ ! -f "$passphrase_file" ]]; then
+    warn "找不到 passphrase 檔 $passphrase_file、跳過 passphrase 備份"
+    return 0
+  fi
+
+  # 互動式取得 USER_KEY（如果環境變數沒設）
+  if [[ -z "$user_key" ]]; then
+    if [[ -t 0 ]]; then
+      echo ""
+      echo "════════════════════════════════════════════════════════════"
+      echo "  v4.5 passphrase 備份"
+      echo ""
+      echo "  這台 N100 硬碟如果壞掉,需要 USER_KEY 從 Drive 解開 passphrase"
+      echo "  然後才能解開 secrets/*.tar.gpg"
+      echo ""
+      echo "  ⚠️  USER_KEY 跟 GPG passphrase 不同、是你自己選的一組密碼"
+      echo "  ⚠️  建議跟你的密碼管理器(1Password)主密碼相同"
+      echo "  ⚠️  千萬不要跟 GPG passphrase 相同"
+      echo ""
+      read -r -s -p "  請輸入 USER_KEY: " user_key
+      echo ""
+      read -r -s -p "  請再輸入一次確認: " user_key2
+      echo ""
+      if [[ "$user_key" != "$user_key2" ]]; then
+        err "兩次 USER_KEY 不一致、跳過 passphrase 備份"
+        return 1
+      fi
+    else
+      warn "非互動式模式且 HERMES_USER_KEY 未設、跳過 passphrase 備份"
+      warn "（手動跑 v4 backup 時會用互動式 prompt）"
+      return 0
+    fi
+  fi
+
+  mkdir -p "$recovery_dir"
+  log "加密 passphrase → $recovery_gpg"
+  gpg --batch --yes --pinentry-mode loopback \
+    --symmetric --cipher-algo AES256 \
+    --s2k-mode 3 --s2k-count 65011792 \
+    --compress-algo none \
+    --passphrase "$user_key" \
+    --output "$recovery_gpg" \
+    "$passphrase_file" 2>&1 | head -3
+
+  if [[ ! -f "$recovery_gpg" ]]; then
+    err "passphrase 加密失敗"
+    return 1
+  fi
+  chmod 600 "$recovery_gpg"
+
+  # Drive 上傳
+  if $DO_UPLOAD_T2; then
+    log "上傳 passphrase-recovery 到 Drive ..."
+    rclone copy "$recovery_gpg" "$drive_remote/" --transfers=1 --checkers=1 --tpslimit 5 2>&1 | tail -3
+    # 保留本地副本 3 份(新→舊)
+    ls -1t "$recovery_dir"/passphrase-recovery-*.gpg 2>/dev/null | tail -n +4 | xargs -r rm -f
+  else
+    ok "passphrase-recovery 加密完成 (本地 $recovery_gpg)"
+    echo "  上傳到 Drive 請加 --upload-drive flag"
+  fi
 }
 
 # ===================== 主流程 =====================

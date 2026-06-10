@@ -103,10 +103,43 @@ full_backups/                ← **只有 FULL 才有這層**
 ├── hermes-agent/            ← 1.1 GB 源碼（排除 venv/）
 ├── sparc-methodology/       ← 103 MB 外部 skill
 ├── alt_gh_tokens/           ← GPG 加密的備用 GitHub PAT
-├── secrets/                 ← GPG passphrase 檔
+├── secrets/                 ← GPG **加密的** .env + auth.json + state.db（需 passphrase 才能解）
+├── passphrase-recovery/     ← v4.5 新增：GPG **加密的** passphrase 檔（需 USER_KEY 才能解）
 ├── cache/、logs/、lsp/、bin/、sessions/
 └── models_dev_cache.json
 ```
+
+### v4.5 雙層加密策略（2026-06-10 新增）
+
+**問題**：v4.0 ~ v4.4 設計有致命漏洞——`passphrase 檔（~/Documents/hermes-keys/.hermes_backup_passphrase）` 從未被備份到任何地方。**如果 N100 硬碟壞掉，使用者完全無法異機還原 Drive 上加密的 .env/auth.json/state.db**。
+
+**v4.5 修法**：雙層 GPG 加密 + 雙層 Drive 目錄分離
+
+```
+Drive
+├── secrets/secrets-bundle-20260610_*.tar.gpg
+│   ← 加密的 .env/auth.json/state.db
+│   ← 解密金鑰：GPG passphrase (auto-generated 64-char, 在 ~/Documents/hermes-keys/)
+│
+└── passphrase-recovery/passphrase-recovery-20260610_*.gpg
+    ← 加密的 passphrase 檔
+    ← 解密金鑰：USER_KEY (使用者記住的單一密碼，建議 = 1Password 主密碼)
+```
+
+**異機還原時流程**（hermes-restore-v4.sh tier2 自動處理）：
+
+1. Drive 下載 `secrets-bundle-*.tar.gpg`（需要 Drive 連線）
+2. **如果本地沒有 passphrase 檔** → 自動從 `passphrase-recovery/` 還原：
+   - 下載 `passphrase-recovery-*.gpg`
+   - 互動式問 USER_KEY
+   - GPG 解密 → 放到 `~/Documents/hermes-keys/.hermes_backup_passphrase`（mode 600）
+3. 用 passphrase 檔解 `secrets-bundle-*.tar.gpg` → 拿到 .env/auth.json/state.db
+4. 修權限（600）
+
+**USER_KEY 設定建議**：
+- 跟 1Password / Bitwarden 主密碼相同（最容易記）
+- **不要**跟 GPG passphrase 相同（兩層加密才有意義）
+- 記在 1Password 的 `hermes-backup USER_KEY` 條目
 
 ### GitHub PUBLIC tar.gz 內含（v3.0 ~9.4 MB）
 
