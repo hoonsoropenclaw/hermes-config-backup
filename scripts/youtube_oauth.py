@@ -23,7 +23,7 @@ import requests
 # ────────────────────────────────────────
 SECRETS_FILE = os.path.expanduser("~/.local/share/hermes/secrets/youtube_client.json")
 TOKEN_FILE = os.path.expanduser("~/.hermes/youtube_tokens.json")
-CHANNELS_FILE = os.path.expanduser("~/.hermes/youtube_channels.json")
+CHANNELS_FILE = os.path.expanduser("~/.hermes/cache/youtube/channels.json")
 REDIRECT_URI = "http://localhost:8765"
 PORT = 8765
 

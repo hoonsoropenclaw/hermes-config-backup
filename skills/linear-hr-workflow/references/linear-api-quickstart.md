@@ -104,9 +104,114 @@ Linear ↔ GitHub 雙向同步：
 - 等待 `X-RateLimit-Requests-Reset` 時間後重試
 - 或聯繫 Linear support 申請提升限制
 
+## 批次建立（issueBatchCreate）
+
+一次最多建立 50 個 issue：
+```python
+mutation = """
+mutation issueBatchCreate($teamId: String!, $c0: IssueCreateInput!, $c1: IssueCreateInput!) {
+  issueBatchCreate(input: {teamId: $teamId, issues: [$c0, $c1]}) {
+    success
+    issues { id identifier title }
+  }
+}
+"""
+r = requests.post('https://api.linear.app/graphql', headers=HEADERS, json={
+    'query': mutation,
+    'variables': {
+        'teamId': team_id,
+        'c0': {'title': '【代理】數學 - 張三', 'description': '10年經驗'},
+        'c1': {'title': '【代理】英文 - 李四', 'description': '5年經驗'},
+    }
+})
+issues = r.json()['data']['issueBatchCreate']['issues']
+```
+
+## 更新 Issue 狀態（issueUpdate）
+
+```python
+mutation = """
+mutation issueUpdate($id: String!, $stateId: String!) {
+  issueUpdate(id: $id, input: {stateId: $stateId}) {
+    success
+    issue { id identifier state { name } }
+  }
+}
+"""
+# 先查狀態 ID：query { states(first: 10) { nodes { id name } } }
+r = requests.post('https://api.linear.app/graphql', headers=HEADERS, json={
+    'query': mutation,
+    'variables': {'id': 'issue_id', 'stateId': 'state_id'}
+})
+```
+
+## 分頁查詢（Cursor-based）
+
+```python
+query = """
+query issues($teamId: String!, $after: String) {
+  issues(first: 10, after: $after, filter: {team: {id: {eq: $teamId}}}) {
+    pageInfo { hasNextPage endCursor }
+    nodes { id identifier title updatedAt }
+  }
+}
+"""
+cursor = None
+all_issues = []
+while True:
+    r = requests.post('https://api.linear.app/graphql', headers=HEADERS, json={
+        'query': query,
+        'variables': {'teamId': team_id, 'after': cursor}
+    })
+    data = r.json()['data']['issues']
+    all_issues.extend(data['nodes'])
+    if not data['pageInfo']['hasNextPage']:
+        break
+    cursor = data['pageInfo']['endCursor']
+```
+
+## linear.new URL（即時建立）
+
+```python
+import urllib.parse, webbrowser
+title = "【代理】數學代課老師 - 張三"
+desc = "## 候選人資料\n- 科目：數學\n- 可到職日：2026-09-01"
+url = f"https://linear.new/issue/linear/{urllib.parse.quote(title)}?description={urllib.parse.quote(desc)}"
+webbrowser.open(url)
+# 自動建立 GitHub branch
+```
+
+## Webhook（取代 polling）
+
+Linear 支援 Webhook 推送，減少 API 輪詢：
+- 設定：Linear Settings → API → Webhooks → 新建
+- 監聽事件：`Issue, Comment, IssueLabel, Project, Cycle`
+- 驗證：HMAC-SHA256 signature（header `Linear-Webhook-Signature-256`）
+-你家伺服器需有公開 HTTPS 端點（可用 ngrok 測試）
+
+```python
+# Flask 接收 Webhook 示例
+from flask import Flask, request, hmac, hashlib
+app = Flask(__name__)
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    sig = request.headers.get('Linear-Webhook-Signature-256', '')
+    secret = os.getenv('LINEAR_WEBHOOK_SECRET')
+    expected = 'sha256=' + hmac.new(secret.encode(), request.data, hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(sig, expected):
+        return 'Unauthorized', 401
+    payload = request.json
+    event_type = payload.get('type')  # e.g. "Issue", "Comment"
+    action = payload.get('action')     # e.g. "created", "updated"
+    # 處理事件
+    return 'OK'
+```
+
 ## 參考資源
 
 - Linear 開發者文檔：https://linear.app/developers/graphql
 - Linear Rate Limiting：https://linear.app/developers/rate-limiting
+- Linear Webhooks：https://linear.app/developers/webhooks
 - linear-api PyPI：https://pypi.org/project/linear-api（需要 venv 才能安裝）
 - dltHub Linear pipeline：https://dlthub.com/context/source/linear
+- Apollo Studio Schema：https://studio.apollographql.com/public/Linear-API/variant/current

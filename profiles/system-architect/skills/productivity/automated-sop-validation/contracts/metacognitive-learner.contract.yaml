@@ -1,0 +1,60 @@
+agent: metacognitive-learner
+version: "1.0"
+description: "Behavioral contract for metacognitive-learner sub-agent outputs"
+
+requires:
+  - session_search or fallback memory search completed
+  - at least one skill gap identified
+
+invariant:
+  - output must include If-Then format learning rules
+  - output must include memory sync block for any new learnings
+  - must not fabricate tool results or fake API responses
+
+limits:
+  latency:
+    max_seconds: 5400
+  cost:
+    max_usd: 10.00
+
+must_not:
+  - name: no_fabricated_results
+    pattern: FAKE
+    output_match: true
+    on_violation: block
+  - name: no_ssn
+    pattern: '\b\d{3}-\d{2}-\d{4}\b'
+    output_match: true
+    on_violation: block
+
+must:
+  - name: has_learning_summary
+    required_element: '## 學習摘要'
+    on_violation: warn
+  - name: has_if_then_rules
+    required_element: 'If→Then'
+    on_violation: warn
+  - name: has_memory_sync
+    required_element: '[TO_MEMORY]'
+    on_violation: warn
+  - name: has_self_review
+    required_element: '## 自我審查'
+    on_violation: warn
+
+assert:
+  - name: output_not_empty
+    type: pattern
+    pattern: '.+'
+    output_match: true
+    on_violation: block
+
+ensures:
+  - new skills or updates are logged in memory sync block
+  - skill gaps are documented with priority ranking
+
+on_violation:
+  retries: 1
+  fallback: log_and_continue
+  message: "Learning output failed validation. Logging deviation and continuing."
+
+severity: critical

@@ -65,9 +65,65 @@ tier1_github() {
   # 1. 同步本地 ~/.hermes/ 變動到 staging（增量）
   log "Step 1: 同步 ~/.hermes/ 變動到 staging..."
 
-  # 同步 config.yaml（單檔）
-  if [[ -f "$HERMES_HOME/config.yaml" ]]; then
-    run_or_dry cp -f "$HERMES_HOME/config.yaml" "$STAGING/config.yaml"
+  # 同步根目錄單檔（v4.6 起改成 array, 方便未來加檔案）
+  # 變更對照：改這個清單 → 必同步更新 ~/.hermes/docs/INVENTORY.md
+  declare -a ROOT_SINGLE_FILES=(
+    "config.yaml"
+    "SOUL.md"
+  )
+  for f in "${ROOT_SINGLE_FILES[@]}"; do
+    if [[ -f "$HERMES_HOME/$f" ]]; then
+      run_or_dry cp -f "$HERMES_HOME/$f" "$STAGING/$f"
+    fi
+  done
+
+  # 同步 archive/（v4.6 新增：永久棄用備份）
+  if [[ -d "$HERMES_HOME/archive" ]]; then
+    run_or_dry rsync -au --delete \
+      --exclude='__DEPRECATED__*' \
+      "$HERMES_HOME/archive/" "$STAGING/archive/"
+  fi
+
+  # 同步 config/（v4.6 新增：.hermes-user-key 必備, cron 跑 Tier 2 加密要靠它）
+  if [[ -d "$HERMES_HOME/config" ]]; then
+    run_or_dry rsync -au \
+      "$HERMES_HOME/config/" "$STAGING/config/"
+  fi
+
+  # 同步 handoff/（v4.6 新增：跨 profile handoff pipeline 產出）
+  if [[ -d "$HERMES_HOME/handoff" ]]; then
+    run_or_dry rsync -au --delete \
+      --exclude='__DEPRECATED__*' \
+      "$HERMES_HOME/handoff/" "$STAGING/handoff/"
+  fi
+
+  # 同步 reports/（v4.6 新增：subagent 設計文件）
+  if [[ -d "$HERMES_HOME/reports" ]]; then
+    run_or_dry rsync -au --delete \
+      --exclude='__DEPRECATED__*' \
+      "$HERMES_HOME/reports/" "$STAGING/reports/"
+  fi
+
+  # 同步 cache/youtube/（v4.6 新增：YouTube 公開資料）
+  if [[ -d "$HERMES_HOME/cache/youtube" ]]; then
+    run_or_dry rsync -au --delete \
+      --exclude='__DEPRECATED__*' \
+      "$HERMES_HOME/cache/youtube/" "$STAGING/cache/youtube/"
+  fi
+
+  # 同步 cache/documents/（v4.6 新增：documents cache）
+  if [[ -d "$HERMES_HOME/cache/documents" ]]; then
+    run_or_dry rsync -au --delete \
+      --exclude='__DEPRECATED__*' \
+      "$HERMES_HOME/cache/documents/" "$STAGING/cache/documents/"
+  fi
+
+  # 同步 logs/（v4.6 新增：排除 .log.1 大檔、排除備份腳本自己的 log）
+  if [[ -d "$HERMES_HOME/logs" ]]; then
+    run_or_dry rsync -au --delete \
+      --exclude='*.log.1' --exclude='*.log.2' --exclude='*.gz' \
+      --exclude='backup_*.log' --exclude='backup-coverage*.log' \
+      "$HERMES_HOME/logs/" "$STAGING/logs/"
   fi
 
   # 同步 agents/

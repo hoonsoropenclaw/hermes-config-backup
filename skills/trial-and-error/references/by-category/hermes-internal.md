@@ -7,6 +7,118 @@
 
 ## 2026-06-10（最新）
 
+### `hermes -p X chat` 只讀 SOUL.md、不自動載入 persona.md（engineering-lead 建立時的關鍵發現，第二類「看起來建好了但實際沒生效」）
+
+**症狀**：
+- 寫了 10KB+ 的 persona.md（4 個核心決策 + 6 步工作流 + 12 個禁止事項）
+- sub-agent 啟動新 session 時**只回答赫米斯 SOUL 核心信念**（耗盡配額/有主見/先查再問/用能力換取信任）
+- **完全不知道自己的 4 個核心決策**（B/B/C/B）、不知道在 handoff chain 的位置
+
+**根因**：
+`hermes -p <name> chat` 啟動 sub-agent 時**只讀 `<profile>/SOUL.md`**，**不會自動讀 `<profile>/persona.md`**。SOUL.md 跟 persona.md 是兩種不同檔案：
+- `<profile>/SOUL.md` ✅ sub-agent 啟動時自動載入 → 決定 LLM 的「語氣」跟「核心信念」
+- `<profile>/persona.md` ❌ sub-agent **不會**自動載入 → 必須在 SOUL.md 內引用、或在主 session 內手動讀
+- `<profile>/skills/<X>/SKILL.md` ✅ sub-agent 載入（按需）→ 跟 persona 獨立
+
+**為什麼 system-architect 跟 engineering-lead 行為不同**：
+- system-architect 之所以能直接回答 6 個核心決策，因為它的 SOUL.md 頂部**已經含完整 persona 摘要**（4.9KB SOUL.md 有 persona 段）
+- engineering-lead 之所以失敗，因為 SOUL.md 是 default clone 的通用版、**完全沒含 persona 摘要**
+
+**正確做法**：
+
+1. **在 SOUL.md 頂部插入 persona 摘要**（不是抄整份 persona）：
+   - 4 個核心決策（每個 1 行）
+   - 在 handoff chain 的位置（誰 → 我 → 誰）
+   - 與上下游關係（讀什麼檔、寫什麼檔）
+   - 禁止事項（3-5 條）
+
+2. **用 `patch` 工具做頂部插入**（避免破壞原 SOUL 內容）：
+   - `patch(old_string='# SOUL.md - Who You Are', new_string='# <New Agent> — <Role> Persona\n\n[摘要]\n\n---\n\n# SOUL.md - Who You Are')`
+
+3. **驗證 SOP**（每個常駐 profile 必跑）：
+   ```bash
+   hermes -p <name> chat -q "用一句話回報: 你的 N 個核心決策是什麼?" --cli
+   # 預期: 回答自己的決策
+   # ❌ 失敗: 回答 hermes 預設 SOUL 核心信念（耗盡配額/有主見/先查再問/用能力換取信任）
+   ```
+
+**反面案例**：
+- 看到 sub-agent 回答 default SOUL 內容 → **不要懷疑 persona.md 寫錯** → **修法是加 SOUL.md 頂部摘要**
+- 寫了一堆 SOUL.md 改完也沒動 → 別懷疑 hermes 沒載入 → 確認 `grep prompt_builder.py:1414` 載入的是 `<profile>/SOUL.md`
+
+**配套**：
+- persona.md 仍可保留完整版（給主 session 手動讀、或未來擴展用）
+- SOUL.md 引用 persona 即可：「詳見 `persona.md`」
+- 每個常駐 profile 建立時的 **Step 5.7 端到端真實跑驗證** 必含這個 SOP（驗證 sub-agent 真的套用 persona）
+
+**If→Then**：
+- **If** 任何常駐 profile 的 SOUL.md 沒含 persona 摘要 **Then** sub-agent 啟動時不知道自己的決策 → **修法：加到 SOUL.md 頂部**
+- **If** 寫了 10KB+ persona.md 但 sub-agent 答 default 內容 **Then** SOUL.md 頂部插入 persona 摘要、不是改 persona.md
+- **If** 想保留完整 persona 在 persona.md **Then** 在 SOUL.md 加「詳見 `persona.md`」引用即可
+
+**驗證**（2026-06-10 engineering-lead 真實案例）：
+- 修前：`hermes -p engineering-lead chat -q "回報 4 個核心決策" --cli` → 回答「耗盡配額/有主見/先查再問/用能力換取信任」（default SOUL）
+- 修後（patch SOUL.md 頂部插入 50 行 persona 摘要）：`hermes -p engineering-lead chat -q "回報 4 個核心決策" --cli` → 回答「(1) B 規劃+平行寫 code (2) B gh CLI+git+GitHub (3) C 雙維度交叉 (4) B 只管當下 sprint」（自己的決策）
+
+**相關條目**：
+- [[hermes-config-layout#SOUL.md 永遠在 HERMES_HOME 根目錄、不在 memories/]]（第一類「看起來建好但沒生效」）
+- [[hermes-config-layout#persistent-profile-sop]]（Step 2.5 寫 SOUL.md、Step 5.7 端到端驗證、SOUL.md vs persona.md 載入機制）
+
+---
+
+### 跨 profile 寫入有 soft-guard,需 `cross_profile=true` bypass（2026-06-10 從 engineering-lead 建立踩到、第 3 次撞到）
+
+**症狀**：
+從 `default` profile 寫進新 profile 的 `skills/<X>/SKILL.md` 被擋：
+```
+Cross-profile write blocked by soft guard:
+  <file> belongs to Hermes profile '<other>', but the agent is running under profile 'default'.
+  To bypass this guard after explicit user direction, retry with cross_profile=True.
+```
+
+**根因**：
+- `write_file` / `patch` 預設只寫當前 active profile（通常 default）
+- 跨 profile 寫入有 soft guard（不是硬阻擋、會提示 retry with cross_profile）
+- 觸發條件：當前 active profile ≠ 目標 profile 的目錄
+
+**正確做法**：
+
+1. **明確加 `cross_profile=True` 參數 bypass**：
+   ```python
+   write_file(path="/home/hoonsoropenclaw/.hermes/profiles/<target>/skills/<X>/SKILL.md", content=..., cross_profile=True)
+   patch(path=..., old_string=..., new_string=..., cross_profile=True)
+   ```
+
+2. **前提**：使用者已明確指示「動工」或「建好」— 這就是 explicit user direction
+3. **警告**：**不要**為了省事預設 `cross_profile=True` 開著 — 會繞過所有 profile 邊界、可能誤寫到其他 profile
+4. **驗證**：寫完用 `hermes -p <target> skills list` 看是否 enabled（不同 profile 看到的 `skills/` 不一樣）
+
+**常見踩坑情境**：
+- 從 default profile 用 `write_file` 寫 `~/.hermes/profiles/consumer-researcher/skills/...` ❌
+- 從 default profile 用 `write_file` 寫 `~/.hermes/profiles/system-architect/skills/...` ❌
+- 從 default profile 用 `write_file` 寫 `~/.hermes/profiles/engineering-lead/skills/...` ❌
+- **修法**: 全部加 `cross_profile=True`（確認使用者已明確指示）
+
+**配套**：
+- 一次寫多個檔案要每個都加 `cross_profile=True`（不能只加第一個）
+- 寫完 cross-profile 後必 `hermes -p <target> skills list` 確認 enabled
+- 偶爾需要切換到目標 profile (`hermes -p <target> chat`) 確認 sub-agent 看得見
+
+**If→Then**：
+- **If** 跨 profile 寫入被擋 **Then** 加 `cross_profile=True`、不繞路 debug「為什麼寫不進去」
+- **If** 不知道要 `cross_profile` 還是 `default` **Then** 看目標路徑在 `~/.hermes/profiles/<X>/` 還是 `~/.hermes/` 根目錄
+- **If** 預設 `cross_profile=True` 開著 **Then** 危險 — 會繞過 profile 邊界
+
+**驗證**（2026-06-10 真實案例）：
+- 修前：4 個 `write_file` 呼叫 engineering-lead profile skill 全部失敗（`write_file has failed 4 times`）
+- 修後：4 個 `write_file(path=..., cross_profile=True)` 全部成功、4 個 skill 都 enabled
+
+**相關條目**：
+- [[hermes-config-layout#persistent-profile-sop]]（Step 3 提到這個 guard）
+- [[orchestrator-worker-parallel-architecture]]（worker 跨 profile 寫入也會觸發）
+
+---
+
 ### v2 Orchestrator sub-agent 不會自動繼承「使用者原意」— 必抓清單是必要設計
 - **情境**：consumer-researcher v2 架構跑 skill-language-exchange-platform 任務,Orchestrator 知道使用者原意 Persona(小美/佐藤/陳媽媽),但 sub-agent 派出去後**完全無視這些 Persona**、自己去抓 Reddit/HN 推導
 - **失敗原因**：sub-agent 啟動時**只看到任務指令**、看不到「使用者之前提的偏好」——agent 是無狀態的(每次新 session、沒有跨 call 記憶)
@@ -51,6 +163,20 @@
   4. v4 互動式 GPG passphrase 必用 `pty=true`(行 168 附近)
 - **驗證**:`ls ~/.hermes/backups/hermes_backup_*.tar.gz` 看時間戳(2026-06-08 03:00 最後 cron 跑的就是 v4)
 - **推廣**:**任何腳本名稱相似的工具,跑前先 `head -50 <腳本>` 確認是當前版本,不要看 `which X` 就當權威**
+
+### v4-backup-tier2-daily 加密 OK ≠ Drive 有新檔(2026-06-10 從這次對話歸納)
+- **情境**:`v4-backup-tier2-daily`(02:30)原本 script 寫 `hermes-secrets-encrypt.sh`(沒加 `--upload-drive` flag),**本地加密成功**、daily-summary 看 log 報「OK」、但 Drive 上完全沒新檔 — 連續 3 天加密檔都留在 `~/.cache/hermes-secrets-staging/` 沒推到 Drive
+- **症狀**:`hermes-secrets-encrypt.sh` 預設行為是「加密到本地 + 不上傳」(需手動加 `--upload-drive`),`v4.5` 完整化時 v4 主腳本 `hermes-backup-v4.sh --tier2` 跑 `tier2_drive()` 才會觸發 `backup_passphrase_recovery` + `upload_drive_restore_readme` + 自動傳 `--upload-drive` 給 encrypt
+- **失敗原因**:cron 設 script 寫錯 — 應該用 `hermes-backup-v4.sh --tier2 --upload-tier2` 當入口,不是直接呼叫底層 `hermes-secrets-encrypt.sh`(會繞過 v4 完整流程)
+- **正確做法**:
+  1. v4-* cron 的 script 一律用 `hermes-backup-v4.sh` 當入口(`--tier1` / `--tier2` / `--upload-tier2` / `--dry-run`)
+  2. 底層 `hermes-secrets-encrypt.sh` 留給 v4 主腳本內部呼叫、不直接掛 cron
+  3. **驗證 cron 跑了什麼**=`grep -E 'name|script' ~/.hermes/cron/jobs.json | grep -B1 'hermes-secrets' | head -5` 應該找不到(找到 = cron 繞過 v4)
+- **驗證**:
+  - 修前:2026-06-08/09/10 三天 02:30 log 寫「OK: Encrypted 114M」+「Skipping Drive upload」= 加密成功但 Drive 沒新檔
+  - 修後:2026-06-10 16:22Z 手動觸發 `v4 --tier2 --upload-tier2` → Drive `secrets/` 有 130M 082230Z 新檔、`passphrase-recovery/` 也有 082239Z 新檔
+- **推廣**:**任何「看起來跑完 = 備份成功」的 cron 場景,都要 grep 外部儲存(GitHub/Drive/S3)實際看有沒有新物件**,不能只信本地 log 的「OK」。每日驗證 SOP 見 `agent-system-backup` skill 的 verify-recovery-chain.sh
+- **相關條目**:[[hermes-internal#N100 同時存在 v3 / v4 兩份備份腳本,腳本歧義會誤導(2026-06-10 踩坑)]]
 
 ### Profile 改造的 Orchestrator 必須寫 _plan.md 才能傳承使用者原意(2026-06-10)
 - **情境**:consumer-researcher 從 v1 單體升 v2 架構(Orchestrator + 4 worker + 1 summarizer),v1 跑 10 分鐘卡住 → 失敗;v2 跑 6 分鐘成功
@@ -312,3 +438,205 @@
   ```
 - **驗證**:`HERMES_USER_KEY=x bash hermes-restore-v4.sh tier2` 成功(2026-06-10 14:14)
 - **推廣**:**任何「互動式設計」,準備做 cron 化前必加 `${ENV_VAR:-}` fallback——互動式 prompt 在 cron 必 fail**
+
+
+---
+
+### 平行架構 v3_4_workers 實測 Token 預估(2026-06-10 system-architect 真實驗證)
+
+**情境**:system-architect 跑技能/語言交換平台 Step 3-6,4 個 web-worker 完全平行(context 隔離)
+**時間**:8.1 分鐘(v1 預估 60-90 分鐘 → **89% 加速**)
+**Token 消耗**:627K(4 個 worker 各 45K-312K)
+
+**症狀**:之前在 SKILL.md 寫 v3 模式「Token 200-320K、跟 v1 差不多」這種**沒實測過的預估**。實測 v3 比 v1 多 **214%**(627K vs 200K),預估**嚴重低估**。
+
+**根因**:
+- 4 個 worker 各自讀取 Step 1-2 報告(30KB) + 各自寫出 5-10K 對話 + 各自思考推論
+- 主 session 還要做對齊整合(+20K)
+- **每個 worker 都要付「讀上游 + 思考 + 寫出」的成本**,不是只算最後寫出來的檔案大小
+
+**教訓**:
+- 寫「v3 跟 v1 差不多」這種**沒實測過**的預估是危險的——會讓使用者誤判成本、選錯模式
+- 真實情境下平行模式 token 是單線的 **2-3 倍**(不是 1.3-1.5 倍)
+- **價值在「省時間」不是「省 token」**,要把這個 trade-off 寫進 SOP
+
+**解法 — 真實 Token 預估公式**:
+```
+v1_single ≈ 任務複雜度 × 1.0x
+v2_3_workers ≈ 任務複雜度 × 1.5-2.0x
+v3_4_workers ≈ 任務複雜度 × 2.5-3.5x
+mixed ≈ 任務複雜度 × 1.5-2.0x
+```
+- 任務複雜度:L 等級約 200K、 M 約 80K、S 約 30K(主 session 單線估算)
+- 每個 worker 平均消耗 50K-300K 視複雜度而定
+
+**複雜度對 Token 影響(實測分布)**:
+| Worker 任務 | 複雜度 | 實際 Token |
+|------------|--------|-----------|
+| B (元件圖 7 元件) | 低 | 45K |
+| A (容器圖 14 整合) | 中 | 120K |
+| C (DB 8 表 + ER) | 中高 | 149K |
+| D (API 25+ 端點) | 高 | 312K |
+
+**預防**:
+- 寫任何「平行/序列成本預估」SOP 前必先**實測一次**,不要用「差不多」這種模糊詞
+- 在 persona/SKILL.md 開個「**真實數據(2026-06-10 實測)**」段,定期更新
+- 對使用者解釋 v3 時,主動說「Token 會多 2-3 倍、但時間省 80%+」不要藏 trade-off
+
+**If** 設計任何 Orchestrator + N 個子代理的架構 **Then** 先實測 1 次拿真實 Token 數據、再寫進 SOP 預估
+**If** 使用者問「v3 會不會比 v1 貴」 **Then** 直接給「2-3 倍」數字、不要給「差不多」這種模糊答案
+**If** 任務是「趕時間、預算不重要」 **Then** v3_4_workers 適合
+**If** 任務是「預算重要、可以等」 **Then** v1_single 適合
+**If** 中間值 **Then** v2_3_workers
+
+**驗證**:2026-06-10 技能/語言交換平台架構 Step 3-6
+- v3 平行: 8.1 分鐘, 627K tokens
+- v1 對照(預估): 60-90 分鐘, 200K tokens
+- **時間節省 67 分鐘(89%)、Token 多 428K(+214%)**
+
+
+---
+
+### 多 sub-agent 平行產出的對齊契約 SOP(2026-06-10 system-architect v3 模式實戰)
+
+**情境**:Orchestrator 派 N 個 web-worker 平行產出 1 份完整文件(架構/資料庫/API 等),N 個 worker 完成後**主 session 要整合成 1 份**。**對齊失敗 = 整合時間 + 返工**,可能比單線跑還慢。
+
+**症狀(沒對齊契約會怎樣)**:
+- 4 個 worker 各自命名「UserService」「UserController」「users 表」「/users」——但**有些叫 user 複數、有些叫 user 單數**
+- 容器 A 選 PostgreSQL、worker B 假設是 MySQL → 整合時欄位型別對不上
+- worker C 的欄位命名是 snake_case(`created_at`)、worker D 的 JSON 用 camelCase(`createdAt`)→ API 回應對不上 schema
+
+**根因**:LLM sub-agent **沒看過其他 worker 的產出**——只看 prompt 內的 spec 寫什麼就寫什麼,容易出現命名/欄位/型別不一致。
+
+**解法 — 3 段對齊契約 SOP**:
+
+#### 階段 1:_plan.md 寫對齊契約(派遣前)
+
+在 `_plan.md` 內明確定義跨 worker 的「契約」:
+
+```markdown
+## 對齊契約(3 個 worker 之間要對得起來)
+
+| 契約 | 來源 | 必須對齊 |
+|------|------|---------|
+| 容器命名 | Worker A | Worker B 的元件必須住在 A 定義的容器內 |
+| 服務命名 | Worker B | Worker D 的 API 路徑必須對得起 B 定義的 Service |
+| 資料表命名 | Worker C | Worker D 的 API 回應欄位必須對得起 C 的 schema |
+| 命名風格 | 全員 | snake_case(Python/PostgreSQL)/ camelCase(JSON API) |
+| 容器技術棧 | Worker A | B/C/D 必須假設 A 選的技術,不能另選 |
+```
+
+**5 個常見契約**:容器名、服務名、資料表名、命名風格、技術棧假設。
+
+#### 階段 2:主 session 整合前先做對齊檢查(整合時)
+
+不要直接合併 4 份檔案。先**讀 4 份 + 比對命名**:
+
+```bash
+# 1. 列出每個 worker 用的「服務名」/「表名」/「端點前綴」
+for f in _raw/architect/worker-*.md; do
+  echo "=== $f ==="
+  grep -E "^(\s*)?(UserService|MatchingService|users|matchings)\b" "$f" | head -5
+done
+
+# 2. 比對是否有不一致(grep 找一個名字只在某些 worker 出現)
+grep -l "UserService" _raw/architect/worker-*.md
+grep -l "UserService" _raw/architect/worker-B-components.md
+# 兩個都找不到 = 該 worker 用別的名字(不一致)
+```
+
+#### 階段 3:整合後加 §對齊檢查段(交付物)
+
+每份整合後的交付物第一節加「**對齊檢查**」表格,標明:
+- 容器名 ↔ 元件名 ↔ 表名 ↔ API 端點,**全部對齊**(✓/✗)
+- 哪個 worker 跟其他人命名不一致
+- 5 個架構盲點的對應(全部 3+ worker 都有提到)
+
+```markdown
+## §3 對齊檢查(主 session 整合時做的)
+
+| 契約 | 來源 | 對齊狀態 |
+|------|------|---------|
+| 容器命名 | A 定義「API Server (Node.js 20 Fastify)」 | ✓ B 的 *Controller/*Service 都在 A 定義的 API Server 內 |
+| 服務命名 | B 定義 7 個 Service | ✓ D 的 API 端點前綴(/users /matchings /orders)跟 B 對應 |
+| 技術棧一致性 | A 選 Node.js 20 + Fastify + tRPC + Drizzle + Supabase PG | ⚠️ 跟上游預設 Python 不同,但 A 選的也是合理主流 |
+| 5 個盲點對應 | §1.5 預設建議 | ✓ A/B/C/D 全部採用預設(無 [架構決策待釐清] 提出) |
+```
+
+**實戰數據(2026-06-10 system-architect v3 模式)**:
+- 4 個 worker 平行 8 分鐘完成
+- 主 session 整合 + 對齊檢查花 5 分鐘(讀 4 份 + 寫整合 + 加對齊段)
+- 整合後 3 份文件 116KB、對齊 0 錯誤
+- **沒有對齊契約的話**:整合可能 30+ 分鐘、且可能留隱藏 bug(API 端點對不上資料表)
+
+**預防**:
+- 派 N 個 worker 平行產出「**會被主 session 整合**」的文件時,**_plan.md 必含對齊契約段**
+- 對齊契約 5 個:**容器名 / 服務名 / 表名 / 命名風格 / 技術棧**
+- 主 session 整合前先做對齊檢查(grep + 命名比對)
+- 整合後的交付物第一節必含「對齊檢查」表格
+
+**If→Then**:
+- **If** 派 ≥ 2 個 worker 平行產出文件 **Then** _plan.md 必含「對齊契約」段
+- **If** 主 session 整合時發現命名不一致 **Then** 改主 session 的整合文件,不要回去叫 worker 重跑(重跑成本高)
+- **If** worker 寫出的命名跟對齊契約不一致 **Then** 在整合時標 ⚠️ + 列出不一致點(誠實,不裝懂)
+- **If** 看到 worker 用了「未在契約內」的技術/命名 **Then** 視情況:(a) 接受(若合理)、(b) 改契約叫其他 worker 對齊(成本高)、(c) 標 [待釐清] 不裝懂
+
+
+---
+
+### SOUL.md 永遠在 HERMES_HOME 根目錄、不在 memories/（2026-06-10 從 SOUL.md 沒生效 bug 歸納）
+
+**症狀**：使用者寫的完整 persona（8957B Super Learner 宣言）沒生效、AGENTS.md「啟動程序」寫「讀取 SOUL.md」沒明指路徑
+
+**根因**：`agent/prompt_builder.py:1414` `load_soul_md()` 走 `get_hermes_home() / "SOUL.md"` 讀根目錄、不是 `memories/SOUL.md`。AGENTS.md 寫「讀取 SOUL.md」沒指路徑會誤導（事實上曾經被誤導過、寫錯位置），使用者寫了 8K+ 內容但完全沒生效。
+
+**解法**：
+1. 任何時候編輯/新增「重要檔」、先 grep hermes 程式碼（`prompt_builder.py` / `system_prompt.py`）確認讀哪裡
+2. 跟 AGENTS.md 7 個重要檔實際路徑速查表對照
+3. 改完用 `cp <新位置> <最終位置>` 同步到 hermes 會讀的位置
+4. 修 AGENTS.md「啟動程序」段、加 ⚠️ 標記寫「SOUL.md 在 `~/.hermes/SOUL.md`、不是 `memories/SOUL.md`」
+
+**預防**：
+- AGENTS.md 啟動程序段必明寫每個重要檔的**實際路徑**
+- 加「讀哪/編輯時改哪」速查表（防止未來再寫錯位置）
+- SOUL.md / AGENTS.md / IDENTITY.md 等「人格系統檔」編輯後必跑 `hermes --version` + `hermes status` 確認 hermes 仍能正常啟動
+
+**If→Then**：
+- **If** 任何時候編輯/新增「重要檔」 **Then** 必先 grep hermes 程式碼確認讀哪裡、不靠 AGENTS.md 文字推測
+- **If** SOUL.md 寫錯位置（persona 沒生效） **Then** `cp memories/SOUL.md SOUL.md` 同步到根目錄
+- **If** 重要檔路徑不明 **Then** AGENTS.md 啟動程序段必明寫路徑、不能只寫檔名
+
+**相關條目**：
+- [[hermes-config-tuning#SOUL.md 跟其他重要檔交叉比對 6 個衝突修正]]
+- [[workspace-folder-layout#根目錄檔案盤點三類法]]
+
+---
+
+### AGENTS.md 7 個重要檔必建「實際路徑速查表」(讀哪/改哪/備份哪)（2026-06-10 從修 SOUL.md bug 歸納）
+
+**症狀**：使用者（或 agent）寫 persona / 重要設定時、不確定該寫到根目錄還是 `memories/`、寫錯位置 persona 沒生效；多個重要檔分散在不同目錄、沒有統一速查
+
+**根因**：AGENTS.md「啟動程序」段原本只寫「讀取 SOUL.md」沒指路徑；7 個重要檔的路徑散落在 3 個目錄（根目錄、memories/、AGENTS.md 內含清單），沒有視覺化速查表。
+
+**解法**：
+1. AGENTS.md 啟動程序段必含 7 個重要檔速查表（**3 欄**：hermes 啟動時讀哪 / 編輯時改哪 / 備份時備到哪）
+2. 必含「歷史教訓」段（為什麼當初這樣設計、避免重複犯同樣錯）
+3. 「SOUL.md 在根目錄、不在 memories/」之類容易誤會的路徑必加 ⚠️ 標記
+4. 7 個重要檔分組：
+   - **hermes 啟動時主動讀**：`SOUL.md`（根目錄）、`USER.md`（memories/）、`MEMORY.md`（memories/）
+   - **hermes 不主動讀**（給 agent 查閱用）：`AGENTS.md`（memories/）、`HEARTBEAT.md`（memories/）、`IDENTITY.md`（memories/）、`TOOLS.md`（memories/）
+
+**預防**：
+- 7 個重要檔是「人格系統」、路徑速查表比檔名清單更有用
+- 修完速查表必跑 `hermes --version` 確認 hermes 仍能正常啟動
+- 改完必同步更新 hermes-backup-coverage-check.sh 的「v4 同步清單」對照
+
+**If→Then**：
+- **If** 重要檔職責不明 **Then** AGENTS.md 必建路徑速查表(讀哪/改哪/備份哪三欄)
+- **If** 修完路徑速查表 **Then** 必跑 hermes 啟動測試 + coverage check 雙驗證
+- **If** 新增重要檔 **Then** 必同步更新 AGENTS.md 速查表 + INVENTORY.md 同步清單
+
+**相關條目**：
+- [[hermes-internal#SOUL.md 永遠在 HERMES_HOME 根目錄、不在 memories/]]
+- [[hermes-backup-design-pitfalls#v4 備份腳本只列 7 個目錄+1 個檔,但 ~/.hermes/ 根目錄有 20+ 個路徑]]
+

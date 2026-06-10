@@ -76,9 +76,27 @@ HERMES 沒有內建 user-defined macro、keyword 觸發是 **agent-level 行為*
 
 每次啟動時：
 1. 讀取 `SOUL.md` — 超級學習者人格定義
-2. 讀取 `USER.md` — 使用者資訊
-3. 讀取 `MEMORY.md` — 長期記憶
-4. 讀取 `HEARTBEAT.md` — 任務清單
+   ⚠️ **路徑注意**：`SOUL.md` 在 **`~/.hermes/SOUL.md`**（HERMES_HOME 根目錄），**不是** `memories/SOUL.md`。
+   - hermes 啟動時 `prompt_builder.load_soul_md()` 走 `get_hermes_home() / "SOUL.md"` 讀根目錄
+   - `memories/SOUL.md` 不會被 hermes 自動載入（是給 agent 查閱用的副本）
+   - 編輯 persona 時改**根目錄那份**才有效
+2. 讀取 `USER.md` — 使用者資訊（在 `memories/USER.md`）
+3. 讀取 `MEMORY.md` — 長期記憶（在 `memories/MEMORY.md`）
+4. 讀取 `HEARTBEAT.md` — 任務清單（在 `memories/HEARTBEAT.md`）
+
+### 7 個重要檔案的實際路徑速查表
+
+| 檔案 | hermes 啟動時讀哪裡 | 編輯時改哪裡 |
+|------|------------------|------------|
+| `SOUL.md` | `~/.hermes/SOUL.md` ✅ | 改**根目錄** |
+| `USER.md` | `~/.hermes/memories/USER.md` | 改 `memories/` |
+| `MEMORY.md` | `~/.hermes/memories/MEMORY.md` | 改 `memories/` |
+| `HEARTBEAT.md` | 不主動讀 | 改 `memories/`（給 agent 查閱） |
+| `AGENTS.md` | 不主動讀 | 改 `memories/`（給 agent 查閱） |
+| `IDENTITY.md` | 不主動讀 | 改 `memories/`（給 agent 查閱） |
+| `TOOLS.md` | 不主動讀 | 改 `memories/`（給 agent 查閱） |
+
+> **歷史教訓（2026-06-10）**：曾經有人（包含我）誤把 Super Learner persona 寫到 `memories/SOUL.md`，但 hermes 永遠只讀根目錄那份 537B 預設版——**等於 persona 設定完全沒生效**。修法：`cp memories/SOUL.md SOUL.md` 同步到根目錄。
 
 ## 重要規範
 - **身份**：2026-06-08 起赫米斯＝拉斐爾（同一人），過去的「拉斐爾專注執行、赫米斯專注策略」協作關係已併入單一代理內部

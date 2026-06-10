@@ -22,15 +22,15 @@
       "schedule_display": "every 120m",
       "repeat": {
         "times": null,
-        "completed": 128
+        "completed": 132
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-30T11:56:33.423422+08:00",
-      "next_run_at": "2026-06-10T17:23:58.352301+08:00",
-      "last_run_at": "2026-06-10T15:23:58.352301+08:00",
+      "next_run_at": "2026-06-11T02:26:32.685671+08:00",
+      "last_run_at": "2026-06-11T00:26:32.685671+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -96,15 +96,15 @@
       "schedule_display": "0 0 * * *",
       "repeat": {
         "times": null,
-        "completed": 8
+        "completed": 9
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-03T22:15:50.758397+08:00",
-      "next_run_at": "2026-06-11T00:00:00+08:00",
-      "last_run_at": "2026-06-10T00:00:59.628737+08:00",
+      "next_run_at": "2026-06-12T00:00:00+08:00",
+      "last_run_at": "2026-06-11T00:00:58.413049+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -171,15 +171,15 @@
       "schedule_display": "0 0 * * *",
       "repeat": {
         "times": null,
-        "completed": 8
+        "completed": 9
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-03T18:33:27.000000+08:00",
-      "next_run_at": "2026-06-11T00:00:00+08:00",
-      "last_run_at": "2026-06-10T00:01:17.182289+08:00",
+      "next_run_at": "2026-06-12T00:00:00+08:00",
+      "last_run_at": "2026-06-11T00:01:17.184947+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -293,7 +293,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-07T13:33:27.569449+08:00",
-      "next_run_at": "2026-06-11T02:00:00+08:00",
+      "next_run_at": "2026-06-12T02:00:00+08:00",
       "last_run_at": "2026-06-10T02:01:15.304348+08:00",
       "last_status": "ok",
       "last_error": null,
@@ -313,7 +313,7 @@
       "model": null,
       "provider": null,
       "base_url": null,
-      "script": "hermes-secrets-encrypt.sh",
+      "script": "hermes-backup-v4.sh --tier2 --upload-tier2",
       "no_agent": true,
       "context_from": [],
       "schedule": {
@@ -400,15 +400,15 @@
       "schedule_display": "0 22 * * *",
       "repeat": {
         "times": null,
-        "completed": 6
+        "completed": 7
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-07T20:16:27.084427+08:00",
-      "next_run_at": "2026-06-10T22:00:00+08:00",
-      "last_run_at": "2026-06-10T04:47:42.890073+08:00",
+      "next_run_at": "2026-06-11T22:00:00+08:00",
+      "last_run_at": "2026-06-10T22:00:58.178339+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -421,7 +421,7 @@
     {
       "id": "v4recovery2026",
       "name": "v4-recovery-chain-verify-weekly",
-      "prompt": "Run verify-recovery-chain.sh from agent-system-backup skill to validate the v4.5 dual-layer GPG encryption chain end-to-end. This is a watchdog job — empty stdout = silent (all good), non-empty stdout = report PASS/FAIL status to user via Telegram. This validates that: 1) USER_KEY in ~/.hermes/config/.hermes-user-key still works, 2) Drive passphrase-recovery chain is intact, 3) secrets-bundle contains expected files (.env, auth.json, state.db). Run weekly on Sunday 23:00 to detect any key rotation or Drive corruption before next disaster.",
+      "prompt": "Run verify-recovery-chain.sh from agent-system-backup skill to validate the v4.5 dual-layer GPG encryption chain end-to-end. This is a watchdog job \u2014 empty stdout = silent (all good), non-empty stdout = report PASS/FAIL status to user via Telegram. This validates that: 1) USER_KEY in ~/.hermes/config/.hermes-user-key still works, 2) Drive passphrase-recovery chain is intact, 3) secrets-bundle contains expected files (.env, auth.json, state.db). Run weekly on Sunday 23:00 to detect any key rotation or Drive corruption before next disaster.",
       "skills": [],
       "skill": null,
       "model": null,
@@ -455,7 +455,88 @@
       "enabled_toolsets": null,
       "workdir": null,
       "profile": null
+    },
+    {
+      "id": "3bc1d7587172",
+      "name": "v4-backup-full-weekly",
+      "prompt": "[v4-backup-full-weekly] \u9031\u65e5 03:00 \u8dd1 hermes-backup-v4.sh --upload-tier2\uff08\u5b8c\u6574\u5099\u4efd:Tier 1 GitHub \u589e\u91cf + Tier 2 Drive \u52a0\u5bc6 + backup_passphrase_recovery + DRIVE-RESTORE.md \u63a8\u9001\uff09\u3002\u6b64 cron \u70ba v4-restore-verify-weekly(\u9031\u65e5 04:00)\u7684\u524d\u7f6e\u4f5c\u696d\u3001\u78ba\u4fdd\u9031\u65e5\u540c\u6642\u6709\u300c\u525b\u5099\u4efd\u5b8c\u300d\u7684\u6700\u65b0\u72c0\u614b\u53ef\u4f9b verify\u3002\u8acb\u7167\u5e73\u5e38 cron \u8173\u672c\u8dd1\u3001\u8f38\u51fa\u900f\u904e telegram \u9001\u9054,\u4e0d\u8981\u505a\u4efb\u4f55\u5176\u4ed6\u4e8b\u3002",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": "hermes-backup-v4.sh --upload-tier2",
+      "no_agent": true,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 3 * * 0",
+        "display": "0 3 * * 0"
+      },
+      "schedule_display": "0 3 * * 0",
+      "repeat": {
+        "times": null,
+        "completed": 0
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-06-10T16:43:42.394014+08:00",
+      "next_run_at": "2026-06-14T03:00:00+08:00",
+      "last_run_at": null,
+      "last_status": null,
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "telegram",
+      "origin": {
+        "platform": "telegram",
+        "chat_id": "8209753986",
+        "chat_name": "Luke0415",
+        "thread_id": null
+      },
+      "enabled_toolsets": null,
+      "workdir": null,
+      "profile": null
+    },
+    {
+      "id": "651713da919d",
+      "name": "hermes-backup-coverage-check",
+      "prompt": "",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": "hermes-backup-coverage-check.sh",
+      "no_agent": true,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 4 * * *",
+        "display": "0 4 * * *"
+      },
+      "schedule_display": "0 4 * * *",
+      "repeat": {
+        "times": null,
+        "completed": 1
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-06-10T22:03:23.429440+08:00",
+      "next_run_at": "2026-06-11T04:00:00+08:00",
+      "last_run_at": "2026-06-10T22:04:08.444066+08:00",
+      "last_status": "error",
+      "last_error": "Script exited with code 1\nstdout:\n\u26a0\ufe0f  WARN  \u5099\u4efd\u8986\u84cb\u7387\u4e0d\u5b8c\u6574\uff084 \u500b warning\uff09\n\u5efa\u8b70\u4fee\u6cd5\uff1a\n  1. \u770b\u54ea\u4e9b\u672c\u6a5f\u65b0\u8def\u5f91 v4 \u6c92\u5217\n  2. \u7de8\u8f2f ~/.hermes/docs/INVENTORY.md \u52a0\u9032\u300ev4 \u540c\u6b65\u6e05\u55ae\u300f\n  3. \u7de8\u8f2f ~/.hermes/scripts/hermes-backup-v4.sh \u52a0 rsync \u6bb5\n\u8a73\u7d30: /home/hoonsoropenclaw/.hermes/logs/backup-coverage.log",
+      "last_delivery_error": null,
+      "deliver": "local",
+      "origin": null,
+      "enabled_toolsets": null,
+      "workdir": null,
+      "profile": null
     }
   ],
-  "updated_at": "2026-06-10T16:20:00.000000+08:00"
+  "updated_at": "2026-06-11T02:00:55.435416+08:00"
 }

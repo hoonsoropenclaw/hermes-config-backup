@@ -3,7 +3,7 @@
 建立 YouTube 訂閱影片的 Obsidian 筆記 + Mermaid 心智圖
 =======================================================
 
-從 ~/.hermes/youtube_channels.json 拿頻道清單
+從 ~/.hermes/cache/youtube/channels.json 拿頻道清單
 抓每個頻道最新 3 支影片
 產生 Obsidian 格式 .md 檔（含 wikilink + frontmatter）
 產生 Mermaid mindmap
@@ -21,7 +21,7 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
 
-CHANNELS_FILE = os.path.expanduser("~/.hermes/youtube_channels.json")
+CHANNELS_FILE = os.path.expanduser("~/.hermes/cache/youtube/channels.json")
 OUTPUT_DIR = os.path.expanduser("~/AutoLearningKnowledge/youtube/2026-06-07")
 ATOM = '{http://www.w3.org/2005/Atom}'
 

@@ -55,7 +55,7 @@ from youtube_transcript_api._errors import TranscriptsDisabled, NoTranscriptFoun
 # 常數
 # ────────────────────────────────────────
 SECRETS_FILE = os.path.expanduser("~/.local/share/hermes/secrets/youtube_client.json")
-CHANNELS_FILE = os.path.expanduser("~/.hermes/youtube_channels.json")
+CHANNELS_FILE = os.path.expanduser("~/.hermes/cache/youtube/channels.json")
 OBSIDIAN_VAULT = os.path.expanduser("~/AutoLearningKnowledge/youtube")
 RAG_MAIN_PY = os.path.expanduser("~/.hermes/rag/rag_system/main.py")
 PYTHON312 = "/usr/bin/python3.12"

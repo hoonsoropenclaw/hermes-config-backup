@@ -1,0 +1,5352 @@
+{
+  "version": 1,
+  "manifest": {
+    "agent-browser/SKILL.md": [
+      1781103626232252831,
+      10800
+    ],
+    "agent-identity-cheatsheet/SKILL.md": [
+      1781103626233252882,
+      4493
+    ],
+    "agent-identity-management/SKILL.md": [
+      1781103626233252882,
+      41108
+    ],
+    "agent-memory-systems/SKILL.md": [
+      1781103626233252882,
+      31858
+    ],
+    "agent-orchestration-multi-agent-optimize/SKILL.md": [
+      1781103626234252933,
+      14124
+    ],
+    "agent-orchestrator/SKILL.md": [
+      1781103626234252933,
+      9004
+    ],
+    "anthropic-analyze/SKILL.md": [
+      1781103626240253238,
+      4432
+    ],
+    "anthropic-build-dashboard/SKILL.md": [
+      1781103626240253238,
+      26002
+    ],
+    "anthropic-competitive-brief/SKILL.md": [
+      1781103626240253238,
+      14774
+    ],
+    "anthropic-competitive-brief/competitive-brief/SKILL.md": [
+      1781103626240253238,
+      13150
+    ],
+    "anthropic-content-creation/SKILL.md": [
+      1781103626241253289,
+      8830
+    ],
+    "anthropic-create-viz/SKILL.md": [
+      1781103626241253289,
+      5151
+    ],
+    "anthropic-data-visualization/SKILL.md": [
+      1781103626241253289,
+      11051
+    ],
+    "anthropic-draft-content/SKILL.md": [
+      1781103626242253340,
+      4612
+    ],
+    "anthropic-explore-data/SKILL.md": [
+      1781103626242253340,
+      11520
+    ],
+    "anthropic-knowledge-synthesis/SKILL.md": [
+      1781103626243253391,
+      8526
+    ],
+    "anthropic-metrics-review/SKILL.md": [
+      1781103626243253391,
+      18038
+    ],
+    "anthropic-plugins/bio-research/skills/instrument-data-to-allotrope/SKILL.md": [
+      1781103626245253493,
+      10726
+    ],
+    "anthropic-plugins/bio-research/skills/nextflow-development/SKILL.md": [
+      1781103626246253544,
+      8828
+    ],
+    "anthropic-plugins/bio-research/skills/scientific-problem-selection/SKILL.md": [
+      1781103626247253594,
+      11184
+    ],
+    "anthropic-plugins/bio-research/skills/scvi-tools/SKILL.md": [
+      1781103626248253645,
+      7423
+    ],
+    "anthropic-plugins/bio-research/skills/single-cell-rna-qc/SKILL.md": [
+      1781103626249253696,
+      7980
+    ],
+    "anthropic-plugins/bio-research/skills/start/SKILL.md": [
+      1781103626249253696,
+      3526
+    ],
+    "anthropic-plugins/cowork-plugin-management/skills/cowork-plugin-customizer/SKILL.md": [
+      1781103626249253696,
+      9702
+    ],
+    "anthropic-plugins/cowork-plugin-management/skills/create-cowork-plugin/SKILL.md": [
+      1781103626249253696,
+      13354
+    ],
+    "anthropic-plugins/customer-support/skills/customer-escalation/SKILL.md": [
+      1781103626250253747,
+      11205
+    ],
+    "anthropic-plugins/customer-support/skills/customer-research/SKILL.md": [
+      1781103626250253747,
+      10232
+    ],
+    "anthropic-plugins/customer-support/skills/draft-response/SKILL.md": [
+      1781103626250253747,
+      14581
+    ],
+    "anthropic-plugins/customer-support/skills/kb-article/SKILL.md": [
+      1781103626250253747,
+      12274
+    ],
+    "anthropic-plugins/customer-support/skills/ticket-triage/SKILL.md": [
+      1781103626250253747,
+      11276
+    ],
+    "anthropic-plugins/data/skills/analyze/SKILL.md": [
+      1781103626250253747,
+      4432
+    ],
+    "anthropic-plugins/data/skills/build-dashboard/SKILL.md": [
+      1781103626250253747,
+      26002
+    ],
+    "anthropic-plugins/data/skills/create-viz/SKILL.md": [
+      1781103626250253747,
+      5151
+    ],
+    "anthropic-plugins/data/skills/data-context-extractor/SKILL.md": [
+      1781103626250253747,
+      7233
+    ],
+    "anthropic-plugins/data/skills/data-visualization/SKILL.md": [
+      1781103626251253798,
+      11051
+    ],
+    "anthropic-plugins/data/skills/explore-data/SKILL.md": [
+      1781103626251253798,
+      11520
+    ],
+    "anthropic-plugins/data/skills/sql-queries/SKILL.md": [
+      1781103626251253798,
+      11126
+    ],
+    "anthropic-plugins/data/skills/statistical-analysis/SKILL.md": [
+      1781103626251253798,
+      10434
+    ],
+    "anthropic-plugins/data/skills/validate-data/SKILL.md": [
+      1781103626251253798,
+      14916
+    ],
+    "anthropic-plugins/data/skills/write-query/SKILL.md": [
+      1781103626251253798,
+      4753
+    ],
+    "anthropic-plugins/design/skills/accessibility-review/SKILL.md": [
+      1781103626251253798,
+      4278
+    ],
+    "anthropic-plugins/design/skills/design-critique/SKILL.md": [
+      1781103626251253798,
+      3923
+    ],
+    "anthropic-plugins/design/skills/design-handoff/SKILL.md": [
+      1781103626251253798,
+      3953
+    ],
+    "anthropic-plugins/design/skills/design-system/SKILL.md": [
+      1781103626251253798,
+      5600
+    ],
+    "anthropic-plugins/design/skills/research-synthesis/SKILL.md": [
+      1781103626251253798,
+      3014
+    ],
+    "anthropic-plugins/design/skills/user-research/SKILL.md": [
+      1781103626251253798,
+      1751
+    ],
+    "anthropic-plugins/design/skills/ux-copy/SKILL.md": [
+      1781103626251253798,
+      3436
+    ],
+    "anthropic-plugins/engineering/skills/architecture/SKILL.md": [
+      1781103626252253849,
+      2410
+    ],
+    "anthropic-plugins/engineering/skills/code-review/SKILL.md": [
+      1781103626252253849,
+      4285
+    ],
+    "anthropic-plugins/engineering/skills/debug/SKILL.md": [
+      1781103626252253849,
+      4074
+    ],
+    "anthropic-plugins/engineering/skills/deploy-checklist/SKILL.md": [
+      1781103626252253849,
+      2389
+    ],
+    "anthropic-plugins/engineering/skills/documentation/SKILL.md": [
+      1781103626252253849,
+      1507
+    ],
+    "anthropic-plugins/engineering/skills/incident-response/SKILL.md": [
+      1781103626252253849,
+      5669
+    ],
+    "anthropic-plugins/engineering/skills/standup/SKILL.md": [
+      1781103626252253849,
+      3315
+    ],
+    "anthropic-plugins/engineering/skills/system-design/SKILL.md": [
+      1781103626252253849,
+      1310
+    ],
+    "anthropic-plugins/engineering/skills/tech-debt/SKILL.md": [
+      1781103626252253849,
+      1458
+    ],
+    "anthropic-plugins/engineering/skills/testing-strategy/SKILL.md": [
+      1781103626252253849,
+      1279
+    ],
+    "anthropic-plugins/enterprise-search/skills/digest/SKILL.md": [
+      1781103626252253849,
+      5587
+    ],
+    "anthropic-plugins/enterprise-search/skills/knowledge-synthesis/SKILL.md": [
+      1781103626253253900,
+      8526
+    ],
+    "anthropic-plugins/enterprise-search/skills/search-strategy/SKILL.md": [
+      1781103626253253900,
+      7198
+    ],
+    "anthropic-plugins/enterprise-search/skills/search/SKILL.md": [
+      1781103626253253900,
+      6581
+    ],
+    "anthropic-plugins/enterprise-search/skills/source-management/SKILL.md": [
+      1781103626253253900,
+      5734
+    ],
+    "anthropic-plugins/finance/skills/audit-support/SKILL.md": [
+      1781103626253253900,
+      16801
+    ],
+    "anthropic-plugins/finance/skills/close-management/SKILL.md": [
+      1781103626253253900,
+      10278
+    ],
+    "anthropic-plugins/finance/skills/financial-statements/SKILL.md": [
+      1781103626253253900,
+      14699
+    ],
+    "anthropic-plugins/finance/skills/journal-entry-prep/SKILL.md": [
+      1781103626253253900,
+      7841
+    ],
+    "anthropic-plugins/finance/skills/journal-entry/SKILL.md": [
+      1781103626253253900,
+      5144
+    ],
+    "anthropic-plugins/finance/skills/reconciliation/SKILL.md": [
+      1781103626253253900,
+      8144
+    ],
+    "anthropic-plugins/finance/skills/sox-testing/SKILL.md": [
+      1781103626253253900,
+      9306
+    ],
+    "anthropic-plugins/finance/skills/variance-analysis/SKILL.md": [
+      1781103626253253900,
+      11232
+    ],
+    "anthropic-plugins/human-resources/skills/comp-analysis/SKILL.md": [
+      1781103626254253951,
+      3263
+    ],
+    "anthropic-plugins/human-resources/skills/draft-offer/SKILL.md": [
+      1781103626254253951,
+      2359
+    ],
+    "anthropic-plugins/human-resources/skills/interview-prep/SKILL.md": [
+      1781103626254253951,
+      1436
+    ],
+    "anthropic-plugins/human-resources/skills/onboarding/SKILL.md": [
+      1781103626254253951,
+      3195
+    ],
+    "anthropic-plugins/human-resources/skills/org-planning/SKILL.md": [
+      1781103626254253951,
+      1227
+    ],
+    "anthropic-plugins/human-resources/skills/people-report/SKILL.md": [
+      1781103626254253951,
+      2782
+    ],
+    "anthropic-plugins/human-resources/skills/performance-review/SKILL.md": [
+      1781103626254253951,
+      4910
+    ],
+    "anthropic-plugins/human-resources/skills/policy-lookup/SKILL.md": [
+      1781103626254253951,
+      4199
+    ],
+    "anthropic-plugins/human-resources/skills/recruiting-pipeline/SKILL.md": [
+      1781103626254253951,
+      1213
+    ],
+    "anthropic-plugins/legal/skills/brief/SKILL.md": [
+      1781103626254253951,
+      7014
+    ],
+    "anthropic-plugins/legal/skills/compliance-check/SKILL.md": [
+      1781103626254253951,
+      14694
+    ],
+    "anthropic-plugins/legal/skills/legal-response/SKILL.md": [
+      1781103626255254001,
+      16174
+    ],
+    "anthropic-plugins/legal/skills/legal-risk-assessment/SKILL.md": [
+      1781103626255254001,
+      12581
+    ],
+    "anthropic-plugins/legal/skills/meeting-briefing/SKILL.md": [
+      1781103626255254001,
+      8990
+    ],
+    "anthropic-plugins/legal/skills/review-contract/SKILL.md": [
+      1781103626255254001,
+      16708
+    ],
+    "anthropic-plugins/legal/skills/signature-request/SKILL.md": [
+      1781103626255254001,
+      3421
+    ],
+    "anthropic-plugins/legal/skills/triage-nda/SKILL.md": [
+      1781103626255254001,
+      14583
+    ],
+    "anthropic-plugins/legal/skills/vendor-check/SKILL.md": [
+      1781103626255254001,
+      5595
+    ],
+    "anthropic-plugins/marketing/skills/brand-review/SKILL.md": [
+      1781103626255254001,
+      12936
+    ],
+    "anthropic-plugins/marketing/skills/campaign-plan/SKILL.md": [
+      1781103626255254001,
+      14153
+    ],
+    "anthropic-plugins/marketing/skills/competitive-brief/SKILL.md": [
+      1781103626255254001,
+      13150
+    ],
+    "anthropic-plugins/marketing/skills/content-creation/SKILL.md": [
+      1781103626255254001,
+      8830
+    ],
+    "anthropic-plugins/marketing/skills/draft-content/SKILL.md": [
+      1781103626255254001,
+      4612
+    ],
+    "anthropic-plugins/marketing/skills/email-sequence/SKILL.md": [
+      1781103626255254001,
+      10627
+    ],
+    "anthropic-plugins/marketing/skills/performance-report/SKILL.md": [
+      1781103626256254052,
+      19213
+    ],
+    "anthropic-plugins/marketing/skills/seo-audit/SKILL.md": [
+      1781103626256254052,
+      9526
+    ],
+    "anthropic-plugins/operations/skills/capacity-plan/SKILL.md": [
+      1781103626256254052,
+      3487
+    ],
+    "anthropic-plugins/operations/skills/change-request/SKILL.md": [
+      1781103626256254052,
+      3764
+    ],
+    "anthropic-plugins/operations/skills/compliance-tracking/SKILL.md": [
+      1781103626256254052,
+      1592
+    ],
+    "anthropic-plugins/operations/skills/process-doc/SKILL.md": [
+      1781103626256254052,
+      2503
+    ],
+    "anthropic-plugins/operations/skills/process-optimization/SKILL.md": [
+      1781103626256254052,
+      1288
+    ],
+    "anthropic-plugins/operations/skills/risk-assessment/SKILL.md": [
+      1781103626256254052,
+      1630
+    ],
+    "anthropic-plugins/operations/skills/runbook/SKILL.md": [
+      1781103626256254052,
+      2519
+    ],
+    "anthropic-plugins/operations/skills/status-report/SKILL.md": [
+      1781103626256254052,
+      2571
+    ],
+    "anthropic-plugins/operations/skills/vendor-review/SKILL.md": [
+      1781103626256254052,
+      3170
+    ],
+    "anthropic-plugins/partner-built/apollo/skills/enrich-lead/SKILL.md": [
+      1781103626257254103,
+      2924
+    ],
+    "anthropic-plugins/partner-built/apollo/skills/prospect/SKILL.md": [
+      1781103626257254103,
+      3606
+    ],
+    "anthropic-plugins/partner-built/apollo/skills/sequence-load/SKILL.md": [
+      1781103626257254103,
+      4057
+    ],
+    "anthropic-plugins/partner-built/brand-voice/skills/brand-voice-enforcement/SKILL.md": [
+      1781103626257254103,
+      5452
+    ],
+    "anthropic-plugins/partner-built/brand-voice/skills/discover-brand/SKILL.md": [
+      1781103626258254154,
+      6891
+    ],
+    "anthropic-plugins/partner-built/brand-voice/skills/guideline-generation/SKILL.md": [
+      1781103626258254154,
+      7022
+    ],
+    "anthropic-plugins/partner-built/common-room/skills/account-research/SKILL.md": [
+      1781103626258254154,
+      6113
+    ],
+    "anthropic-plugins/partner-built/common-room/skills/call-prep/SKILL.md": [
+      1781103626258254154,
+      5917
+    ],
+    "anthropic-plugins/partner-built/common-room/skills/compose-outreach/SKILL.md": [
+      1781103626258254154,
+      5501
+    ],
+    "anthropic-plugins/partner-built/common-room/skills/contact-research/SKILL.md": [
+      1781103626259254205,
+      5388
+    ],
+    "anthropic-plugins/partner-built/common-room/skills/prospect/SKILL.md": [
+      1781103626259254205,
+      6187
+    ],
+    "anthropic-plugins/partner-built/common-room/skills/weekly-prep-brief/SKILL.md": [
+      1781103626259254205,
+      5406
+    ],
+    "anthropic-plugins/partner-built/slack/skills/slack-messaging/SKILL.md": [
+      1781103626259254205,
+      3139
+    ],
+    "anthropic-plugins/partner-built/slack/skills/slack-search/SKILL.md": [
+      1781103626259254205,
+      3998
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/build-zoom-bot/SKILL.md": [
+      1781103626260254256,
+      1250
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/build-zoom-meeting-app/SKILL.md": [
+      1781103626260254256,
+      1317
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/choose-zoom-approach/SKILL.md": [
+      1781103626260254256,
+      1861
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/cobrowse-sdk/SKILL.md": [
+      1781103626260254256,
+      33256
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/contact-center/SKILL.md": [
+      1781103626261254307,
+      5070
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/contact-center/android/SKILL.md": [
+      1781103626261254307,
+      1693
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/contact-center/ios/SKILL.md": [
+      1781103626262254358,
+      1623
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/contact-center/web/SKILL.md": [
+      1781103626262254358,
+      1770
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/debug-zoom-integration/SKILL.md": [
+      1781103626262254358,
+      1124
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/debug-zoom/SKILL.md": [
+      1781103626263254409,
+      1341
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/design-mcp-workflow/SKILL.md": [
+      1781103626263254409,
+      1212
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/general/SKILL.md": [
+      1781103626263254409,
+      25858
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk/SKILL.md": [
+      1781103626266254561,
+      11215
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk/android/SKILL.md": [
+      1781103626266254561,
+      1803
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk/electron/SKILL.md": [
+      1781103626266254561,
+      3000
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk/ios/SKILL.md": [
+      1781103626267254612,
+      1414
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk/linux/SKILL.md": [
+      1781103626267254612,
+      15605
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk/macos/SKILL.md": [
+      1781103626268254663,
+      1454
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk/react-native/SKILL.md": [
+      1781103626268254663,
+      3883
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk/unreal/SKILL.md": [
+      1781103626269254714,
+      1459
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk/web/SKILL.md": [
+      1781103626270254765,
+      34906
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk/web/client-view/SKILL.md": [
+      1781103626270254765,
+      16778
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk/web/component-view/SKILL.md": [
+      1781103626270254765,
+      14428
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk/windows/SKILL.md": [
+      1781103626271254816,
+      45436
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/oauth/SKILL.md": [
+      1781103626272254867,
+      32976
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/phone/SKILL.md": [
+      1781103626274254968,
+      4280
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/plan-zoom-integration/SKILL.md": [
+      1781103626274254968,
+      1457
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/plan-zoom-product/SKILL.md": [
+      1781103626274254968,
+      1581
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/probe-sdk/SKILL.md": [
+      1781103626274254968,
+      3595
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/rest-api/SKILL.md": [
+      1781103626275255019,
+      26477
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/rivet-sdk/SKILL.md": [
+      1781103626277255121,
+      4604
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/rtms/SKILL.md": [
+      1781103626278255172,
+      23952
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/scribe/SKILL.md": [
+      1781103626279255223,
+      5940
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/setup-zoom-mcp/SKILL.md": [
+      1781103626279255223,
+      1263
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/setup-zoom-oauth/SKILL.md": [
+      1781103626279255223,
+      1275
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/start/SKILL.md": [
+      1781103626279255223,
+      1959
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/team-chat/SKILL.md": [
+      1781103626279255223,
+      23778
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/ui-toolkit/SKILL.md": [
+      1781103626281255324,
+      17750
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk/SKILL.md": [
+      1781103626281255324,
+      13941
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk/android/SKILL.md": [
+      1781103626281255324,
+      1408
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk/flutter/SKILL.md": [
+      1781103626282255375,
+      3084
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk/ios/SKILL.md": [
+      1781103626282255375,
+      1365
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk/linux/SKILL.md": [
+      1781103626283255426,
+      15819
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk/macos/SKILL.md": [
+      1781103626284255477,
+      1393
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk/react-native/SKILL.md": [
+      1781103626284255477,
+      3002
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk/unity/SKILL.md": [
+      1781103626285255528,
+      1392
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk/web/SKILL.md": [
+      1781103626285255528,
+      26381
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk/windows/SKILL.md": [
+      1781103626286255579,
+      41125
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/virtual-agent/SKILL.md": [
+      1781103626288255681,
+      3321
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/virtual-agent/android/SKILL.md": [
+      1781103626288255681,
+      1488
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/virtual-agent/ios/SKILL.md": [
+      1781103626288255681,
+      1404
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/virtual-agent/web/SKILL.md": [
+      1781103626288255681,
+      1498
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/webhooks/SKILL.md": [
+      1781103626289255732,
+      5122
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/websockets/SKILL.md": [
+      1781103626289255732,
+      7553
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/zoom-apps-sdk/SKILL.md": [
+      1781103626289255732,
+      25876
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/zoom-mcp/SKILL.md": [
+      1781103626290255782,
+      9331
+    ],
+    "anthropic-plugins/partner-built/zoom-plugin/skills/zoom-mcp/whiteboard/SKILL.md": [
+      1781103626291255833,
+      3270
+    ],
+    "anthropic-plugins/pdf-viewer/skills/view-pdf/SKILL.md": [
+      1781103626291255833,
+      6241
+    ],
+    "anthropic-plugins/product-management/skills/competitive-brief/SKILL.md": [
+      1781103626292255884,
+      14774
+    ],
+    "anthropic-plugins/product-management/skills/metrics-review/SKILL.md": [
+      1781103626292255884,
+      18038
+    ],
+    "anthropic-plugins/product-management/skills/product-brainstorming/SKILL.md": [
+      1781103626292255884,
+      15944
+    ],
+    "anthropic-plugins/product-management/skills/roadmap-update/SKILL.md": [
+      1781103626292255884,
+      12372
+    ],
+    "anthropic-plugins/product-management/skills/sprint-planning/SKILL.md": [
+      1781103626292255884,
+      4144
+    ],
+    "anthropic-plugins/product-management/skills/stakeholder-update/SKILL.md": [
+      1781103626292255884,
+      14677
+    ],
+    "anthropic-plugins/product-management/skills/synthesize-research/SKILL.md": [
+      1781103626292255884,
+      16135
+    ],
+    "anthropic-plugins/product-management/skills/write-spec/SKILL.md": [
+      1781103626292255884,
+      12326
+    ],
+    "anthropic-plugins/productivity/skills/memory-management/SKILL.md": [
+      1781103626292255884,
+      8742
+    ],
+    "anthropic-plugins/productivity/skills/start/SKILL.md": [
+      1781103626292255884,
+      4919
+    ],
+    "anthropic-plugins/productivity/skills/task-management/SKILL.md": [
+      1781103626292255884,
+      2604
+    ],
+    "anthropic-plugins/productivity/skills/update/SKILL.md": [
+      1781103626293255935,
+      5061
+    ],
+    "anthropic-plugins/sales/skills/account-research/SKILL.md": [
+      1781103626293255935,
+      8002
+    ],
+    "anthropic-plugins/sales/skills/call-prep/SKILL.md": [
+      1781103626293255935,
+      8492
+    ],
+    "anthropic-plugins/sales/skills/call-summary/SKILL.md": [
+      1781103626293255935,
+      5840
+    ],
+    "anthropic-plugins/sales/skills/competitive-intelligence/SKILL.md": [
+      1781103626293255935,
+      13176
+    ],
+    "anthropic-plugins/sales/skills/create-an-asset/SKILL.md": [
+      1781103626293255935,
+      25286
+    ],
+    "anthropic-plugins/sales/skills/daily-briefing/SKILL.md": [
+      1781103626293255935,
+      7390
+    ],
+    "anthropic-plugins/sales/skills/draft-outreach/SKILL.md": [
+      1781103626293255935,
+      10110
+    ],
+    "anthropic-plugins/sales/skills/forecast/SKILL.md": [
+      1781103626293255935,
+      6941
+    ],
+    "anthropic-plugins/sales/skills/pipeline-review/SKILL.md": [
+      1781103626293255935,
+      8129
+    ],
+    "anthropic-plugins/small-business/skills/business-pulse/SKILL.md": [
+      1781103626294255986,
+      6253
+    ],
+    "anthropic-plugins/small-business/skills/call-list/SKILL.md": [
+      1781103626294255986,
+      2960
+    ],
+    "anthropic-plugins/small-business/skills/canva-creator/SKILL.md": [
+      1781103626294255986,
+      17309
+    ],
+    "anthropic-plugins/small-business/skills/cash-flow-snapshot/SKILL.md": [
+      1781103626294255986,
+      6594
+    ],
+    "anthropic-plugins/small-business/skills/close-month/SKILL.md": [
+      1781103626294255986,
+      3665
+    ],
+    "anthropic-plugins/small-business/skills/content-strategy/SKILL.md": [
+      1781103626294255986,
+      5160
+    ],
+    "anthropic-plugins/small-business/skills/contract-review/SKILL.md": [
+      1781103626294255986,
+      7331
+    ],
+    "anthropic-plugins/small-business/skills/crm-cleanup/SKILL.md": [
+      1781103626295256037,
+      2689
+    ],
+    "anthropic-plugins/small-business/skills/crm-maintenance/SKILL.md": [
+      1781103626295256037,
+      5614
+    ],
+    "anthropic-plugins/small-business/skills/customer-pulse-check/SKILL.md": [
+      1781103626295256037,
+      3096
+    ],
+    "anthropic-plugins/small-business/skills/customer-pulse/SKILL.md": [
+      1781103626295256037,
+      3970
+    ],
+    "anthropic-plugins/small-business/skills/friday-brief/SKILL.md": [
+      1781103626295256037,
+      2027
+    ],
+    "anthropic-plugins/small-business/skills/handle-complaint/SKILL.md": [
+      1781103626295256037,
+      3050
+    ],
+    "anthropic-plugins/small-business/skills/invoice-chase/SKILL.md": [
+      1781103626295256037,
+      4572
+    ],
+    "anthropic-plugins/small-business/skills/job-post-builder/SKILL.md": [
+      1781103626296256088,
+      15789
+    ],
+    "anthropic-plugins/small-business/skills/lead-triage/SKILL.md": [
+      1781103626296256088,
+      3718
+    ],
+    "anthropic-plugins/small-business/skills/margin-analyzer/SKILL.md": [
+      1781103626296256088,
+      8118
+    ],
+    "anthropic-plugins/small-business/skills/monday-brief/SKILL.md": [
+      1781103626296256088,
+      3028
+    ],
+    "anthropic-plugins/small-business/skills/month-end-prep/SKILL.md": [
+      1781103626296256088,
+      7287
+    ],
+    "anthropic-plugins/small-business/skills/month-heads-up/SKILL.md": [
+      1781103626297256139,
+      2441
+    ],
+    "anthropic-plugins/small-business/skills/plan-payroll/SKILL.md": [
+      1781103626297256139,
+      2613
+    ],
+    "anthropic-plugins/small-business/skills/price-check/SKILL.md": [
+      1781103626297256139,
+      2980
+    ],
+    "anthropic-plugins/small-business/skills/quarterly-review/SKILL.md": [
+      1781103626297256139,
+      3045
+    ],
+    "anthropic-plugins/small-business/skills/review-contract/SKILL.md": [
+      1781103626297256139,
+      2824
+    ],
+    "anthropic-plugins/small-business/skills/run-campaign/SKILL.md": [
+      1781103626297256139,
+      2756
+    ],
+    "anthropic-plugins/small-business/skills/sales-brief/SKILL.md": [
+      1781103626297256139,
+      2850
+    ],
+    "anthropic-plugins/small-business/skills/smb-onboard/SKILL.md": [
+      1781103626297256139,
+      5988
+    ],
+    "anthropic-plugins/small-business/skills/smb-router/SKILL.md": [
+      1781103626297256139,
+      9321
+    ],
+    "anthropic-plugins/small-business/skills/tax-prep/SKILL.md": [
+      1781103626297256139,
+      2532
+    ],
+    "anthropic-plugins/small-business/skills/tax-season-organizer/SKILL.md": [
+      1781103626297256139,
+      11601
+    ],
+    "anthropic-plugins/small-business/skills/ticket-deflector/SKILL.md": [
+      1781103626297256139,
+      5002
+    ],
+    "anthropic-product-brainstorming/SKILL.md": [
+      1781103626299256240,
+      15944
+    ],
+    "anthropic-roadmap-update/SKILL.md": [
+      1781103626299256240,
+      12372
+    ],
+    "anthropic-search-strategy/SKILL.md": [
+      1781103626301256342,
+      7198
+    ],
+    "anthropic-search/SKILL.md": [
+      1781103626301256342,
+      6581
+    ],
+    "anthropic-sprint-planning/SKILL.md": [
+      1781103626301256342,
+      4144
+    ],
+    "anthropic-sql-queries/SKILL.md": [
+      1781103626302256393,
+      11126
+    ],
+    "anthropic-stakeholder-update/SKILL.md": [
+      1781103626302256393,
+      14677
+    ],
+    "anthropic-statistical-analysis/SKILL.md": [
+      1781103626302256393,
+      10434
+    ],
+    "anthropic-synthesize-research/SKILL.md": [
+      1781103626302256393,
+      16135
+    ],
+    "anthropic-task-management/SKILL.md": [
+      1781103626302256393,
+      2604
+    ],
+    "anthropic-update/SKILL.md": [
+      1781103626302256393,
+      5061
+    ],
+    "anthropic-validate-data/SKILL.md": [
+      1781103626302256393,
+      14916
+    ],
+    "anthropic-write-query/SKILL.md": [
+      1781103626302256393,
+      4753
+    ],
+    "anthropic-write-spec/SKILL.md": [
+      1781103626302256393,
+      12326
+    ],
+    "anti-panic-protocol/SKILL.md": [
+      1781103626303256444,
+      2188
+    ],
+    "anti-pattern-czar/SKILL.md": [
+      1781103626303256444,
+      3425
+    ],
+    "anti-slop-design/SKILL.md": [
+      1781103626303256444,
+      63900
+    ],
+    "antislop/SKILL.md": [
+      1781103626303256444,
+      16159
+    ],
+    "automation-workflows/SKILL.md": [
+      1781103626308256698,
+      4494
+    ],
+    "autonomous-ai-agents/hermes-agent/SKILL.md": [
+      1781103626310256800,
+      48073
+    ],
+    "autonomous-ai-agents/hermes-config-checklist/SKILL.md": [
+      1781103626309256749,
+      8986
+    ],
+    "autonomous-ai-agents/hermes-self-improvement/SKILL.md": [
+      1781103626309256749,
+      11049
+    ],
+    "autonomous-ai-agents/kanban-codex-lane/SKILL.md": [
+      1781103626310256800,
+      12774
+    ],
+    "autonomous-ai-agents/metacognitive-learner/SKILL.md": [
+      1781103626308256698,
+      35555
+    ],
+    "autonomous-ai-agents/orchestrator-worker-architecture/SKILL.md": [
+      1781103626309256749,
+      11650
+    ],
+    "bash-defensive-patterns/SKILL.md": [
+      1781103626310256800,
+      11764
+    ],
+    "beautiful-mermaid/SKILL.md": [
+      1781103626312256902,
+      39643
+    ],
+    "browser/camofox/SKILL.md": [
+      1781103626312256902,
+      26538
+    ],
+    "code-reviewer/SKILL.md": [
+      1781104029065319065,
+      5288
+    ],
+    "code/SKILL.md": [
+      1781103626313256953,
+      3205
+    ],
+    "connection-resilience/SKILL.md": [
+      1781103626313256953,
+      3443
+    ],
+    "deployment-verification-sop/SKILL.md": [
+      1781103626328257716,
+      6333
+    ],
+    "devops/backup-coverage-check/SKILL.md": [
+      1781103626330257818,
+      10662
+    ],
+    "devops/coupled-infra-removal-sop/SKILL.md": [
+      1781103626329257767,
+      13290
+    ],
+    "devops/cron-job-health-monitor/SKILL.md": [
+      1781103626328257716,
+      25451
+    ],
+    "devops/hermes-config-layout/SKILL.md": [
+      1781103626329257767,
+      25673
+    ],
+    "devops/hermes-deploy-verification/SKILL.md": [
+      1781103626329257767,
+      18687
+    ],
+    "devops/multi-model-routing-cheatsheet/SKILL.md": [
+      1781103626329257767,
+      8917
+    ],
+    "devops/orchestrator-worker-parallel-architecture/SKILL.md": [
+      1781103626330257818,
+      8305
+    ],
+    "devops/webhook-subscriptions/SKILL.md": [
+      1781103626330257818,
+      6836
+    ],
+    "devops/website-design-principles/SKILL.md": [
+      1781103626330257818,
+      12392
+    ],
+    "diagram-generator/SKILL.md": [
+      1781103626330257818,
+      3328
+    ],
+    "docx/SKILL.md": [
+      1781103626331257869,
+      5201
+    ],
+    "general-workflow/SKILL.md": [
+      1781103626341258377,
+      36470
+    ],
+    "github/SKILL.md": [
+      1781103626342258428,
+      12164
+    ],
+    "github/github-auth/SKILL.md": [
+      1781103626342258428,
+      14600
+    ],
+    "github/github-repo-management/SKILL.md": [
+      1781103626342258428,
+      19555
+    ],
+    "hermes-architecture/hermes-resident-agent/SKILL.md": [
+      1781103626376260158,
+      7847
+    ],
+    "hermes-tier-router/SKILL.md": [
+      1781103626376260158,
+      12471
+    ],
+    "minimax-docx/SKILL.md": [
+      1781103626400261380,
+      15818
+    ],
+    "minimax-pdf/SKILL.md": [
+      1781103626404261583,
+      8624
+    ],
+    "minimax-xlsx/SKILL.md": [
+      1781103626405261634,
+      8398
+    ],
+    "new-conversation/SKILL.md": [
+      1781103626408261787,
+      4435
+    ],
+    "ontology/SKILL.md": [
+      1781103626408261787,
+      6703
+    ],
+    "pdf/SKILL.md": [
+      1781103626408261787,
+      4377
+    ],
+    "pptx-generator/SKILL.md": [
+      1781103626410261888,
+      7930
+    ],
+    "python-anti-patterns/SKILL.md": [
+      1781103626415262143,
+      8122
+    ],
+    "python-observability/SKILL.md": [
+      1781103626416262194,
+      11880
+    ],
+    "python-resilience/SKILL.md": [
+      1781103626416262194,
+      11159
+    ],
+    "reverse-engineering/SKILL.md": [
+      1781103626420262397,
+      6092
+    ],
+    "scrapling/SKILL.md": [
+      1781103626421262448,
+      8382
+    ],
+    "security-review/SKILL.md": [
+      1781103626421262448,
+      11668
+    ],
+    "skill-docker/SKILL.md": [
+      1781103626425262652,
+      3972
+    ],
+    "software-development/debugging-hermes-tui-commands/SKILL.md": [
+      1781103626426262703,
+      7910
+    ],
+    "software-development/hermes-s6-container-supervision/SKILL.md": [
+      1781103626425262652,
+      11474
+    ],
+    "software-development/program-project-planner/SKILL.md": [
+      1781103626426262703,
+      25268
+    ],
+    "software-development/subagent-driven-development/SKILL.md": [
+      1781103626425262652,
+      15023
+    ],
+    "software-development/systematic-debugging/SKILL.md": [
+      1781103626425262652,
+      13950
+    ],
+    "software-development/test-driven-development/SKILL.md": [
+      1781103626426262703,
+      10963
+    ],
+    "software-development/writing-plans/SKILL.md": [
+      1781103626426262703,
+      9009
+    ],
+    "sprint-planner/SKILL.md": [
+      1781104029079323364,
+      4718
+    ],
+    "sprint-reporter/SKILL.md": [
+      1781104029059317223,
+      4925
+    ],
+    "tdd-implementer/SKILL.md": [
+      1781104029102330426,
+      6452
+    ],
+    "tdd-workflow/SKILL.md": [
+      1781103626743278832,
+      9517
+    ],
+    "trial-and-error/SKILL.md": [
+      1781103626743278832,
+      34056
+    ],
+    "user-collaboration-style/SKILL.md": [
+      1781103626745278934,
+      22588
+    ],
+    "vision-analysis/SKILL.md": [
+      1781103626745278934,
+      9733
+    ],
+    "web_search/SKILL.md": [
+      1781103626745278934,
+      5388
+    ],
+    "workspace-folder-layout/SKILL.md": [
+      1781103626745278934,
+      26643
+    ],
+    "xlsx/SKILL.md": [
+      1781103626745278934,
+      2892
+    ],
+    "autonomous-ai-agents/DESCRIPTION.md": [
+      1781103626310256800,
+      211
+    ],
+    "diagramming/DESCRIPTION.md": [
+      1781103626330257818,
+      159
+    ],
+    "github/DESCRIPTION.md": [
+      1781103626342258428,
+      167
+    ],
+    "research/DESCRIPTION.md": [
+      1781103626420262397,
+      179
+    ]
+  },
+  "skills": [
+    {
+      "skill_name": "agent-browser",
+      "category": "agent-browser",
+      "frontmatter_name": "Agent Browser",
+      "description": "A fast Rust-based headless browser automation CLI with No...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "agent-identity-cheatsheet",
+      "category": "agent-identity-cheatsheet",
+      "frontmatter_name": "agent-identity-cheatsheet",
+      "description": "代理身份管理 3 種情境快速判斷 cheat sheet — 給未來 agent 緊急判斷用,30 秒內判斷該走「...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "agent-identity-management",
+      "category": "agent-identity-management",
+      "frontmatter_name": "agent-identity-management",
+      "description": "代理身份管理 — 處理「多代理 / 多名稱 / 身份繼承 / 命名空間合併 / 跨檔案身份同步 / **身份重塑 ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "agent-memory-systems",
+      "category": "agent-memory-systems",
+      "frontmatter_name": "agent-memory-systems",
+      "description": "Memory is the cornerstone of intelligent agents. Without ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "agent-orchestration-multi-agent-optimize",
+      "category": "agent-orchestration-multi-agent-optimize",
+      "frontmatter_name": "agent-orchestration-multi-agent-optimize",
+      "description": "Optimize multi-agent systems with coordinated profiling, ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "agent-orchestrator",
+      "category": "agent-orchestrator",
+      "frontmatter_name": "agent-orchestrator",
+      "description": "Meta-skill that orchestrates all agents in the ecosystem....",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-analyze",
+      "category": "anthropic-analyze",
+      "frontmatter_name": "analyze",
+      "description": "Answer data questions -- from quick lookups to full analy...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-build-dashboard",
+      "category": "anthropic-build-dashboard",
+      "frontmatter_name": "build-dashboard",
+      "description": "Build an interactive HTML dashboard with charts, filters,...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-competitive-brief",
+      "category": "anthropic-competitive-brief",
+      "frontmatter_name": "competitive-brief",
+      "description": "Create a competitive analysis brief for one or more compe...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "competitive-brief",
+      "category": "anthropic-competitive-brief",
+      "frontmatter_name": "competitive-brief",
+      "description": "Research competitors and generate a positioning and messa...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-content-creation",
+      "category": "anthropic-content-creation",
+      "frontmatter_name": "content-creation",
+      "description": "Draft marketing content across channels — blog posts, soc...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-create-viz",
+      "category": "anthropic-create-viz",
+      "frontmatter_name": "create-viz",
+      "description": "Create publication-quality visualizations with Python. Us...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-data-visualization",
+      "category": "anthropic-data-visualization",
+      "frontmatter_name": "data-visualization",
+      "description": "Create effective data visualizations with Python (matplot...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-draft-content",
+      "category": "anthropic-draft-content",
+      "frontmatter_name": "draft-content",
+      "description": "Draft blog posts, social media, email newsletters, landin...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-explore-data",
+      "category": "anthropic-explore-data",
+      "frontmatter_name": "explore-data",
+      "description": "Profile and explore a dataset to understand its shape, qu...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-knowledge-synthesis",
+      "category": "anthropic-knowledge-synthesis",
+      "frontmatter_name": "knowledge-synthesis",
+      "description": "Combines search results from multiple sources into cohere...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-metrics-review",
+      "category": "anthropic-metrics-review",
+      "frontmatter_name": "metrics-review",
+      "description": "Review and analyze product metrics with trend analysis an...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "instrument-data-to-allotrope",
+      "category": "anthropic-plugins/bio-research/skills",
+      "frontmatter_name": "instrument-data-to-allotrope",
+      "description": "Convert laboratory instrument output files (PDF, CSV, Exc...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "nextflow-development",
+      "category": "anthropic-plugins/bio-research/skills",
+      "frontmatter_name": "nextflow-development",
+      "description": "Run nf-core bioinformatics pipelines (rnaseq, sarek, atac...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "scientific-problem-selection",
+      "category": "anthropic-plugins/bio-research/skills",
+      "frontmatter_name": "scientific-problem-selection",
+      "description": "This skill should be used when scientists need help with ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "scvi-tools",
+      "category": "anthropic-plugins/bio-research/skills",
+      "frontmatter_name": "scvi-tools",
+      "description": "Deep learning for single-cell analysis using scvi-tools. ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "single-cell-rna-qc",
+      "category": "anthropic-plugins/bio-research/skills",
+      "frontmatter_name": "single-cell-rna-qc",
+      "description": "Performs quality control on single-cell RNA-seq data (.h5...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "start",
+      "category": "anthropic-plugins/bio-research/skills",
+      "frontmatter_name": "start",
+      "description": "Set up your bio-research environment and explore availabl...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "cowork-plugin-customizer",
+      "category": "anthropic-plugins/cowork-plugin-management/skills",
+      "frontmatter_name": "cowork-plugin-customizer",
+      "description": "Customize a Claude Code plugin for a specific organizatio...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "create-cowork-plugin",
+      "category": "anthropic-plugins/cowork-plugin-management/skills",
+      "frontmatter_name": "create-cowork-plugin",
+      "description": "Guide users through creating a new plugin from scratch in...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "customer-escalation",
+      "category": "anthropic-plugins/customer-support/skills",
+      "frontmatter_name": "customer-escalation",
+      "description": "Package an escalation for engineering, product, or leader...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "customer-research",
+      "category": "anthropic-plugins/customer-support/skills",
+      "frontmatter_name": "customer-research",
+      "description": "Multi-source research on a customer question or topic wit...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "draft-response",
+      "category": "anthropic-plugins/customer-support/skills",
+      "frontmatter_name": "draft-response",
+      "description": "Draft a professional customer-facing response tailored to...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "kb-article",
+      "category": "anthropic-plugins/customer-support/skills",
+      "frontmatter_name": "kb-article",
+      "description": "Draft a knowledge base article from a resolved issue or c...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "ticket-triage",
+      "category": "anthropic-plugins/customer-support/skills",
+      "frontmatter_name": "ticket-triage",
+      "description": "Triage and prioritize a support ticket or customer issue....",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "analyze",
+      "category": "anthropic-plugins/data/skills",
+      "frontmatter_name": "analyze",
+      "description": "Answer data questions -- from quick lookups to full analy...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "build-dashboard",
+      "category": "anthropic-plugins/data/skills",
+      "frontmatter_name": "build-dashboard",
+      "description": "Build an interactive HTML dashboard with charts, filters,...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "create-viz",
+      "category": "anthropic-plugins/data/skills",
+      "frontmatter_name": "create-viz",
+      "description": "Create publication-quality visualizations with Python. Us...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "data-context-extractor",
+      "category": "anthropic-plugins/data/skills",
+      "frontmatter_name": "data-context-extractor",
+      "description": "Generate or improve a company-specific data analysis skil...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "data-visualization",
+      "category": "anthropic-plugins/data/skills",
+      "frontmatter_name": "data-visualization",
+      "description": "Create effective data visualizations with Python (matplot...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "explore-data",
+      "category": "anthropic-plugins/data/skills",
+      "frontmatter_name": "explore-data",
+      "description": "Profile and explore a dataset to understand its shape, qu...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "sql-queries",
+      "category": "anthropic-plugins/data/skills",
+      "frontmatter_name": "sql-queries",
+      "description": "Write correct, performant SQL across all major data wareh...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "statistical-analysis",
+      "category": "anthropic-plugins/data/skills",
+      "frontmatter_name": "statistical-analysis",
+      "description": "Apply statistical methods including descriptive stats, tr...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "validate-data",
+      "category": "anthropic-plugins/data/skills",
+      "frontmatter_name": "validate-data",
+      "description": "QA an analysis before sharing -- methodology, accuracy, a...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "write-query",
+      "category": "anthropic-plugins/data/skills",
+      "frontmatter_name": "write-query",
+      "description": "Write optimized SQL for your dialect with best practices....",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "accessibility-review",
+      "category": "anthropic-plugins/design/skills",
+      "frontmatter_name": "accessibility-review",
+      "description": "Run a WCAG 2.1 AA accessibility audit on a design or page...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "design-critique",
+      "category": "anthropic-plugins/design/skills",
+      "frontmatter_name": "design-critique",
+      "description": "Get structured design feedback on usability, hierarchy, a...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "design-handoff",
+      "category": "anthropic-plugins/design/skills",
+      "frontmatter_name": "design-handoff",
+      "description": "Generate developer handoff specs from a design. Use when ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "design-system",
+      "category": "anthropic-plugins/design/skills",
+      "frontmatter_name": "design-system",
+      "description": "Audit, document, or extend your design system. Use when c...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "research-synthesis",
+      "category": "anthropic-plugins/design/skills",
+      "frontmatter_name": "research-synthesis",
+      "description": "Synthesize user research into themes, insights, and recom...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "user-research",
+      "category": "anthropic-plugins/design/skills",
+      "frontmatter_name": "user-research",
+      "description": "Plan, conduct, and synthesize user research. Trigger with...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "ux-copy",
+      "category": "anthropic-plugins/design/skills",
+      "frontmatter_name": "ux-copy",
+      "description": "Write or review UX copy — microcopy, error messages, empt...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "architecture",
+      "category": "anthropic-plugins/engineering/skills",
+      "frontmatter_name": "architecture",
+      "description": "Create or evaluate an architecture decision record (ADR)....",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "code-review",
+      "category": "anthropic-plugins/engineering/skills",
+      "frontmatter_name": "code-review",
+      "description": "Review code changes for security, performance, and correc...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "debug",
+      "category": "anthropic-plugins/engineering/skills",
+      "frontmatter_name": "debug",
+      "description": "Structured debugging session — reproduce, isolate, diagno...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "deploy-checklist",
+      "category": "anthropic-plugins/engineering/skills",
+      "frontmatter_name": "deploy-checklist",
+      "description": "Pre-deployment verification checklist. Use when about to ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "documentation",
+      "category": "anthropic-plugins/engineering/skills",
+      "frontmatter_name": "documentation",
+      "description": "Write and maintain technical documentation. Trigger with ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "incident-response",
+      "category": "anthropic-plugins/engineering/skills",
+      "frontmatter_name": "incident-response",
+      "description": "Run an incident response workflow — triage, communicate, ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "standup",
+      "category": "anthropic-plugins/engineering/skills",
+      "frontmatter_name": "standup",
+      "description": "Generate a standup update from recent activity. Use when ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "system-design",
+      "category": "anthropic-plugins/engineering/skills",
+      "frontmatter_name": "system-design",
+      "description": "Design systems, services, and architectures. Trigger with...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "tech-debt",
+      "category": "anthropic-plugins/engineering/skills",
+      "frontmatter_name": "tech-debt",
+      "description": "Identify, categorize, and prioritize technical debt. Trig...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "testing-strategy",
+      "category": "anthropic-plugins/engineering/skills",
+      "frontmatter_name": "testing-strategy",
+      "description": "Design test strategies and test plans. Trigger with \"how ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "digest",
+      "category": "anthropic-plugins/enterprise-search/skills",
+      "frontmatter_name": "digest",
+      "description": "Generate a daily or weekly digest of activity across all ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "knowledge-synthesis",
+      "category": "anthropic-plugins/enterprise-search/skills",
+      "frontmatter_name": "knowledge-synthesis",
+      "description": "Combines search results from multiple sources into cohere...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "search-strategy",
+      "category": "anthropic-plugins/enterprise-search/skills",
+      "frontmatter_name": "search-strategy",
+      "description": "Query decomposition and multi-source search orchestration...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "search",
+      "category": "anthropic-plugins/enterprise-search/skills",
+      "frontmatter_name": "search",
+      "description": "Search across all connected sources in one query. Trigger...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "source-management",
+      "category": "anthropic-plugins/enterprise-search/skills",
+      "frontmatter_name": "source-management",
+      "description": "Manages connected MCP sources for enterprise search. Dete...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "audit-support",
+      "category": "anthropic-plugins/finance/skills",
+      "frontmatter_name": "audit-support",
+      "description": "Support SOX 404 compliance with control testing methodolo...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "close-management",
+      "category": "anthropic-plugins/finance/skills",
+      "frontmatter_name": "close-management",
+      "description": "Manage the month-end close process with task sequencing, ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "financial-statements",
+      "category": "anthropic-plugins/finance/skills",
+      "frontmatter_name": "financial-statements",
+      "description": "Generate financial statements (income statement, balance ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "journal-entry-prep",
+      "category": "anthropic-plugins/finance/skills",
+      "frontmatter_name": "journal-entry-prep",
+      "description": "Prepare journal entries with proper debits, credits, and ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "journal-entry",
+      "category": "anthropic-plugins/finance/skills",
+      "frontmatter_name": "journal-entry",
+      "description": "Prepare journal entries with proper debits, credits, and ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "reconciliation",
+      "category": "anthropic-plugins/finance/skills",
+      "frontmatter_name": "reconciliation",
+      "description": "Reconcile accounts by comparing GL balances to subledgers...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "sox-testing",
+      "category": "anthropic-plugins/finance/skills",
+      "frontmatter_name": "sox-testing",
+      "description": "Generate SOX sample selections, testing workpapers, and c...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "variance-analysis",
+      "category": "anthropic-plugins/finance/skills",
+      "frontmatter_name": "variance-analysis",
+      "description": "Decompose financial variances into drivers with narrative...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "comp-analysis",
+      "category": "anthropic-plugins/human-resources/skills",
+      "frontmatter_name": "comp-analysis",
+      "description": "Analyze compensation — benchmarking, band placement, and ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "draft-offer",
+      "category": "anthropic-plugins/human-resources/skills",
+      "frontmatter_name": "draft-offer",
+      "description": "Draft an offer letter with comp details and terms. Use wh...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "interview-prep",
+      "category": "anthropic-plugins/human-resources/skills",
+      "frontmatter_name": "interview-prep",
+      "description": "Create structured interview plans with competency-based q...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "onboarding",
+      "category": "anthropic-plugins/human-resources/skills",
+      "frontmatter_name": "onboarding",
+      "description": "Generate an onboarding checklist and first-week plan for ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "org-planning",
+      "category": "anthropic-plugins/human-resources/skills",
+      "frontmatter_name": "org-planning",
+      "description": "Headcount planning, org design, and team structure optimi...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "people-report",
+      "category": "anthropic-plugins/human-resources/skills",
+      "frontmatter_name": "people-report",
+      "description": "Generate headcount, attrition, diversity, or org health r...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "performance-review",
+      "category": "anthropic-plugins/human-resources/skills",
+      "frontmatter_name": "performance-review",
+      "description": "Structure a performance review with self-assessment, mana...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "policy-lookup",
+      "category": "anthropic-plugins/human-resources/skills",
+      "frontmatter_name": "policy-lookup",
+      "description": "Find and explain company policies in plain language. Trig...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "recruiting-pipeline",
+      "category": "anthropic-plugins/human-resources/skills",
+      "frontmatter_name": "recruiting-pipeline",
+      "description": "Track and manage recruiting pipeline stages. Trigger with...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "brief",
+      "category": "anthropic-plugins/legal/skills",
+      "frontmatter_name": "brief",
+      "description": "Generate contextual briefings for legal work — daily summ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "compliance-check",
+      "category": "anthropic-plugins/legal/skills",
+      "frontmatter_name": "compliance-check",
+      "description": "Run a compliance check on a proposed action, product feat...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "legal-response",
+      "category": "anthropic-plugins/legal/skills",
+      "frontmatter_name": "legal-response",
+      "description": "Generate a response to a common legal inquiry using confi...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "legal-risk-assessment",
+      "category": "anthropic-plugins/legal/skills",
+      "frontmatter_name": "legal-risk-assessment",
+      "description": "Assess and classify legal risks using a severity-by-likel...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "meeting-briefing",
+      "category": "anthropic-plugins/legal/skills",
+      "frontmatter_name": "meeting-briefing",
+      "description": "Prepare structured briefings for meetings with legal rele...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "review-contract",
+      "category": "anthropic-plugins/legal/skills",
+      "frontmatter_name": "review-contract",
+      "description": "Review a contract against your organization's negotiation...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "signature-request",
+      "category": "anthropic-plugins/legal/skills",
+      "frontmatter_name": "signature-request",
+      "description": "Prepare and route a document for e-signature — run a pre-...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "triage-nda",
+      "category": "anthropic-plugins/legal/skills",
+      "frontmatter_name": "triage-nda",
+      "description": "Rapidly triage an incoming NDA and classify it as GREEN (...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "vendor-check",
+      "category": "anthropic-plugins/legal/skills",
+      "frontmatter_name": "vendor-check",
+      "description": "Check the status of existing agreements with a vendor acr...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "brand-review",
+      "category": "anthropic-plugins/marketing/skills",
+      "frontmatter_name": "brand-review",
+      "description": "Review content against your brand voice, style guide, and...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "campaign-plan",
+      "category": "anthropic-plugins/marketing/skills",
+      "frontmatter_name": "campaign-plan",
+      "description": "Generate a full campaign brief with objectives, audience,...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "competitive-brief",
+      "category": "anthropic-plugins/marketing/skills",
+      "frontmatter_name": "competitive-brief",
+      "description": "Research competitors and generate a positioning and messa...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "content-creation",
+      "category": "anthropic-plugins/marketing/skills",
+      "frontmatter_name": "content-creation",
+      "description": "Draft marketing content across channels — blog posts, soc...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "draft-content",
+      "category": "anthropic-plugins/marketing/skills",
+      "frontmatter_name": "draft-content",
+      "description": "Draft blog posts, social media, email newsletters, landin...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "email-sequence",
+      "category": "anthropic-plugins/marketing/skills",
+      "frontmatter_name": "email-sequence",
+      "description": "Design and draft multi-email sequences with full copy, ti...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "performance-report",
+      "category": "anthropic-plugins/marketing/skills",
+      "frontmatter_name": "performance-report",
+      "description": "Build a marketing performance report with key metrics, tr...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "seo-audit",
+      "category": "anthropic-plugins/marketing/skills",
+      "frontmatter_name": "seo-audit",
+      "description": "Run a comprehensive SEO audit — keyword research, on-page...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "capacity-plan",
+      "category": "anthropic-plugins/operations/skills",
+      "frontmatter_name": "capacity-plan",
+      "description": "Plan resource capacity — workload analysis and utilizatio...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "change-request",
+      "category": "anthropic-plugins/operations/skills",
+      "frontmatter_name": "change-request",
+      "description": "Create a change management request with impact analysis a...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "compliance-tracking",
+      "category": "anthropic-plugins/operations/skills",
+      "frontmatter_name": "compliance-tracking",
+      "description": "Track compliance requirements and audit readiness. Trigge...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "process-doc",
+      "category": "anthropic-plugins/operations/skills",
+      "frontmatter_name": "process-doc",
+      "description": "Document a business process — flowcharts, RACI, and SOPs....",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "process-optimization",
+      "category": "anthropic-plugins/operations/skills",
+      "frontmatter_name": "process-optimization",
+      "description": "Analyze and improve business processes. Trigger with \"thi...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "risk-assessment",
+      "category": "anthropic-plugins/operations/skills",
+      "frontmatter_name": "risk-assessment",
+      "description": "Identify, assess, and mitigate operational risks. Trigger...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "runbook",
+      "category": "anthropic-plugins/operations/skills",
+      "frontmatter_name": "runbook",
+      "description": "Create or update an operational runbook for a recurring t...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "status-report",
+      "category": "anthropic-plugins/operations/skills",
+      "frontmatter_name": "status-report",
+      "description": "Generate a status report with KPIs, risks, and action ite...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "vendor-review",
+      "category": "anthropic-plugins/operations/skills",
+      "frontmatter_name": "vendor-review",
+      "description": "Evaluate a vendor — cost analysis, risk assessment, and r...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "enrich-lead",
+      "category": "anthropic-plugins/partner-built/apollo/skills",
+      "frontmatter_name": "enrich-lead",
+      "description": "Instant lead enrichment. Drop a name, company, LinkedIn U...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "prospect",
+      "category": "anthropic-plugins/partner-built/apollo/skills",
+      "frontmatter_name": "prospect",
+      "description": "Full ICP-to-leads pipeline. Describe your ideal customer ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "sequence-load",
+      "category": "anthropic-plugins/partner-built/apollo/skills",
+      "frontmatter_name": "sequence-load",
+      "description": "Find leads matching criteria and bulk-add them to an Apol...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "brand-voice-enforcement",
+      "category": "anthropic-plugins/partner-built/brand-voice/skills",
+      "frontmatter_name": "brand-voice-enforcement",
+      "description": "This skill applies brand guidelines to content creation. ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "discover-brand",
+      "category": "anthropic-plugins/partner-built/brand-voice/skills",
+      "frontmatter_name": "discover-brand",
+      "description": "This skill orchestrates autonomous discovery of brand mat...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "guideline-generation",
+      "category": "anthropic-plugins/partner-built/brand-voice/skills",
+      "frontmatter_name": "guideline-generation",
+      "description": "This skill generates, creates, or builds brand voice guid...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "account-research",
+      "category": "anthropic-plugins/partner-built/common-room/skills",
+      "frontmatter_name": "account-research",
+      "description": "Research a company using Common Room data. Triggers on 'r...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "call-prep",
+      "category": "anthropic-plugins/partner-built/common-room/skills",
+      "frontmatter_name": "call-prep",
+      "description": "Prepare for a customer or prospect call using Common Room...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "compose-outreach",
+      "category": "anthropic-plugins/partner-built/common-room/skills",
+      "frontmatter_name": "compose-outreach",
+      "description": "Generate personalized outreach messages using Common Room...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "contact-research",
+      "category": "anthropic-plugins/partner-built/common-room/skills",
+      "frontmatter_name": "contact-research",
+      "description": "Research a specific person using Common Room data. Trigge...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "prospect",
+      "category": "anthropic-plugins/partner-built/common-room/skills",
+      "frontmatter_name": "prospect",
+      "description": "Build targeted account or contact lists using Common Room...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "weekly-prep-brief",
+      "category": "anthropic-plugins/partner-built/common-room/skills",
+      "frontmatter_name": "weekly-prep-brief",
+      "description": "Generate a comprehensive weekly briefing for all external...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "slack-messaging",
+      "category": "anthropic-plugins/partner-built/slack/skills",
+      "frontmatter_name": "slack-messaging",
+      "description": "Guidance for composing well-formatted, effective Slack me...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "slack-search",
+      "category": "anthropic-plugins/partner-built/slack/skills",
+      "frontmatter_name": "slack-search",
+      "description": "Guidance for effectively searching Slack to find messages...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "build-zoom-bot",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "build-zoom-bot",
+      "description": "Build a Zoom meeting bot, recorder, or real-time media wo...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "build-zoom-meeting-app",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "build-zoom-meeting-app",
+      "description": "Build or embed a Zoom meeting flow. Use when implementing...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "choose-zoom-approach",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "choose-zoom-approach",
+      "description": "Choose the right Zoom architecture for a use case. Use wh...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "cobrowse-sdk",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "zoom-cobrowse-sdk",
+      "description": "Reference skill for Zoom Cobrowse SDK. Use after routing ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "contact-center",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "build-zoom-contact-center-app",
+      "description": "Reference skill for Zoom Contact Center. Use after routin...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "android",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/contact-center",
+      "frontmatter_name": "contact-center/android",
+      "description": "Zoom Contact Center SDK for Android. Use for native Andro...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "ios",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/contact-center",
+      "frontmatter_name": "contact-center/ios",
+      "description": "Zoom Contact Center SDK for iOS. Use for native iOS chat/...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "web",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/contact-center",
+      "frontmatter_name": "contact-center/web",
+      "description": "Zoom Contact Center SDK for Web. Use for web chat/video/c...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "debug-zoom-integration",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "debug-zoom-integration",
+      "description": "Debug broken Zoom implementations quickly. Use when auth,...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "debug-zoom",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "debug-zoom",
+      "description": "Debug a broken Zoom integration by isolating the failure ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "design-mcp-workflow",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "design-mcp-workflow",
+      "description": "Design a Zoom MCP workflow for Claude. Use when deciding ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "general",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "zoom-general",
+      "description": "Cross-product Zoom reference skill. Use after the workflo...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "meeting-sdk",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "build-zoom-meeting-sdk-app",
+      "description": "Reference skill for Zoom Meeting SDK. Use after routing t...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "android",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk",
+      "frontmatter_name": "zoom-meeting-sdk-android",
+      "description": "Zoom Meeting SDK for Android native apps. Use when embedd...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "electron",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk",
+      "frontmatter_name": "zoom-meeting-sdk-electron",
+      "description": "Zoom Meeting SDK for Electron desktop applications. Use w...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "ios",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk",
+      "frontmatter_name": "zoom-meeting-sdk-ios",
+      "description": "Zoom Meeting SDK for iOS native apps. Use when embedding ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "linux",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk",
+      "frontmatter_name": "meeting-sdk/linux",
+      "description": "Zoom Meeting SDK for Linux - C++ headless meeting bots wi...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "macos",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk",
+      "frontmatter_name": "zoom-meeting-sdk-macos",
+      "description": "Zoom Meeting SDK for macOS native apps. Use when embeddin...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "react-native",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk",
+      "frontmatter_name": "zoom-meeting-sdk-react-native",
+      "description": "Zoom Meeting SDK for React Native. Use when embedding Zoo...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "unreal",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk",
+      "frontmatter_name": "zoom-meeting-sdk-unreal",
+      "description": "Zoom Meeting SDK for Unreal Engine wrapper integrations. ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "web",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk",
+      "frontmatter_name": "zoom-meeting-sdk-web",
+      "description": "Zoom Meeting SDK for Web - Embed Zoom meeting capabilitie...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "client-view",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk/web",
+      "frontmatter_name": "zoom-meeting-sdk-web-client-view",
+      "description": "Zoom Meeting SDK Web - Client View. Full-page Zoom meetin...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "component-view",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk/web",
+      "frontmatter_name": "zoom-meeting-sdk-web-component-view",
+      "description": "Zoom Meeting SDK Web - Component View. Embeddable Zoom me...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "windows",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/meeting-sdk",
+      "frontmatter_name": "zoom-meeting-sdk-windows",
+      "description": "Zoom Meeting SDK for Windows - Native C++ SDK for embeddi...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "oauth",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "zoom-oauth",
+      "description": "Reference skill for Zoom authentication. Use after routin...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "phone",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "build-zoom-phone-integration",
+      "description": "Reference skill for Zoom Phone. Use after routing to a ph...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "plan-zoom-integration",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "plan-zoom-integration",
+      "description": "Turn a Zoom integration idea into an implementation plan ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "plan-zoom-product",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "plan-zoom-product",
+      "description": "Choose the right Zoom building surface for a use case and...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "probe-sdk",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "probe-sdk",
+      "description": "Reference skill for Zoom Probe SDK. Use after routing to ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "rest-api",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "build-zoom-rest-api-app",
+      "description": "Reference skill for Zoom REST API. Use after choosing an ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "rivet-sdk",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "rivet-sdk",
+      "description": "Reference skill for Zoom Rivet SDK. Use after routing to ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "rtms",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "zoom-rtms",
+      "description": "Reference skill for Zoom RTMS. Use after routing to a liv...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "scribe",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "scribe",
+      "description": "Reference skill for Zoom AI Services Scribe. Use after ro...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "setup-zoom-mcp",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "setup-zoom-mcp",
+      "description": "Decide when Zoom MCP is the right fit and produce a safe ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "setup-zoom-oauth",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "setup-zoom-oauth",
+      "description": "Implement Zoom authentication correctly. Use when setting...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "start",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "start",
+      "description": "Start here for any Zoom integration or app idea. Use when...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "team-chat",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "build-zoom-team-chat-app",
+      "description": "Reference skill for Zoom Team Chat. Use after routing to ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "ui-toolkit",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "ui-toolkit/web",
+      "description": "Reference skill for Zoom Video SDK UI Toolkit. Use after ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "video-sdk",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "build-zoom-video-sdk-app",
+      "description": "Reference skill for Zoom Video SDK. Use after routing to ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "android",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk",
+      "frontmatter_name": "zoom-video-sdk-android",
+      "description": "Zoom Video SDK for Android native apps. Use when building...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "flutter",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk",
+      "frontmatter_name": "zoom-video-sdk-flutter",
+      "description": "Zoom Video SDK for Flutter. Use when building custom vide...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "ios",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk",
+      "frontmatter_name": "zoom-video-sdk-ios",
+      "description": "Zoom Video SDK for iOS native apps. Use when building cus...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "linux",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk",
+      "frontmatter_name": "video-sdk/linux",
+      "description": "Zoom Video SDK for Linux - C++ headless bots, raw audio/v...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "macos",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk",
+      "frontmatter_name": "zoom-video-sdk-macos",
+      "description": "Zoom Video SDK for macOS native desktop apps. Use when bu...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "react-native",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk",
+      "frontmatter_name": "zoom-video-sdk-react-native",
+      "description": "Zoom Video SDK for React Native. Use when building custom...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "unity",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk",
+      "frontmatter_name": "zoom-video-sdk-unity",
+      "description": "Zoom Video SDK for Unity wrapper integrations. Use when b...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "web",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk",
+      "frontmatter_name": "video-sdk/web",
+      "description": "Zoom Video SDK for Web - JavaScript/TypeScript integratio...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "windows",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/video-sdk",
+      "frontmatter_name": "video-sdk/windows",
+      "description": "Zoom Video SDK for Windows - C++ integration for video se...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "virtual-agent",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "build-zoom-virtual-agent",
+      "description": "Reference skill for Zoom Virtual Agent. Use after routing...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "android",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/virtual-agent",
+      "frontmatter_name": "virtual-agent/android",
+      "description": "Zoom Virtual Agent Android integration via WebView. Use f...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "ios",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/virtual-agent",
+      "frontmatter_name": "virtual-agent/ios",
+      "description": "Zoom Virtual Agent iOS integration via WKWebView. Use for...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "web",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/virtual-agent",
+      "frontmatter_name": "virtual-agent/web",
+      "description": "Zoom Virtual Agent SDK for web embeds. Use for campaign o...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "webhooks",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "setup-zoom-webhooks",
+      "description": "Reference skill for Zoom webhooks. Use after routing to a...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "websockets",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "setup-zoom-websockets",
+      "description": "Reference skill for Zoom WebSockets. Use after routing to...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "zoom-apps-sdk",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "zoom-apps-sdk",
+      "description": "Reference skill for Zoom Apps SDK. Use after routing to a...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "zoom-mcp",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills",
+      "frontmatter_name": "zoom-mcp",
+      "description": "Guidance for the bundled Zoom MCP connectors. Use after r...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "whiteboard",
+      "category": "anthropic-plugins/partner-built/zoom-plugin/skills/zoom-mcp",
+      "frontmatter_name": "zoom-mcp/whiteboard",
+      "description": "Guidance for the bundled Zoom Whiteboard MCP connector. U...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "view-pdf",
+      "category": "anthropic-plugins/pdf-viewer/skills",
+      "frontmatter_name": "view-pdf",
+      "description": "Interactive PDF viewer. Use when the user wants to open, ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "competitive-brief",
+      "category": "anthropic-plugins/product-management/skills",
+      "frontmatter_name": "competitive-brief",
+      "description": "Create a competitive analysis brief for one or more compe...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "metrics-review",
+      "category": "anthropic-plugins/product-management/skills",
+      "frontmatter_name": "metrics-review",
+      "description": "Review and analyze product metrics with trend analysis an...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "product-brainstorming",
+      "category": "anthropic-plugins/product-management/skills",
+      "frontmatter_name": "product-brainstorming",
+      "description": "Brainstorm product ideas, explore problem spaces, and cha...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "roadmap-update",
+      "category": "anthropic-plugins/product-management/skills",
+      "frontmatter_name": "roadmap-update",
+      "description": "Update, create, or reprioritize your product roadmap. Use...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "sprint-planning",
+      "category": "anthropic-plugins/product-management/skills",
+      "frontmatter_name": "sprint-planning",
+      "description": "Plan a sprint — scope work, estimate capacity, set goals,...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "stakeholder-update",
+      "category": "anthropic-plugins/product-management/skills",
+      "frontmatter_name": "stakeholder-update",
+      "description": "Generate a stakeholder update tailored to audience and ca...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "synthesize-research",
+      "category": "anthropic-plugins/product-management/skills",
+      "frontmatter_name": "synthesize-research",
+      "description": "Synthesize user research from interviews, surveys, and fe...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "write-spec",
+      "category": "anthropic-plugins/product-management/skills",
+      "frontmatter_name": "write-spec",
+      "description": "Write a feature spec or PRD from a problem statement or f...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "memory-management",
+      "category": "anthropic-plugins/productivity/skills",
+      "frontmatter_name": "memory-management",
+      "description": "Two-tier memory system that makes Claude a true workplace...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "start",
+      "category": "anthropic-plugins/productivity/skills",
+      "frontmatter_name": "start",
+      "description": "Initialize the productivity system and open the dashboard...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "task-management",
+      "category": "anthropic-plugins/productivity/skills",
+      "frontmatter_name": "task-management",
+      "description": "Simple task management using a shared TASKS.md file. Refe...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "update",
+      "category": "anthropic-plugins/productivity/skills",
+      "frontmatter_name": "update",
+      "description": "Sync tasks and refresh memory from your current activity....",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "account-research",
+      "category": "anthropic-plugins/sales/skills",
+      "frontmatter_name": "account-research",
+      "description": "Research a company or person and get actionable sales int...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "call-prep",
+      "category": "anthropic-plugins/sales/skills",
+      "frontmatter_name": "call-prep",
+      "description": "Prepare for a sales call with account context, attendee r...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "call-summary",
+      "category": "anthropic-plugins/sales/skills",
+      "frontmatter_name": "call-summary",
+      "description": "Process call notes or a transcript — extract action items...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "competitive-intelligence",
+      "category": "anthropic-plugins/sales/skills",
+      "frontmatter_name": "competitive-intelligence",
+      "description": "Research your competitors and build an interactive battle...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "create-an-asset",
+      "category": "anthropic-plugins/sales/skills",
+      "frontmatter_name": "create-an-asset",
+      "description": "Generate tailored sales assets (landing pages, decks, one...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "daily-briefing",
+      "category": "anthropic-plugins/sales/skills",
+      "frontmatter_name": "daily-briefing",
+      "description": "Start your day with a prioritized sales briefing. Works s...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "draft-outreach",
+      "category": "anthropic-plugins/sales/skills",
+      "frontmatter_name": "draft-outreach",
+      "description": "Research a prospect then draft personalized outreach. Use...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "forecast",
+      "category": "anthropic-plugins/sales/skills",
+      "frontmatter_name": "forecast",
+      "description": "Generate a weighted sales forecast with best/likely/worst...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "pipeline-review",
+      "category": "anthropic-plugins/sales/skills",
+      "frontmatter_name": "pipeline-review",
+      "description": "Analyze pipeline health — prioritize deals, flag risks, g...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "business-pulse",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "business-pulse",
+      "description": "Produces a one-page cross-functional business snapshot fo...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "call-list",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "call-list",
+      "description": "Ranks the top-5 leads most worth calling today, supplies ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "canva-creator",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "canva-creator",
+      "description": "Takes an approved content brief and executes a campaign e...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "cash-flow-snapshot",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "cash-flow-snapshot",
+      "description": "Reads AR/AP, historical cash timing, and known fixed cost...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "close-month",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "close-month",
+      "description": "Closes the month — reconciles QB vs payment processors, f...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "content-strategy",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "content-strategy",
+      "description": "Analyzes sales data from PayPal and QuickBooks to find to...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "contract-review",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "contract-review",
+      "description": "Lightweight NDA, MSA, and vendor contract review for SMBs...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "crm-cleanup",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "crm-cleanup",
+      "description": "Scans HubSpot for stale deals, duplicate contacts, and mi...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "crm-maintenance",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "crm-maintenance",
+      "description": "Keeps HubSpot current without the owner opening it: creat...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "customer-pulse-check",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "customer-pulse-check",
+      "description": "Synthesizes themes from PayPal disputes, HubSpot tickets,...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "customer-pulse",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "customer-pulse",
+      "description": "Aggregates PayPal disputes, HubSpot feedback and tickets,...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "friday-brief",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "friday-brief",
+      "description": "Delivers the Friday end-of-week pulse — revenue vs prior ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "handle-complaint",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "handle-complaint",
+      "description": "Handles an incoming customer complaint end-to-end — pulls...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "invoice-chase",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "invoice-chase",
+      "description": "Drafts overdue-invoice reminder emails from QuickBooks an...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "job-post-builder",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "job-post-builder",
+      "description": "Builds end-to-end hiring packets — job post, structured i...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "lead-triage",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "lead-triage",
+      "description": "Scores inbound HubSpot leads by engagement signals, compa...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "margin-analyzer",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "margin-analyzer",
+      "description": "Analyzes unit economics by product or service using PayPa...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "monday-brief",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "monday-brief",
+      "description": "Generates a one-page Monday morning briefing — cash, sale...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "month-end-prep",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "month-end-prep",
+      "description": "Walks an SMB owner through month-end close: reconciles Qu...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "month-heads-up",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "month-heads-up",
+      "description": "Runs on the 25th — shows the next 30-day cash-flow outloo...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "plan-payroll",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "plan-payroll",
+      "description": "Forecasts cash, ranks overdue invoices, and stages PayPal...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "price-check",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "price-check",
+      "description": "Produces a margin-by-product table and three pricing-scen...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "quarterly-review",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "quarterly-review",
+      "description": "Generates a full QBR narrative — revenue trend, margin tr...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "review-contract",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "review-contract",
+      "description": "Reviews a contract in plain English, surfaces red flags w...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "run-campaign",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "run-campaign",
+      "description": "Runs an end-to-end marketing campaign — sales analysis, c...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "sales-brief",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "sales-brief",
+      "description": "Surfaces top and bottom sellers, identifies seasonality p...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "smb-onboard",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "smb-onboard",
+      "description": "Claude as the trainer. Walks an SMB owner through connect...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "smb-router",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "smb-router",
+      "description": "The front door to the Small Business plugin. Listens to w...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "tax-prep",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "tax-prep",
+      "description": "Prepares tax-season materials — quarterly estimated tax c...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "tax-season-organizer",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "tax-season-organizer",
+      "description": "Prepares tax-season materials for small business owners —...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "ticket-deflector",
+      "category": "anthropic-plugins/small-business/skills",
+      "frontmatter_name": "ticket-deflector",
+      "description": "Reads a forwarded customer email or ticket, pulls order/r...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-product-brainstorming",
+      "category": "anthropic-product-brainstorming",
+      "frontmatter_name": "product-brainstorming",
+      "description": "Brainstorm product ideas, explore problem spaces, and cha...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-roadmap-update",
+      "category": "anthropic-roadmap-update",
+      "frontmatter_name": "roadmap-update",
+      "description": "Update, create, or reprioritize your product roadmap. Use...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-search-strategy",
+      "category": "anthropic-search-strategy",
+      "frontmatter_name": "search-strategy",
+      "description": "Query decomposition and multi-source search orchestration...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-search",
+      "category": "anthropic-search",
+      "frontmatter_name": "search",
+      "description": "Search across all connected sources in one query. Trigger...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-sprint-planning",
+      "category": "anthropic-sprint-planning",
+      "frontmatter_name": "sprint-planning",
+      "description": "Plan a sprint — scope work, estimate capacity, set goals,...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-sql-queries",
+      "category": "anthropic-sql-queries",
+      "frontmatter_name": "sql-queries",
+      "description": "Write correct, performant SQL across all major data wareh...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-stakeholder-update",
+      "category": "anthropic-stakeholder-update",
+      "frontmatter_name": "stakeholder-update",
+      "description": "Generate a stakeholder update tailored to audience and ca...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-statistical-analysis",
+      "category": "anthropic-statistical-analysis",
+      "frontmatter_name": "statistical-analysis",
+      "description": "Apply statistical methods including descriptive stats, tr...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-synthesize-research",
+      "category": "anthropic-synthesize-research",
+      "frontmatter_name": "synthesize-research",
+      "description": "Synthesize user research from interviews, surveys, and fe...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-task-management",
+      "category": "anthropic-task-management",
+      "frontmatter_name": "task-management",
+      "description": "Simple task management using a shared TASKS.md file. Refe...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-update",
+      "category": "anthropic-update",
+      "frontmatter_name": "update",
+      "description": "Sync tasks and refresh memory from your current activity....",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-validate-data",
+      "category": "anthropic-validate-data",
+      "frontmatter_name": "validate-data",
+      "description": "QA an analysis before sharing -- methodology, accuracy, a...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-write-query",
+      "category": "anthropic-write-query",
+      "frontmatter_name": "write-query",
+      "description": "Write optimized SQL for your dialect with best practices....",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-write-spec",
+      "category": "anthropic-write-spec",
+      "frontmatter_name": "write-spec",
+      "description": "Write a feature spec or PRD from a problem statement or f...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anti-panic-protocol",
+      "category": "anti-panic-protocol",
+      "frontmatter_name": "anti-panic-protocol",
+      "description": "Handle tool failures under pressure with bounded retries,...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anti-pattern-czar",
+      "category": "anti-pattern-czar",
+      "frontmatter_name": "anti-pattern-czar",
+      "description": "Detect and fix TypeScript error handling anti-patterns wi...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anti-slop-design",
+      "category": "anti-slop-design",
+      "frontmatter_name": "hallmark",
+      "description": "Anti-AI-slop design skill for greenfield pages, audits, r...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "antislop",
+      "category": "antislop",
+      "frontmatter_name": "Anti-Slop",
+      "description": "This skill should be used when the user asks to\n\"check fo...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "automation-workflows",
+      "category": "automation-workflows",
+      "frontmatter_name": "automation-workflows",
+      "description": "",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hermes-agent",
+      "category": "autonomous-ai-agents",
+      "frontmatter_name": "hermes-agent",
+      "description": "Configure, extend, or contribute to Hermes Agent.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hermes-config-checklist",
+      "category": "autonomous-ai-agents",
+      "frontmatter_name": "hermes-config-checklist",
+      "description": "赫米斯工具鏈配置檢查清單：依優先順序設定 API tokens、啟用工具能力、驗證工具可用性。當用戶問「如何設定 ...",
+      "platforms": [
+        "linux"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hermes-self-improvement",
+      "category": "autonomous-ai-agents",
+      "frontmatter_name": "hermes-self-improvement",
+      "description": "赫米斯的自我改進機制：技能更新、記憶管理、SOP 服從性與外部驗收循環的架構說明。",
+      "platforms": [
+        "linux"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "kanban-codex-lane",
+      "category": "autonomous-ai-agents",
+      "frontmatter_name": "kanban-codex-lane",
+      "description": "Use when a Hermes Kanban worker wants to run Codex CLI as...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "metacognitive-learner",
+      "category": "autonomous-ai-agents",
+      "frontmatter_name": "metacognitive-learner",
+      "description": "赫米斯的後設認知引擎：持續識別技能缺口、主動學習、將經驗固化為 If→Then 格式。",
+      "platforms": [
+        "linux"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "orchestrator-worker-architecture",
+      "category": "autonomous-ai-agents",
+      "frontmatter_name": "orchestrator-worker-architecture",
+      "description": "處理 LLM context 累積的「Orchestrator + Worker + summarizer」三層架...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "bash-defensive-patterns",
+      "category": "bash-defensive-patterns",
+      "frontmatter_name": "bash-defensive-patterns",
+      "description": "Master defensive Bash programming techniques for producti...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "beautiful-mermaid",
+      "category": "beautiful-mermaid",
+      "frontmatter_name": "beautiful-mermaid",
+      "description": "Render Mermaid diagrams as beautiful SVG, PNG, or ASCII a...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "camofox",
+      "category": "browser",
+      "frontmatter_name": "camofox",
+      "description": "Camofox (camoufox-based Firefox) headless browser for Her...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "code-reviewer",
+      "category": "code-reviewer",
+      "frontmatter_name": "code-reviewer",
+      "description": "對完成的 ticket 跑兩階段 review:Spec Review(對照 Given/When/Then 驗收...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "code",
+      "category": "code",
+      "frontmatter_name": "Code",
+      "description": "Coding workflow with planning, implementation, verificati...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "connection-resilience",
+      "category": "connection-resilience",
+      "frontmatter_name": "Connection Resilience",
+      "description": "連線恢復專家 - 監控對話中斷、自動恢復、保護長時間任務。當回應中斷時自動重連，確保 N100 代理 24/7 穩...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "deployment-verification-sop",
+      "category": "deployment-verification-sop",
+      "frontmatter_name": "deployment-verification-sop",
+      "description": "赫米斯部署/推送任何東西後的「先驗證後啟動」SOP。觸發:任何 vercel/netlify/github pus...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "backup-coverage-check",
+      "category": "devops",
+      "frontmatter_name": "backup-coverage-check",
+      "description": "每日自動驗證備份腳本的「同步清單完整性」——掃 ~/.hermes/ 跟 v4 同步清單比對，找出「該備但沒備」或...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "coupled-infra-removal-sop",
+      "category": "devops",
+      "frontmatter_name": "coupled-infra-removal-sop",
+      "description": "Disaster-safe removal workflow for infrastructure the age...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "cron-job-health-monitor",
+      "category": "devops",
+      "frontmatter_name": "cron-job-health-monitor",
+      "description": "赫米斯 24/7 cron jobs 健康監控與失敗自動修復指引。當任何 cron job 顯示 error 狀態...",
+      "platforms": [
+        "linux"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hermes-config-layout",
+      "category": "devops",
+      "frontmatter_name": "hermes-config-layout",
+      "description": "Hermes Agent 配置檔案的結構、改動 SOP、檔案間關係地圖。當需要改 ~/.hermes/ 下的設定檔...",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hermes-deploy-verification",
+      "category": "devops",
+      "frontmatter_name": "hermes-deploy-verification",
+      "description": "標準化的部署前/中/後驗證流程，覆蓋本地驗證、production 多管道測試、DNS 同步、alias prop...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "multi-model-routing-cheatsheet",
+      "category": "devops",
+      "frontmatter_name": "multi-model-routing-cheatsheet",
+      "description": "赫米斯多模型路由速查 — 當用戶問「按任務難度切換 model」「省 tokens」「用便宜 tier」「chea...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "orchestrator-worker-parallel-architecture",
+      "category": "devops",
+      "frontmatter_name": "orchestrator-worker-parallel-architecture",
+      "description": "Orchestrator + N 個 worker 平行架構的 class-level SOP — 主 sessi...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "webhook-subscriptions",
+      "category": "devops",
+      "frontmatter_name": "webhook-subscriptions",
+      "description": "Webhook subscriptions: event-driven agent runs.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "website-design-principles",
+      "category": "devops",
+      "frontmatter_name": "website-design-principles",
+      "description": "網站建構 SOP — 多目錄多檔案分工，反對單一巨大 index.html",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "diagram-generator",
+      "category": "diagram-generator",
+      "frontmatter_name": "diagram-generator",
+      "description": "Generate Draw.io architecture diagrams, Mermaid diagrams,...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "docx",
+      "category": "docx",
+      "frontmatter_name": "docx",
+      "description": "",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "general-workflow",
+      "category": "general-workflow",
+      "frontmatter_name": "general-workflow",
+      "description": "泛化工作流程技能 — 當用戶提出問題或交辦任務時，優先喚醒此技能。先搜尋相似歷史案例，若相似度超過閾值則套用現有 ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "github",
+      "category": "github",
+      "frontmatter_name": "github",
+      "description": "Interact with GitHub using the `gh` CLI. Use `gh issue`, ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "github-auth",
+      "category": "github",
+      "frontmatter_name": "github-auth",
+      "description": "GitHub auth setup: HTTPS tokens, SSH keys, gh CLI login, ...",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "github-repo-management",
+      "category": "github",
+      "frontmatter_name": "github-repo-management",
+      "description": "Clone/create/fork repos; manage remotes, releases, bulk o...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hermes-resident-agent",
+      "category": "hermes-architecture",
+      "frontmatter_name": "hermes-resident-agent",
+      "description": "在 Hermes Agent 內建「常駐代理」架構的 SOP。當使用者要求建立長期運作的專屬代理（例如「建一個常駐...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hermes-tier-router",
+      "category": "hermes-tier-router",
+      "frontmatter_name": "hermes-tier-router",
+      "description": "赫米斯 2-tier model 路由決策表。赫米斯主 session 在呼叫 delegate_task 前讀這...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "minimax-docx",
+      "category": "minimax-docx",
+      "frontmatter_name": "minimax-docx",
+      "description": "Professional DOCX document creation, editing, and formatt...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "minimax-pdf",
+      "category": "minimax-pdf",
+      "frontmatter_name": "minimax-pdf",
+      "description": "Use this skill when visual quality and design identity ma...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "minimax-xlsx",
+      "category": "minimax-xlsx",
+      "frontmatter_name": "minimax-xlsx",
+      "description": "Open, create, read, analyze, edit, or validate Excel/spre...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "new-conversation",
+      "category": "new-conversation",
+      "frontmatter_name": "new-conversation",
+      "description": "結束 session 前先掃描本次對話,自動列出值得紀錄的 L3 抽象教訓,讓使用者確認後納入 trial-and...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "ontology",
+      "category": "ontology",
+      "frontmatter_name": "ontology",
+      "description": "Typed knowledge graph for structured agent memory and com...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "pdf",
+      "category": "pdf",
+      "frontmatter_name": "pdf",
+      "description": "",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "pptx-generator",
+      "category": "pptx-generator",
+      "frontmatter_name": "pptx-generator",
+      "description": "Generate, edit, and read PowerPoint presentations. Create...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "python-anti-patterns",
+      "category": "python-anti-patterns",
+      "frontmatter_name": "python-anti-patterns",
+      "description": "Common Python anti-patterns to avoid. Use as a checklist ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "python-observability",
+      "category": "python-observability",
+      "frontmatter_name": "python-observability",
+      "description": "Python observability patterns including structured loggin...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "python-resilience",
+      "category": "python-resilience",
+      "frontmatter_name": "python-resilience",
+      "description": "Python resilience patterns including automatic retries, e...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "reverse-engineering",
+      "category": "reverse-engineering",
+      "frontmatter_name": "Reverse Engineering",
+      "description": "Reverse engineer binaries, APIs, protocols, and workflows...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "scrapling",
+      "category": "scrapling",
+      "frontmatter_name": "scrapling",
+      "description": "Scrapling - 自適應網頁爬蟲框架，45k+ Stars。支援自動元素重定位、Cloudflare Tur...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "security-review",
+      "category": "security-review",
+      "frontmatter_name": "security-review",
+      "description": "Use this skill when adding authentication, handling user ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "skill-docker",
+      "category": "skill-docker",
+      "frontmatter_name": "skill-docker",
+      "description": "manifest inspect",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "debugging-hermes-tui-commands",
+      "category": "software-development",
+      "frontmatter_name": "debugging-hermes-tui-commands",
+      "description": "Debug Hermes TUI slash commands: Python, gateway, Ink UI.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hermes-s6-container-supervision",
+      "category": "software-development",
+      "frontmatter_name": "hermes-s6-container-supervision",
+      "description": "Modify, debug, or extend the s6-overlay supervision tree ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "program-project-planner",
+      "category": "software-development",
+      "frontmatter_name": "program-project-planner",
+      "description": "",
+      "platforms": [
+        "[linux, macos, windows]"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "subagent-driven-development",
+      "category": "software-development",
+      "frontmatter_name": "subagent-driven-development",
+      "description": "Execute plans via delegate_task subagents (2-stage review).",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "systematic-debugging",
+      "category": "software-development",
+      "frontmatter_name": "systematic-debugging",
+      "description": "4-phase root cause debugging: understand bugs before fixing.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "test-driven-development",
+      "category": "software-development",
+      "frontmatter_name": "test-driven-development",
+      "description": "TDD: enforce RED-GREEN-REFACTOR, tests before code.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "writing-plans",
+      "category": "software-development",
+      "frontmatter_name": "writing-plans",
+      "description": "Write implementation plans: bite-sized tasks, paths, code.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "sprint-planner",
+      "category": "sprint-planner",
+      "frontmatter_name": "sprint-planner",
+      "description": "從 system-architect 架構 handoff 拆出 sprint ticket,每個 ticket ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "sprint-reporter",
+      "category": "sprint-reporter",
+      "frontmatter_name": "sprint-reporter",
+      "description": "Sprint 結束時產出 burndown 圖 + velocity 報告,更新 sprint-history.m...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "tdd-implementer",
+      "category": "tdd-implementer",
+      "frontmatter_name": "tdd-implementer",
+      "description": "對單一 ticket 執行 TDD(RED → GREEN → REFACTOR)實作,完成後 commit + ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "tdd-workflow",
+      "category": "tdd-workflow",
+      "frontmatter_name": "tdd-workflow",
+      "description": "Use this skill when writing new features, fixing bugs, or...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "trial-and-error",
+      "category": "trial-and-error",
+      "frontmatter_name": "trial-and-error",
+      "description": "赫米斯踩過的坑目錄 — **MUST LOAD BEFORE EXECUTION**。當使用者交辦任何執行類任務或...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "user-collaboration-style",
+      "category": "user-collaboration-style",
+      "frontmatter_name": "user-collaboration-style",
+      "description": "與 hoonsoropenclaw 這位使用者協作的工作風格規範。當赫米斯處理任何任務、回答問題、提出方案、撰寫報...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "vision-analysis",
+      "category": "vision-analysis",
+      "frontmatter_name": "vision-analysis",
+      "description": "Analyze, describe, and extract information from images us...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "web_search",
+      "category": "web_search",
+      "frontmatter_name": "web_search",
+      "description": "雙軌 Web 搜尋技能：Ollama Web Search（主） + Tavily（備）。當需要查詢網路資訊、驗證...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "workspace-folder-layout",
+      "category": "workspace-folder-layout",
+      "frontmatter_name": "workspace-folder-layout",
+      "description": "hoonsoropenclaw 工作區（home 根目錄 / Y 槽遠端硬碟）的檔案組織 SOP。當要建立新檔案/...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "xlsx",
+      "category": "xlsx",
+      "frontmatter_name": "xlsx",
+      "description": "",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    }
+  ],
+  "category_descriptions": {
+    "autonomous-ai-agents": "Skills for spawning and orchestrating autonomous AI coding agents and multi-agent workflows — running independent agent processes, delegating tasks, and coordinating parallel workstreams.",
+    "diagramming": "Diagram creation skills for generating visual diagrams, flowcharts, architecture diagrams, and illustrations using tools like Excalidraw.",
+    "github": "GitHub workflow skills for managing repositories, pull requests, code reviews, issues, and CI/CD pipelines using the gh CLI and git via terminal.",
+    "research": "Skills for academic research, paper discovery, literature review, domain reconnaissance, market data, content monitoring, and scientific knowledge retrieval."
+  }
+}
