@@ -223,7 +223,29 @@ tier2_drive() {
   # 解 passphrase-recovery 需 USER_KEY(使用者記住的單一密碼,跟 GPG passphrase 不同)
   if ! $DRY_RUN; then
     backup_passphrase_recovery
+    upload_drive_restore_readme
   fi
+}
+
+# v4.5.1：每次 Tier 2 完成時把 DRIVE-RESTORE.md 推到 Drive 根目錄
+# 讓未來的 AI / 接手者 / 使用者打開 Drive 就能看到還原說明
+upload_drive_restore_readme() {
+  local restore_doc="$HERMES_HOME/docs/DRIVE-RESTORE.md"
+  local drive_root="hoonsorasus:hermes-backup"
+
+  if [[ ! -f "$restore_doc" ]]; then
+    warn "找不到 $restore_doc、跳過 Drive 端還原說明上傳"
+    return 0
+  fi
+
+  if ! $DO_UPLOAD_T2; then
+    log "DRIVE-RESTORE.md 上傳跳過（需加 --upload-drive）"
+    return 0
+  fi
+
+  log "上傳 DRIVE-RESTORE.md 到 Drive 根目錄..."
+  rclone copy "$restore_doc" "$drive_root/" --transfers=1 --checkers=1 --tpslimit 5 2>&1 | tail -3
+  ok "Drive 端還原說明已更新"
 }
 
 # v4.5：把 GPG passphrase 加密備份到 Drive 獨立目錄
