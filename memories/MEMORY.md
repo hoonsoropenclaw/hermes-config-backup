@@ -167,6 +167,15 @@
 - **If** 寫 rsync 排除清單 **Then** **所有「同形子目錄」都要列**:不只是 `skills/.curator_backups/`,還要 `profiles/*/skills/.curator_backups/`
 - 推廣:**rsync 的 `--exclude` 不支援 glob 跨層級**——`*/skills/.curator_backups/` 也不會匹配,必須明確列每個路徑,**或** 用 `--max-size=50m` 從大小端加一層保險
 
+### 「修改影響對照表」要寫進技能才算閉環(2026-06-10,從備份 v4.5 完整化歸納)
+- **情境**:這次從 v4.1 升 v4.5 過程中,使用者反覆問「改 X 會不會漏改 Y」,赫米斯每次回答都要先 `grep` 全工作區,容易漏。**解法**:把「改 X 必同步改 A/B/C/D」直接寫進技能 SKILL.md §14,未來 AI 載入技能時自動看到
+- **If** 設計任何「跨多個檔案/多個 SOP 的技能」**Then** 必含「修改影響對照表」段:
+  - 「改這個檔 → 必同步改那幾個檔」清單
+  - 對應的驗證命令(語法檢查、push 測試、grep 驗證)
+  - 「常見遺漏」警示(過去踩過的坑)
+- **If** 還原說明檔要給「未來 AI」看 **Then** 必含 7 個元素(架構圖、預期輸出、決策樹、debug 對照表、FAQ、驗證清單、自動化驗證 script)
+- 推廣:**技能的「完整性」= 設計意圖 + 流程 SOP + 修改影響對照 + 驗證方式 + 還原說明 5 段都寫進去**——不是只寫「怎麼做」也要寫「改了會影響什麼」跟「給接手者看」
+
 ### LLM sub-agent 是無狀態的——必抓清單 + _plan.md 是 Orchestrator 跟 sub-agent 的介面契約（2026-06-10）
 - 觀察:Orchestrator + Worker 平行架構跑 4 個 web-worker + 1 個 summarizer,summarizer **自動從 _raw/ 歸納 Persona** 換掉 v1 推測的「跨國」「退休族」客群,並**漏掉 SkillSwap.io**(v1 有、v2 原始漏)
 - 根因:LLM sub-agent 看到 prompt 只看 prompt 內列的內容、**不會主動繼承 Orchestrator 還沒寫進 prompt 的「使用者原意」**,也不會主動補抓 prompt 沒列的「必抓清單」
