@@ -533,3 +533,83 @@ rclone copy --dry-run --progress <src> crypt_hermes:<dst>
 - [[hermes-backup-strategy#hermes-backup-coverage-check.sh 設計:3 層檢查 + EXCLUDE 清單明確]]
 - [[hermes-backup-sop#改任何備份腳本必同步改 INVENTORY.md + SKILL.md §14.1 改檔對照表]]
 - [[workspace-folder-layout#根目錄檔案盤點三類法]]
+
+---
+
+### [Rule 16] jobs.json script 欄位不得含參數（2026-06-11）
+
+**症狀**：`v4-backup-tier2-daily` cron error：`Script not found: /home/hoonsoropenclaw/.hermes/scripts/hermes-backup-v4.sh --tier2 --upload-tier2`
+
+**根因**：`hermes cron edit --script` 或直接寫 jobs.json 時，`script` 欄位寫成 `hermes-backup-v4.sh --tier2 --upload-tier2`（含參數）。Scheduler 的 `_run_job_script()` 對 no_agent jobs 直接把 `script` 欄位當成完整 shell command 拼接，導致 `/bin/bash -c "hermes-backup-v4.sh --tier2 --upload-tier2"` 而非只執行 `hermes-backup-v4.sh`。
+
+**解法**：
+- `script` 欄位只寫腳面名（如 `hermes-backup-v4.sh`），不帶任何參數
+- 參數寫在 `prompt` 欄位
+- jobs.json 中手動創建 no_agent jobs 時嚴守此格式
+
+**預防**：
+- **If** 要建立含參數的 script-only cron job **Then** 在 jobs.json 中手動創建，確保 `script` = 檔名、`prompt` = 含參數的命令、`no_agent` = `true`
+- **If** 懷疑某個 no_agent cron job 的 "Script not found" 錯誤 **Then** 先檢查 jobs.json 的 `script` 欄位是否只含檔名
+
+**If→Then**：
+- **If** `hermes cron edit --script` 對 no_agent jobs 的 bug（把參數寫進 script 欄位）**Then** 直接手動編輯 jobs.json 修復，不要再用 `hermes cron edit`
+- **If** jobs.json 的 `script` 欄位包含空白字元（看起來像 `xxx.sh --arg`）**Then** 立即拆分：script = `xxx.sh`，prompt = 完整命令
+
+**驗證命令**：
+```bash
+python3 -c "
+import json
+with open('~/.hermes/cron/jobs.json') as f:
+    data = json.load(f)
+for j in data['jobs']:
+    if j.get('no_agent') and j.get('script') and ' ' in j['script']:
+        print(f\"BUG: {j['name']} has args in script: {j['script']}\")
+"
+```
+
+---
+
+### [Rule 17] hermes-backup-v4.sh 新增同步目錄後，必須同步 mkdir staging（2026-06-11）
+
+**症狀**：`v4-backup-tier2-daily` rsync 失敗：`mkdir "/home/hoonsoropenclaw/.hermes/hermes-backup-staging/cache/youtube" failed: No such file or directory`
+
+**根因**：INVENTORY.md 和 hermes-backup-v4.sh 新增了 `cache/youtube/`、`cache/documents/`、`logs/` 等同步目標，但 staging 目錄（`~/.hermes/hermes-backup-staging/`）是空的，rsync 嘗試 mkdir 這些子目錄失敗。
+
+**解法**：rsync 目標 staging 的父目錄必須存在。先建立 `~/.hermes/hermes-backup-staging/`，裡面手動 mkdir 所有會被 rsync 的子目錄。
+
+**預防**：
+- **If** INVENTORY.md 新增同步目錄 **Then** 同步建立對應的 staging 子目錄
+- **If** 跑了 coverage check 出現 `⚠️ 'xxx/' 本機有但 staging 沒有` **Then** 立即 `mkdir -p ~/.hermes/hermes-backup-staging/xxx/`
+
+**驗證命令**：
+```bash
+# 驗證所有 INVENTORY.md 中的同步目錄在 staging 都存在
+SCRIPT="$HOME/.hermes/scripts/hermes-backup-v4.sh"
+STAGING="$HOME/.hermes/hermes-backup-staging"
+grep -oE '"\$HERMES_HOME/[a-z_]+/"' "$SCRIPT" | while read dir; do
+  name=$(echo "$dir" | sed -E 's/"\$HERMES_HOME\///; s|/"||')
+  if [[ ! -d "$STAGING/$name" ]]; then
+    echo "MISSING staging dir: $name"
+  fi
+done
+```
+
+---
+
+### [Rule 18] hermes-config-backup-daily 使用舊版 backup_hermes_v3.sh，應改用 v4（2026-06-11）
+
+**症狀**：`hermes-config-backup-daily` timeout after 3600s（跑了 1 小時還超時）。使用 `backup_hermes_v3.sh` 而非 `hermes-backup-v4.sh`。
+
+**根因**：jobs.json 中 `hermes-config-backup-daily` 的 script 欄位仍指向 `backup_hermes_v3.sh`（v3 版）。v3 設計比 v4 慢很多。
+
+**解法**：
+1. jobs.json 中將 script 改為 `hermes-backup-v4.sh`
+2. prompt 設為 `hermes-backup-v4.sh`（無參數）
+3. `no_agent` 保持 `true`
+4. 注意：v4 預設同時跑 Tier 1 + Tier 2，若只想跑 Tier 1，需加 `--tier1-only` 或查看 v4 是否支援
+
+**交叉驗證**：
+```bash
+grep '"timeout_seconds": 600' ~/.hermes/cron/jobs.json  # 應為 3600+
+grep 'backup_hermes_v3.sh' ~/.hermes/cron/jobs.json     # 舊 script 名
+```

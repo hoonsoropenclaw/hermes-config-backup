@@ -70,6 +70,7 @@ tier1_github() {
   declare -a ROOT_SINGLE_FILES=(
     "config.yaml"
     "SOUL.md"
+    ".skills_prompt_snapshot.json"
   )
   for f in "${ROOT_SINGLE_FILES[@]}"; do
     if [[ -f "$HERMES_HOME/$f" ]]; then
@@ -105,14 +106,18 @@ tier1_github() {
   fi
 
   # 同步 cache/youtube/（v4.6 新增：YouTube 公開資料）
+  # v4.6.1 fix: 先 mkdir -p 確保 staging 子目錄存在（修 2026-06-11 02:00 rsync mkdir failed 錯誤）
   if [[ -d "$HERMES_HOME/cache/youtube" ]]; then
+    mkdir -p "$STAGING/cache/youtube"
     run_or_dry rsync -au --delete \
       --exclude='__DEPRECATED__*' \
       "$HERMES_HOME/cache/youtube/" "$STAGING/cache/youtube/"
   fi
 
   # 同步 cache/documents/（v4.6 新增：documents cache）
+  # v4.6.1 fix: 同上、確保 staging 子目錄存在
   if [[ -d "$HERMES_HOME/cache/documents" ]]; then
+    mkdir -p "$STAGING/cache/documents"
     run_or_dry rsync -au --delete \
       --exclude='__DEPRECATED__*' \
       "$HERMES_HOME/cache/documents/" "$STAGING/cache/documents/"
@@ -411,7 +416,11 @@ main() {
   local exit_code=0
 
   if $DO_TIER1; then
-    tier1_github || exit_code=1
+    if ! tier1_github; then
+      err "Tier 1 失敗、跳過 Tier 2（避免白做 285M secrets 加密）"
+      err "詳細錯誤看上面訊息、或看 ~/.hermes/logs/$(date +%Y%m%d)_*.log"
+      return 1
+    fi
     echo ""
   fi
 
