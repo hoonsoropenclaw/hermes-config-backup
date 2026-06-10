@@ -352,8 +352,16 @@ gh auth setup-git   # 自動注入 [credential "https://github.com"] helper = !/
 **If** 看到備份腳本寫到 `/media/...` 或 `n100/backup-2026...` 開頭
 **Then** 先 `ls /media/hoonsoropenclaw/` 確認，**不存在就別跑**
 
-## 11. 改進方向（未實作）
+## 11. References 支援檔(class-level 細節)
+
+需要深入特定主題時 view 對應 reference:
+
+- **`references/v4-rsync-exclude-recipes.md`** — v4 rsync 排除清單完整食譜(18+ 個 exclude 的「為何」+ v5 設計 checklist)
+- **`references/github-push-recovery.md`** — GitHub push 卡死的 3 種情境 troubleshooting(95% 卡死 / SSH 卡死 / 帳號不一致)
+- **`references/gpg-two-layer-encryption.md`** — GPG 雙層加密 + 異機還原完整設計(USER_KEY 規則 + Drive 目錄結構 + 互動式解密流程)
+
+## 12. 改進方向（未實作）
 
 - **真正的異機還原測試**：用 docker 跑完整 restore 流程驗證（未做，本 session 只測了 backup + rclone 連通性）
 - **增量備份**：目前每次全量 134 MB 加密上傳，1.3 MB/s 要 100 秒。改 rclone `--backup-dir` 做 incremental 可省頻寬
-- **多 profile 支援**：hermes 支援多 profile，但本備份 script 只備 default。要加 `~/.hermes/profiles/*` 的話需先看 `get_hermes_home()` 怎麼運作
+- **多 profile 增量驗證**：v4.2 profiles 同步的 `.curator_backups/` 排除清單只驗證 default,profile 內是否還有其他隱藏大檔需要實測確認

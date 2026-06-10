@@ -279,8 +279,11 @@ recover_passphrase_from_drive() {
   mv "/tmp/$latest" "$tmp_gpg"
   chmod 600 "$tmp_gpg"
 
-  # 4. 互動式問 USER_KEY
-  if [[ -t 0 ]]; then
+  # 4. 互動式問 USER_KEY（或從環境變數讀，cron 或 CI 模式用）
+  if [[ -n "${HERMES_USER_KEY:-}" ]]; then
+    user_key="$HERMES_USER_KEY"
+    log "USER_KEY 從 HERMES_USER_KEY 環境變數讀取（跳過互動 prompt）"
+  elif [[ -t 0 ]]; then
     echo ""
     echo "════════════════════════════════════════════════════════════"
     echo "  Passphrase 自動還原 (v4.5)"
@@ -294,6 +297,7 @@ recover_passphrase_from_drive() {
   else
     err "非互動式模式、USER_KEY 無法輸入"
     err "請手動跑 hermes-restore-v4.sh tier2（互動式）"
+    err "或設定 HERMES_USER_KEY 環境變數"
     rm -f "$tmp_gpg"
     return 1
   fi
