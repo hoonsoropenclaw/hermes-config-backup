@@ -295,3 +295,20 @@
 - `~/.config/rclone/rclone.conf`(舊、過期 token)
 - `~/documents/rclone.conf`(新、含 crypt 層)
 - 備份 script 必須明確指新路徑
+
+### v4.5 restore 缺 HERMES_USER_KEY 環境變數 fallback(2026-06-10 14:14 踩坑)
+- **情境**:v4.5 `backup_passphrase_recovery()` 支援 `HERMES_USER_KEY` 環境變數(給 cron 用),但 `recover_passphrase_from_drive()` **只支援 `[[ -t 0 ]]` 互動式 prompt**——cron 跑會 fail
+- **失敗原因**:v4.5 兩個函式**同步設計時沒對齊**——backup 支援非互動式、restore 沒支援
+- **正確做法**:`recover_passphrase_from_drive()` 也加 `${HERMES_USER_KEY:-}` 環境變數 fallback
+  ```bash
+  if [[ -n "${HERMES_USER_KEY:-}" ]]; then
+    user_key="$HERMES_USER_KEY"
+  elif [[ -t 0 ]]; then
+    read -r -s -p "USER_KEY: " user_key
+  else
+    err "非互動式、需 HERMES_USER_KEY"
+    return 1
+  fi
+  ```
+- **驗證**:`HERMES_USER_KEY=x bash hermes-restore-v4.sh tier2` 成功(2026-06-10 14:14)
+- **推廣**:**任何「互動式設計」,準備做 cron 化前必加 `${ENV_VAR:-}` fallback——互動式 prompt 在 cron 必 fail**
