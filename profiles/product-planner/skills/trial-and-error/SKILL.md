@@ -1,0 +1,184 @@
+---
+name: trial-and-error
+description: "赫米斯踩過的坑目錄 — **MUST LOAD BEFORE EXECUTION**。當使用者交辦任何執行類任務或赫米斯即將對系統做變更時,必須**第一時間** `skill_view` 這個 skill,看有沒有踩過的雷。**HARD TRIGGER 詞**(命中任一必須載入):vercel / deploy / Vercel / CDN / cloudflare / git push / filter-branch / BFG / GH013 / GH001 / force push / large file / GPG / gpg / encrypt / decrypt / 簽章 / passphrase / rclone / Drive / 備份 / backup / purge / crypt / token / .env / API key / process.env / execute_code / python3.12 / pip install / uv venv / uv pip / pyproject.toml / hatchling / wheel / editable install / subprocess / sandbox / browser / playwright / headless / camofox / for f in / 2>&1 / pipefail / set -e / hermes cron / hermes status / config / gateway / **openclaw / uninstall / 反安裝 / cookies / Cookie-Editor / twitter-cli / rdt-cli / yt-dlp / X.json / reddit.json**。**判斷性問題**也必須查(使用者問「X 可以不備嗎」「X 是 Y 還是 Z」「X 真的能砍嗎」時不要憑印象答)。**懲罰**:跳過載入 = 使用者事後審查發現 = 信任扣分。"
+version: 1.2.0
+author: Hermes Agent (auto-saved)
+license: MIT
+platforms: [linux, macos]
+---
+
+### session_search MCP Tool 不可用的備援程序（2026-06-09）
+**症狀**: `session_search` 呼叫時收到「Tool not found」或「Skill not found」
+**根因**: session_search 是 MCP 工具，非核心依賴，可能被標記為 `skipped` 或根本未啟用
+**觸發情境**: metacognitive-learner 每 2 小時啟動，Phase 1 需要搜尋最近 10 個 session
+
+**備援路徑**（按順序）：
+1. 直接搜尋 `~/.hermes/memories/*.md`（`read_file` + `search_files`）
+2. 搜尋 `~/.hermes/skills/` 目錄結構
+3. 讀取 `HEARTBEAT.md`、`MEMORY.md`、`USER.md` 等核心記憶檔案
+4. 搜尋 `~/.hermes/cron/jobs.json` 了解排程任務模式
+5. 若仍無足夠線索，搜尋 `~/.hermes/sessions/sessions.json`（會話索引）
+
+**驗證命令**：
+```bash
+hermes cron list 2>&1 | head -20  # 基本系統狀態
+ls ~/.hermes/memories/            # 記憶檔案存在
+wc -l ~/.hermes/memories/MEMORY.md  # 確認可讀
+```
+
+**If→Then**: **If** session_search 工具呼叫失敗 **Then** 立即切換備援路徑，不要中斷學習流程
+
+> **不要在這裡塞踩雷條目** — 完整條目依分類放在 `references/by-category/`。
+> 本檔只放「怎麼用這個 skill」的入口。
+
+## 何時使用
+
+**觸發條件**（任一符合即觸發）:
+
+- 任何涉及 gpg / gh CLI / Vercel / Python sandbox / 加密 / token / 部署 / 認證 / 權限 / **rclone / Drive / GitHub** / bash script / cron / 異機還原的任務
+- 使用者明確說「這以前踩過」「為什麼又壞了」「上次怎麼解的」時
+- hermes CLI / gateway / config / cron jobs 內部行為問題
+- **使用者問判斷性問題**（「X 可以不備嗎」「X 是 rebuild 還是 cache」「X 真的可以砍掉嗎」）— 先看 `hermes-backup-design-pitfalls#Rule 12`（rebuild 判斷要先查）
+
+### 🚨 強制載入 SOP（2026-06-07 新增,根據使用者回饋）
+
+**觸發檢查點**（每個任務第一個 tool call 之前**必須**完成）:
+
+1. **掃使用者訊息** 是否有 HARD TRIGGER 詞（vercel / git push / GPG / rclone / token / execute_code / bash script / cron / browser / hermes CLI）
+2. **命中任一** → 立即 `skill_view(name='trial-and-error', file_path='references/by-category/<分類>.md')` 載入對應分類
+3. **判斷性問題**（使用者問「X 可以不備嗎」「X 是 Y 還是 Z」）→ 必查 `hermes-backup-design-pitfalls.md` Rule 12
+4. **載入完成後**才開始第一個 tool call（patch / write_file / terminal / execute_code）
+
+**If→Then 規則**:
+- **If** 使用者訊息含 vercel / deploy / CDN / github pages 任一字 **Then** 必載入 `vercel-deployment.md`
+- **If** 使用者訊息含 git push / GH013 / filter-branch 任一字 **Then** 必載入 `gh-cli-and-github.md`
+- **If** 使用者訊息含 GPG / encrypt / 簽章 任一字 **Then** 必載入 `gpg-encryption.md`
+- **If** 使用者訊息含 rclone / Drive / 備份 任一字 **Then** 必載入 `hermes-backup-strategy.md` + `hermes-backup-design-pitfalls.md`
+- **If** 使用者訊息含 token / .env / API key 任一字 **Then** 必載入 `secrets-and-env.md`
+- **If** 使用者訊息含 pip install / uv venv / uv pip / pyproject.toml / hatchling / editable install 任一字 **Then** 必載入 `python-sandbox.md`(uv venv 無 pip、force-include 衝突、editable fallback)
+- **If** 使用者訊息含 cookies / Cookie-Editor / X.json / reddit.json / twitter-cli / rdt-cli / yt-dlp / agent-reach 任一字 **Then** 必載入 `headless-cookie-import.md`(N100 headless 平台 CLI 認證通用 SOP)
+- **If** 判斷性問題（「X 可以不備嗎」「X 是 Y 還是 Z」「X 真的能砍嗎」）**Then** 必載入 `hermes-backup-design-pitfalls.md` Rule 12
+- **If** 赫米斯在第 5 個 tool call 內遇到「看起來以前踩過的雷」症狀 **Then** 立即停止、回頭載入 trial-and-error、不是繼續 debug
+
+**為什麼需要這條**（2026-06-07 案例）:
+使用者交付「hermes-cli-reference 網站搜尋『更新』沒結果」任務,赫米斯直接開始 patch + deploy + 驗證,結果在第 15 個 tool call 才發現 git reflog 沒有那個 commit（其實是 LLM hallucination 成功 SHA）。**如果一開始就 `skill_view(vercel-deployment.md)`,會看到「部署成功 200 ≠ 使用者打得開」、「.env 是 token 唯一可靠來源」等條目,提早發現問題**。使用者審查後明確要求:赫米斯必須**強制主動撈 trial-and-error**,不要等出事了才撈。
+
+**已知分類**（2026-06-07 更新）:
+
+- `hermes-internal` — hermes CLI / gateway / cron jobs / config / skill 機制的坑
+- `gpg-encryption` — GPG 加密 / 簽章 / key 管理
+- `gh-cli-and-github` — gh CLI / GitHub API / 雙帳號 / token / **GH013 / GH001 / filter-branch**
+- `vercel-deployment` — Vercel CLI / API / 部署 / env 變數
+- `python-sandbox` — Python sandbox / token 字串遮罩 / 程式碼寫法 / **uv venv 無 pip / pyproject force-include 衝突 / venv CLI PATH 不可見 / yt-dlp JS runtime**
+- `headless-cookie-import` — **N100 headless 把 Cookie-Editor JSON 餵給 X/Reddit/小紅書/微博/雪球 CLI 的完整 SOP**（twitter-cli 用 env、rdt-cli 用 credential.json、yt-dlp 用 Netscape 檔、agent-reach 內建 configure 直接吃 cookie header）
+- `secrets-and-env` — .env / 憑證管理 / GPG 加密佈局
+- `browser-automation` — Playwright / headless browser / 反檢測
+- `bash-defensive-patterns` — Bash 函式 stdout 污染、for+2>/dev/null 語法、array+regex、**2>&1 | grep 吞 exit code**、**set -o pipefail + head -1 對空 grep 觸發 silent exit**
+- `hermes-backup-strategy` — 備份架構演進（v1 → v2 → v3 → **v4.1 雙雲端** → **v4.2 明文 Drive**）
+- `hermes-backup-design-pitfalls` — 備份設計盲點（**Rule 8-15**：Drive 配額、rebuild 判斷、rclone purge、偽 mkdir、偽 .gpg 目錄）
+- `hermes-backup-sop` — 備份執行 SOP
+- `hermes-config-tuning` — model / provider / **wakeAgent gate 控制 cron silent/not**
+
+## 最近新增條目（2026-06-07 v3 → v4 → v4.1 演進；2026-06-08 agent-reach 完整啟用）
+
+### headless-cookie-import（2026-06-08 新分類）
+N100 headless 把 Cookie-Editor JSON 餵給各平台 CLI 的通用 SOP。涵蓋：
+- **Twitter/X** (twitter-cli 用 `TWITTER_AUTH_TOKEN` + `TWITTER_CT0` 環境變數 → 寫進獨立 `~/.bash_env` 避免 bash_profile 互動式 return 阻擋)
+- **Reddit** (rdt-cli 用 `~/.config/rdt-cli/credential.json` JSON 檔 → 必含 `reddit_session` + 建議含 `token_v2` → N100 沒瀏覽器所以 `rdt login` 失敗、要手動寫)
+- **YouTube** (yt-dlp 用 Netscape cookie 檔 → `#HttpOnly_` prefix 容易被忽略)
+- **小紅書 / 微博 / 雪球** (走 `agent-reach configure <platform>-cookies "header string"`)
+- 完整「N100 平台 CLI 認證通用 SOP」流程 + 平台對照表 + 通用 If→Then 規則
+
+### python-sandbox
+- 2026-06-08 大幅擴充（從 6 → 9 條）：
+  - **`force-include` 衝突 → editable install fallback**（hatchling wheel 失敗 SOP）
+  - **venv CLI PATH 不可見 → `~/.local/bin` symlink 是標準解**（為何不用 pipx 自動處理）
+  - **yt-dlp `--js-runtimes node` 是 2026+ 最小配置**（配 EJS 處理更難 challenge）
+  - **`uv venv` 預設不含 `pip`**（要 `uv pip install --python <path> pip` 才會有）
+  - **N100 出口 IP 是真住宅 IP（遠傳 ADSL）但 YouTube 仍 429**（AS-level 黑名單的概念 + Webshare 是最便宜的乾淨解）
+  - **`execute_code` sanitization 連 patch 工具都觸發**（寫 token 用 f-string 會被靜默替換成 `***`、Python 還不報錯）
+
+### hermes-internal
+- 2026-06-08 加 **bash_profile 從 bashrc 抄 skeleton 帶「互動式 return」阻擋 export** 條目（hermes-internal 第 21 條）
+
+### hermes-backup-strategy
+- v4.2 明文 Drive + client-side GPG（響應 rclone crypt 不實用）
+- v4.1 修正：state.db 跟 hermes-agent 分類重新檢視
+- v4 雙雲端演進：從 v3.0 半成品到 v4 雙雲端
+
+### hermes-backup-design-pitfalls
+- [[hermes-backup-design-pitfalls#Rule 15：`rclone mkdir ... 2>/dev/null || true` 偽成功 + Drive 上 .gpg 顯示成「偽目錄」陷阱]]
+- [[hermes-backup-design-pitfalls#Rule 14：`rclone purge <remote>:` = 砍整個 remote 內容到垃圾桶（不是清垃圾桶）]]
+- [[hermes-backup-design-pitfalls#Rule 13：rclone crypt 對大檔（>50 MB）加密是反模式]]
+- [[hermes-backup-design-pitfalls#Rule 12：對任何資料備份前，**先查能不能 rebuild**（不要憑印象答）]]
+- [[hermes-backup-design-pitfalls#Rule 11：v4 備份腳本**完全漏掉 skills/ 同步**、剛加的條目沒進 GitHub（2026-06-07 踩到）]]
+- [[hermes-backup-design-pitfalls#Rule 10：「先查上游、不要假設本地是 source of truth」— sparc-methodology 是 upstream clone 不是本地維護]]
+- [[hermes-backup-design-pitfalls#Rule 9：備份檔不該被備份（備份悖論）]]
+- [[hermes-backup-design-pitfalls#Rule 8：Drive API 配額 840K/分鐘/專案、13,611 小檔必爆（從 stderr 拿到 Google 官方配額數字）]]
+
+### gh-cli-and-github
+- [[gh-cli-and-github#GH001 Large files > 100MB + filter-branch 從歷史移除的陷阱（2026-06-07 踩到）]]
+- [[gh-cli-and-github#GH013 push protection 觸發時的完整修復 SOP（2026-06-07 第二次踩到）]]
+- [[gh-cli-and-github#`gh repo create --source=. --push` 要求目錄已是 git repo + 至少一次 commit]]
+- [[gh-cli-and-github#`vercel whoami` 跟 `gh auth status` 顯示的帳號可能不同 — 兩者不互通]]
+- [[gh-cli-and-github#gh auth status 顯示 Failed 但 GH_TOKEN 環境變數仍可走 API]]
+- [[gh-cli-and-github#gh CLI 對缺 read:org scope 的 token 會拒絕 auth login --with-token]]
+
+### bash-defensive-patterns
+- [[bash-defensive-patterns#bash `2>&1 | grep -qE "error"` 會吞掉 exit code、讓 push 失敗顯示假成功]]
+- [[bash-defensive-patterns#bash `[[ "$array[@]" "regex" =~ "pattern" ]]` 在 array expansion + regex 比對會炸]]
+- [[bash-defensive-patterns#bash `for f in glob 2>/dev/null` 在 for 結構內不支援 stderr 重導]]
+- [[bash-defensive-patterns#Bash 函式內 echo 會被當成回傳值汙染 $(func) 結果]]
+
+### hermes-config-tuning
+- v4.1 完整敘述（Rule 11：v3 限制催生 v4 雙雲端）
+- wakeAgent=false gate 控制 cron 腳本 stdout 是不是 silent
+
+### hermes-internal
+- **卸載前用 `ps -o ppid=` 查 PPID 判斷「真正 owner」可顛覆整個方案（2026-06-08）**：使用者問「mempalace MCP 是前任拉斐爾 OpenClaw 套件代理啟動嗎？不能改由赫米斯（繼承後的現任拉斐爾）啟動嗎？」→ 查 `ps -o pid,ppid,cmd` 發現 mempalace.mcp_server 的 PPID 是赫米斯主進程（1872192），不是 OpenClaw。整個「卸載前要改赫米斯 MCP 設定加 env var」的方案變成不需要（PPID 證明 mempalace 本來就赫米斯管、前任拉斐爾 OpenClaw 套件代理死了也不影響）。**If** 卸載前猶豫「A 跟 B 哪個才是 X 的 owner」**Then** `ps -ef | grep X` + `ps -o pid,ppid,cmd` 查 PPID 鏈，不要從 config 檔讀「誰提到 X」就推論誰管
+- **卸載會 kill child process 觸發「副作用波」+ 赫米斯自動 re-spawn（2026-06-08）**：前任拉斐爾 OpenClaw 套件代理卸載 `openclaw uninstall --all` 跑完後，mempalace MCP 從 PID 1872205 換成 1896464 — 卸載動作觸發 kill 整個 process group，赫米斯偵測 MCP 死掉自動 re-spawn 新進程。**對 MCP 工具鏈零 down-time**，但需要驗證：「卸載後 PID 是否換了」 = 系統健康訊號，反之「PID 沒換」 = 卸載沒動到、可能有問題。**If** 卸載某個 parent process **Then** 預期 child MCP 會重 spawn、PID 會變，要用「工具呼叫仍可用」驗證
+- **套件卸載 100% 會清 CLI binary、但 user-installed systemd unit 殘檔要手動清（2026-06-08）**：前任拉斐爾 OpenClaw 套件代理的 `openclaw uninstall --all` 只清 `default.target.wants/` 跟 `timers.target.wants/` 內的 symlink，沒清 `~/.config/systemd/user/<service>.{service,timer}` 本身。**If** 套件卸載後看到 systemd `not-found inactive dead` 但 unit 檔還在 **Then** 這是套件卸載 bug、要手動 `rm -f` unit 檔 + `daemon-reload` + `reset-failed`。驗證：`find ~/.config/systemd -name '*<X>*'` 必須空
+- **卸載前必先 `--dry-run`（2026-06-08）**：前任拉斐爾 OpenClaw 套件代理的 `openclaw uninstall --all --dry-run` 會列印「remove gateway service / remove ~/.openclaw / remove ~/.openclaw/workspace」三個動作。**任何 `npm uninstall`、`pip uninstall`、`apt remove`、`rm -rf` 前必先 dry-run 或 list target**。**If** 卸載指令有 `--dry-run` flag **Then** 必先跑確認會動什麼，不要直接看 help 就下指令。**If** 卸載指令沒 `--dry-run` **Then** 至少先 `which X` + `readlink -f $(which X)` + `dpkg -L X | head` 知道會被動到哪些檔
+- **Vercel CLI auth.json 在套件卸載時可能被觸碰（2026-06-08）**：前任拉斐爾 OpenClaw 套件代理的 `openclaw uninstall --all` 後 `~/.local/share/com.vercel.cli/auth.json` 從原本的完整 OAuth token 變成 3 bytes 雜湊。**不影響**已部署的 status site 公開 URL（Vercel CDN 不依賴 CLI token），但未來要 `vercel --prod` 重新部署時需 `vercel login` 重新登入。**If** 卸載某個 CLI 工具後 `vercel whoami`/`gh auth status`/其他 CLI 認證指令報「no credentials」**Then** 該 CLI 的 auth.json 可能被卸載觸碰、跑 `vercel login`/`gh auth login` 重新登入。**If** 認證檔可能被卸載觸碰 **Then** 提前備份（`cp auth.json auth.json.pre-uninstall-20260608`）
+- **`pgrep -f <name>` 對「path 含子字串」的 process 會誤報（2026-06-08 結尾）**：結尾驗證「前任拉斐爾 OpenClaw 套件代理完全清除」時 `pgrep -f openclaw` 報 6 個進程，嚇一跳以為漏網之魚。實際是 false positive — `pgrep -f` 對**完整 command line** 做 regex 匹配，任何 path 含 `openclaw` 子字串的 process 都會中（包括 `~/.hermes/hermes-agent/` 內某些子字串、sshd、跑 `pgrep` 自己的 bash）。正確查法：`pgrep -f 'openclaw/dist/index.js'`（更精準的完整 path）、或 `pgrep -af openclaw` 看完整指令辨識。**If** 用 `pgrep -f <name>` 確認 process 已清乾淨 **Then** 至少用 `pgrep -af` 看完整指令，不要只看數量
+- **Background process 結束通知的 exit code 語意（2026-06-08）**：用 `terminal(background=true)` 啟動的 process 跑完，Hermes 自動通知 `Background process proc_xxx completed (exit code N)`。**N 的語意**:124 = timeout、130 = SIGINT（Ctrl+C）、137 = SIGKILL（OOM 或強制）、**143 = SIGTERM（被 pkill/kill 正常關掉）**。**If** 收到 background process 結束通知 **Then** 先看 exit code：124 → 該調大 timeout 或拆批；130/137 → 看 log 找原因；**143 → 通常是測試用 process 跑完被主動 kill、是預期內 lifecycle、不要當失敗重跑**。驗證方式：grep 自己 `pkill/kill` 紀錄 + `ps -ef` 看 process 是否還在 + `tail log` 看有沒有 panic
+- **bash_profile 從 bashrc 複製會帶進「互動式 return」阻擋 login shell 的 export（2026-06-08）**：想把 export 寫到 `~/.bash_profile` 給 login shell 用，從 `~/.bashrc` 複製 skeleton 過去時，bashrc 開頭的「若非互動式 shell 則 return」區塊也跟著被複製。`bash -lc` 登入 shell 雖然是互動的，但 `bash -c "command"` 啟動的 subprocess 進到 bash_profile 會被 `case $- in *i*) ;; *) return;; esac` 提前 return，後面所有 export 都不執行。**症狀**：檔案裡 export 確實有值（`TWITTER_CT0` 160 chars 都在），但 `bash -lc 'echo ${TWITTER_CT0:0:10}'` 印出 `TWITTER_CT0 actual: `（空字串）。**修法 — 用獨立 `~/.bash_env` 純放 credentials**：在 `~/.bash_profile` / `~/.profile` / `~/.bashrc` 開頭（**在任何互動式判斷之前**）加 `[ -f ~/.bash_env ] && . ~/.bash_env`，credentials 寫在 `~/.bash_env`（mode 600）。這樣不論互動/非互動、login shell 與否、subprocess 與否，**只要 shell 啟動就一定 source 到**。**If** 寫 export 到 `~/.bash_profile` 從 `.bashrc` 抄過來 **Then** 改用獨立 `~/.bash_env` + 在三個 startup 檔案最開頭 source，不要把 bashrc 整份複製到 bash_profile
+
+（更早的 hermes-internal 條目見下方「完整條目列表」段）
+
+### vercel-deployment
+- **GitHub push 沒觸發 Vercel auto-deploy、CDN edge cache 不會自動 invalidate（2026-06-07）** — 4 步驗證 SOP（git SHA → Vercel API → 手動觸發 → cache-busting curl）
+
+## 完整條目列表
+
+所有踩雷條目依分類存在 `references/by-category/` 下:
+
+| 分類 | 檔案 | 條目數 | 觸發情境 |
+|------|------|-------|----------|
+| hermes-internal | `references/by-category/hermes-internal.md` | **22** | hermes CLI / cron / config 行為 / **驗證閉環失敗 (2026-06-09)** / **OpenClaw 反安裝 (2026-06-08)** / **bash_profile 互動式 return 阻擋 (2026-06-08)** |
+| gpg-encryption | `references/by-category/gpg-encryption.md` | — | GPG 對稱/非對稱加密、key 管理 |
+| gh-cli-and-github | `references/by-category/gh-cli-and-github.md` | **6** | **GH013、GH001、filter-branch 從這次學到** |
+| vercel-deployment | `references/by-category/vercel-deployment.md` | — | Vercel CLI / API / 部署 |
+| python-sandbox | `references/by-category/python-sandbox.md` | **9** | Python sandbox / token 遮罩 / **uv venv 無 pip / pyproject force-include 衝突 / venv CLI PATH 不可見 / yt-dlp JS runtime / N100 住宅 IP AS-level 黑名單 / f-string sanitization 靜默替換** |
+| headless-cookie-import | `references/by-category/headless-cookie-import.md` | **1** | **N100 headless 平台 CLI 認證（Twitter/Reddit/小紅書/微博/雪球）— 2026-06-08 新建** |
+| secrets-and-env | `references/by-category/secrets-and-env.md` | — | .env / 憑證管理 |
+| browser-automation | `references/by-category/browser-automation.md` | — | Playwright / headless browser |
+| bash-defensive-patterns | `references/by-category/bash-defensive-patterns.md` | **4** | **2026-06-07 從這次對話建立** |
+| hermes-backup-strategy | `references/by-category/hermes-backup-strategy.md` | — | **v1 → v4.2 演進** |
+| hermes-backup-design-pitfalls | `references/by-category/hermes-backup-design-pitfalls.md` | **15** | **2026-06-07 從 v3 → v4.1 → v4.2 大幅擴充** |
+| hermes-backup-sop | `references/by-category/hermes-backup-sop.md` | — | 備份執行 SOP |
+| hermes-config-tuning | `references/by-category/hermes-config-tuning.md` | — | model / provider / wakeAgent gate |
+
+## 用戶偏好（2026-06-07 v4 演進中觀察到，**已寫進對應 Rules**）
+
+- **「不要憑印象答」**：當用戶問「X 可以不備嗎？」「X 是 Y 還是 Z？」時，先跑驗證命令（`git remote -v`、`git log`、`file <X>`、`du -sh`）並把輸出貼出來。**見 Rule 6（✅ 聲稱附驗證）+ Rule 12（rebuild 判斷要先查）**。對應觸發：「真的可以不備嗎？」「驗證一下」。
+- **「先建 todo、按優先順序執行」**：v4 演進 + 還原 SOP + Telegram 通知 3 個任務都是先 `todo` 規劃再跑。對應觸發：「按照你的建議先 sync」、「按照建議順序處理任務」。
+- **「失誤要直接說、不要假裝沒事」**：v4 跑 Drive purge 砍整個 remote、誠實承認「我犯了個大錯」、不迴避。對應 SKILL 的 hermes-internal「自我審查：自我報告 ≠ 驗證」段。
+- **「涉及具體 ID（commit SHA、PR 編號、deployment ID）時，必須驗證而非憑敘事」**（2026-06-07 新增）：我曾回報「commit 4a8b3f3 已 push」但 git reflog 完全沒這個 commit — 浪費了 8 個工具呼叫才發現。對應 hermes-internal 條目「LLM 幻覺出成功 commit SHA」。**任何回報具體 ID 給使用者前，必須先跑 `git log` / `gh pr view` / `curl API` 驗證並貼輸出。**
+- **「探勘式問題也要先查」(2026-06-07 新增)**：使用者問「X 系統/技能/機制有沒有在運作？」「X 是什麼？」「X 存不存在？」「X 是誰在評價？」這類**探索狀態**的問題（不是修 bug、不是執行任務），**仍然要先實地查** — 不能靠「我記得是這樣」答。具體方法：
+  - 問「有沒有在運作」 → 先 `cron list` / 跑對應命令看輸出 / 查檔案 mtime
+  - 問「X 是什麼 / 存不存在」 → 先 `find` / `skill_view` / 搜目錄
+  - 問「誰在做 X」 → 先查 DB / 查程式碼邏輯（不要從 narrative 推）
+  - 答覆結構必含「我親自查了什麼 + 真實輸出」 — 不能直接給結論
+  - 失敗時說「我沒查到」+ 給「我怎麼查了」+ 給「我可以怎麼繼續查」— 不要用模糊敘述填空
+</content>

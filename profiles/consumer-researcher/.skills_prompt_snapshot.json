@@ -1,0 +1,926 @@
+{
+  "version": 1,
+  "manifest": {
+    "agent-browser/SKILL.md": [
+      1780586516739536040,
+      10800
+    ],
+    "anthropic-account-research/SKILL.md": [
+      1780214758272541551,
+      8002
+    ],
+    "anthropic-analyze/SKILL.md": [
+      1780214758409542109,
+      4432
+    ],
+    "anthropic-build-dashboard/SKILL.md": [
+      1780214758411542117,
+      26002
+    ],
+    "anthropic-competitive-brief/SKILL.md": [
+      1780214758317541735,
+      14774
+    ],
+    "anthropic-competitive-brief/competitive-brief/SKILL.md": [
+      1780214758345541848,
+      13150
+    ],
+    "anthropic-competitive-intelligence/SKILL.md": [
+      1780214758283541596,
+      13176
+    ],
+    "anthropic-create-viz/SKILL.md": [
+      1780214758414542129,
+      5151
+    ],
+    "anthropic-customer-research/SKILL.md": [
+      1780214758305541686,
+      10232
+    ],
+    "anthropic-data-visualization/SKILL.md": [
+      1780214758422542162,
+      11051
+    ],
+    "anthropic-explore-data/SKILL.md": [
+      1780214758425542174,
+      11520
+    ],
+    "anthropic-knowledge-synthesis/SKILL.md": [
+      1780214758443542247,
+      8526
+    ],
+    "anthropic-metrics-review/SKILL.md": [
+      1780214758320541747,
+      18038
+    ],
+    "anthropic-product-brainstorming/SKILL.md": [
+      1780214758323541759,
+      15944
+    ],
+    "anthropic-scientific-problem-selection/SKILL.md": [
+      1780214758460542316,
+      11184
+    ],
+    "anthropic-search-strategy/SKILL.md": [
+      1780214758448542268,
+      7198
+    ],
+    "anthropic-search/SKILL.md": [
+      1780214758445542255,
+      6581
+    ],
+    "anthropic-statistical-analysis/SKILL.md": [
+      1780214758431542198,
+      10434
+    ],
+    "anthropic-synthesize-research/SKILL.md": [
+      1780214758334541804,
+      16135
+    ],
+    "anthropic-validate-data/SKILL.md": [
+      1780214758434542211,
+      14916
+    ],
+    "anthropic-write-spec/SKILL.md": [
+      1780214758337541816,
+      12326
+    ],
+    "anti-panic-protocol/SKILL.md": [
+      1779975046533499803,
+      2188
+    ],
+    "beautiful-mermaid/SKILL.md": [
+      1779974551541880524,
+      39643
+    ],
+    "browser/camofox/SKILL.md": [
+      1780811036420677528,
+      26538
+    ],
+    "connection-resilience/SKILL.md": [
+      1780794191315108310,
+      3443
+    ],
+    "diagram-generator/SKILL.md": [
+      1779974550495889299,
+      3328
+    ],
+    "docx/SKILL.md": [
+      1778080449245007274,
+      5201
+    ],
+    "general-workflow/SKILL.md": [
+      1780922376774995271,
+      31194
+    ],
+    "hermes-architecture/hermes-resident-agent/SKILL.md": [
+      1781023097272750738,
+      7847
+    ],
+    "minimax-docx/SKILL.md": [
+      1780110403172953374,
+      15818
+    ],
+    "minimax-pdf/SKILL.md": [
+      1780110403189953897,
+      8624
+    ],
+    "minimax-xlsx/SKILL.md": [
+      1780110403190953927,
+      8398
+    ],
+    "new-conversation/SKILL.md": [
+      1780675673076520786,
+      4435
+    ],
+    "pdf/SKILL.md": [
+      1778080486311148076,
+      4377
+    ],
+    "pptx-generator/SKILL.md": [
+      1780110403192953989,
+      7930
+    ],
+    "research/arxiv/SKILL.md": [
+      1780109239602526485,
+      10085
+    ],
+    "research/blogwatcher/SKILL.md": [
+      1780109239602526485,
+      5111
+    ],
+    "research/llm-wiki/SKILL.md": [
+      1780109239603526524,
+      20113
+    ],
+    "research/polymarket/SKILL.md": [
+      1780109239603526524,
+      2985
+    ],
+    "research/research-paper-writing/SKILL.md": [
+      1780109239603526524,
+      103375
+    ],
+    "scrapling/SKILL.md": [
+      1778086588689568662,
+      8382
+    ],
+    "trial-and-error/SKILL.md": [
+      1781046321891529603,
+      30894
+    ],
+    "user-collaboration-style/SKILL.md": [
+      1780793886810978109,
+      13935
+    ],
+    "vision-analysis/SKILL.md": [
+      1780705901004238764,
+      9733
+    ],
+    "web_search/SKILL.md": [
+      1780290158840375174,
+      5388
+    ],
+    "workspace-folder-layout/SKILL.md": [
+      1780726196570254824,
+      13367
+    ],
+    "xlsx/SKILL.md": [
+      1778080518771125925,
+      2892
+    ],
+    "apple/DESCRIPTION.md": [
+      1780109239566525051,
+      137
+    ],
+    "autonomous-ai-agents/DESCRIPTION.md": [
+      1780109239566525051,
+      211
+    ],
+    "creative/DESCRIPTION.md": [
+      1780109239567525090,
+      116
+    ],
+    "data-science/DESCRIPTION.md": [
+      1780109239588525927,
+      137
+    ],
+    "email/DESCRIPTION.md": [
+      1780109239588525927,
+      101
+    ],
+    "github/DESCRIPTION.md": [
+      1780109239589525967,
+      167
+    ],
+    "media/DESCRIPTION.md": [
+      1780109239591526046,
+      139
+    ],
+    "mlops/DESCRIPTION.md": [
+      1780109239592526086,
+      162
+    ],
+    "mlops/evaluation/DESCRIPTION.md": [
+      1780109239592526086,
+      126
+    ],
+    "mlops/inference/DESCRIPTION.md": [
+      1780109239593526126,
+      161
+    ],
+    "mlops/models/DESCRIPTION.md": [
+      1780109239594526166,
+      253
+    ],
+    "note-taking/DESCRIPTION.md": [
+      1780109239595526206,
+      146
+    ],
+    "productivity/DESCRIPTION.md": [
+      1780109239595526206,
+      114
+    ],
+    "productivity/ocr-and-documents/DESCRIPTION.md": [
+      1780109239597526286,
+      147
+    ],
+    "research/DESCRIPTION.md": [
+      1780109239602526485,
+      179
+    ],
+    "smart-home/DESCRIPTION.md": [
+      1780109239610526803,
+      123
+    ],
+    "social-media/DESCRIPTION.md": [
+      1780109239610526803,
+      151
+    ]
+  },
+  "skills": [
+    {
+      "skill_name": "agent-browser",
+      "category": "agent-browser",
+      "frontmatter_name": "Agent Browser",
+      "description": "A fast Rust-based headless browser automation CLI with No...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-account-research",
+      "category": "anthropic-account-research",
+      "frontmatter_name": "account-research",
+      "description": "Research a company or person and get actionable sales int...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-analyze",
+      "category": "anthropic-analyze",
+      "frontmatter_name": "analyze",
+      "description": "Answer data questions -- from quick lookups to full analy...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-build-dashboard",
+      "category": "anthropic-build-dashboard",
+      "frontmatter_name": "build-dashboard",
+      "description": "Build an interactive HTML dashboard with charts, filters,...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-competitive-brief",
+      "category": "anthropic-competitive-brief",
+      "frontmatter_name": "competitive-brief",
+      "description": "Create a competitive analysis brief for one or more compe...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "competitive-brief",
+      "category": "anthropic-competitive-brief",
+      "frontmatter_name": "competitive-brief",
+      "description": "Research competitors and generate a positioning and messa...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-competitive-intelligence",
+      "category": "anthropic-competitive-intelligence",
+      "frontmatter_name": "competitive-intelligence",
+      "description": "Research your competitors and build an interactive battle...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-create-viz",
+      "category": "anthropic-create-viz",
+      "frontmatter_name": "create-viz",
+      "description": "Create publication-quality visualizations with Python. Us...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-customer-research",
+      "category": "anthropic-customer-research",
+      "frontmatter_name": "customer-research",
+      "description": "Multi-source research on a customer question or topic wit...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-data-visualization",
+      "category": "anthropic-data-visualization",
+      "frontmatter_name": "data-visualization",
+      "description": "Create effective data visualizations with Python (matplot...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-explore-data",
+      "category": "anthropic-explore-data",
+      "frontmatter_name": "explore-data",
+      "description": "Profile and explore a dataset to understand its shape, qu...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-knowledge-synthesis",
+      "category": "anthropic-knowledge-synthesis",
+      "frontmatter_name": "knowledge-synthesis",
+      "description": "Combines search results from multiple sources into cohere...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-metrics-review",
+      "category": "anthropic-metrics-review",
+      "frontmatter_name": "metrics-review",
+      "description": "Review and analyze product metrics with trend analysis an...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-product-brainstorming",
+      "category": "anthropic-product-brainstorming",
+      "frontmatter_name": "product-brainstorming",
+      "description": "Brainstorm product ideas, explore problem spaces, and cha...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-scientific-problem-selection",
+      "category": "anthropic-scientific-problem-selection",
+      "frontmatter_name": "scientific-problem-selection",
+      "description": "This skill should be used when scientists need help with ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-search-strategy",
+      "category": "anthropic-search-strategy",
+      "frontmatter_name": "search-strategy",
+      "description": "Query decomposition and multi-source search orchestration...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-search",
+      "category": "anthropic-search",
+      "frontmatter_name": "search",
+      "description": "Search across all connected sources in one query. Trigger...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-statistical-analysis",
+      "category": "anthropic-statistical-analysis",
+      "frontmatter_name": "statistical-analysis",
+      "description": "Apply statistical methods including descriptive stats, tr...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-synthesize-research",
+      "category": "anthropic-synthesize-research",
+      "frontmatter_name": "synthesize-research",
+      "description": "Synthesize user research from interviews, surveys, and fe...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-validate-data",
+      "category": "anthropic-validate-data",
+      "frontmatter_name": "validate-data",
+      "description": "QA an analysis before sharing -- methodology, accuracy, a...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anthropic-write-spec",
+      "category": "anthropic-write-spec",
+      "frontmatter_name": "write-spec",
+      "description": "Write a feature spec or PRD from a problem statement or f...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anti-panic-protocol",
+      "category": "anti-panic-protocol",
+      "frontmatter_name": "anti-panic-protocol",
+      "description": "Handle tool failures under pressure with bounded retries,...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "beautiful-mermaid",
+      "category": "beautiful-mermaid",
+      "frontmatter_name": "beautiful-mermaid",
+      "description": "Render Mermaid diagrams as beautiful SVG, PNG, or ASCII a...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "camofox",
+      "category": "browser",
+      "frontmatter_name": "camofox",
+      "description": "Camofox (camoufox-based Firefox) headless browser for Her...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "connection-resilience",
+      "category": "connection-resilience",
+      "frontmatter_name": "Connection Resilience",
+      "description": "連線恢復專家 - 監控對話中斷、自動恢復、保護長時間任務。當回應中斷時自動重連，確保 N100 代理 24/7 穩...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "diagram-generator",
+      "category": "diagram-generator",
+      "frontmatter_name": "diagram-generator",
+      "description": "Generate Draw.io architecture diagrams, Mermaid diagrams,...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "docx",
+      "category": "docx",
+      "frontmatter_name": "docx",
+      "description": "",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "general-workflow",
+      "category": "general-workflow",
+      "frontmatter_name": "general-workflow",
+      "description": "泛化工作流程技能 — 當用戶提出問題或交辦任務時，優先喚醒此技能。先搜尋相似歷史案例，若相似度超過閾值則套用現有 ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hermes-resident-agent",
+      "category": "hermes-architecture",
+      "frontmatter_name": "hermes-resident-agent",
+      "description": "在 Hermes Agent 內建「常駐代理」架構的 SOP。當使用者要求建立長期運作的專屬代理（例如「建一個常駐...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "minimax-docx",
+      "category": "minimax-docx",
+      "frontmatter_name": "minimax-docx",
+      "description": "Professional DOCX document creation, editing, and formatt...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "minimax-pdf",
+      "category": "minimax-pdf",
+      "frontmatter_name": "minimax-pdf",
+      "description": "Use this skill when visual quality and design identity ma...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "minimax-xlsx",
+      "category": "minimax-xlsx",
+      "frontmatter_name": "minimax-xlsx",
+      "description": "Open, create, read, analyze, edit, or validate Excel/spre...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "new-conversation",
+      "category": "new-conversation",
+      "frontmatter_name": "new-conversation",
+      "description": "結束 session 前先掃描本次對話,自動列出值得紀錄的 L3 抽象教訓,讓使用者確認後納入 trial-and...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "pdf",
+      "category": "pdf",
+      "frontmatter_name": "pdf",
+      "description": "",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "pptx-generator",
+      "category": "pptx-generator",
+      "frontmatter_name": "pptx-generator",
+      "description": "Generate, edit, and read PowerPoint presentations. Create...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "arxiv",
+      "category": "research",
+      "frontmatter_name": "arxiv",
+      "description": "Search arXiv papers by keyword, author, category, or ID.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "blogwatcher",
+      "category": "research",
+      "frontmatter_name": "blogwatcher",
+      "description": "Monitor blogs and RSS/Atom feeds via blogwatcher-cli tool.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "llm-wiki",
+      "category": "research",
+      "frontmatter_name": "llm-wiki",
+      "description": "Karpathy's LLM Wiki: build/query interlinked markdown KB.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "polymarket",
+      "category": "research",
+      "frontmatter_name": "polymarket",
+      "description": "Query Polymarket: markets, prices, orderbooks, history.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "research-paper-writing",
+      "category": "research",
+      "frontmatter_name": "research-paper-writing",
+      "description": "Write ML papers for NeurIPS/ICML/ICLR: design→submit.",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [
+          "terminal",
+          "files"
+        ],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "scrapling",
+      "category": "scrapling",
+      "frontmatter_name": "scrapling",
+      "description": "Scrapling - 自適應網頁爬蟲框架，45k+ Stars。支援自動元素重定位、Cloudflare Tur...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "trial-and-error",
+      "category": "trial-and-error",
+      "frontmatter_name": "trial-and-error",
+      "description": "赫米斯踩過的坑目錄 — **MUST LOAD BEFORE EXECUTION**。當使用者交辦任何執行類任務或...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "user-collaboration-style",
+      "category": "user-collaboration-style",
+      "frontmatter_name": "user-collaboration-style",
+      "description": "與 hoonsoropenclaw 這位使用者協作的工作風格規範。當赫米斯處理任何任務、回答問題、提出方案、撰寫報...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "vision-analysis",
+      "category": "vision-analysis",
+      "frontmatter_name": "vision-analysis",
+      "description": "Analyze, describe, and extract information from images us...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "web_search",
+      "category": "web_search",
+      "frontmatter_name": "web_search",
+      "description": "雙軌 Web 搜尋技能：Ollama Web Search（主） + Tavily（備）。當需要查詢網路資訊、驗證...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "workspace-folder-layout",
+      "category": "workspace-folder-layout",
+      "frontmatter_name": "workspace-folder-layout",
+      "description": "hoonsoropenclaw 工作區（home 根目錄 / Y 槽遠端硬碟）的檔案組織 SOP。當要建立新檔案/...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "xlsx",
+      "category": "xlsx",
+      "frontmatter_name": "xlsx",
+      "description": "",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    }
+  ],
+  "category_descriptions": {
+    "autonomous-ai-agents": "Skills for spawning and orchestrating autonomous AI coding agents and multi-agent workflows — running independent agent processes, delegating tasks, and coordinating parallel workstreams.",
+    "creative": "Creative content generation — ASCII art, hand-drawn style diagrams, and visual design tools.",
+    "data-science": "Skills for data science workflows — interactive exploration, Jupyter notebooks, data analysis, and visualization.",
+    "email": "Skills for sending, receiving, searching, and managing email from the terminal.",
+    "github": "GitHub workflow skills for managing repositories, pull requests, code reviews, issues, and CI/CD pipelines using the gh CLI and git via terminal.",
+    "media": "Skills for working with media content — YouTube transcripts, GIF search, music generation, and audio visualization.",
+    "mlops": "Knowledge and Tools for Machine Learning Operations - tools and frameworks for training, fine-tuning, deploying, and optimizing ML/AI models",
+    "mlops/evaluation": "Model evaluation benchmarks, experiment tracking, data curation, tokenizers, and interpretability tools.",
+    "mlops/inference": "Model serving, quantization (GGUF/GPTQ), structured output, inference optimization, and model surgery tools for deploying and running LLMs.",
+    "mlops/models": "Specific model architectures and tools — image segmentation (Segment Anything / SAM) and audio generation (AudioCraft / MusicGen). Additional model skills (CLIP, Stable Diffusion, Whisper, LLaVA) are available as optional skills.",
+    "note-taking": "Note taking skills, to save information, assist with research, and collab on multi-session planning and information sharing.",
+    "productivity": "Skills for document creation, presentations, spreadsheets, and other productivity workflows.",
+    "productivity/ocr-and-documents": "Skills for extracting text from PDFs, scanned documents, images, and other file formats using OCR and document parsing tools.",
+    "research": "Skills for academic research, paper discovery, literature review, domain reconnaissance, market data, content monitoring, and scientific knowledge retrieval.",
+    "smart-home": "Skills for controlling smart home devices — lights, switches, sensors, and home automation systems.",
+    "social-media": "Skills for interacting with social platforms and social-media workflows — posting, reading, monitoring, and account operations."
+  }
+}

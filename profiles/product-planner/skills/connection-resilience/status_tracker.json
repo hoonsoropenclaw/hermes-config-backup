@@ -1,0 +1,10 @@
+{
+    "last_check": "2026-05-07T14:40:42Z",
+    "gateway_alive": dead,
+    "gateway_latency": 0,
+    "session_locked": 0,
+    "active_subagents": 0
+0,
+    "api_quota_percent": 1033,
+    "status": "gateway_down"
+}
