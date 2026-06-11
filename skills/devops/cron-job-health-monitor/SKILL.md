@@ -668,8 +668,9 @@ last_error:  Script exited with code 1
 
 **If→Then 規則**：
 - **If** Phase 1.5 看到 `last_status: error` **Then** **先**手動跑 + 交叉驗證、**再**判斷是否緊急修復（不要直接進 Phase 1-3）
-- **If** jobs.json 已修 + script 手動跑成功 + last_status 仍 error **Then** `hermes cron run` + `hermes cron tick` 強迫翻（**不要等 6~24 小時 cron 自然排程**）
+- **If** jobs.json 已修 + script 手動跑成功 + last_status 仍 error **Then** `hermes cron run <job_name>` + `hermes cron tick` 強迫翻（**不要等 6~24 小時 cron 自然排程**）
 - **If** 連續 3 個 cycle 看到同樣 error、但都過手動驗證 **Then** 確認 scheduler 的 `mark_job_run()` 是否真的有跑、`hermes-gateway` 是否 active
+- **If** 要驗證 backup script 真實跑了 git push **Then** 手動執行 `bash ~/.hermes/scripts/hermes-backup-v4.sh --tier1`（不是 dry-run），檢查 `git rev-parse HEAD` vs `git rev-parse origin/main` 是否同步、並看 telegram 是否收到「備份完成」通知；dry-run 成功不等於 real run 能 push
 
 **預防**：
 - metacognitive-learner SKILL.md Phase 1.5 段開頭應加「stale state 排除 SOP」（參考 `references/stale-state-recovery.md`）
@@ -683,10 +684,12 @@ last_error:  Script exited with code 1
 ## 支援檔案
 
 - `scripts/check_cron_health.py` — 自動掃描 + 分類 + 輸出結構化報告
-- `references/nullglob-set-e-bug.md` — 類型 O：glob 匹配 0 檔 + set -e + exit code 2 bug（2026-06-10）
-- `references/failure-cases-2026-06.md` — 已知失敗案例 + 修復記錄（2026-06 eval-sync 401 key mask、skill-usage-daily-v3 git recovery、camofox watchdog 每 6 分鐘重啟、backup_hermes.sh v2 timeout → v3 修復）
+- `references/hermes-backup-timeout.md` — 類型 N：backup timeout 修復與 Scheduler timeout 分離
 - `references/camofox-watchdog-deployment.md` — camofox-watchdog.sh 從未進 crontab 的修復（skill dir 0700 問題 + 部署步驟）
-- `references/stale-state-recovery.md` — 2026-06-11 新增：`last_status` 跟 jobs.json 解耦的 4 步排除 SOP（含 `hermes cron run` 強迫翻轉指令）
+- `references/stale-state-recovery.md` — 2026-06-11：`last_status` 跟 jobs.json 解耦的 4 步排除 SOP（含 `hermes cron run` 強迫翻轉指令）
+- `references/failure-cases-2026-06.md` — 已知失敗案例 + 修復記錄（2026-06 eval-sync 401 key mask、skill-usage-daily-v3 git recovery、camofox watchdog 每 6 分鐘重啟、backup_hermes.sh v2 timeout → v3 修復）
+- `references/nullglob-set-e-bug.md` — 類型 O：glob 匹配 0 檔 + set -e + exit code 2 bug（2026-06-10）
+- `references/dry-run-vs-real-run.md` — 2026-06-11：dry-run 成功不等於 real-run 成功，backup cron job 驗證必須包含 real-run（git push 實際成功檢查）
 
 ## 相關 SKILL
 

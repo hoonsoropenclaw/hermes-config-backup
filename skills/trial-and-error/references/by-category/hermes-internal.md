@@ -287,3 +287,194 @@ hermes skills list | grep <skill>
 **相關條目**：
 - [[hermes-internal#jobs.json 欄位污染：no_agent cron job 的 `prompt` 欄位被錯誤寫入 script+args]] — 另一個 cron job 改動的坑
 - [[hermes-internal#MCP server `command: python3` 跟 hermes venv PATH 衝突]] — 同樣是 service 環境配置沒考慮到子進程
+
+---
+
+### 代理重塑後 SOP 範例沒跟著同步——典型系統遺留缺陷（2026-06-11 親身修）
+
+**症狀**：
+- `consumer-researcher` 在 2026-06-10 從 `market-strategist` 重塑過來（profile + persona + skill 庫全改）
+- 但 `references/sops/keyword-triggers-sop.md` 「`@專案` SOP 段」的範例、命令、`SESSION_DIR` 路徑**全部還在用舊名稱**（`market-strategist` / `market-research.md`）
+- 已上線 1 天沒人發現（keyword 沒觸發、沒人實際走 SOP）
+- 同樣情況：`AGENTS.md` 表格的「現有常駐代理」列還是 2 段、**沒包含後來加的** `system-architect` / `engineering-lead` / `test-engineer`
+
+**根因**（典型的「重塑不同步」）：
+- 身份重塑（agent-identity-management 的 Role Pivot）只動了 profile + skill 庫 + persona
+- **沒動** 引用舊名的下游檔案（keyword 觸發 SOP 段、handoff README、AGENTS.md 表格、HEARTBEAT.md、INVENTORY.md）
+- 「重塑」跟「下游同步」**是兩個動作**、沒人連起來
+
+**正確做法**（**「代理重塑 SOP」必含的下游同步清單**）：
+
+1. **重塑時立刻 grep 整套工作區**找出所有引用舊名的地方：
+   ```bash
+   grep -rln 'market-strategist' ~/.hermes/ 2>/dev/null
+   grep -rln '@專案' ~/.hermes/ 2>/dev/null
+   ```
+2. **下游同步清單**（5 個固定位置）：
+   - `~/.hermes/memories/AGENTS.md` —— 表格內的「現有常駐代理」列
+   - `~/.hermes/memories/HEARTBEAT.md` —— 「現況」描述
+   - `~/.hermes/memories/references/sops/keyword-triggers-sop.md` —— 觸發 SOP 段（**最容易漏**、因為藏在 references/）
+   - `~/.hermes/handoff/_chains/README.md` + `SCHEMA.md` —— 鏈名範例
+   - `~/.hermes/handoff/README.md` —— 鏈條圖
+3. **每個引用要修對、不只是「換名稱」**：
+   - 代理名稱改了
+   - 交付物命名可能也改了（`market-research.md` → `consumer-needs-research.md`）
+   - 階段數可能增加（從 2 段變 5 段）
+   - 範例命令要實際跑得通（`SESSION_DIR` 路徑）
+4. **驗證命令**（**改完必跑**）：
+   ```bash
+   grep -rn 'market-strategist' ~/.hermes/ 2>/dev/null | grep -v '\.bak\.' || echo "✅ 全部清除"
+   grep -rn 'consumer-researcher' ~/.hermes/ | wc -l   # 確認新名稱都到位
+   ls ~/.local/bin/consumer-researcher                   # 確認 wrapper 存在
+   ```
+5. **記下「重塑日期 + 下游同步日期」**讓未來 cycle 容易驗證：
+   ```markdown
+   ## 變更記錄
+   - 2026-06-10: 身份重塑（market-strategist → consumer-researcher）
+   - 2026-06-11: 下游同步（keyword-triggers-sop.md / AGENTS.md / handoff README）
+   - **延遲 1 天才修、原因：keyword 沒實際觸發、沒人發現**
+   ```
+
+**If→Then**：
+- **If** 接到「重塑 X 代理 / 重新定位 / 換個角色」類任務 **Then** 跑「下游同步清單」（5 個固定位置）、不是只改 profile 跟 skill
+- **If** grep 找到引用舊名稱（不只檔名、還有 `SESSION_DIR`、交付物命名、範例命令）**Then** 全部要改、不只是「替換字串」、要確認「改完後實際跑得通」
+- **If** SOP 段是 references/sops/ 內的檔案 **Then** 優先順序最高（system 不會自動掃描、容易漏）、動完 profile 必查這個目錄
+- **If** 看到「@keyword 觸發 SOP 段還在用舊名」**Then** 這是已上線 1 天的 bug 沒人發現、趕快修、不能等下次觸發才發現
+- **If** agent-identity-management 的 Role Pivot SOP 沒列「下游同步清單」**Then** 補上、這是 SOP 缺漏
+
+**預防**（改進 agent-identity-management）：
+- 在 `agent-identity-management/references/role-pivot-sop.md` 加「**Step 6: 下游同步（5 個位置必查）**」
+- 用 `grep -rln '<old-name>' ~/.hermes/` 模板化
+- 同步日期寫進 MEMORY.md「更新記錄」段
+
+**真實案例**（2026-06-11 修）：
+- 改了 6 個檔（AGENTS.md / HEARTBEAT.md / keyword-triggers-sop.md / handoff/_chains/README.md / handoff/_chains/SCHEMA.md / handoff/README.md）
+- 順帶修了 1 個**重大系統遺留缺陷**：SOP 段範例從 `market-strategist` 改成 `consumer-researcher` + 5 階段標準鏈 + 迴圈反饋 + 未來 keyword 從 `@` 改成 `^`（設計決策見下條）
+- grep 驗證 `market-strategist` 全清除（只保留 `_EXECUTION_REPORT.md` 歷史紀錄）
+
+---
+
+### keyword 符號選擇：`^` 給 handoff、`@` 給 skill，明確分工（2026-06-11 設計決策）
+
+**問題**：
+- 原本 `@專案` 觸發 handoff pipeline、`@學習` 觸發 `trial-and-error` skill —— **兩個 `@` keyword 共用前綴**
+- 視覺容易混淆（人腦看到 `@` 第一反應是 skill）、shell 沒風險、但長期會誤觸發
+
+**評估過的候選**（2026-06-11 session 跑完）：
+
+| 符號 | 鍵盤 | shell 風險 | 評分 | 結論 |
+|------|------|----------|------|------|
+| `@`（現有） | `Shift+2` | 0 | ⭐⭐⭐ | 視覺混淆 |
+| **`^`** | `Shift+6` | 0 | ⭐⭐⭐⭐⭐ | **採用** |
+| `§` | 輸入法 | 0 | ⭐⭐⭐ | 輸入摩擦 |
+| `&` | `Shift+7` | ❌ background | ❌ | 不用 |
+| `*` | `Shift+8` | ❌ glob | ❌ | 不用 |
+| `?` | `Shift+/` | ❌ glob | ❌ | 不用 |
+| `#` | `Shift+3` | ⚠️ 註解 | ⭐ | 容易吃字 |
+| `>` | `Shift+.` | ❌ redirect | ❌ | 不用 |
+| `»` | 輸入法 | 0 | ⭐⭐⭐ | Unicode 麻煩 |
+
+**採 `^` 的 3 個理由**：
+1. **鍵盤原生**：`Shift+6` 跟 `&` 一樣順、零輸入摩擦
+2. **shell 0 風險**：`^foo` 不會被 bash 解析
+3. **視覺分工明確**：`^` 給 handoff（隱喻「啟動 / 進入」）、`@` 給 skill（保留現有設計）
+
+**設計**（已落地 2026-06-11）：
+
+| 用途 | 符號 | 範例 |
+|------|------|------|
+| handoff pipeline | **`^`** | `^專案 我想做技能交換平台` |
+| skill 觸發 | **`@`** | `@學習 rclone 配額` |
+| 一般對話 | （無前綴）| `今天天氣如何` |
+
+**改動清單**（6 個檔）：
+- `~/.hermes/memories/AGENTS.md` —— `@專案` row → `^專案` row、If 規則改「`^` 或 `@`」
+- `~/.hermes/memories/HEARTBEAT.md` —— 現況說明 + 改動紀錄
+- `~/.hermes/memories/references/sops/keyword-triggers-sop.md` —— SOP 段標題 + 整段現代化
+- `~/.hermes/handoff/README.md` —— 鏈條圖說明
+- `~/.hermes/handoff/_chains/README.md` + `SCHEMA.md` —— 範例改 `^專案`
+- （保留歷史）`_EXECUTION_REPORT.md` 跟 `MEMORY.md.bak.*` 不改
+
+**驗證**：
+```bash
+grep -rn '\^專案' ~/.hermes/memories/ ~/.hermes/handoff/ 2>/dev/null | wc -l   # 期望 14+ 處
+grep -rn '@專案' ~/.hermes/memories/ ~/.hermes/handoff/ 2>/dev/null | grep -v '.bak\.' | grep -v '_EXECUTION_REPORT'
+echo '^專案 我想做技能交換平台'   # ^ 不會被 shell 解析
+```
+
+**If→Then**：
+- **If** 未來想新增 keyword 觸發 `^X` / `@X` **Then** 先在這表格選符號（handoff 用 `^`、skill 用 `@`）、不要混用
+- **If** 看到 SOP / 表格 / 鏈名用 `@專案` **Then** 是過時用法、要改成 `^專案`
+- **If** 想選其他符號（`§` / `»` / 自訂）**Then** 先跑這表格的 6 個評估維度（鍵盤 / shell / 視覺 / 衝突 / 輸入摩擦 / 未來維護）
+- **If** keyword 改符號 **Then** 必走 5 個檔的同步清單（AGENTS.md / HEARTBEAT.md / keyword-triggers-sop.md / handoff README / _chains/）
+
+**預防**（給未來 cycle）：
+- 寫進 `references/sops/keyword-triggers-sop.md` 的「未來可能新增 keyword」段、預設用 `^` 開頭
+- AGENTS.md 表格加「符號分工說明」永久條目（避免新 cycle 又把 `^` 改成 `@`）
+
+---
+
+### keyword 觸發時「主動延伸 user 語意」是 Rule 12 違規（2026-06-11 親身踩）
+
+**症狀**：
+- 使用者說「目前這些常駐代理，之後可能會因為不同工作流程而有不同任務交棒流向順序跟組合，譬如目前建立的是「At符號 學習」這個流程」
+- 這句話是**「未來規劃」討論**、不是「建 @符號學習 鏈」執行命令
+- 我**主動延伸語意**：「@符號學習 流程 = consumer→product→eng→test 跳過 arch」+ 寫進 handoff README + 寫進 SCHEMA.md
+- 還寫了「反編譯/反組譯」鏈的範例（同樣是延伸）
+- 使用者當下立刻糾正：「更正 應該是「@專案」才是唯一的鍊」「沒有「@符號學習」這個鍊，我從來沒說過，是你延伸的」
+
+**根因**（典型 Rule 12 違規）：
+- 觸發情境是「純討論 / 探勘式問題」、不是「執行任務」（user-collaboration-style Rule 12）
+- 我**沒先反問確認**、就**主動延伸 user 語意建具體內容**（Rule 19 已預防但**沒載入**）
+- 我**憑印象**把「At 符號 學習」聯想到「@符號學習 鏈」+「反編譯鏈」+ 寫進 SOP
+
+**正確做法**（**討論模式下絕不延伸**）：
+
+1. **收到 keyword 相關訊息時**、**先**載入 `user-collaboration-style` Rule 19 + `AGENTS.md` 表格 + `keyword-triggers-sop.md`
+2. **確認「這是執行命令還是討論」**（user-collaboration-style Rule 12）：
+   - 使用者說「建 X 鏈」「這個用 ^專案 跑」= 執行
+   - 使用者說「可能會」「之後」「譬如」= 純討論
+3. **純討論時**、**只**回答使用者問的東西、**不**主動建具體內容
+4. **如果 user 語意模糊**、**先反問**（Rule 19）：
+   ```
+   你說的「At符號 學習」是：
+   - 觸發 keyword（@學習 / @專案）？
+   - 一個新的 handoff 鏈（取名 @學習鏈）？
+   - trial-and-error skill 載入流程？
+   - 其他？
+   ```
+5. **絕不**主動延伸 user 沒明確說的東西（避免「我覺得他意思應該是 X」的 hallucination）
+
+**驗證**（**判斷自己是否在主動延伸**）：
+```bash
+# 寫 SOP / 改檔前、問自己：
+# 1. 使用者訊息裡有沒有「明確說」要建這個？
+# 2. 如果只寫 60% 的內容、剩下的 40% 是從哪來的？
+# 3. 40% 是 user 講的還是我延伸的？
+# 
+# 如果 40% 是我延伸的 → 停下來、反問、不要寫
+```
+
+**If→Then**：
+- **If** 收到含「可能 / 譬如 / 之後 / 之類 / 大概」的 user 訊息 **Then** 純討論模式、不主動延伸建具體內容
+- **If** 想主動延伸 user 語意（建具體鏈 / 範例 / 範本）**Then** 先反問確認、不要直接寫
+- **If** 已經延伸寫了、user 糾正 **Then** 立即 revert 延伸部分、只保留 user 明確要的 + **記進這個條目**（避免下次再犯）
+- **If** 看到自己的回應含「我覺得他意思應該是」「可能他想」「延伸一下」**Then** 立即刪掉、回到 user 明確說的
+- **If** 在 SOP / README 寫了 user 沒明確說的「未來鏈 / 範例鏈」**Then** 這是「架構優先於用戶原意」的錯誤延伸、該段必須移除
+
+**真實案例**（2026-06-11）：
+- 寫了「@符號學習 鏈」「反編譯/反組譯 鏈」進 handoff README
+- 還寫了「鏈型態 A/B/C」進 SCHEMA.md（含 B 重構鏈、沒人要的）
+- 第一次 user 糾正：「更正 應該是「@專案」才是唯一的鍊」 → 改 @符號學習 → @專案
+- 第二次 user 糾正：「先停止，不要錯誤理解  「＠學習」是我原本設定呼叫試誤學習的技能」「沒有「＠符號學習」這個鍊」→ 理解 @學習 ≠ 鏈
+- **教訓**：「未來可能」類訊息 = **純討論**、不是「建範例」綠燈
+
+**預防**（給未來 cycle）：
+- 寫進 `user-collaboration-style` Rule 19 加註：「收到 keyword 相關訊息時、**先判斷這是執行還是討論**、**討論模式下不延伸建具體內容**」
+- metacognitive-learner Phase 2 加：「回應含『可能 / 譬如 / 之後』時、檢查有沒有不小心延伸」
+- 寫進 `references/sops/keyword-triggers-sop.md` 「A/B/C 模式選擇」段加：「B 模式仍需 user 確認具體行為、不能延伸」
+
+**相關條目**：
+- [[hermes-internal#身份重塑 ≠ 身份繼承（2026-06-10 L3 抽象教訓）]] — 同樣的「下游同步沒做」風險
+- [[user-collaboration-style#Rule 19 @keyword 觸發反問確認:使用者會打錯、不一定知道是 @專案 還是 @學習(2026-06-10 增補)]]
+- [[user-collaboration-style#Rule 12 「先中斷 + 我有疑問」= 純討論模式,不是執行模式（2026-06-06 session 確立,2026-06-07 第二次踩）]]

@@ -15,11 +15,11 @@
 
 ## 鏈的 4 個必要元素
 
-| 元素 | 必填？ | 說明 | 範例（@專案）|
+| 元素 | 必填？ | 說明 | 範例（`^專案`）|
 |------|-------|------|--------------|
 | **project-slug** | ✅ 必填 | kebab-case、`~/.hermes/handoff/<slug>/` 目錄名 | `skill-language-exchange-platform` |
 | **chain stages** | ✅ 必填 | 至少 1 個 stage、每個 stage 標明代理 + 交付物 | stage 1: consumer-researcher → consumer-needs-research.md |
-| **skip reasons** | ⚠️ 跳過階段才填 | 為什麼這個 stage 不需要 | （@專案沒跳過、5 階段全跑）|
+| **skip reasons** | ⚠️ 跳過階段才填 | 為什麼這個 stage 不需要 | （`^專案`沒跳過、5 階段全跑）|
 | **trigger mode** | ✅ 必填 | `sequential`（串接）/ `parallel`（平行）| sequential |
 
 ---
@@ -80,7 +80,7 @@ ls ~/.local/bin/<agent-name>
 consumer-researcher → product-planner → system-architect → engineering-lead → test-engineer
 ```
 **交付物**：`consumer-needs-research.md` → `prd.md` → `architecture.md` → `sprint-report.md` → `qa-signoff.md`
-**目前唯一真實鏈**：`skill-language-exchange-platform`（@專案）
+**目前唯一真實鏈**：`skill-language-exchange-platform`（`^專案`）
 
 ### 型態 B: 重構/接手既有 codebase（程式碼驅動）
 **起點**：使用者有「既有 .exe / .class / legacy code」、要重構或翻譯

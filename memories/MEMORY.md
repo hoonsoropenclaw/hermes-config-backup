@@ -22,12 +22,21 @@
 - **If** 設計任何備份架構 **Then** 先問「每個資料類型有沒有辦法 rebuild」、不要憑印象答
 - 具體架構（v4.1 雙雲端 Tier 1 GitHub / Tier 2 Drive + GPG 加密）細節在 `trial-and-error/references/by-category/hermes-backup-strategy.md`（MEMORY 不重複）
 
+### Keyword 符號分工（2026-06-11 確立）
+- **`^` = handoff pipeline 觸發**（例：`^專案 我想做技能交換平台`）—— 赫米斯 default 串接多個常駐代理（consumer-researcher → product-planner → system-architect → engineering-lead → test-engineer，鏈長動態）
+- **`@` = skill 觸發**（例：`@學習 rclone 配額`）—— 載入單一 skill 進 context（`@學習` = `trial-and-error` skill）
+- **無前綴 = 一般對話**
+- 完整 SOP：`~/.hermes/memories/references/sops/keyword-triggers-sop.md`
+- 觸發判斷在 AGENTS.md keyword 表，**看到 `^xxx`/`@xxx` 開頭訊息就對應觸發**
+- **If** 設計新 keyword **Then** 先決定走 `^`（handoff 鏈）還是 `@`（skill），**不要混用前綴**（多義前綴會造成判斷混淆）
+
 > **清理原則**（2026-06-06 修訂）：本檔只放**跨 session 仍有用的抽象知識**。
 > - ✅ 留：高層架構、環境事實、穩定決策原則、If→Then 抽象規則
 > - 📦 移：具體工具試誤條目 → `trial-and-error` skill 的 `references/by-category/`
 > - 🗑️ 刪：任務進度、commit/PR 編號、單次 session 結果、過時技術細節（用 `session_search` 撈）
 
 ## 🗓️ 更新記錄（只留近 3 條，歷史可從 session_search/git 撈）
+- 2026-06-11: **`^專案` keyword 替換 `@專案`**（handoff pipeline 觸發從 `@` 改 `^`）—— 因為 `@學習` 已是 `trial-and-error` skill 觸發、兩者同 `@` 前綴會造成人/AI 判斷混淆。符號分工定型：**`^` = handoff pipeline（多代理串接）**、**`@` = skill 觸發（單一 skill 載入）**、**無前綴 = 一般對話**。`^` 用 `Shift+6` 鍵盤原生、零 shell 風險（不踩 glob/XOR/註解）。改動覆蓋 6 個檔（AGENTS.md / HEARTBEAT.md / keyword-triggers-sop.md / handoff/README / handoff/_chains/{README,SCHEMA}.md）、**順手修系統遺留缺陷**：keyword-triggers-sop.md SOP 段還在用 `market-strategist`（2026-06-10 重塑為 `consumer-researcher` 後未跟改）。**L3 教訓**：「keyword 設計要避免多義前綴（`@`/`@` 容易撞）、視覺符號差異是 zero-cost 防呆機制」
 - 2026-06-10: **market-strategist 身份重塑為 consumer-researcher**（使用者觀察:實際專案瓶頸是「消費者需求 + 標竿功能盤點」不是市場分析）。重建 profile、砍 192→41 個 skill、改 persona 跟 SOUL、新建 web-worker-template / summarizer-worker-template、修正 v1/v2/v2 修正版三方比對 → 見 `~/shared-infra/CONSUMER_RESEARCHER_V2_ARCHITECTURE_REPORT.md` + `CONSUMER_RESEARCHER_CONVERSION_v1_REPORT.md`
 - 2026-06-10: **v2 Orchestrator + Worker 平行架構設計與驗證**——主 session 不跑 web 抓取、改派 `hermes chat -q ... --cli` 獨立 hermes session(context 完全隔離)+ summarizer 整合。**v2 原始版漏 SkillSwap.io + 換 Persona**,**v2 修正版**(必抓清單 + _plan.md 保留使用者原意 Persona)涵蓋完整。L3 教訓:「LLM sub-agent 是無狀態的、必抓清單 + _plan.md 是 Orchestrator 跟 sub-agent 的介面契約」
 - 2026-06-10: **notify_on_complete 通知延遲 10-14 分鐘是常態**——v2 架構派 4 worker + 1 summarizer,實際 11 分鐘跑完但通知 10-14 分鐘才送達。L3 教訓:「Hermes 通知是『最終確認』不是『即時 polling』,用 `ls <output_dir>` 撈實際產出比等通知更可靠」。**If** 派 background process **Then** 主動用 ls 監聽、不依賴 notify

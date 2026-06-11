@@ -13,7 +13,7 @@ consumer-researcher (56) → product-planner (64) → system-architect (102) →
 ```
 
 > **2026-06-10 更新**:從「市場策略代理 (market-strategist)」重塑為「消費者需求及功能需求代理 (consumer-researcher)」。交付物命名從 `market-research.md` 改為 `consumer-needs-research.md`。
-> **2026-06-11 更新**:鏈條圖改為「線性 5 階段 + 迴圈反饋」模型 —— 線性主流程（consumer→product→arch→eng→test），test 發現問題時**迴圈丟回 engineering-lead**重做、直到測試無誤才把產出給使用者。赫米斯（default）是唯一交棒者（透過「@專案」keyword 觸發 handoff pipeline）。
+> **2026-06-11 更新**:鏈條圖改為「線性 5 階段 + 迴圈反饋」模型 —— 線性主流程（consumer→product→arch→eng→test），test 發現問題時**迴圈丟回 engineering-lead**重做、直到測試無誤才把產出給使用者。赫米斯（default）是唯一交棒者（透過「`^專案`」keyword 觸發 handoff pipeline、2026-06-11 從 `@專案` 改為 `^專案`）。
 
 ## 目錄慣例
 

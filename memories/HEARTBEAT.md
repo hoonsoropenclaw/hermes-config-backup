@@ -39,7 +39,7 @@
 - [ ] **方案 C** — 建 `orchestrator` 常駐 profile（profile + tmux），watch `~/.hermes/handoff/inbox/` 目錄自動串接
   - 預期效益：可離線跑（赫米斯主 session 不在也能接力）、可監控多個專案同時進行
   - 風險：要寫 daemon、處理 race condition、profile 記憶管理、tmux session 監控；複雜度最高
-- **現況**：方案 A（赫米斯 default 串接、`@專案` keyword 觸發）已可用，2026-06-09 啟用
+- **現況**：方案 A（赫米斯 default 串接、`^專案` keyword 觸發）已可用，2026-06-09 啟用；2026-06-11 從 `@專案` 改為 `^專案`（避免與 `@學習` skill 觸發混淆、視覺分工明確）
 - **與使用者的約定**：本對話先驗證方案 A 可用性，後續再決定是否升級 B 或 C
 
 ---

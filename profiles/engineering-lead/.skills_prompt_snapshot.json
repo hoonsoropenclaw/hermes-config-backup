@@ -1041,6 +1041,10 @@
       1781103626313256953,
       3443
     ],
+    "debug/SKILL.md": [
+      1781148439914700586,
+      4074
+    ],
     "deployment-verification-sop/SKILL.md": [
       1781103626328257716,
       6333
@@ -1205,6 +1209,10 @@
       1781104029059317223,
       4925
     ],
+    "systematic-debugging/SKILL.md": [
+      1781148439918700702,
+      13950
+    ],
     "tdd-implementer/SKILL.md": [
       1781104029102330426,
       6452
@@ -1212,6 +1220,10 @@
     "tdd-workflow/SKILL.md": [
       1781103626743278832,
       9517
+    ],
+    "tech-debt/SKILL.md": [
+      1781148439927700962,
+      1458
     ],
     "trial-and-error/SKILL.md": [
       1781103626743278832,
@@ -1232,6 +1244,10 @@
     "workspace-folder-layout/SKILL.md": [
       1781103626745278934,
       26643
+    ],
+    "writing-plans/SKILL.md": [
+      1781148439922700817,
+      9009
     ],
     "xlsx/SKILL.md": [
       1781103626745278934,
@@ -4646,6 +4662,19 @@
       }
     },
     {
+      "skill_name": "debug",
+      "category": "debug",
+      "frontmatter_name": "debug",
+      "description": "Structured debugging session — reproduce, isolate, diagno...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
       "skill_name": "deployment-verification-sop",
       "category": "deployment-verification-sop",
       "frontmatter_name": "deployment-verification-sop",
@@ -5230,6 +5259,23 @@
       }
     },
     {
+      "skill_name": "systematic-debugging",
+      "category": "systematic-debugging",
+      "frontmatter_name": "systematic-debugging",
+      "description": "4-phase root cause debugging: understand bugs before fixing.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
       "skill_name": "tdd-implementer",
       "category": "tdd-implementer",
       "frontmatter_name": "tdd-implementer",
@@ -5247,6 +5293,19 @@
       "category": "tdd-workflow",
       "frontmatter_name": "tdd-workflow",
       "description": "Use this skill when writing new features, fixing bugs, or...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "tech-debt",
+      "category": "tech-debt",
+      "frontmatter_name": "tech-debt",
+      "description": "Identify, categorize, and prioritize technical debt. Trig...",
       "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
@@ -5321,6 +5380,23 @@
       "platforms": [
         "linux",
         "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "writing-plans",
+      "category": "writing-plans",
+      "frontmatter_name": "writing-plans",
+      "description": "Write implementation plans: bite-sized tasks, paths, code.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
       ],
       "conditions": {
         "fallback_for_toolsets": [],

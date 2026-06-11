@@ -1,7 +1,7 @@
 # Hermes 代理 Handoff Chain 範本區
 
 > **這裡是「未來要建新鏈時的範本區」，不是「目前進行中的鏈」。**
-> 目前進行中的鏈直接放在 `~/.hermes/handoff/<project-slug>/`（頂層目錄），例如 `skill-language-exchange-platform/` 就是「@專案」這個活躍鏈的 project。
+> 目前進行中的鏈直接放在 `~/.hermes/handoff/<project-slug>/`（頂層目錄），例如 `skill-language-exchange-platform/` 就是「`^專案`」這個活躍鏈的 project。
 
 ---
 
@@ -30,7 +30,7 @@ ls ~/.hermes/handoff/   # 看到的就是目前所有「進行中 + 已完成 + 
 |----|------|
 | `README.md` | 本檔、使用手冊 |
 | `SCHEMA.md` | 鏈條結構定義（鏈由什麼組成、怎麼算合法鏈） |
-| `EXAMPLE-at-project.md` | 「@專案」鏈的結構化範例（**目前唯一真實鏈**） |
+| `EXAMPLE-at-project.md` | 「`^專案`」鏈的結構化範例（**目前唯一真實鏈**） |
 
 ---
 
@@ -38,14 +38,13 @@ ls ~/.hermes/handoff/   # 看到的就是目前所有「進行中 + 已完成 + 
 
 | 鏈名 | project-slug | 階段數 | 狀態 | 走過的代理 |
 |------|--------------|--------|------|-----------|
-| **@專案** | `skill-language-exchange-platform` | 5 階段 | ✅ 完成（Jun 10 21:11） | consumer-researcher → product-planner → system-architect → (engineering-lead 預定) → (test-engineer 預定) |
+| **`^專案`** | `skill-language-exchange-platform` | 5 階段 | ✅ 完成（Jun 10 21:11） | consumer-researcher → product-planner → system-architect → (engineering-lead 預定) → (test-engineer 預定) |
 
 > **命名說明**：
-> - 「@專案」= **用 @ 符號**做技能/語言交換協作的專案流程
-> - 鏈名裡的「@」指**應用場景**（用 @ 標註、媒合、追蹤）不是被學的對象
-> - 不要誤讀成「學會用 @」或「教 @ 是什麼」 —— **鏈名指應用場景、不指功能教學**
+> - 「`^專案`」= 觸發 handoff pipeline 的 keyword（**Shift+6 鍵盤原生**、與 `@學習` 視覺分工明確）
+> - 2026-06-11 從 `@專案` 改為 `^專案`：避免 `@學習` skill 觸發混淆、shell 無風險、輸入零摩擦
 >
-> **重要**：常駐代理的「@學習」= `trial-and-error` skill（試誤學習的觸發標記），**不是 handoff 鏈**。Handoff chain 都是「專案」維度、不是「技能學習」維度。
+> **重要**：常駐代理的「`@學習`」= `trial-and-error` skill（試誤學習的觸發標記），**不是 handoff 鏈**。Handoff chain 都是「專案」維度、不是「技能學習」維度。
 
 **只有 1 條**。其他目錄：
 - `school-multidept-site/` —— 2 階段早期測試（market-research → prd）、**不代表真實鏈**
