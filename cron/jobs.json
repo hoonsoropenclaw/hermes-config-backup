@@ -248,7 +248,7 @@
       "schedule_display": "0 3 * * *",
       "repeat": {
         "times": null,
-        "completed": 7
+        "completed": 8
       },
       "enabled": true,
       "state": "scheduled",
@@ -256,9 +256,9 @@
       "paused_reason": null,
       "created_at": "2026-06-06T14:48:00.047140+08:00",
       "next_run_at": "2026-06-12T03:00:00+08:00",
-      "last_run_at": "2026-06-11T15:42:07.733493+08:00",
+      "last_run_at": "2026-06-11T15:52:35.059028+08:00",
       "last_status": "error",
-      "last_error": "Script exited with code 1\nstderr:\n\u001b[0;31m[15:42:07] \u2717\u001b[0m push \u5931\u6557\u3001\u770b\u4e0a\u9762\u932f\u8aa4\u8a0a\u606f\n\u001b[0;31m[15:42:07] \u2717\u001b[0m Tier 1 \u5931\u6557\u3001\u8df3\u904e Tier 2\uff08\u907f\u514d\u767d\u505a 285M secrets \u52a0\u5bc6\uff09\n\u001b[0;31m[15:42:07] \u2717\u001b[0m \u8a73\u7d30\u932f\u8aa4\u770b\u4e0a\u9762\u8a0a\u606f\u3001\u6216\u770b ~/.hermes/logs/20260611_*.log\nstdout:\n\u001b[0;32m========================================\u001b[0m\n\u001b[0;32m  Hermes Backup v4 (Tier 1 + Tier 2)  \u001b[0m\n\u001b[0;32m========================================\u001b[0m\n\nTier 1 (GitHub):   true\nTier 2 (Drive):    true\nUpload Tier 2:     false\nDry run:           false\n\n\u001b[0;36m[15:42:04]\u001b[0m === Tier 1: GitHub (staging \u2192 hoonsoropenclaw/hermes-config-backup) ===\n\u001b[0;36m[15:42:04]\u001b[0m Step 1: \u540c\u6b65 ~/.hermes/ \u8b8a\u52d5\u5230 staging...\n\u001b[0;36m[15:42:05]\u001b[0m Step 2: git add + commit\n[main fb3d8d3] backup: 20260611_074206Z (v4 tier1 auto)\n 32 files changed, 5233 insertions(+), 54 deletions(-)\n create mode 100644 handoff/school-bulletin/_plan.md\n create mode 100644 handoff/school-bulletin/_raw/worker-1-taiwan-enotice.md\n create mode 100644 handoff/school-bulletin/_raw/worker-2-enterprise-and-tags.md\n create mode 100644 handoff/school-bulletin/_raw/worker-3-rbac-and-attachments.md\n create mode 100644 handoff/school-bulletin/_raw/worker-4-taiwan-painpoints.md\n create mode 100644 handoff/school-bulletin/architecture.md\n create mode 100644 handoff/school-bulletin/consumer-needs-research.md\n create mode 100644 handoff/school-bulletin/prd.md\n create mode 100644 profiles/consumer-researcher/processes.json\n create mode 100644 profiles/engineering-lead/processes.json\n create mode 100644 skills/browser/camofox/references/browser-use-2026-research.md\n create mode 100644 skills/devops/cron-job-health-monitor/references/dry-run-vs-real-run.md\n\u001b[0;36m[15:42:06]\u001b[0m Step 3: git push origin main\nremote: Permission to hoonsoropenclaw/hermes-config-backup.git denied to hoonsor.\nfatal: unable to access 'https://github.com/hoonsoropenclaw/hermes-config-backup.git/': The requested URL returned error: 403",
+      "last_error": "Script exited with code 1\nstderr:\n\u001b[0;31m[15:52:35] \u2717\u001b[0m push \u5931\u6557\u3001\u770b\u4e0a\u9762\u932f\u8aa4\u8a0a\u606f\n\u001b[0;31m[15:52:35] \u2717\u001b[0m Tier 1 \u5931\u6557\u3001\u8df3\u904e Tier 2\uff08\u907f\u514d\u767d\u505a 285M secrets \u52a0\u5bc6\uff09\n\u001b[0;31m[15:52:35] \u2717\u001b[0m \u8a73\u7d30\u932f\u8aa4\u770b\u4e0a\u9762\u8a0a\u606f\u3001\u6216\u770b ~/.hermes/logs/20260611_*.log\nstdout:\n\u001b[0;32m========================================\u001b[0m\n\u001b[0;32m  Hermes Backup v4 (Tier 1 + Tier 2)  \u001b[0m\n\u001b[0;32m========================================\u001b[0m\n\nTier 1 (GitHub):   true\nTier 2 (Drive):    true\nUpload Tier 2:     false\nDry run:           false\n\n\u001b[0;36m[15:52:33]\u001b[0m === Tier 1: GitHub (staging \u2192 hoonsoropenclaw/hermes-config-backup) ===\n\u001b[0;36m[15:52:33]\u001b[0m Step 1: \u540c\u6b65 ~/.hermes/ \u8b8a\u52d5\u5230 staging...\n\u001b[0;36m[15:52:34]\u001b[0m Step 2: git add + commit\n[main 10a6975] backup: 20260611_075234Z (v4 tier1 auto)\n 1 file changed, 1 insertion(+), 1 deletion(-)\n\u001b[0;36m[15:52:34]\u001b[0m Step 3: git push origin main\nremote: Permission to hoonsoropenclaw/hermes-config-backup.git denied to hoonsor.\nfatal: unable to access 'https://github.com/hoonsoropenclaw/hermes-config-backup.git/': The requested URL returned error: 403",
       "last_delivery_error": null,
       "deliver": "local",
       "origin": null,
@@ -538,5 +538,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-06-11T15:52:32.997881+08:00"
+  "updated_at": "2026-06-11T15:52:35.059950+08:00"
 }
