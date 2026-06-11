@@ -1,7 +1,7 @@
 ---
 name: hermes-config-layout
 description: "Hermes Agent 配置檔案的結構、改動 SOP、檔案間關係地圖。當需要改 ~/.hermes/ 下的設定檔（config.yaml / .env / auth.json / cron/jobs.json / config 區段）或理解某個欄位怎麼運作時,載入此 skill。涵蓋檔案結構、改動前備份慣例、跨檔案相依性（如 model 改動要同步 .env key + jobs.json + config.yaml + 重啟 gateway）、**建常駐 profile 的精瘦 SOP（取代舊的 agents/ + persistent-subagent 方案）**、**SOUL.md vs persona.md 載入機制（sub-agent 只讀 SOUL.md）**。"
-version: 1.5.0
+version: 1.6.0
 author: Hermes Agent (auto-saved)
 license: MIT
 platforms: [linux, macos, windows]
@@ -118,9 +118,48 @@ Step 4: 修法
    # 修 AGENTS.md 註明路徑（避免再誤會）— 見下段
 ```
 
-### SOUL.md vs persona.md 載入機制（2026-06-10 engineering-lead 建立時踩到，第二類「看起來建好了但實際沒生效」）
+## 🚨 Background 跑 `hermes chat` sub-agent 的 4 條鐵律（2026-06-12 實戰歸納）
 
-**核心發現**：`hermes -p <name> chat` 啟動 sub-agent 時,**只讀 `<profile>/SOUL.md`,不會自動讀 `<profile>/persona.md`**。
+**觸發情境**:要 background 跑 1 個或多個 `hermes chat` sub-agent（像 `delegate_task` 或 orchestrator-worker 架構、跑跨 session 實驗、跑 5 個 round 的 A/B test 等等）時，**本段必讀**。違反任一條 = sub-agent 看不到 prompt、直接 Goodbye、產出 0。
+
+**4 條鐵律**（R3b 跑了 3 次才成功歸納）:
+
+1. **Prompt 必永久存到工作目錄**：`/tmp/prompt-*.txt` 不可靠（`/tmp` 預設 10 天未訪問自動清，實測在跑 sub-agent 期間就被清掉）。**所有 prompt 檔必存到 `~/<project-dir>/prompt-<name>.txt`**
+2. **不要用 `tee`，用 `>`**：`cmd 2>&1 | tee log` 會搶 stdin，sub-agent 看不到 prompt。**改用 `cmd > log 2>&1`**（先 redirect stdout、再 redirect stderr 到當前 stdout）
+3. **Redirect 順序要對**：`cmd > log 2>&1`（先 `> log` 再 `2>&1`）。**不是 `cmd 2>&1 > log`**（那是先開 stderr 到 tty、再 redirect stdout，順序錯會導致 stderr 進 tty、log 只剩 stdout）
+4. **加 `--yolo --accept-hooks`**：避免 sub-agent 在 TTY approval prompt 卡住（背景跑沒有 tty、會 hang 等不到回應）
+
+**驗證 SOP**（每個 background sub-agent 必跑，不要只看通知）:
+
+```bash
+# 1. 啟動後 30-60 秒看進程還活著
+ps -ef | grep "hermes chat" | grep -v grep
+
+# 2. 看 log 不是 Goodbye（成功跡象）
+tail -3 log
+# 成功:有 worker 自己的輸出（不是 "Goodbye! ⚕"）
+# 失敗:只有 "Goodbye! ⚕" 表示 prompt 沒進去
+
+# 3. 看產物是否存在
+ls <expected-output-dir>
+
+# 4. （重要）**不要相信 notify_on_complete 的 exit code 或 output snapshot**:
+#    - exit code 0 但 output 顯示 Goodbye = 實際上失敗（hermes 通知機制抓的可能是啟動 snapshot）
+#    - **最可靠**:看 log 大小 + 產物存在 + worker 自己寫的 report
+```
+
+**反面案例**（R3b 3 次嘗試時間軸）:
+- 嘗試 1：用 `/tmp/round-3b-worker-{1,2,3}.txt` + `| tee log` → 3 個 worker 全 Goodbye、0 產出
+- 嘗試 2：改 `>` 但仍讀 `/tmp` → 3 個 worker 仍 Goodbye、output 顯示 `cat: /tmp/...: No such file or directory`
+- 嘗試 3：`>` + 永久 prompt + `--yolo --accept-hooks` → 180 秒完成、4 個核心檔 + 3 個 worker report 全部產出
+
+**If** 看到 background sub-agent 通知 exit code 0 但 log 是 Goodbye **Then** **不要只看通知**、**ls 產物 + wc -c log + 看 worker 自己寫的 report**
+
+---
+
+## SOUL.md vs persona.md 載入機制（2026-06-10 engineering-lead 建立時踩到，第二類「看起來建好了但實際沒生效」）
+
+**核心發現**：`hermes -p <name> chat` 啟動 sub-agent 時，**只讀 `<profile>/SOUL.md`，不會自動讀 `<profile>/persona.md`**。
 
 | 檔案 | 載入時機 | 影響 |
 |------|---------|------|
@@ -451,6 +490,7 @@ cp ~/.hermes/auth.json ~/.hermes/auth.json.bak.$(date +%s)
 
 | 版本 | 日期 | 變更 |
 |------|------|------|
+| 1.6.0 | 2026-06-12 | 新增「Background 跑 `hermes chat` sub-agent 的 4 條鐵律」段——從 R3b 跑了 3 次才成功歸納：(1) prompt 必永久存到工作目錄（`/tmp` 不可靠，會被自動清）、(2) 不要用 `tee` 用 `>`（`tee` 搶 stdin）、(3) redirect 順序要對（先 `> log` 再 `2>&1`）、(4) 加 `--yolo --accept-hooks` 避免 TTY 卡住。**新增「不要相信 notify_on_complete 的 exit code」反模式**：R3b 3 個成功 sub-agent 通知時都顯示 Goodbye + exit 0，但實際上是 sub-agent 跑了 + 有產出（hermes 通知機制抓的是啟動 snapshot）。**最可靠的監聽是 `ls` 產物 + `wc -c log` + `ps` 看 process**。|
 | 1.5.0 | 2026-06-10 | 補上 engineering-lead 建立時的關鍵發現：「**`hermes -p X chat` 只讀 SOUL.md、不自動載 persona.md**」—— 寫了 10KB persona.md 但 sub-agent 開新 session 完全沒套用。新增「SOUL.md vs persona.md 載入機制」段,含症狀、修法（patch SOUL.md 頂部插入摘要）、反面案例（system-architect 為何能用）、必跑驗證 SOP（`chat -q "回報 N 個決策" --cli`）。**這是「看起來建好了但實際沒生效」第二類**（第一類是 1.4.1 的 SOUL.md 雙檔衝突）|
 | 1.4.2 | 2026-06-10 | 補上 6/10 第三次收尾：SOUL.md 內容精簡（v2 8957B/206 行 → v3 6263B/114 行，-30% 縮減）、6 個衝突（耗盡配額/第一次就做對/回應指示燈/Python 守則/資料夾結構/Session 延續性）+ 2 個補強（記憶紀律/Vibe INTJ 呼應）全部修好、新增 SOUL.md 路徑決策樹（給未來 session 速查）。**收錄使用者「高效率耗盡」first-class 偏好**（3 指標 + 4 反例，未來任何 token-heavy 任務必遵守）|
 | 1.4.1 | 2026-06-10 | 補上 6/10 收尾：SOUL.md bug 已修（537B 預設 → 8957B Super Learner 覆蓋根目錄 + AGENTS.md 加註路徑說明）、youtube_channels.json 已搬到 `cache/youtube/channels.json` + 改 3 個 script。「雙檔衝突」段從「待決策」改為「已修」、「應該在 hermes 外部」表加 2026-06-10 狀態欄。 |

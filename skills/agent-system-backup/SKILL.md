@@ -475,6 +475,23 @@ ln -sf ~/.hermes/skills/agent-system-backup/scripts/verify-recovery-chain.sh \
 **備註**:`hermes gateway restart` 從 gateway 內會被拒(`Refusing to restart the gateway from inside the gateway process`)、這是**設計而非 bug**
 
 ### 🆕 10.14 INVENTORY.md 必含「改檔對照表」（v4.6 新增）
+
+### 🆕 10.15 Git Credential Helper Chain Pollution — 403 陷阱（v4.6.1 新增）
+**問題**：`hermes-config-backup-daily` push fails with 403 "denied to hoonsor"，但 interactive session 中 `git push` 成功。
+
+**根因**：`~/.git-credentials-raphael` 包含 legacy credential `https://hoonsor:ghp_...@github.com`（錯誤帳號）。在非互動式 cron/script 環境中，git credential helper chain 觸發 fallback 到 `~/.git-credentials-raphael`，使用錯誤帳號。
+
+**修復**：
+```bash
+rm ~/.git-credentials-raphael
+# 或執行
+gh auth setup-git
+```
+
+**完整技術細節**：見 `references/git-credential-helper-chain-pollution.md`
+
+**If** git push works in interactive but fails in cron/script with 403 "denied to hoonsor"
+**Then** 檢查 `~/.git-credentials-raphael` 是否包含錯誤帳號 → 刪除該檔
 **問題**:v4.5 之前的 SKILL.md §14.1 改檔對照表只列「改 v4 腳本必同步改的其他檔」，但**沒強調「必同步更新同步清單本身」**。
 
 **v4.6 修法**:
@@ -659,6 +676,7 @@ HERMES_USER_KEY="<key>" bash ~/.hermes/skills/agent-system-backup/scripts/verify
 - `references/v4-rsync-exclude-recipes.md` — v4 rsync 排除清單完整食譜(2026-06-10)
 - `references/github-push-recovery.md` — GitHub push 卡死 troubleshooting 完整流程(2026-06-10)
 - `references/cron-environment-key-fallback.md` — cron 環境密鑰 3 級 fallback 設計(2026-06-10,對應 §10.10)
+- `references/git-credential-helper-chain-pollution.md` — **v4.6.1 新增** - 403 陷阱：script 環境中 git credential chain fallback 到錯誤帳號（hoonsor vs hoonsoropenclaw）
 - `references/hermes-backup-coverage-pattern.md` — **v4.6 新增** - v4 同步清單 single source of truth + coverage check 3 層檢查邏輯 + 4 個踩坑經驗 + 對未來 AI 的提示
 
 ## 17. Scripts 支援檔
@@ -671,6 +689,7 @@ HERMES_USER_KEY="<key>" bash ~/.hermes/skills/agent-system-backup/scripts/verify
 
 | 版本 | 日期 | 變更 |
 |------|------|------|
+| 1.2.1 | 2026-06-12 | v4.6.1：新增 §10.15 Git Credential Helper Chain Pollution 403 陷阱 + `references/git-credential-helper-chain-pollution.md`（~/.git-credentials-raphael 污染導致 cron/script 環境 403）。hermes-config-backup-daily 根因已識別。|
 | 1.2.0 | 2026-06-10 | v4.5 → v4.6 升級：8 → 14 個同步目標、新建 INVENTORY.md 同步清單、新建 hermes-backup-coverage-check.sh 每日 cron 自動化驗證（id 651713da919d）。新增 §1.5 v4.6 同步清單擴充、§10.14 INVENTORY 必含改檔對照表、§14.6 改 INVENTORY 必同步更新。新增 references/hermes-backup-coverage-pattern.md（完整設計 + 4 個踩坑經驗）。**未來任何「今天變動的檔案是否漏備份」任務必看本檔** |
 | 1.1.0 | (前版) | v4.5 雙層 GPG + USER_KEY |
 | 1.0.0 | (前版) | 既有內容 |

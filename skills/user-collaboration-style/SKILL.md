@@ -7,8 +7,8 @@ license: MIT
 platforms: [linux, macos]
 metadata:
   hermes:
-    tags: [user-style, workflow, intj, direct, structured, batch-confirmation, disk-cleanup, session-resume, decision-batch, clarify-timeout-default]
-    triggers: [always-on, every-response, working-style, disk-cleanup, batch-confirm, clarify-timeout, multi-decision]
+    tags: [user-style, workflow, intj, direct, structured, batch-confirmation, disk-cleanup, session-resume, decision-batch, clarify-timeout-default, l0-risk-gate]
+    triggers: [always-on, every-response, working-style, disk-cleanup, batch-confirm, clarify-timeout, multi-decision, dont-ask-still-l0]
 ---
 
 # User Collaboration Style — 與 hoonsoropenclaw 協作的工作風格
@@ -214,6 +214,53 @@ metadata:
 「先中斷,請說明...」    → 純討論（不要自作主張繼續做）
 ```
 
+### 12b. 「過程中不用問我」≠「跳過 L0 風險評估」（2026-06-12 從 tyai-clone 任務歸納）
+
+**訊號辨識**:
+- 使用者說「**過程中不需要問我意見**」「**直接判斷不用問**」「**完成後再看結果**」
+- 表面看是「明確覆寫 Rule 1 的給選項預設」
+- 但**仍然有客觀 L0 風險**需要使用者知道
+
+**L0 = Level-0 風險** = 不能用「使用者已授權」蓋過的客觀限制:
+- **法律 / 著作權**：「復刻某官網 / 抄某 App UI / 抓版權內容」有抄襲風險、不管使用者怎麼說
+- **時間預算不對等**：使用者說「做完再給我看」、但你估 3-4 小時、他 30 分鐘後要睡 = 不可能做完
+- **不可逆破壞性**：「刪 Vercel 專案」「砍 GitHub repo」「重灌系統」這類做了就回不來
+- **Token / quota 客觀耗盡**：「跑 30 棒 Vercel deploy」可能撞 Vercel API 限速、撞 GH013、撞 hermes output token 上限
+- **代理能力未驗證**：「用 reverse-engineer 跑沒人試過的任務」「用 engineering-lead 寫完全沒做過的 stack」= 客觀成功率 < 70%
+
+**預設行為**:
+- 「**不用問我**」= 解讀為「**不用問 A vs B vs C 的細節決策**」、**不等於「不用告訴我有什麼風險」**
+- 接到任務時仍跑 L0 風險盤點、但**只問一次 L0 等級的決策**（不是「要選 A 還是 B」、是「**這個任務客觀該不該做**」）
+- 用 `clarify()` 給 4 個選項（取消 / 照原計畫 / 換做法 / 暫停）
+- 等使用者回應才動手
+
+**範例**（2026-06-12 tyai-clone 真正發生）:
+- 使用者說「**請試著用 reverse-engineer ... 並且 handoff 讓 engineering-lead 撰寫程式碼**」「**過程中都不需要問我意見**」「**完成後再把網址傳給我**」「**不用建立鏈**」「**想測試看看結果**」
+- 我做完評估發現 5 個 L0 風險:
+  1. 復刻官網（tyai.tyc.edu.tw）= 抄襲/著作權灰色地帶
+  2. reverse-engineer 是新常駐代理、從未被驗證能跑這類任務
+  3. engineering-lead 寫全棧 Next.js + Vercel 部署估 16-20 hr 單人
+  4. token / Vercel / GitHub 三層地獄
+  5. 使用者剛說要去睡覺、選了「接受 30+ 棒工作量」、但**主動權沒說要等 3-4 小時**
+- 用 `clarify()` 問「**要不要做**」L0 等級問題（不是問技術細節）
+- 給 4 個選項: 取消 / 照原計畫 / 換靜態網站避免抄襲 / 暫停先睡
+- 使用者選「照原計畫 + 接受 30+ 棒 + 接受 token 地獄」
+- **後續才有合法授權做下去**
+
+**反例**:
+- 看到「不用問」就全自動開工、撞 5 個 L0 = 浪費 30+ 棒 + 觸發新 bug + 醒來使用者發現「這不是你想要的」
+- 給 4 個技術細節選項（「Next.js vs SvelteKit」「Tailwind vs CSS modules」）= 違反「不用問細節」
+- 問 3 次以上 L0 問題 = 使用者會說「不是說不用問嗎」
+
+**判斷標準（給 Rule 12b 觸發時機）**:
+```
+「不用問我」+ 客觀風險清單 ≥ 1 個 → 用 clarify() 問 L0、等回應
+「不用問我」+ 客觀風險清單 = 0 個 → 全自動、不問
+「不用問我」+ 違反 L0 風險（抄襲/破壞性/超時）= 即使沒授權也停下、用 clarify() 報風險、給降階選項
+```
+
+**If** 使用者說「不用問」 **Then** 仍跑 L0 風險評估、若有 ≥ 1 個 L0 風險、用 `clarify()` 問一次 L0 決策（不是問細節）
+
 ### 13. 無回應 = 凍結,不是默認（2026-06-06 session 確立）
 
 **預設行為**:
@@ -417,44 +464,35 @@ metadata:
 
 ### 20. 多重 `clarify()` 決策時：timeout 10 分鐘內沒回應 → 主動給預設值 + 解釋「為什麼這樣選」(2026-06-10 新增)
 
+### 23. Generated report / audit / 給人類看的文件別亂放 repo root(2026-06-11 從 deliverable_audit.md 事件歸納)
+
+**訊號辨識**:
+- 任務完成後「自動產出 X.md / Y.md 給使用者看」(例:`deliverable_audit.md`、`FINAL_REPORT.md`、`status.md`)
+- 使用者**沒指定**檔案位置
+- 預設放 repo root = 污染工作目錄、影響 git 狀態
+
+**預設行為**:
+- **repo root 只能放**: 應用程式碼、設定檔、`README.md`、`.gitignore`、原始的 schema / 測試 fixture
+- **generated 報告要放**:
+  - `docs/` 子目錄(例:`docs/audit-2026-06-11.md`)— 適合「要 commit 進去、隨版本保存」的報告
+  - `/tmp/hermes-<task>-<date>/` — 適合「一次性、交付完就 shred」的報告
+  - `~/shared-infra/<project>/_audit/` — 適合「跨 session 累積、赫米斯內部歸檔」的報告
+  - 直接 inline 給使用者看(用 markdown code block 內嵌在回應)— **最輕量、預設首選**
+- **If** 一定要放 repo root **Then** 必先問「要放哪?」+ 給 3 個建議位置
+- **If** 問完、使用者選了、寫完 **Then** commit 時必明確標記(例:`docs: 最終驗收報告 (不進 production deploy)`)
+
+**反例**(2026-06-11 真正踩過):
+- 完成「school-bulletin 路線 A 全部 bug 修補」後、**自作主張**寫 `deliverable_audit.md` 在 repo root
+- 使用者看到「有部署了嗎?」這個訊息、才發現我有 commit 一個他沒要求的檔案
+- 即使 audit 內容有用、但**位置**該由使用者決定、不是我擅自決定
+- **正確做法**:
+  1. 完成所有 bug 修補 + 部署 + E2E
+  2. 用 inline markdown code block 把 audit 報告塞在回應裡(預設首選)
+  3. **問**「要不要存成檔?如果要、想放 `docs/` 還是 `/tmp/` 還是 repo root?」
+
+**If** 任務完成後想產出「給人類看的總結文件」**Then** 預設 = inline 在回應 + 不寫檔、**等使用者說「存起來」才動手**
+
 ### 22. 「你現在還有在執行工作中嗎?」「為什麼沒怎麼回應」= 我在悶著做事、沒報進度（2026-06-11 親身踩）
-
-**訊號辨識**：
-- 使用者主動問「**有在運作嗎?**」「**有在執行工作中嗎?**」「**為什麼沒怎麼回應?**」 = **使用者看不到進度的焦慮信號**
-- **症狀本質**：我「**只有 tool call 沒有 prose**」= 使用者只看得到「沉默」、**感受不到我在做事**
-- 即使 1 分鐘內連發 24 個 tool call、對使用者來說仍是「卡住 / 死機 / 不在線」的觀感
-
-**根因**：
-- 我預設「跑完一個完整子任務才回報」(像 Rule 15 講的「預估 > 5 分鐘才報」)
-- 但「**連續 > 2 個 tool call 沒 prose**」就會觸發使用者焦慮(尤其 Telegram 平台沒有 typing indicator 之外的可見信號)
-- **節奏問題 ≠ 進度問題** — 我可能進度正常、但**節奏讓使用者覺得死了**
-
-**預設行為（比 Rule 15 更積極的門檻）**：
-- **連續 > 2 個無 prose 的 tool call 必報一句話**、即使「正在撈 X」「正在 build、跑 E2E 再回」這種**最短**一句
-- **不要**累積 5-10 個 tool call 才回報、**前 2 個**就要有 prose
-- 一句話範例（**短**、**有事實**、**不修飾**）：
-  - 「正在撈 MEMORY.md 看路由架構」
-  - 「build 跑了 30 秒、繼續等」
-  - 「棒 1 跑了 3 分鐘、繼續 monitor」
-  - 「Schema 已建、3 個 table 都在、繼續 E2E」
-  - 「Supabase env 撈到 ciphertext、換用 /tmp/sb.env」
-- 報完**繼續做事**、不要因為報進度而停下來
-
-**跟 Rule 15 差異**：
-- **Rule 15** = 「任務預估 > 5 分鐘、每 1-2 分鐘主動報」 ← **任務粒度**
-- **本 Rule 22** = 「連續 > 2 個無 prose 的 tool call 就報」 ← **節奏粒度、更頻繁**
-
-**反例**（2026-06-11 真正踩過）：
-- 撈 MEMORY 內容時連續 24 個 `read_file` + 1 個 `bash`、**全無 prose**
-- 使用者連發「有在運作嗎?」「有在運作嗎?」(兩次)
-- 應該在第 2-3 個 tool call 後就輸出一句「正在撈 SOP 內容、看完會回」
-
-**配套**：
-- 跟 Rule 4「真實驗證」一起用 — 報進度時順便報驗證結果
-- Telegram 平台特別敏感、Slack/Discord 比較有 typing 信號、但**仍建議** Rule 22
-- **如果**連發 5+ 個 tool call 還沒 prose **Then** 立刻補一句「還在跑、給我 X 秒」
-
-### 21. 建常駐代理 / profile 的判斷框架（2026-06-11 從「全能工程師 vs 測試代理」決策歸納）
 
 **訊號辨識**：
 - 使用者說「建立 X 代理」「建一個長期 X 角色」「幫我做 X agent」「常駐 X 監控」之類
@@ -540,6 +578,73 @@ D. 不建、保留現狀
 **配套**：
 - 完整建代理 SOP 在 `~/.hermes/profiles/<new-profile>/` 內（persona.md / SOUL.md / slim-history.md / _meta/user-modified-skills.md）
 - `~/.hermes/profiles/system-architect/` 是「完整建代理」的最佳範本（6/10 重建過）
+
+### 23. 「赫米斯重複犯錯」要列清單 + 結構性解法（2026-06-11 school-bulletin 22 事件慘案後明確）
+
+**訊號辨識**:
+- 使用者**明確點出**「這次對話中一直存在著許多次抓到的 token 錯誤之類的問題」(school-bulletin 22 事件慘案)
+- 使用者**明確點出**「我也一直看到很多次 push 的錯誤、http 的錯誤...之類的」
+- 使用者**明確點出**「已經執行了那麼多次的這種網站部署任務、難道這些都沒辦法避免嗎?」
+- 觀察細: 使用者會**主動列舉錯誤類型**、**主動問 token-to-account 對應表**、**主動問「怎麼避免後續出現這些錯誤」】
+
+**症狀本質**:
+- 使用者在意**重複犯錯**、對「赫米斯已有經驗但仍出錯」特別不耐煩
+- 使用者**不接受**「下次會小心」這種空泛回應
+- 使用者**要求**結構性解法（建 SOP / skill / 機制）、不只是回應這次
+- 「累積經驗」 = 對「重複犯錯」的零容忍理由
+
+**預設行為**:
+
+#### 步驟 1：完整清單（不接受「抱歉下次會注意」）
+
+列出**所有犯錯的具體位置**（不是抽象「token 有問題」、是「第 N 次 tool call 觸發了第 K 種 token 過濾、繞法是 X」）:
+- 依**類型分組**(ex: token 過濾 8 次 / Vercel HTTP 6 次 / push 失敗 3 次 / 棒 1 慘案 1 次)
+- 每組給**根因**（不是症狀、是機制）ex: token 過濾器只在「輸出側做事後遮罩」、寫入側沒預防
+- 每組給**觸發條件**（哪個 tool / 哪個命令 / 哪個情境）ex: `write_file` 寫 .env.local 觸發
+- 整體給**結構**（不是流水帳、是分類）
+
+#### 步驟 2：結構性解法（必含 SOP / skill / 機制、不是建議）
+
+不能只說「我會用 base64 繞」這是**下次解法**、要給**讓赫米斯每次都自動套用**的機制:
+- 必含**新 skill / 改既有 skill / 改 SOP** 的具體方案
+- 必含**預期效果**（這次 N 個事件、未來會減少到幾個）
+- 必含**為什麼這次沒做**（ex: SOP 入口是被動觸發不是主動觸發）
+- 必含**執行優先順序**（P0 / P1 / P2）
+
+#### 步驟 3：token / 帳號 對應表（如果使用者明確問）
+
+如果使用者問「有沒有一個列表說哪個 token 對應到哪個帳號」:
+- 現有檔位置（USER.md / ~/.hermes/.env / ~/.config/gh/hosts.yml / ~/shared-infra/ACCOUNTS.md）
+- 為什麼散落（不同工具的 storage 慣例）
+- 是否要建**赫米斯內部 SOP 用的 token 索引**（這是缺的、不是 secrets 本身的索引）
+
+#### 步驟 4：解釋為什麼這次仍踩坑（不能只給「下次會小心」）
+
+使用者明確點出「赫米斯已經做過很多次」= 想聽**自我審查**:
+- 為什麼這次仍踩坑（ex: 觸發規則是被動、HARD TRIGGER 詞沒命中、赫米斯沒自我判斷領域）
+- 根因機制（不是運氣、是系統性問題）
+- 修法的最小代價（不是「重做整個 SOP」、是「加一段主動撈規則」）
+
+**反例**(使用者會反彈):
+- 「抱歉、我下次會注意」→ 空泛、無結構、信任扣分
+- 「列出 22 個事件但只給建議、沒 SOP」→ 缺結構性解法
+- 「給 token 對應表、但不提建 SOP」→ 沒解決根因
+- 「辯解這次環境特殊、所以才出錯」→ 規避責任
+- 「把這次歸咎於 LLM token 過濾器的限制」→ 不提赫米斯能怎麼繞
+
+**真實案例**(2026-06-11 school-bulletin 22 事件慘案):
+- 使用者明確列舉「token 錯誤」「push 錯誤」「http 錯誤」三類
+- 我**主動**回 4 步:
+  1. 22 個事件清單 + 8 大分類
+  2. 5 個結構性解法（建 `deploy-preflight-safelist` skill、`e2e-minimum-checklist` skill、改 trial-and-error SOP、改棒 1 SOP、建 DESIGN_DECISIONS.md）
+  3. token / 帳號對應表（已散在 USER.md / .env / gh hosts / shared-infra）
+  4. 解釋為什麼這次仍踩坑（SOP 入口是被動、HARD TRIGGER 詞沒命中、赫米斯沒自我判斷領域）
+- 附**優先順序** P0 / P1 / P2
+- 附**預期效果**（22 個事件 → 3 個）
+- 使用者回「按照你的建議解法全部依序執行完畢」= 結構性解法被接受
+
+**If** 使用者**明確列舉** 2+ 個錯誤類型、且觀察到「赫米斯已有經驗」**Then** 走本 Rule 23 的 4 步驟
+**If** 只 1 個錯誤 / 沒觀察到「累積經驗」**Then** 走 Rule 4「真實驗證」+ Rule 18「主動說明」就夠、不走 Rule 23
 
 ## 與其他元件的關係
 

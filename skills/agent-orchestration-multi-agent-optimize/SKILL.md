@@ -389,3 +389,98 @@ Example: | Source | Key Feature | Target User | Pain Point Addressed |
 **If** designing an Orchestrator → Worker handoff **Then** include all four elements (task + context + constraints + output_format) in `_plan.md`. Missing any element increases failure mode risk.
 
 **If** adding a new worker type to an existing orchestration **Then** validate that the summarizer's output_format can handle the worker's deliverable shape before deployment.
+
+## Sub-Agent Coding Tickets: Integration Cost is the Hidden Tax (2026-06-11)
+
+> Evidence: `references/sub-agent-coding-integration-cost.md` (full Todo App experiment with 3 rounds × 3 modes)
+
+When the Orchestrator is the main agent and Workers are sub-agents spawned via `delegate_task` to **write code in parallel**, the playbook above is necessary but not sufficient. **Code writing has a unique failure mode the abstract "handoff contract" framework doesn't cover: the function signature and module-export-shape must be agreed upon upfront, or every worker invents their own.**
+
+### The Five Hard-Won Lessons (Todo App Experiment, M-type, Next.js + TS)
+
+| # | Lesson | Specific Evidence |
+|---|--------|-------------------|
+| 1 | **Parallel write does NOT save wall time** | R2: 109s parallel + 71s integration = 180s total. R1 (solo): 161s. Parallel saved 0s on the clock, only saved main-session context occupancy. |
+| 2 | **Integration cost grows with sub-agent count** | 1 worker → 0 integration issues. 3 workers → 2+ signature-mismatch issues. Issue count scales faster than linearly because every (worker × interface) pair can drift. |
+| 3 | **Coding standards fix "format" problems, not "semantic" problems** | 6 coding rules (quote style, import form, export form, TS strict, catch (e), `deleteTodo` rename) eliminated 100% of format drift. They did **not** fix `list()` vs `list(filter)` signature drift, or `Todo` vs `Todo \| null` return type drift. |
+| 4 | **Workers make mistakes a solo writer would not make** | Solo writer keeps "what I just exported" in working memory. Workers write `import db from "@/lib/db"` assuming default export, while the lib worker wrote `export const db = {...}` (named). A solo writer reading their own lib/db.ts 10 seconds later catches this instantly. |
+| 5 | **Ticket precision has a cost-benefit curve** | A 3×-longer ticket saved only 30s of integration time. The marginal cost of writing ultra-precise tickets exceeds the marginal benefit at the M-task scale. |
+
+### When to Spawn Sub-Agents for Coding (Decision Tree)
+
+```
+Is the task M-size (2-3 tickets) or L-size (5+ tickets)?
+├── L-size (5+ tickets) → SPAWN SUB-AGENTS freely (your context would explode otherwise)
+├── M-size (2-3 tickets) →
+│   ├── Are the interfaces already 100% nailed down? (full TS signatures, not just descriptions)
+│   │   ├── YES → Spawn is OK, but budget 30-90s for integration
+│   │   └── NO  → Write solo. The integration cost will eat the parallel savings.
+└── S-size (1 ticket) → NEVER spawn. Solo is always faster.
+
+Is the worker's context critical for the task? (e.g. needs a 50-file reading of an unfamiliar codebase)
+├── YES → Spawn is justified even at M-size, because solo writer can't hold it either
+└── NO  → Solo is preferred
+```
+
+### The Required Additions to a Coding Ticket (Beyond the 4-Element Handoff)
+
+The standard handoff (task + context + constraints + output_format) is missing the two things code-writing needs:
+
+| Additional Element | Purpose | Example |
+|-------------------|---------|---------|
+| **exact export shape** | Worker A and Worker B must agree on `export const db = {...}` vs `export function list() {...}` | "Use `export const db = { list, create, update, deleteTodo }` object form, NOT named functions" |
+| **exact function signatures + return types** | Prevents `list(): Todo[]` vs `list(filter: FilterType): Todo[]` drift, or `Todo` vs `Todo \| null` return type drift | "Required signatures: `list(filter: FilterType = 'all'): Todo[]`, `update(id: string, data: Partial<Pick<Todo,'completed'>>): Todo \| null`, `deleteTodo(id: string): boolean`" |
+
+**Without these two additions**, every multi-worker coding task will produce 1-3 integration errors that the Orchestrator must fix manually.
+
+### The Integration-Fix SOP (Orchestrator after Workers return)
+
+Don't just trust the workers' "T-N DONE" reports. Run this 4-step:
+
+1. **Verify file presence**: `ls <expected paths>` for every file the ticket said to create. Workers sometimes write to the wrong path or skip files.
+2. **Run `tsc --noEmit` (or equivalent type checker)**: catches signature mismatches and missing exports that `next build` will miss.
+3. **Run the actual build**: catches `npm` resolution errors, missing dependencies, webpack-only issues.
+4. **Manually inspect cross-file imports**: `grep -rn "from '@/"` and look for default-vs-named import mismatches.
+
+**If** any of these fail **Then** the Worker did NOT actually finish — the ticket is still open. Do not accept the worker's self-report.
+
+### When Workers Have Isolated Working Directories (Critical)
+
+`delegate_task` gives each sub-agent a **fresh, isolated terminal session** with its own cwd. Workers cannot see each other's output. Implications:
+
+- If you tell 3 workers "create the project at `~/todo-app`", each one will run `npx create-next-app` and the second/third will see the directory exists. **This is actually fine** — the project is shared — but workers don't realize it and will each emit "create-next-app detected existing directory" warnings.
+- If you tell 3 workers "each create your own copy at `~/todo-{1,2,3}-app`", they CANNOT share code between them. They each produce a separate project. **You, the Orchestrator, must merge.**
+- Workers cannot read each other's worker-N-report.md during their run. Reports are for you, not for them.
+
+**If** workers need to share code while running **Then** you must use a shared parent directory and let later workers "inherit" the early files. **Document this in the ticket** or workers will each create their own subdirectory and you'll have a 3-project merge nightmare.
+
+### When Not to Use This Pattern At All
+
+- Task touches ≤ 2 files total → spawn overhead exceeds gain
+- All tickets have hard inter-dependencies (Worker B needs Worker A's output to start) → no parallelism possible, just sequential
+- The integration fix is non-trivial (cross-cutting refactor, breaking schema change) → the "merge" step is itself a full task, hire 1 worker for the merge instead
+
+## Creating a Long-Running Sub-Agent Profile (常駐代理 13-Step Recipe)
+
+> Trigger: user says "build a permanent sub-agent", "常駐代理", "long-running agent", "monitoring agent"
+> Full detail: `references/long-running-sub-agent-recipe.md`
+
+Quick checklist (don't skip steps, don't combine steps):
+
+1. **Plan the role** (5 min) — write down: trigger phrases, input types, output artifacts, handoff targets, "禁止事項"
+2. **`hermes profile create <name> --clone`** (10s) — clones from default, gets ~194 skills
+3. **Copy trial-and-error SOP** (5s) — `cp -r ~/.hermes/profiles/consumer-researcher/skills/trial-and-error/references/sops/ ~/.hermes/profiles/<name>/skills/trial-and-error/references/sops/` (default trial-and-error is in minimal-rebuild state, this restores the profile-slimming SOP)
+4. **Write `persona.md`** at profile root — the role definition, 6-step workflow, 禁止事項, handoff rules
+5. **Write the agent's defining skill** (1-2 skills unique to this role) — the methodology that makes the role valuable
+6. **`hermes -p <name> skills opt-out --remove --yes`** (5s) — auto-removes 65 bundled skills, writes `.no-bundled-skills` marker
+7. **Whitelist prune with Python** (10s) — keep 30-50 skills (own + hermes infrastructure + role-specific), drop the rest with `shutil.rmtree` (NOT shell glob, NOT `hermes skills disable`)
+8. **Create `wrapper script`** at `~/.local/bin/<name>` — 3 lines: `#!/bin/sh` + `exec hermes -p <name> "$@"`. The `hermes profile create` auto-creates a wrapper, but the auto one uses `hermes chat` not `hermes -p <name>`. Fix it.
+9. **Write `skills/_meta/slim-history.md`** — the decision record (what was kept, why, what was dropped, what was missing from default trial-and-error)
+10. **Run 4-件套 verification** (30s) — own skill present + 4 hermes infrastructure skills present + default profile untouched + `.no-bundled-skills` marker present
+11. **Update trial-and-error skill** with the new profile's name (so future agents know it exists)
+12. **Document in profile-list mental model** (the user might keep a written list, or you can rely on `hermes profile list` output)
+13. **Smoke test**: `hermes -p <name> skills list 2>&1 | tail -1` should show ~30-50 skills enabled
+
+**Time budget**: 15-30 minutes for a complete profile. Less = you skipped a step (usually #3 or #9).
+
+**Why "create the project's defining skill" is step 5, not step 1**: the persona declares the role; the skill is the *codified methodology* the role will use. Persona is "what is this agent", skill is "how does it do its job." Many agents have a persona but no codified skill — they re-invent their workflow every session. Step 5 prevents that.

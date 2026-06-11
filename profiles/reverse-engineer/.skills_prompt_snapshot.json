@@ -1,0 +1,705 @@
+{
+  "version": 1,
+  "manifest": {
+    "agent-browser/SKILL.md": [
+      1780586516739536040,
+      10800
+    ],
+    "anti-panic-protocol/SKILL.md": [
+      1779975046533499803,
+      2188
+    ],
+    "anti-pattern-czar/SKILL.md": [
+      1779975046544499727,
+      3425
+    ],
+    "anti-slop-design/SKILL.md": [
+      1780405266883106699,
+      63900
+    ],
+    "antislop/SKILL.md": [
+      1780835408164140001,
+      16159
+    ],
+    "bash-defensive-patterns/SKILL.md": [
+      1780405274866376774,
+      11764
+    ],
+    "beautiful-mermaid/SKILL.md": [
+      1779974551541880524,
+      39643
+    ],
+    "browser/camofox/SKILL.md": [
+      1780811036420677528,
+      26538
+    ],
+    "code/SKILL.md": [
+      1775910538790296406,
+      3205
+    ],
+    "diagram-generator/SKILL.md": [
+      1779974550495889299,
+      3328
+    ],
+    "docx/SKILL.md": [
+      1778080449245007274,
+      5201
+    ],
+    "general-workflow/SKILL.md": [
+      1781151396555186621,
+      22284
+    ],
+    "hermes-architecture/hermes-resident-agent/SKILL.md": [
+      1781152616138788648,
+      9134
+    ],
+    "hermes-tier-router/SKILL.md": [
+      1780758740543038468,
+      12471
+    ],
+    "minimax-docx/SKILL.md": [
+      1780110403172953374,
+      15818
+    ],
+    "minimax-pdf/SKILL.md": [
+      1780110403189953897,
+      8624
+    ],
+    "minimax-xlsx/SKILL.md": [
+      1780110403190953927,
+      8398
+    ],
+    "new-conversation/SKILL.md": [
+      1780675673076520786,
+      4435
+    ],
+    "pdf/SKILL.md": [
+      1778080486311148076,
+      4377
+    ],
+    "python-anti-patterns/SKILL.md": [
+      1780405274872376977,
+      8122
+    ],
+    "python-observability/SKILL.md": [
+      1780405274873377011,
+      11880
+    ],
+    "python-resilience/SKILL.md": [
+      1780405274873377011,
+      11159
+    ],
+    "reverse-engineer-methodology/SKILL.md": [
+      1781191545763593392,
+      13631
+    ],
+    "reverse-engineering/SKILL.md": [
+      1779974331409125242,
+      6092
+    ],
+    "scrapling/SKILL.md": [
+      1781172957943526920,
+      9699
+    ],
+    "skill-docker/SKILL.md": [
+      1779586389517703193,
+      3972
+    ],
+    "software-development/debugging-hermes-tui-commands/SKILL.md": [
+      1780109239611526843,
+      7910
+    ],
+    "software-development/hermes-s6-container-supervision/SKILL.md": [
+      1780109239611526843,
+      11474
+    ],
+    "software-development/program-project-planner/SKILL.md": [
+      1780406550207229062,
+      25268
+    ],
+    "software-development/subagent-driven-development/SKILL.md": [
+      1780406650510599665,
+      15023
+    ],
+    "software-development/systematic-debugging/SKILL.md": [
+      1780584933158391452,
+      13950
+    ],
+    "software-development/test-driven-development/SKILL.md": [
+      1780406679096880088,
+      10963
+    ],
+    "software-development/writing-plans/SKILL.md": [
+      1780406857043214259,
+      9009
+    ],
+    "trial-and-error/SKILL.md": [
+      1781191299597426278,
+      8073
+    ],
+    "user-collaboration-style/SKILL.md": [
+      1781189289367576358,
+      38602
+    ],
+    "vision-analysis/SKILL.md": [
+      1780705901004238764,
+      9733
+    ],
+    "web_search/SKILL.md": [
+      1780290158840375174,
+      5388
+    ],
+    "workspace-folder-layout/SKILL.md": [
+      1781098984943348099,
+      26643
+    ],
+    "xlsx/SKILL.md": [
+      1778080518771125925,
+      2892
+    ]
+  },
+  "skills": [
+    {
+      "skill_name": "agent-browser",
+      "category": "agent-browser",
+      "frontmatter_name": "Agent Browser",
+      "description": "A fast Rust-based headless browser automation CLI with No...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anti-panic-protocol",
+      "category": "anti-panic-protocol",
+      "frontmatter_name": "anti-panic-protocol",
+      "description": "Handle tool failures under pressure with bounded retries,...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anti-pattern-czar",
+      "category": "anti-pattern-czar",
+      "frontmatter_name": "anti-pattern-czar",
+      "description": "Detect and fix TypeScript error handling anti-patterns wi...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "anti-slop-design",
+      "category": "anti-slop-design",
+      "frontmatter_name": "hallmark",
+      "description": "Anti-AI-slop design skill for greenfield pages, audits, r...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "antislop",
+      "category": "antislop",
+      "frontmatter_name": "Anti-Slop",
+      "description": "This skill should be used when the user asks to\n\"check fo...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "bash-defensive-patterns",
+      "category": "bash-defensive-patterns",
+      "frontmatter_name": "bash-defensive-patterns",
+      "description": "Master defensive Bash programming techniques for producti...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "beautiful-mermaid",
+      "category": "beautiful-mermaid",
+      "frontmatter_name": "beautiful-mermaid",
+      "description": "Render Mermaid diagrams as beautiful SVG, PNG, or ASCII a...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "camofox",
+      "category": "browser",
+      "frontmatter_name": "camofox",
+      "description": "Camofox (camoufox-based Firefox) headless browser for Her...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "code",
+      "category": "code",
+      "frontmatter_name": "Code",
+      "description": "Coding workflow with planning, implementation, verificati...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "diagram-generator",
+      "category": "diagram-generator",
+      "frontmatter_name": "diagram-generator",
+      "description": "Generate Draw.io architecture diagrams, Mermaid diagrams,...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "docx",
+      "category": "docx",
+      "frontmatter_name": "docx",
+      "description": "",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "general-workflow",
+      "category": "general-workflow",
+      "frontmatter_name": "general-workflow",
+      "description": "泛化工作流程技能 — 當用戶提出問題或交辦任務時，優先喚醒此技能。先搜尋相似歷史案例，若相似度超過閾值則套用現有 ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hermes-resident-agent",
+      "category": "hermes-architecture",
+      "frontmatter_name": "hermes-resident-agent",
+      "description": "在 Hermes Agent 內建「常駐代理」架構的 SOP。當使用者要求建立長期運作的專屬代理（例如「建一個常駐...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hermes-tier-router",
+      "category": "hermes-tier-router",
+      "frontmatter_name": "hermes-tier-router",
+      "description": "赫米斯 2-tier model 路由決策表。赫米斯主 session 在呼叫 delegate_task 前讀這...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "minimax-docx",
+      "category": "minimax-docx",
+      "frontmatter_name": "minimax-docx",
+      "description": "Professional DOCX document creation, editing, and formatt...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "minimax-pdf",
+      "category": "minimax-pdf",
+      "frontmatter_name": "minimax-pdf",
+      "description": "Use this skill when visual quality and design identity ma...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "minimax-xlsx",
+      "category": "minimax-xlsx",
+      "frontmatter_name": "minimax-xlsx",
+      "description": "Open, create, read, analyze, edit, or validate Excel/spre...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "new-conversation",
+      "category": "new-conversation",
+      "frontmatter_name": "new-conversation",
+      "description": "結束 session 前先掃描本次對話,自動列出值得紀錄的 L3 抽象教訓,讓使用者確認後納入 trial-and...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "pdf",
+      "category": "pdf",
+      "frontmatter_name": "pdf",
+      "description": "",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "python-anti-patterns",
+      "category": "python-anti-patterns",
+      "frontmatter_name": "python-anti-patterns",
+      "description": "Common Python anti-patterns to avoid. Use as a checklist ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "python-observability",
+      "category": "python-observability",
+      "frontmatter_name": "python-observability",
+      "description": "Python observability patterns including structured loggin...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "python-resilience",
+      "category": "python-resilience",
+      "frontmatter_name": "python-resilience",
+      "description": "Python resilience patterns including automatic retries, e...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "reverse-engineer-methodology",
+      "category": "reverse-engineer-methodology",
+      "frontmatter_name": "reverse-engineer-methodology",
+      "description": "8 視角架構圖導向的反向工程方法論 — 從黑盒產物產出「工程師拿著就能近乎 100% 還原」的規格說明。必載入於 ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "reverse-engineering",
+      "category": "reverse-engineering",
+      "frontmatter_name": "Reverse Engineering",
+      "description": "Reverse engineer binaries, APIs, protocols, and workflows...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "scrapling",
+      "category": "scrapling",
+      "frontmatter_name": "scrapling",
+      "description": "Scrapling - 自適應網頁爬蟲框架，45k+ Stars。支援自動元素重定位、Cloudflare Tur...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "skill-docker",
+      "category": "skill-docker",
+      "frontmatter_name": "skill-docker",
+      "description": "manifest inspect",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "debugging-hermes-tui-commands",
+      "category": "software-development",
+      "frontmatter_name": "debugging-hermes-tui-commands",
+      "description": "Debug Hermes TUI slash commands: Python, gateway, Ink UI.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hermes-s6-container-supervision",
+      "category": "software-development",
+      "frontmatter_name": "hermes-s6-container-supervision",
+      "description": "Modify, debug, or extend the s6-overlay supervision tree ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "program-project-planner",
+      "category": "software-development",
+      "frontmatter_name": "program-project-planner",
+      "description": "",
+      "platforms": [
+        "[linux, macos, windows]"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "subagent-driven-development",
+      "category": "software-development",
+      "frontmatter_name": "subagent-driven-development",
+      "description": "Execute plans via delegate_task subagents (2-stage review).",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "systematic-debugging",
+      "category": "software-development",
+      "frontmatter_name": "systematic-debugging",
+      "description": "4-phase root cause debugging: understand bugs before fixing.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "test-driven-development",
+      "category": "software-development",
+      "frontmatter_name": "test-driven-development",
+      "description": "TDD: enforce RED-GREEN-REFACTOR, tests before code.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "writing-plans",
+      "category": "software-development",
+      "frontmatter_name": "writing-plans",
+      "description": "Write implementation plans: bite-sized tasks, paths, code.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "trial-and-error",
+      "category": "trial-and-error",
+      "frontmatter_name": "trial-and-error",
+      "description": "赫米斯踩過的坑目錄 — **MUST LOAD BEFORE EXECUTION**。當使用者交辦任何執行類任務或...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "user-collaboration-style",
+      "category": "user-collaboration-style",
+      "frontmatter_name": "user-collaboration-style",
+      "description": "與 hoonsoropenclaw 這位使用者協作的工作風格規範。當赫米斯處理任何任務、回答問題、提出方案、撰寫報...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "vision-analysis",
+      "category": "vision-analysis",
+      "frontmatter_name": "vision-analysis",
+      "description": "Analyze, describe, and extract information from images us...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "web_search",
+      "category": "web_search",
+      "frontmatter_name": "web_search",
+      "description": "雙軌 Web 搜尋技能：Ollama Web Search（主） + Tavily（備）。當需要查詢網路資訊、驗證...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "workspace-folder-layout",
+      "category": "workspace-folder-layout",
+      "frontmatter_name": "workspace-folder-layout",
+      "description": "hoonsoropenclaw 工作區（home 根目錄 / Y 槽遠端硬碟）的檔案組織 SOP。當要建立新檔案/...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "xlsx",
+      "category": "xlsx",
+      "frontmatter_name": "xlsx",
+      "description": "",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    }
+  ],
+  "category_descriptions": {}
+}

@@ -1,8 +1,8 @@
 ---
 name: multi-model-routing-cheatsheet
 description: "赫米斯多模型路由速查 — 當用戶問「按任務難度切換 model」「省 tokens」「用便宜 tier」「cheap model」「MiniMax 2.7 vs M3」「deepseek」「claude opus vs sonnet」時喚醒。本 skill 涵蓋赫米斯 2 條官方 routing 路徑、MiniMax 自家 cheap tier 切換、multi-provider 場景、3-tier 任務模型矩陣、3 個常見用戶誤區。"
-version: 1.0.0
-author: Hermes Agent (metacognitive-learner 2026-06-06)
+version: 1.1.0
+author: Hermes Agent (metacognitive-learner 2026-06-06; sub-agent integration update 2026-06-12)
 metadata:
   hermes:
     tags: [cost-optimization, model-routing, delegation, miniMax, cron]
@@ -100,6 +100,51 @@ hermes cron create \
 | **複雜** | Opus / M3 | architecture design、multi-file debug、security audit、framework upgrade、novel reasoning | 出錯成本 > token 成本 |
 
 **反面教材**：用 Opus 跑 commit message → 60x 成本、零品質提升。
+
+## 派遣 sub-agent 整合成本差異（M2.7 vs M3，2026-06-12 5 round 實驗歸納）
+
+**觸發**:用戶問「派遣 sub-agent 平行寫 code、值不值得？」「整合問題怎麼避免？」「M2.7 vs M3 在 sub-agent 場景差多少？」
+
+**實驗設定**:Todo App M 型任務（2-3 ticket、4 個核心檔），5 個 round 跑出來。
+
+**核心結論**:
+- **M2.7 派遣**:整合問題 2 個（export 形式 / 函式簽名不一致）、派遣總時間 180-200s（跟單獨寫 161s 差不多、沒省時間）
+- **M3 派遣**:整合問題 0-1 個小 lint、派遣總時間 180-270s（跟單獨寫平手）
+
+**M3 比 M2.7 在 sub-agent 整合上強的具體維度**:
+1. **讀同一份 reverse-arch 推測對方會寫什麼**：M3 比較準（物件 vs function、default vs named import 都猜對）
+2. **函式簽名**：M3 比較不會漏參數或加多餘
+3. **回傳型**：M3 比較不會回 `void` 忘了 `| null`
+4. **風格一致性**：3 worker 之間引號 / catch 形式比較一致
+
+**派遣決策表**:
+
+| 場景 | 推薦 | 原因 |
+|------|------|------|
+| S 型任務（1 ticket, 1 個檔）+ M2.7/M3 | 單獨寫 | 派遣 overhead 反而比任務本身大 |
+| M 型任務 + M2.7 | 單獨寫 | 派遣要 60-90s 整合、反而更慢 |
+| M 型任務 + M3 | 派遣 sub-agent | 平行 180s 跟單獨寫 161s 差不多、但省主 session context |
+| L 型任務（5+ ticket）+ M3 | 派遣 sub-agent | 自己寫 context 會爆 |
+| 不確定任務規模 | M3 + 派遣 + 改進 ticket | 最保險的選擇 |
+| 追求最快拿到 code | 單獨寫 M3 | 161s 真的最快 |
+
+**改進版 ticket 6 條 coding 規範**（對 M3 仍推薦，零風險）:
+1. lib/db.ts 用 `export const db = {...}` 物件形式（明寫，不要用 named function export）
+2. 全用雙引號（明寫）
+3. TypeScript 嚴格模式
+4. API 層用 `import { db } from "@/lib/db"` named import（明寫）
+5. try/catch 必 catch (e) 用 `e instanceof Error` 判斷
+6. 用 `deleteTodo` 避開 JS keyword
+
+**Ticket 規範化的極限**:
+- 格式問題（引號/import/export/catch 形式）= 可規範化（6 條就夠）
+- **語意問題**（函式簽名/回傳型/命名）= 要 reverse-arch 升級成精確 API 規格（具體函式簽名 + 回傳型表）
+
+**If** 派遣 M2.7 sub-agent **Then** 預期 60-90s 整合時間，主 session 要留預算
+**If** 派遣 M3 sub-agent + 改進 ticket **Then** 預期 0-30s 整合，接近免費
+**If** 派遣 M3 sub-agent + 粗糙 ticket **Then** 預期 30-60s 整合，仍可接受
+
+**完整實驗報告**: `~/reverse-engineering/todo-app/exp-2-m3-compare.md`
 
 ## 3 個常見用戶誤區（先講清楚避免誤導）
 
