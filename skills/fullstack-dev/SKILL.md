@@ -1027,6 +1027,7 @@ This skill includes deep-dive references for specialized topics. Read the releva
 
 | Need to… | Reference |
 |----------|-----------|
+| Tiptap rich text in a Next.js client component, Supabase RLS patterns, sanitize-html for `dangerouslySetInnerHTML`, lazy-import pattern for SDKs that probe env at load | [references/nextjs-rich-text-and-supabase-rls.md](references/nextjs-rich-text-and-supabase-rls.md) |
 | Write backend tests (unit, integration, e2e, contract, performance) | [references/testing-strategy.md](references/testing-strategy.md) |
 | Validate a release before deployment (6-gate checklist) | [references/release-checklist.md](references/release-checklist.md) |
 | Choose a tech stack (language, framework, database, infra) | [references/technology-selection.md](references/technology-selection.md) |

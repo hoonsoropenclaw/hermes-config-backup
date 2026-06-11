@@ -1293,6 +1293,10 @@
       1781064412174694438,
       11650
     ],
+    "backend/supabase-integration/SKILL.md": [
+      1781167955083306607,
+      7363
+    ],
     "backup-verification/SKILL.md": [
       1780797115798888080,
       3165
@@ -1430,8 +1434,8 @@
       13290
     ],
     "devops/cron-job-health-monitor/SKILL.md": [
-      1781156194231863371,
-      33892
+      1781180558699197393,
+      35565
     ],
     "devops/hermes-config-layout/SKILL.md": [
       1781104784891922896,
@@ -1456,6 +1460,10 @@
     "devops/orchestrator-worker-parallel-architecture/SKILL.md": [
       1781074082619030660,
       8305
+    ],
+    "devops/supabase-migration/SKILL.md": [
+      1781172386159054948,
+      13171
     ],
     "devops/webhook-subscriptions/SKILL.md": [
       1780109239588525927,
@@ -1502,8 +1510,8 @@
       32751
     ],
     "fullstack-dev/SKILL.md": [
-      1780110403170953313,
-      34810
+      1781173393596348759,
+      35083
     ],
     "gaming/minecraft-modpack-server/SKILL.md": [
       1780109239589525967,
@@ -1826,8 +1834,8 @@
       6092
     ],
     "scrapling/SKILL.md": [
-      1778086588689568662,
-      8382
+      1781172957943526920,
+      9699
     ],
     "security-review/SKILL.md": [
       1780405274874377044,
@@ -3618,12 +3626,12 @@
       8009
     ],
     "trial-and-error/SKILL.md": [
-      1781157550990488607,
-      36769
+      1781187192864675066,
+      6033
     ],
     "user-collaboration-style/SKILL.md": [
-      1781157639587354295,
-      32857
+      1781187045326511260,
+      39048
     ],
     "vision-analysis/SKILL.md": [
       1780705901004238764,
@@ -7994,6 +8002,19 @@
       }
     },
     {
+      "skill_name": "supabase-integration",
+      "category": "backend",
+      "frontmatter_name": "supabase-integration",
+      "description": "整合 Supabase 到 Vercel 部署的 Next.js / Node 專案的完整 SOP。涵蓋拿到兩把 ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
       "skill_name": "backup-verification",
       "category": "backup-verification",
       "frontmatter_name": "backup-verification",
@@ -8628,6 +8649,19 @@
         "linux",
         "macos"
       ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "supabase-migration",
+      "category": "devops",
+      "frontmatter_name": "supabase-migration",
+      "description": "用 Supabase (Postgres + Storage + Auth) 取代 Vercel KV/Blob/...",
+      "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],
@@ -15890,10 +15924,7 @@
       "category": "trial-and-error",
       "frontmatter_name": "trial-and-error",
       "description": "赫米斯踩過的坑目錄 — **MUST LOAD BEFORE EXECUTION**。當使用者交辦任何執行類任務或...",
-      "platforms": [
-        "linux",
-        "macos"
-      ],
+      "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],

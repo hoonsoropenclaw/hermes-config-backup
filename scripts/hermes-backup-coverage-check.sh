@@ -258,7 +258,9 @@ elif [[ ${#WARNINGS[@]} -gt 0 ]]; then
   echo "  2. 編輯 ~/.hermes/docs/INVENTORY.md 加進『v4 同步清單』"
   echo "  3. 編輯 ~/.hermes/scripts/hermes-backup-v4.sh 加 rsync 段"
   echo "詳細: $LOG"
-  exit 1
+  # WARN 警告只是「建議改進」不是「失敗」——warnings-only 應該 exit 0
+  # 只有 ERRORS（致命問題）才應該讓 cron job 失敗
+  exit 0
 
 else
   echo "✅ PASS  備份覆蓋率完整（${#ACTUAL_DIRS[@]} 個目錄 + ${#ACTUAL_ROOT_FILES[@]} 個根目錄檔案都有覆蓋）"

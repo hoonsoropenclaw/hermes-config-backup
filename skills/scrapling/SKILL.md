@@ -85,8 +85,14 @@ MySpider().start()
 
 ### 安裝
 
+**重要：PEP 668 限制** — 系統 python3 無法直接 `pip install`，需要建立 venv：
 ```bash
-pip install scrapling
+# 正確方式（建立 venv）
+uv venv /tmp/scrapling-env --python 3.12
+uv pip install --python /tmp/scrapling-env/bin/python scrapling
+
+# 錯誤方式（會失敗）
+pip install scrapling  # → externally-managed-environment error
 ```
 
 ### 基本抓取
@@ -271,6 +277,23 @@ Scrapling MCP Server 提供 10 個工具：
 ```
 
 ## 學校應用場景
+
+### 與其他瀏覽器工具的抉擇
+
+| 工具 | 引擎 | 何時用 | 安裝方式 |
+|------|------|--------|---------|
+| **Scrapling** | 自適應解析 | 網站結構會變化、Cloudflare Turnstile | `uv venv /tmp/se --python 3.12 && uv pip install --python /tmp/se/bin/python scrapling` |
+| **Playwright** | Chromium | 一般爬蟲、QA、已驗證穩定 | `/usr/bin/python3.12` 已內含 |
+| **Camofox** | Firefox (Docker) | 需要 cookies 認證（Google/YouTube） | `docker ps` 確認 `camofox-browser` 運行中 |
+| **nodriver** | Chrome CDP | 最高規避（31/31 Cloudflare 零封鎖） | `uv venv /tmp/nd --python 3.12 && uv pip install --python /tmp/nd/bin/python nodriver` |
+
+**抉擇樹**：
+- anti-bot 嚴格（Cloudflare）→ nodriver（需 venv + Chrome binary）
+- 一般爬蟲 / QA → Playwright（`/usr/bin/python3.12` 最穩）
+- 需要 cookies 認證 → Camofox（先 `curl -s http://localhost:9377/health`）
+- 網站結構會動態變化 → Scrapling（自適應解析）
+
+---
 
 ### 1. 政府開放資料抓取
 
