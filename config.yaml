@@ -343,10 +343,14 @@ mattermost:
   require_mention: true
 mcp_servers:
   mempalace:
-    args:
-    - -m
-    - mempalace.mcp_server
-    command: python3
+    # v2026-06-11 修：原用 `command: python3` + `args: [-m, mempalace.mcp_server]`
+    # 但 hermes-gateway systemd service 的 PATH 開頭是 venv/bin
+    # → 抓到 hermes venv 內的 Python 3.11、找不到 3.12 才裝的 mempalace
+    # 改用 pip console_script wrapper、shebang 寫死 #!/usr/bin/python3
+    # → 跟 PATH 順序無關、跟 hermes venv 隔離
+    # → 未來 pip 升 mempalace 自動更新 wrapper、hermes 升 Python 也不影響
+    args: []
+    command: /home/hoonsoropenclaw/.local/bin/mempalace-mcp
     enabled: true
 memory:
   flush_min_turns: 6

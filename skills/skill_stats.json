@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-11T00:00:54.667990",
-  "total_skills": 91,
+  "generated_at": "2026-06-11T08:59:40.758397",
+  "total_skills": 92,
   "daily": {
     "2026-06-01": {
       "__all__": 1
@@ -73,14 +73,14 @@
     "hermes-self-improvement": 21,
     "hermes-status-site": 4,
     "hermes-tier-router": 5,
-    "hr-automation-workflow": 1,
+    "hr-automation-workflow": 2,
     "intelligence-route": 1,
     "linear": 1,
     "linear-hr-workflow": 1,
     "local-rag-system": 3,
     "media/youtube-content": 2,
     "media:youtube-content": 1,
-    "metacognitive-learner": 193,
+    "metacognitive-learner": 199,
     "multi-model-routing-cheatsheet": 0,
     "orchestrator-worker-architecture": 1,
     "orchestrator-worker-parallel-architecture": 0,
@@ -97,7 +97,7 @@
     "secrets-and-env": 2,
     "site-qa-checklist": 14,
     "tradingagents": 1,
-    "trial-and-error": 173,
+    "trial-and-error": 180,
     "user-collaboration-style": 20,
     "v4-p7-skills-sync-bug": 1,
     "vercel": 2,
@@ -105,7 +105,8 @@
     "vision-analysis": 4,
     "web_search": 9,
     "website-design-principles": 9,
-    "workspace-folder-layout": 7
+    "workspace-folder-layout": 7,
+    "yuanbao": 1
   },
-  "last_updated": "2026-06-11 00:00:54"
+  "last_updated": "2026-06-11 08:59:40"
 }
