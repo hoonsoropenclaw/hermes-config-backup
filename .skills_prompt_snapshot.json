@@ -26,8 +26,8 @@
       31858
     ],
     "agent-orchestration-multi-agent-optimize/SKILL.md": [
-      1781084430815081480,
-      14124
+      1781194158071393610,
+      22961
     ],
     "agent-orchestrator/SKILL.md": [
       1778082967415894045,
@@ -38,8 +38,8 @@
       4592
     ],
     "agent-system-backup/SKILL.md": [
-      1781101063100017015,
-      31659
+      1781196976193802912,
+      32953
     ],
     "agentfolio/SKILL.md": [
       1778082967415894045,
@@ -1417,6 +1417,10 @@
       1780109239588525927,
       5285
     ],
+    "deploy-preflight-safelist/SKILL.md": [
+      1781192453077258514,
+      8812
+    ],
     "deployment-verification-sop/SKILL.md": [
       1780752148899246175,
       6333
@@ -1434,16 +1438,16 @@
       13290
     ],
     "devops/cron-job-health-monitor/SKILL.md": [
-      1781180558699197393,
-      35565
+      1781189255583157072,
+      36643
     ],
     "devops/hermes-config-layout/SKILL.md": [
-      1781104784891922896,
-      29428
+      1781196049174602009,
+      32612
     ],
     "devops/hermes-deploy-verification/SKILL.md": [
-      1780846561004370126,
-      18687
+      1781189191687651525,
+      21910
     ],
     "devops/kanban-orchestrator/SKILL.md": [
       1780832652682839848,
@@ -1454,16 +1458,16 @@
       10979
     ],
     "devops/multi-model-routing-cheatsheet/SKILL.md": [
-      1780720869963371545,
-      8917
+      1781196048094551480,
+      11555
     ],
     "devops/orchestrator-worker-parallel-architecture/SKILL.md": [
       1781074082619030660,
       8305
     ],
     "devops/supabase-migration/SKILL.md": [
-      1781172386159054948,
-      13171
+      1781189158228222809,
+      19533
     ],
     "devops/webhook-subscriptions/SKILL.md": [
       1780109239588525927,
@@ -1488,6 +1492,10 @@
     "dogfood/SKILL.md": [
       1780146405587670370,
       7442
+    ],
+    "e2e-minimum-checklist/SKILL.md": [
+      1781192517372977752,
+      9762
     ],
     "email/himalaya/SKILL.md": [
       1780109239588525927,
@@ -1898,8 +1906,8 @@
       8730
     ],
     "software-development/subagent-driven-development/SKILL.md": [
-      1780406650510599665,
-      15023
+      1781195864601013563,
+      20131
     ],
     "software-development/systematic-debugging/SKILL.md": [
       1780584933158391452,
@@ -3626,12 +3634,12 @@
       8009
     ],
     "trial-and-error/SKILL.md": [
-      1781187192864675066,
-      6033
+      1781196657917397558,
+      28833
     ],
     "user-collaboration-style/SKILL.md": [
-      1781187045326511260,
-      39048
+      1781196741125994496,
+      46464
     ],
     "vision-analysis/SKILL.md": [
       1780705901004238764,
@@ -8491,6 +8499,22 @@
       }
     },
     {
+      "skill_name": "deploy-preflight-safelist",
+      "category": "deploy-preflight-safelist",
+      "frontmatter_name": "deploy-preflight-safelist",
+      "description": "赫米斯部署/推送「前」的 preflight SOP — 補 deployment-verification-so...",
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
       "skill_name": "deployment-verification-sop",
       "category": "deployment-verification-sop",
       "frontmatter_name": "deployment-verification-sop",
@@ -8747,6 +8771,22 @@
         "linux",
         "macos",
         "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "e2e-minimum-checklist",
+      "category": "e2e-minimum-checklist",
+      "frontmatter_name": "e2e-minimum-checklist",
+      "description": "任何 web app 部署「前」必跑的 E2E 10 項 minimum checklist — 補 deploy...",
+      "platforms": [
+        "linux",
+        "macos"
       ],
       "conditions": {
         "fallback_for_toolsets": [],
