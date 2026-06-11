@@ -263,6 +263,37 @@ find $STAGING -type f \( -name "*.md" -o -name "*.yaml" -o -name "*.json" -o -na
 - 應該用 `~/documents/rclone.conf` 6/6 新版
 - **教訓**：rclone config 雙目錄時先看 token 跟 remote 名，**不要假設自動連到對的**
 
+### 案例 6：cron runner 把 191KB stderr 整份倒進 telegram 切 50 則（2026-06-11）
+- **症狀**：`v4-backup-tier1-daily` 02:00 跑 v4 腳本失敗，hermes cron runner 把 `last_error` 整份塞進 telegram 訊息
+- 191,490 bytes / 1,805 行的 stderr+stdout 經 Telegram 4096 char 切段成 **~47 條訊息**（使用者看到「50 則左右」）
+- 實際根因是 **3 個獨立 bug 同時爆**：
+  1. `hermes-backup-v4.sh` rsync 之前沒 `mkdir -p $STAGING/cache/youtube`、`cache/documents` → rsync mkdir 失敗
+  2. cron subshell 跑的 `gh` 帳號是 `hoonsor` 不是 `hoonsoropenclaw` → push 403（cron 環境變數跟 interactive shell 不一樣）
+  3. **hermes-agent `cron/scheduler.py` line 2105 沒截斷 `last_error`**，整份 error 倒進 telegram
+  4. **v4 腳本 Tier 1 失敗仍繼續跑 Tier 2**，白白 encrypt 285M secrets
+- **教訓 1**：cron runner 的 `last_error` 必須截斷（500 字 + 「完整 log 在 X 路徑」），不管底層 script 多乾淨、stderr 一定會爆
+  - **修法**：`scheduler.py:2105` 改成 `error[:500] + "...[truncated, see ~/.hermes/cron/output/ for full]"`
+- **教訓 2**：v4 這類 multi-step script，**前一步失敗 → exit 1 不要繼續下一步**（285M 加密白做最浪費）
+  - **修法**：`tier1_github` 失敗後 `exit_code=1; return 1`、不要 `tier1_github || exit_code=1` 繼續往下跑
+- **教訓 3**：使用者問「為什麼 N 則訊息、每次都這樣嗎」**先量化 + 對照歷史**，不要憑印象答
+  - 5 天前 `~/.hermes/cron/output/108ce8cabdfc/*.md` log bytes：232 / 2,409 / 3,098 / 4,430 / **191,490** → 立刻看出「今天才爆」、不是「每次都這樣」
+- **教訓 4**：驗證 exit code 別信 pipe 後面的指令
+  - `bash script.sh 2>&1 | tail -25; echo $?` → `$?` 是 `tail` 的 exit code（永遠 0），不是 script 的
+  - 正確：`bash script.sh 2>&1; echo "exit=$?"`（不要 pipe）**或** `set -o pipefail` 然後看 `${PIPESTATUS[0]}`
+  - 2026-06-11 實測：第一次模擬失敗時 echo `$?` 顯示 0、誤以為 v4 沒生效，事實是 tail 的 0
+- **完整診斷 SOP**（cron 異常必跑 3 件套）：
+  1. `hermes cronjob list` 找 `last_status=error` 的 job、看 `last_error` 開頭
+  2. `ls -la ~/.hermes/cron/output/<job_id>/` 看完整 log（**不要只信 last_error**）
+  3. `wc -c ~/.hermes/cron/output/<job_id>/*.md` 對照**前幾天**同個 job 的 log 大小 → 判斷「一直這樣」還是「今天才爆」
+  - 4 個 tool call 內可定位 90% 的 cron 異常
+- **修改影響對照表**（改 v4 / scheduler.py 必同步改的檔）：
+  - 改 `hermes-backup-v4.sh` → 改 `docs/INVENTORY.md` v4 同步清單 + `INVENTORY.md` rsync 排除清單
+  - 改 `cron/scheduler.py` last_error 邏輯 → **需要重啟 hermes-gateway 才生效**（Python source code 不像 bash 自動 reload）
+- **相關條目**：
+  - [[hermes-internal#notify_on_complete 是「最終確認」不是「即時 polling」]] — 為什麼 cron 跑完通知延遲 10-14 分鐘、要看 log 檔不是等通知
+  - [[hermes-backup-sop#改任何備份腳本必同步改 INVENTORY.md + SKILL.md §14.1 改檔對照表]] — 改 v4 的對照表流程
+  - [[bash-defensive-patterns#bash `2>&1 | grep -qE "error"` 會吞掉 exit code、讓 push 失敗顯示假成功]] — 為什麼 `bash ... | tail; echo $?` 也會誤報
+
 ---
 
 

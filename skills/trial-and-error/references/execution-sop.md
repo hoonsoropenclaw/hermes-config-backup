@@ -287,6 +287,79 @@ hermes -p <target-profile> skills list | grep <skill-name>
 
 ---
 
+## SOP-7: 備份 / cron 異常診斷 3 件套（4 個 tool call 內定位問題）
+
+**為什麼需要這個 SOP**：使用者說「02:01 左右怎麼會有 50 則備份訊息、每次都這樣嗎」這類**備份/cron 異常**問題，**不先實地查就憑印象答**會出大錯（2026-06-11 實證：表面是 cron runner 把 stderr 倒進 telegram、實際有 4 個獨立 bug 同時爆——rsync mkdir、gh 帳號、scheduler 沒截斷、v4 腳本缺早退）。這個 SOP 4 個 tool call 內可定位 90% 異常。
+
+### 觸發情境
+- 使用者說「今天 / N 天有 X 則備份訊息」「cron 又噴訊息」「備份失敗」「通知怪怪的」
+- 任何 `last_status: error` 的 cron job 出現
+- `~/.hermes/cron/output/<job_id>/` 有新檔但 telegram 沒通知
+- 任何「為什麼 Y 跑出 X 行為、每次都這樣嗎」類問句
+
+### 標準步驟（4 個 tool call）
+
+**Step 1 — `hermes cronjob list` 找異常 job**
+```python
+cronjob(action="list")
+```
+- 看 `last_status: error` 的 job
+- 抄下 `job_id`（`108ce8cabdfc` 格式）跟 `last_error` 開頭 5-10 字
+
+**Step 2 — 撈完整 log（不要只信 `last_error`）**
+```python
+# 看 output 資料夾
+ls -la ~/.hermes/cron/output/<job_id>/
+# 撈最新一份 log
+read_file(path=f"~/.hermes/cron/output/<job_id>/<最新 .md>", limit=200)
+```
+- **不要**直接用 `last_error` 欄位下結論（這個欄位可能被截斷、或根本是 stack trace 不是 root cause）
+
+**Step 3 — 量化「今天才爆 vs 一直這樣」**
+```python
+# 對照**前幾天**同一個 job 的 log 大小
+for f in ~/.hermes/cron/output/<job_id>/*.md:
+    echo "$f: $(wc -c < $f) bytes"
+```
+- **模式 A**（今天才爆、不是「每次都這樣」）：找出今天的差異（新增檔案、配置改動、token 過期）
+- **模式 B**（一直這樣、5 天都 > 100KB）：是架構問題（cron runner 行為、scheduler.py 沒截斷）→ 修源碼
+- 這個量化**必須做**——使用者問「每次都這樣嗎」時不能憑印象答
+
+**Step 4 — 找根因（從 log 往外追）**
+- log 開頭的 `Script exited with code N` → 找腳本本身
+- log 中段的 `error:` / `fatal:` 行 → 抄下檔路徑 + line number
+- 撈 hermes-agent 源碼對應 line：`read_file(path="~/.hermes/hermes-agent/<file>", offset=<line-5>, limit=15)`
+- **4 個 bug 同時爆的實況**：rsync mkdir 失敗 + gh 帳號不對 + scheduler 沒截斷 + v4 腳本早退缺失 → 4 條都是 L3 教訓、要分開 patch
+
+### 常見錯誤
+- ❌ 看到 `last_error` 開頭就直接下結論（這個欄位是 stack trace 不是 root cause）
+- ❌ 不對照歷史 log 就答「每次都這樣嗎」（**這是 INTJ 使用者必問的、不能跳過**）
+- ❌ 只修表面（修 cron 排程不讓它跑）而不是修根因（腳本 bug、runner 行為）
+- ❌ 改完 Python 源碼（`scheduler.py`）忘了**重啟 hermes-gateway 才生效**
+- ❌ 驗證 exit code 用 `bash script.sh | tail; echo $?` → `$?` 是 tail 的 0、不是 script 的
+
+### 驗證清單
+- [ ] 跑了 `cronjob list` 找到 `last_status: error` 的 job
+- [ ] 撈了完整 log（不是只信 `last_error`）
+- [ ] 量化了「今天 vs 前幾天」的 log 大小
+- [ ] 找到根因（從 log 往外追到源碼 line）
+- [ ] 列出所有 bug（**常見多個同時爆**、不要看到第一個就停）
+- [ ] 修完驗證（**重跑 + 模擬失敗 + 還原**三步、不是只跑一次）
+
+### If→Then
+- **If** cron 異常 + 4 個 tool call 內沒定位 **Then** 停下來重新讀 log、不要繼續 debug——大概率在追錯方向
+- **If** 看到 `last_error` 是 stack trace **Then** 抓 `error:` 開頭的那幾行、從那邊往外追
+- **If** 量化後發現「今天才爆」**Then** 優先找今天的差異（git log、token 過期、配置改動）
+- **If** 量化後發現「一直這樣」**Then** 是架構問題、修源碼、不要只在 surface patch
+- **If** 改 hermes-agent Python 源碼（`scheduler.py` 等）**Then** 提醒「需要重啟 gateway」——Python 不像 bash 自動 reload
+
+### 相關條目
+- [[hermes-internal#notify_on_complete 是「最終確認」不是「即時 polling」]] — 為什麼 cron 跑完通知延遲 10-14 分鐘
+- [[hermes-backup-strategy#案例 6：cron runner 把 191KB stderr 整份倒進 telegram 切 50 則（2026-06-11）]] — 這條 SOP 就是從那次故障歸納的
+- [[bash-defensive-patterns#bash `2>&1 | grep -qE "error"` 會吞掉 exit code、讓 push 失敗顯示假成功]] — 為什麼驗證 exit code 別信 pipe 後面的指令
+
+---
+
 ## SOP-4: 把 L3 抽象教訓寫進 trial-and-error skill（分流 SOP）
 
 **為什麼需要這個 SOP**：metacognitive-learner skill 的 Phase 4 已於 2026-06-06 改為「L3 進 trial-and-error 對應分類、單次結果用 [TO_MEMORY] 區塊」，但「寫進去」這個動作本身的格式、檔名、分類判斷需要明確指引。
