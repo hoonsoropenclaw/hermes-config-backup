@@ -1,19 +1,83 @@
 # Hermes 代理 Handoff 共享區
 
-這個目錄是**消費者需求及功能需求代理 (consumer-researcher)** ↔ **產品規劃代理 (product-planner)** 之間的交付介面。
+這個目錄是**多代理 handoff chain 的共享介面**。預設鏈條為 5 階段：
+
+```
+使用者提出需求
+   ↓
+consumer-researcher (56) → product-planner (64) → system-architect (102) → engineering-lead (88) → test-engineer (38)
+                                                                                            ↑                                  ↓
+                                                                                            └────── 測試失敗丟回 engineering-lead ──────┘
+                                                                                                                            ↓
+                                                                                                                  測試無誤 → 產出成品給使用者
+```
 
 > **2026-06-10 更新**:從「市場策略代理 (market-strategist)」重塑為「消費者需求及功能需求代理 (consumer-researcher)」。交付物命名從 `market-research.md` 改為 `consumer-needs-research.md`。
+> **2026-06-11 更新**:鏈條圖改為「線性 5 階段 + 迴圈反饋」模型 —— 線性主流程（consumer→product→arch→eng→test），test 發現問題時**迴圈丟回 engineering-lead**重做、直到測試無誤才把產出給使用者。赫米斯（default）是唯一交棒者（透過「@專案」keyword 觸發 handoff pipeline）。
 
 ## 目錄慣例
+
+### 5 階段標準鏈的交付物命名
 
 ```
 ~/.hermes/handoff/
 └── <project-slug>/                          # kebab-case 專案代號
-    ├── consumer-needs-research.md           # 消費者需求代理的交付物(主交付)
-    ├── sources.json                         # 引用來源索引(可選,便於追蹤)
-    ├── clarifications.md                    # 產品規劃代理反問、消費者需求代理回覆(可選)
-    └── prd.md                               # 產品規劃代理的交付物
+    ├── _plan.md                              # 鏈條規劃(列出這個 project 用哪幾個代理、按什麼順序)
+    ├── consumer-needs-research.md            # 階段 1 交付物(消費者研究)
+    ├── sources.json                          # 引用來源索引(可選)
+    ├── clarifications.md                     # 階段 1↔2 往返(可選)
+    ├── prd.md                                # 階段 2 交付物(PRD)
+    ├── architecture.md                       # 階段 3 交付物(技術架構)
+    ├── sprint-report.md                      # 階段 4 交付物(sprint 實作報告)
+    ├── qa-signoff.md                         # 階段 5 交付物(品質驗收)
+    └── _handoff-log.md                       # 各階段代理的觸發時間/狀態/聯絡窗口(debug 用)
 ```
+
+### 動態鏈條(非 5 階段)
+
+不是每個 project 都要走滿 5 階段。**預設鏈只是起點,實際鏈條由 `_plan.md` 定義**:
+
+- **「純架構評估」**:只跑 system-architect,產出 architecture-review.md
+
+> **注意**:常駐代理的「@學習」= `trial-and-error` skill(試誤學習的觸發標記)、**不是鏈**。Handoff chain 都是「專案」維度、不是「技能學習」維度。
+
+**`_plan.md` 範本**(由 default orchestrator 在 dispatch 第一個代理前寫入):
+
+```markdown
+# <project-slug> Handoff Plan
+
+## Chain Definition
+- 階段 1: <agent-name> → 交付物:<filename>
+- 階段 2: <agent-name> → 交付物:<filename>
+- 階段 3: <agent-name> → 交付物:<filename>
+(... 視鏈長動態 ...)
+
+## Skip Reason (如適用)
+- 為什麼跳過 stage-X
+```
+
+## Handoff 流程
+
+### 1. default orchestrator 接任務
+- 判斷要走哪條鏈(預設 5 階段 / 動態 N 階段)
+- 建立 `~/.hermes/handoff/<project-slug>/` 目錄
+- **先寫 `_plan.md`**(給所有下游代理看鏈條)
+- 觸發第一階段代理(`<agent-name> chat -q "..." --cli`)
+
+### 2. 每個代理完成後
+- 寫自己的交付物到 `<filename>`(結構見各 agent 的 `persona.md`「交付物格式」段)
+- append 一行到 `_handoff-log.md`(`<timestamp> | <agent> | <filename> | status: ok/error`)
+- **通知 default orchestrator**(目前是手動觸發,未來考慮 cron 監控)
+
+### 3. default orchestrator 收到通知後
+- `cat` 撈最新交付物、確認品質
+- 觸發下一階段代理(讀 `_plan.md` 決定下一棒是誰)
+- 重複直到鏈尾
+
+### 4. 動態鏈條特殊規則
+- **跳過階段**:在 `_plan.md` 列「Skip Reason」+ 補交付物佔位檔(如 `architecture-skipped.md: "N/A - 跳過 system-architect"`)
+- **插入階段**:直接在 `_plan.md` 加新階段
+- **平行階段**(未來):`_plan.md` 加 `[parallel]` 標記,但目前 orchestrator 是 foreground 串接,平行要靠 `delegate_task` 不是 `hermes chat --cli`
 
 `<project-slug>` 用 kebab-case,例:`freelancer-tax-tool`、`ai-tutor-app`、`school-multidept-site`。
 

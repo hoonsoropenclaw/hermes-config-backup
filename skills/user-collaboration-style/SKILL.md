@@ -396,6 +396,95 @@ metadata:
 
 ### 20. 多重 `clarify()` 決策時：timeout 10 分鐘內沒回應 → 主動給預設值 + 解釋「為什麼這樣選」(2026-06-10 新增)
 
+### 21. 建常駐代理 / profile 的判斷框架（2026-06-11 從「全能工程師 vs 測試代理」決策歸納）
+
+**訊號辨識**：
+- 使用者說「建立 X 代理」「建一個長期 X 角色」「幫我做 X agent」「常駐 X 監控」之類
+- 任務本質 = **建立新的 hermes profile + 寫 persona + SOUL + 精瘦 skill 庫 + wrapper**
+- 高風險 = 6+ 個 profile 會有維護成本、多一個 gateway process 吃資源、chain 重疊污染
+
+**預設行為**：**不要直接建**、**先做 2 輪判斷**:
+
+#### 判斷第 1 輪：「合併職能 vs 分開」
+
+| 問題 | 答案 → 動作 |
+|------|------------|
+| 候選代理 vs 現有 profile 是「同一件事的兩個階段」嗎？ | **是** → 補 skill 到現有 profile、**不另建**（例：sprint 跟 code-driven、本質是同一件事） |
+| 候選代理 vs 現有 profile 是「完全不同的職能」嗎？ | **是** → **考慮另建**、但先跑第 2 輪 |
+| 候選代理是現有 chain 缺的一棒嗎？ | **是** → **強烈建議建**（例：handoff chain 缺測試代理） |
+
+#### 判斷第 2 輪：「值不值得建」（只在第 1 輪答「分開」時跑）
+
+| 條件 | 風險評估 |
+|------|---------|
+| **handoff chain 缺口**（上游有交付物、下游沒人接）| **強烈建議建**（chain 閉環是基礎設施）|
+| **跨職能**（設計 vs 實作 vs 測試、規劃 vs 寫 code）| **建議建**（sprint manager 跟 code executor 是真的不同）|
+| **跨語言 / 跨 stack** | **看情境**：6 個 profile 不太值得、預設 default + 載入 language-specific skill 即可 |
+| **跟現有 profile 70%+ 重疊** | **不建議建**（瓶頸在 handoff 多一跳、不在能力不夠）|
+| **使用者不確定** | **預設不建**（給「補 skill 到現有 profile」當預設推薦、解釋為什麼）|
+
+#### 完整決策矩陣（給 `clarify()` 用）
+
+```
+A. 合併職能（補 skill 到現有 profile）
+   - 預設推薦、給「要補哪 4-5 個 skill」具體清單
+   - 適用：sprint 跟 code-driven 這種「同一件事的兩階段」
+
+B. 另建常駐代理（同昨天 system-architect 流程）
+   - 90 分鐘：建 profile + persona + SOUL + 精瘦 + wrapper
+   - 適用：handoff chain 缺口、跨職能
+
+C. 另建 lightweight profile（8-10 skill 精瘦）
+   - 45 分鐘：比 B 輕、不寫 persona、只給核心 skill
+   - 適用：ad-hoc 任務、特殊 stack 專家
+
+D. 不建、保留現狀
+   - 0 分鐘
+   - 適用：觀望期、需求不明
+```
+
+#### 評估必附的內容
+
+給使用者決策前、**必含**：
+1. **重疊率分析**：「這個新代理跟現有 engineering-lead 重疊約 70%、跟現有 system-architect 重疊約 20%」
+2. **handoff 成本**：「多一跳 = 5-15 秒延遲 + 1 個 context 切換失敗點」
+3. **profile 維護成本**：「多 1 個 profile = 多 80 個 skills 同步成本」
+4. **預設推薦 + 為什麼**：「預設 A、因為 X；不選 B、因為 Y」
+5. **未來擴展性**：「如果選 A 但日後發現不夠、可改 B（建新 profile 不難）」
+
+**反例**（不該做的）：
+- 看到「建 X 代理」就立刻建 → 跳過判斷框架
+- 給 4 個選項但**不附評估數據**（重疊率、成本）→ 使用者只能憑感覺選
+- 預設推薦但**不解釋為什麼** → 失去 Rule 20 的「主動給理由」精神
+- 跳過 chain 缺口評估 → 錯過真正的需求
+
+**真實案例**（2026-06-11 兩次套用）:
+
+**案例 1：全能工程師代理**
+- 候選描述：「撰寫程式碼之全能工程師」
+- 跟 engineering-lead 對比：sprint 跟 code-driven 是同一件事的兩階段
+- 評估結果：70% 重疊
+- 決策：**不另建**、補 4 個 debug skill 到 engineering-lead
+- 學到：使用者同意「合併職能比另建好」、接受了「補 skill」方案
+
+**案例 2：測試代理**
+- 候選描述：「包含程式碼修正跟實際運行程式測試」
+- 跟 engineering-lead 對比：寫 code vs 找 bug、跑 E2E、test framework 選型
+- 評估結果：跟 engineering-lead 職能完全分離、handoff chain 缺一棒
+- 決策：**建**、完整走「system-architect 流程」90 分鐘
+- 學到：chain 閉環是基礎設施、值得付 90 分鐘成本
+
+**預防**（給未來 cycle）：
+- **新 cycle 看到「建 X 代理」**時、**先跑本框架**、**不要直接 clarify() 給 ABCD**
+- 評估前**先讀現有 profile list 跟 skill 庫**、**必含「跟現有 X 重疊率」**
+- **chain 缺口評估**是判斷第 1 輪的高優先問題、「handoff chain 缺這棒嗎」比「功能重疊嗎」更基本
+
+**配套**：
+- 完整建代理 SOP 在 `~/.hermes/profiles/<new-profile>/` 內（persona.md / SOUL.md / slim-history.md / _meta/user-modified-skills.md）
+- `~/.hermes/profiles/system-architect/` 是「完整建代理」的最佳範本（6/10 重建過）
+
+## 與其他元件的關係
+
 **訊號辨識**:
 - 任務本質需要 N 個獨立決策（例:建常駐代理的 4 個核心設計決策）
 - 已成功收回 N-1 個決策、剩下 1 個 `clarify()` 工具呼叫
@@ -445,3 +534,9 @@ metadata:
   - 新增 Rule 20「多重 clarify() 決策 → timeout 10 分鐘內沒回應 → 主動給預設值 + 解釋為什麼」—— 解決多次決策流程中途卡住的問題
   - 來源: engineering-lead 建立時 4 個核心決策只回 3 個、第 4 個 timeout 後主動給預設 D
   - 配套:預設不寫進 MEMORY、隨時可改、使用者回應立即採用
+- **2026-06-11 v1.4.0 變更記錄**:
+  - 新增 Rule 21「建常駐代理 / profile 的判斷框架」—— 從「全能工程師 vs 測試代理」兩次決策歸納
+  - 兩輪判斷流程: (1) 合併職能 vs 分開、(2) 值不值得建
+  - 完整決策矩陣 A/B/C/D + 必含的評估數據（重疊率、handoff 成本、profile 維護成本、未來擴展性）
+  - 真實案例 2 則：全能工程師 (70% 重疊 → 不另建)、測試代理 (chain 缺口 → 建)
+  - 來源：見 Rule 21 內文「真實案例」段

@@ -22,15 +22,15 @@
       "schedule_display": "every 120m",
       "repeat": {
         "times": null,
-        "completed": 135
+        "completed": 137
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-30T11:56:33.423422+08:00",
-      "next_run_at": "2026-06-11T10:54:17.993170+08:00",
-      "last_run_at": "2026-06-11T06:53:35.650104+08:00",
+      "next_run_at": "2026-06-11T15:28:03.608378+08:00",
+      "last_run_at": "2026-06-11T11:27:18.330292+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -133,15 +133,15 @@
       "schedule_display": "0 10 * * *",
       "repeat": {
         "times": null,
-        "completed": 10
+        "completed": 11
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-03T22:24:52.905388+08:00",
-      "next_run_at": "2026-06-11T10:00:00+08:00",
-      "last_run_at": "2026-06-10T10:00:05.927101+08:00",
+      "next_run_at": "2026-06-12T10:00:00+08:00",
+      "last_run_at": "2026-06-11T10:00:04.431750+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -209,7 +209,7 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 7
+        "completed": 8
       },
       "enabled": true,
       "state": "scheduled",
@@ -217,7 +217,7 @@
       "paused_reason": null,
       "created_at": "2026-06-04T22:12:29.200675+08:00",
       "next_run_at": "2026-06-12T09:00:00+08:00",
-      "last_run_at": "2026-06-11T09:00:33.690737+08:00",
+      "last_run_at": "2026-06-11T09:35:18.552233+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -230,7 +230,7 @@
     {
       "id": "65f2dc3583d5",
       "name": "hermes-config-backup-daily",
-      "prompt": "hermes-config-backup-daily: hermes-backup-v4.sh --tier1",
+      "prompt": null,
       "skills": [],
       "skill": null,
       "model": null,
@@ -538,5 +538,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-06-11T09:00:33.691193+08:00"
+  "updated_at": "2026-06-11T13:28:03.608544+08:00"
 }

@@ -82,6 +82,8 @@ mkdir -p ~/.hermes/handoff
 - 慣例：`~/.hermes/handoff/<project-slug>/{market-research.md, clarifications.md, prd.md}`
 - 每個代理完成交付後寫到這裡，handoff 給下一棒
 
+**🔴 鏈條拓樸設計必看 `references/chain-topology-pitfalls.md`** —— 5 個常見錯誤（命名混淆、拓樸錯誤、跳過 stage 沒寫理由、預設鏈 vs 實際鏈、dispatch 後補 plan），畫鏈條圖前先讀。
+
 ### Step 7 — tmux 持久化（可選，看需求）
 - 如果代理需要長期掛著收訊息/監控：用 `tmux new -d -s <name> '<name> gateway start'`
 - 如果只是「跨 session 保留 persona」就夠：不用 tmux，每次 `hermes -p <name> chat` 重啟即可
@@ -131,6 +133,8 @@ cat ~/.hermes/profiles/<name>/persona.md       # persona 寫入成功
 4. **`--clone` 帶 197 個 skills = 197 個通用 skill 全部繼承** — 如果只想要空 profile，用 `--no-skills` 旗標。
 5. **handoff 目錄沒有 owner** — `~/.hermes/handoff/` 不屬於任何 profile，預設就 shared（這是設計，handoff 是跨 profile 介面）。
 6. **跨 profile 寫檔要明確 bypass** — 見「跨 profile 操作的 Hermes 軟防護」段。
+7. **「@X」是 skill 觸發標記、不是 handoff 鏈名** — 聽到「@X」必先 `grep triggers.*@X` 確認是 skill 還是鏈、不要主動延伸成「@X 鏈」。**詳見 `references/chain-topology-pitfalls.md` §錯誤 1**。
+8. **`engineering-lead` / `test-engineer` 往往是主 session 召集、不是 `system-architect` 派工** —— 畫鏈條圖時「主 session 召集」要用 `←── 主 session 召集` 標記。**詳見 `references/chain-topology-pitfalls.md` §錯誤 2**。
 
 ## 詳見（support files）
 - `references/handoff-conventions.md` — handoff 共享區完整慣例、目錄結構、為什麼不用 hermes memory
@@ -138,9 +142,12 @@ cat ~/.hermes/profiles/<name>/persona.md       # persona 寫入成功
 - `references/persona-template.md` — persona.md 完整範本（含各 section 範例文字）
 - `references/skill-template.md` — 專屬 skill 的 SKILL.md 範本（含 frontmatter 範例）
 - `references/chain-automation.md` — 多代理 chain 自動化 wrapper script 模板與 SOP（2026-06-10 新增）
+- `references/chain-topology-pitfalls.md` — **鏈條拓樸設計的 5 個常見錯誤（2026-06-11 新增）：命名混淆、跳接邏輯、主 session 召集 vs 鏈內交付、_plan.md 必填、動態鏈 vs 預設鏈**
 
 ## 歷史
 
 - 2026-05-31：曾有 `persistent-subagent` skill + `~/.hermes/agents/*.yaml` 身份檔方案（已廢棄，2026-06-09 全清）
 - 2026-06-09：建立 `market-strategist` 與 `product-planner` 兩個常駐代理（沿用本 skill 的 7 步流程），從實作中沉澱出本 skill
 - 2026-06-09：MEMORY.md 加入 L3 教訓「常駐子代理 = profile + tmux」防未來回頭用舊方案
+- 2026-06-10：新增 `references/chain-automation.md`（chain 自動化 wrapper script SOP）
+- 2026-06-11：完成 5 階段 handoff chain 實作（consumer→product→architect→engineer→test）、新增 `references/chain-topology-pitfalls.md`（5 個拓樸設計錯誤 + 命名混淆 @學習 vs @專案）、pitfall 7-8

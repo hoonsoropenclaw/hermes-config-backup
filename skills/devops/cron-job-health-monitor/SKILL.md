@@ -412,6 +412,82 @@ triggers:
 - [ ] `hermes cron list` 顯示 `next_run` 排程正確
 - [ ] 第一次手動觸發驗證成功後才放手
 
+## 重啟 hermes-gateway 的正確姿勢（2026-06-11 觀察歸納）
+
+**症狀**：`sudo systemctl restart hermes-gateway.service` 之後**卡 3 分鐘才完成重啟**、中間 `systemctl status` 顯示 `deactivating (stop-sigterm)`、讓人以為指令沒生效又重發。
+
+**根因**：
+- `/etc/systemd/system/hermes-gateway.service` 設 `Type=simple`、**沒設 `TimeoutStopSec`**
+- systemd 預設 90s graceful timeout → 過了才送 SIGKILL 強制殺
+- 為什麼 graceful shutdown 慢：gateway 跑 async telegram long polling、收到 SIGTERM 後要等 in-flight agent request 跑完（metacognitive 87s）+ telegram API 釋放連線
+- **本機的 `TimeoutStopSec=210`** 是 2026-06-11 之後才加的（之前用預設 90s + systemd 自動 grace period）
+
+**正確 SOP**：
+1. **發 restart 後不要慌**、`systemctl status` 會顯示 `deactivating (stop-sigterm)` 是正常的
+2. **等 3 分鐘**（不要用 `timeout 30`、不要連發 restart 指令）
+3. **看新 PID 出現**才確認成功：
+   ```bash
+   pgrep -af "hermes_cli.main gateway" | grep -v "bash -c"
+   # 新 PID 出現 = 重啟完成
+   ```
+4. **第二次重啟建議先驗證**（避免連發造成 zombie process）：
+   ```bash
+   sudo systemctl show hermes-gateway.service -p ActiveEnterTimestamp
+   # 看上次進入 active 的時間、決定是否真的需要再重啟
+   ```
+
+**預防**：
+- 在 `/etc/systemd/system/hermes-gateway.service` 加 `TimeoutStopSec=10s`（10 秒 grace 期間讓 telegram long polling 自己退、然後 SIGKILL）
+- 但要先驗證 hermes 收到 SIGTERM 後能正常處理（沒 in-flight agent 還在算東西）
+- 或加 `KillSignal=SIGINT`（部分 hermes 版本會更主動收訊號）
+
+**If→Then 規則**：
+- **If** `systemctl restart hermes-gateway` 30 秒後 status 仍 `deactivating` **Then** **不要**重發指令、繼續等 2-3 分鐘（這是正常 graceful stop）
+- **If** 收到 `Background process completed` 通知但 service 沒新 PID **Then** 重跑 `systemctl status` 看 `Restart=` counter、有異常時手動重啟
+- **If** 改完 hermes-agent 源碼要重啟生效 **Then** 預期要等 3 分鐘（不是 30 秒）
+
+### 類型 P：Cron 失敗時 telegram 訊息爆炸（scheduler.py 缺乏 500 字截斷）（2026-06-11 修訂）
+
+**症狀**：
+- 任何 cron script 失敗時 cron 失敗訊息是幾十 KB 到幾百 KB（git push 輸出、rsync 進度、traceback 等等）
+- telegram 收到 50+ 則訊息（每次 4096 char 切一段）
+- 使用者**誤以為每天 cron 都在爆炸**、但其實只有當天失敗才有
+
+**觸發情境（2026-06-11 實例）**：
+- 02:00 `v4-backup-tier1-daily` 失敗
+- scheduler.py line 2105 把 191,490 bytes stderr 整份塞進 `deliver_content`
+- telegram 自動切 47 段
+- 使用者收到「50 則左右」的備份訊息 → 誤判為「每天都這樣」
+
+**根因**（`hermes-agent/cron/scheduler.py` line 2105）：
+```python
+deliver_content = final_response if success else f"⚠️ Cron job '{job.get('name', job['id'])}' failed:\n{error}"
+```
+- `error` 是 script 失敗時的 `subprocess.Popen` 完整 stderr + stdout
+- 沒上限、沒截斷
+- Telegram 切段是事後補救、本來不該靠它
+
+**正確做法**（已落地於 2026-06-11）：
+1. `scheduler.py` line 2105-2115：失敗時若 `len(error) > 500` 字自動截斷成「`⚠️ job failed (truncated, full N chars saved to log):\n<前 500 字>\n... [truncated, see ~/.hermes/cron/output/]`」
+2. 完整 stderr 仍寫進 `~/.hermes/cron/output/<id>/<timestamp>.md`（已存在）
+3. Telegram 切段從 47 段 → 1 段
+
+**驗證**：
+```bash
+# 改完需重啟 hermes-gateway 才會生效
+# （Python 程式碼改動要重啟 process、修改只動到記憶體不夠）
+sudo systemctl restart hermes-gateway.service
+```
+
+**If→Then 規則**：
+- **If** 看到 cron 失敗「N 段訊息」爆炸 **Then** 立刻看 `hermes-agent/cron/scheduler.py` 的 `deliver_content = ` 那行、必有沒截斷的 `error` 變數
+- **If** 設計任何「失敗時送 telegram 訊息」的功能 **Then** 必加 ≤ 500 字截斷 + 完整版寫 log（不要靠 telegram 4096 char 自動切段補救）
+- **If** 任何 hermes-agent 程式碼（scheduler.py / jobs.py / run_agent.py）被改動 **Then** 提醒使用者「需要重啟 hermes-gateway 才會生效」、不要默默假設已生效
+
+**預防**（避免未來再犯）：
+- scheduler.py 任何把 `error` 變數塞進 `deliver_content` 的位置都要先截斷
+- 新增 cron runner 平台（discord / slack）時也吃這條：≤ 500 字 + 完整版寫 log
+
 ## 驗證修復成功
 
 任何失敗修復後，**必須主動驗證**：
@@ -452,6 +528,8 @@ hermes cron run <job_id>
 | jobs.json 指向某 script 但 cron 仍 error + `ls ~/.hermes/scripts/<name>` → No such file | 類型 N2：script 檔案從未部署（jobs.json 指向不存在的檔案）。見上方類型 N2。`ls -la ~/.hermes/scripts/<name>` + `ls -la ~/.hermes/scripts/<fallback>` 確認 |
 | 錯誤含 `Script timed out after 120s` + jobs.json timeout_seconds 已設够大 | 類型 N（舊版表現）：Scheduler `_DEFAULT_SCRIPT_TIMEOUT=120s` 寫死在 scheduler.py，jobs.json `timeout_seconds` 控制 agent iteration 預算、不控制 script timeout → 在 `config.yaml cron.script_timeout_seconds` 設更大值 + `.env HERMES_CRON_SCRIPT_TIMEOUT` + 重啟 gateway |
 | 錯誤含 `Script exited with code 2` + 手動執行 exit 0 | 類型 O：nullglob + set -e bug | `references/nullglob-set-e-bug.md` + 修補後驗證 |
+| 任何 cron 失敗時 telegram 收到 N 段訊息（每段 4096 char）| 類型 P：scheduler.py `deliver_content` 沒截斷 `error` 變數 | 修 `hermes-agent/cron/scheduler.py` line 2105：失敗時 `error` 截斷到 500 字、完整版寫 `~/.hermes/cron/output/<id>/` |
+| `sudo systemctl restart hermes-gateway` 30 秒後仍 `deactivating` | 不是失敗、是 graceful stop 正常（systemd 預設 90s + hermes 預設 210s）| 等 3 分鐘看新 PID、**不要**重發指令 |
 | 連續 3 天同類錯誤 | 升級為已知問題，建立新 skill 或 patch 既有 skill |
 
 ### 類型 M：Stale Lock File 導致 Timeout（backup_hermes.sh 專屬）
@@ -527,35 +605,80 @@ bash ~/.hermes/scripts/hermes-backup-daily-summary.sh
 
 ---
 
-### 類型 J：Stale last_error（歷史錯誤不代表當前狀態）
+### 類型 J：Stale last_error 排除 SOP（2026-06-11 修訂）
 
 **症狀**：
 ```
 last_status: error
 last_error:  Script exited with code 1
-（但重新執行 script 卻 exit 0）
+# 但 jobs.json 的 script 欄位修對了、script 手動跑也 exit 0
+# 連續 3 個 cycle 都看到同樣 error、但根本沒有新 bug
 ```
 
-**觸發情境**：
-- 腳本在某次 cron 執行時因 transient 原因失敗（網路閃斷、檔案狀態不一致、Vercel API 暫時 503）
-- 使用者或上一個 cycle 已經手動修復了錯誤，但 cron list 的 `last_error` 仍顯示歷史錯誤
-- 這是最容易被忽略的陷阱：看到 `error` 就以為「還沒修好」
+**根因（比 2026-06-09 觀察的更細）**：
+- `last_status` / `last_error` / `last_run_at` **只在 `_process_job()` 跑完 scheduler tick 才會被 `mark_job_run()` 寫入**（scheduler.py line 2129）
+- 手動 `bash <script>.sh` **不走 scheduler 流程**、**不會**更新 jobs.json
+- jobs.json 被手動修對 ≠ last_status 翻成 ok
+- 「修對」跟「last_status 顯示 ok」**中間有 6~24 小時的時間差**（看 cron 排程）
+- 這是 metacognitive-learner Phase 1.5 最常誤判的陷阱——以為「還沒修好」、反覆進緊急修復循環
 
-**正確處理流程**：
-1. 看到 cron error → **不要慌，先重新執行一次 script**
+**完整排除流程（4 步）**：
+1. **手動跑 script**（從 `/` 或空 cwd 模擬 cron 環境）：
    ```bash
    cd / && python3 /home/hoonsoropenclaw/.hermes/scripts/<script_name>.py
    # 或
    cd / && bash /home/hoonsoropenclaw/.hermes/scripts/<script_name>.sh
    ```
-2. 若重新執行 exit 0 → 這是 **假性失敗（spurious failure）**，沒有真正的問題
-3. 若重新執行仍 exit 1 → 才依據新錯誤訊息分類（走 A–I 決策樹）
+2. **交叉驗證 jobs.json**（jobs.json 跟 trial-and-error 建議值一致）：
+   ```bash
+   python3 -c "
+   import json
+   d = json.load(open('/home/hoonsoropenclaw/.hermes/cron/jobs.json'))
+   for j in d['jobs']:
+       if j.get('name') == '<job_name>':
+           print('script:', j.get('script'))
+           print('prompt:', j.get('prompt'))
+           print('timeout_seconds:', j.get('timeout_seconds'))
+           print('no_agent:', j.get('no_agent'))
+   "
+   ```
+3. **以上都過 → 這是 stale state**、不是新 bug。**不要**進 Phase 1-3 緊急修復模式
+4. **用 `hermes cron run` + `hermes cron tick` 強迫翻 last_status**（不要等 cron 自然排程）：
+   ```bash
+   hermes cron run <job_name>      # schedule 到下一個 tick
+   sleep 30                         # 等 scheduler tick
+   # 驗證
+   python3 -c "
+   import json
+   d = json.load(open('/home/hoonsoropenclaw/.hermes/cron/jobs.json'))
+   for j in d['jobs']:
+       if j.get('name') == '<job_name>':
+           print('last_status:', j.get('last_status'))
+           print('last_run_at:', j.get('last_run_at'))
+           print('last_error:', j.get('last_error'))
+   "
+   # 看 cron output dir
+   ls -lat /home/hoonsoropenclaw/.hermes/cron/output/<job_id>/
+   ```
 
 **驗證方式**：
 - cron list 的 `last_error` 只代表「上次觸發時」的狀態，不代表當下
 - **自我報告不等於驗證**：「上次 cycle 說已修復」不可信，必須重新執行一次
+- `last_status: pending` 跟 `last_status: error` 不同：pending = 從未跑過（如 `v4recovery2026` 等週日 23:00）；error = 跑過但失敗、且未再跑翻
 
-**預防**：建立 cron job 後，第一次執行後立即檢查 `last_status` 是否為 `ok`，並在發現假性失敗時記錄「已驗證正常，只是 stale error」
+**If→Then 規則**：
+- **If** Phase 1.5 看到 `last_status: error` **Then** **先**手動跑 + 交叉驗證、**再**判斷是否緊急修復（不要直接進 Phase 1-3）
+- **If** jobs.json 已修 + script 手動跑成功 + last_status 仍 error **Then** `hermes cron run` + `hermes cron tick` 強迫翻（**不要等 6~24 小時 cron 自然排程**）
+- **If** 連續 3 個 cycle 看到同樣 error、但都過手動驗證 **Then** 確認 scheduler 的 `mark_job_run()` 是否真的有跑、`hermes-gateway` 是否 active
+
+**預防**：
+- metacognitive-learner SKILL.md Phase 1.5 段開頭應加「stale state 排除 SOP」（參考 `references/stale-state-recovery.md`）
+- 設計 `hermes cron heal-stale` 指令：jobs.json 內 `last_status: error` 但 `last_error` 跟當前 jobs.json script 對不起來的 job 自動觸發
+
+**觀察記錄（2026-06-11）**：
+- 06:53 cycle 修了 4 個 jobs.json、09:11 / 09:35 兩個 cycle 仍看到 error → 觸發「stale state 排除 SOP」才發現根本沒新 bug
+- 4 個 error jobs 的 jobs.json 跟 script 邏輯都對、`hermes cron run` 後 last_status 立即翻成 ok
+- 浪費了 3 個 cycle 重新做修復嘗試、其實只需 1 步 `hermes cron run`
 
 ## 支援檔案
 
@@ -563,6 +686,7 @@ last_error:  Script exited with code 1
 - `references/nullglob-set-e-bug.md` — 類型 O：glob 匹配 0 檔 + set -e + exit code 2 bug（2026-06-10）
 - `references/failure-cases-2026-06.md` — 已知失敗案例 + 修復記錄（2026-06 eval-sync 401 key mask、skill-usage-daily-v3 git recovery、camofox watchdog 每 6 分鐘重啟、backup_hermes.sh v2 timeout → v3 修復）
 - `references/camofox-watchdog-deployment.md` — camofox-watchdog.sh 從未進 crontab 的修復（skill dir 0700 問題 + 部署步驟）
+- `references/stale-state-recovery.md` — 2026-06-11 新增：`last_status` 跟 jobs.json 解耦的 4 步排除 SOP（含 `hermes cron run` 強迫翻轉指令）
 
 ## 相關 SKILL
 

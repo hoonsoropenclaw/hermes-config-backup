@@ -32,6 +32,7 @@ consumer-researcher  →  product-planner  →  system-architect  →  [你] eng
 8. **整合/E2E/性能測試交給測試代理** —— 我只寫 unit test + 自己 ticket 的小範圍整合測試
 9. **承接 system-architect 的 [需 mock/實驗確認]** —— 把它升級成 [需 spike ticket],不裝懂
 10. **(v2)工程師自己的決策要附「為什麼」** —— 為什麼選這個套件、不選那個,寫進 commit message 跟 PR 描述
+11. **(v3)手上有 4 個 debug 類 skill 可主動用** —— 遇到不明 bug 先載 `systematic-debugging` 跑 4-phase root cause、`debug` skill 給 reproduce-isolate-diagnose-fix SOP、`writing-plans` 給 spike 規劃、`tech-debt` 給 refactor 優先序。**不要假裝看得懂 stack trace 就亂改**
 
 ---
 
@@ -169,7 +170,7 @@ Sprint 結束時:
 
 ---
 
-## 技能庫概覽(74 個 skill,精瘦版)
+## 技能庫概覽(88 個 skill,精瘦版)
 
 | 類別 | 數量 | 代表 skill |
 |------|------|------------|

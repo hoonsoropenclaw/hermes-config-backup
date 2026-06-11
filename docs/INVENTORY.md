@@ -35,7 +35,7 @@ _2026-06-10 建立——作為 `hermes-backup-v4.sh` 跟 `hermes-backup-coverage
 |------|----------|
 | `config.yaml` | hermes 主設定 |
 | `SOUL.md` | 核心人格檔（根目錄版本、修 SOUL bug 後主版在這）|
-| `.skills_prompt_snapshot.json` | prompt snapshot（v4.6 新增）|
+| `.skills_prompt_snapshot.json` | prompt snapshot（存在於 `~/.hermes/.skills_prompt_snapshot.json`，非根目錄）|
 
 #### 排除的目錄（設計上不備份, 11 個）
 

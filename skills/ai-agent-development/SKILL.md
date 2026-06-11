@@ -172,7 +172,8 @@ When building agents that learn from experience, use these validated approaches:
 **Core Principle**: Without external validation (Layer 3), "improving over time" is decoration only.
 LLM cannot reliably self-verify — validation must be external-triggered.
 
-**Reference**: See `metacognitive-learner/references/ai-agent-self-improvement-research.md` for condensed research summary.
+**Reference:** See `metacognitive-learner/references/ai-agent-self-improvement-research.md` for condensed research summary.
+**Integration Reference:** See `references/full-stack-coding-agent-integration.md` for wiring coding components into a full-stack autonomous agent.
 
 ## Agent SOPs (strands-agents-sops)
 
@@ -191,7 +192,26 @@ For production agent workflows, use the **strands-agents-sops** Python package w
 - Phase 2 (Single Agent Implementation) → use `code-assist` for TDD workflow
 - Phase 3 (Multi-Agent System) → use `pdd` for role definition and task delegation
 - Phase 5 (Tool Integration) → use `code-task-generator` for breaking down tool-building into micro-tasks
+Generated skills available at: `~/.hermes/skills/strands-skills-generated/`
 
+### Autonomous Execution: Combining Skills into a Full-Stack Coding Agent
+
+This skill's Phase 1-7 workflow and the generated strands-skills are building blocks. The actual gap is the **integration layer** — no single skill chains them into a continuous "receive task → plan → execute → verify → deliver" pipeline. To build a full-stack coding agent:
+
+**Skill components already available:**
+| Component | Skill | Role |
+|-----------|-------|------|
+| TDD implementation | `strands-skills-generated/code-assist` | Explore → Plan → Code → Commit, supports `mode: auto` (no user interruption) |
+| Orchestrator-Worker contract | `agent-orchestration-multi-agent-optimize` | Handoff format: task + context + constraints + output_format |
+| Quality gates | `ai-agent-development` Phase 7 | Evaluation checkpoints across the workflow |
+| Task breakdown | `strands-skills-generated/code-task-generator` | Break PDD plans into micro-tasks |
+
+**Integration pattern (If→Then):**
+- **If** you need a single agent to autonomously handle a coding task from rough idea to delivered code
+- **Then** use `code-assist` with `mode: auto` as the execution engine, use `agent-orchestration-multi-agent-optimize` Orchestrator-Worker contract if spawning sub-agents, and gate each phase with the ai-agent-development Phase 7 quality checklist
+- **Trigger conditions** for this integration: task has acceptance criteria, no user present or user approved autonomous mode, task fits in one session
+
+**Pitfall (2026-06-11):** Each component skill works in isolation. Without an explicit integration skill, the agent must manually wire them together every time. Creating a wrapper skill that sequences these is the correct fix — not modifying each component.
 Generated skills available at: `~/.hermes/skills/strands-skills-generated/`
 
 ## Quality Gates
