@@ -249,9 +249,23 @@ curl -s -o /tmp/downloaded.pdf -w "HTTP %{http_code}, size %{size_download}\n" \
 - **本 skill 是 deploy-preflight-safelist 原則 3（E2E 必跑 happy + error path）的展開**、更詳細 + 可直接複製貼上
 - 部署**後**驗證（DNS / headless browser / 4 步）見 `deployment-verification-sop`
 - 棒 1 race / 棒 N 間 handoff 細節見 `handoff-chain-timeout-sop.md`
+- **⚠️ 重要串接**：`e2e-minimum-checklist` 是「這 10 件事現在能不能做」（靜態 pass/fail 健康檢查），**不**知道「相較上次變更有沒有功能退化」。正確串接順序：
+
+  ```
+  handoff-chain-acceptance-sop（PRD 4 步對照）
+      ↓
+  e2e-minimum-checklist（10 項健康檢查）← 本 skill
+      ↓
+  regression-testing（API snapshot diff）  ← 必接在這裡
+      ↓
+  vercel deploy（或 revert）
+  ```
+
+  **沒有 regression-testing 的問題**：10/10 綠但 AND 篩選從正確變 500（功能退化）不會被 catch。學校專案 06-11 的 5 Must 只有 55% 實作率，正是兩層都缺的情況。
 
 ---
 
 ## 變更記錄
 
 - 2026-06-11 v1.0.0 — 從 school-bulletin production 5 bug 慘案歸納建立。10 項 minimum + 多角色測試 + 多環境測試 + 回報格式
+- 2026-06-13 — 新增「與 regression-testing 的串接關係」，彌補本 skill 只有靜態 pass/fail 無 diff 的缺口

@@ -254,6 +254,8 @@ affect that profile's future sessions, not the one you are currently in.
 
 - `references/by-category/audience-permission-logic.md` — C 方案 audience/權限定案
 - `references/by-category/vercel-supabase-env-pattern.md` — Vercel encrypted env + Supabase 直連 SOP
+- `references/by-category/browser-automation.md` — 2026-06-12 新增：nodriver/camoufox/camofox 生態調研（見下方）
+- `references/by-category/hermes-internal.md` — Hermes cron/scheduler 内部運作、stale state 機制（2026-06-12 stale state 案例已收錄）
 
 ## 已建立的 script template
 

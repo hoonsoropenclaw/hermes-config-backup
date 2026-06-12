@@ -228,6 +228,46 @@ Generated skills available at: `~/.hermes/skills/strands-skills-generated/`
 - `rag-implementation` - RAG systems
 - `workflow-automation` - Workflow patterns
 
+---
+
+## Layer 3 Enforcement: Agent Behavioral Contracts (ABC)
+
+**Source:** arXiv 2602.22302 — "Agent Behavioral Contracts: Formal Specification and Runtime Enforcement for Reliable Autonomous AI Agents"
+
+**What it adds over Layer 2.5 (Hermes automated-sop-validation):**
+- Static YAML contracts (P/I/G) = Layer 2.5 (Hermes current state)
+- ABC adds: Runtime enforcement + Probabilistic satisfaction + Recovery mechanism
+- ABC defines (p,δ,k)-satisfaction: accounts for LLM non-determinism
+- **Drift Bounds Theorem**: if recovery rate γ > α (natural drift rate), behavioral drift is bounded to D* = α/γ
+- **Results**: 1980 sessions, 5.2–6.8 soft violations/session detected, 88–100% hard constraint compliance, D* < 0.27 drift, <10ms overhead/action
+
+**ABC Contract Structure:**
+| Component | Purpose |
+|-----------|---------|
+| Precondition (P) | What must be true before action |
+| Invariant (I) | What must remain true during execution |
+| Postcondition (G) | What must be true after action |
+| Recovery (R) | Action when P/I/G violated + recovery rate γ |
+
+**For Hermes (2026-06-12 state):**
+- `automated-sop-validation/contracts/*.yaml` = Static P/I/G specs (Layer 2.5)
+- Missing: `recovery:` field + runtime ABC enforcement
+
+**If→Then:**
+- **If** a contract has `recovery.gamma > alpha` AND output violates postcondition
+- **Then** invoke recovery action instead of silent pass
+
+**Minimal ABC YAML extension:**
+```yaml
+postcondition:
+  description: "output must contain X"
+  assertion: "X in output"
+  recovery:
+    action: "retry_once_then_escalate"
+    gamma: 0.8   # recovery rate (must exceed alpha for drift bound)
+    max_retries: 1
+```
+
 ## Limitations
 - Use this skill only when the task clearly matches the scope described above.
 - Do not treat the output as a substitute for environment-specific validation, testing, or expert review.

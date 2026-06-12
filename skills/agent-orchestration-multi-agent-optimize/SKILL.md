@@ -218,6 +218,8 @@ class CostOptimizer:
 
 ## Reference Workflows
 
+> **New: Delegation Patterns Foundations** — covers the four delegation architectures (Sequential / Router / Hierarchical / Bidirectional), three sub-agent execution patterns (Synchronous / Asynchronous / Scheduled), context compression as primary value (>90% token reduction), and Delegation by Reference principle. See `references/delegation-patterns-foundations.md`.
+
 ### Workflow 1: E-Commerce Platform Optimization
 
 1. Initial performance profiling
