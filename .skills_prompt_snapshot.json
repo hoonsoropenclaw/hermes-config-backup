@@ -26,8 +26,8 @@
       31858
     ],
     "agent-orchestration-multi-agent-optimize/SKILL.md": [
-      1781194158071393610,
-      22961
+      1781267759533355261,
+      23334
     ],
     "agent-orchestrator/SKILL.md": [
       1778082967415894045,
@@ -46,8 +46,8 @@
       4435
     ],
     "ai-agent-development/SKILL.md": [
-      1781148486016045605,
-      8089
+      1781275345601857618,
+      9752
     ],
     "alt-token-secrets-layout/SKILL.md": [
       1780810212998874223,
@@ -1494,8 +1494,8 @@
       7442
     ],
     "e2e-minimum-checklist/SKILL.md": [
-      1781192517372977752,
-      9762
+      1781283015617211975,
+      10560
     ],
     "email/himalaya/SKILL.md": [
       1781219476338126444,
@@ -1820,6 +1820,10 @@
     "red-teaming/godmode/SKILL.md": [
       1780832652683839110,
       20044
+    ],
+    "regression-testing/SKILL.md": [
+      1781283028268836964,
+      7206
     ],
     "research/arxiv/SKILL.md": [
       1780109239602526485,
@@ -3638,8 +3642,8 @@
       8009
     ],
     "trial-and-error/SKILL.md": [
-      1781252357432066770,
-      31549
+      1781260186308078169,
+      31826
     ],
     "user-collaboration-style/SKILL.md": [
       1781196741125994496,
@@ -9994,6 +9998,22 @@
         "linux",
         "macos",
         "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "regression-testing",
+      "category": "regression-testing",
+      "frontmatter_name": "regression-testing",
+      "description": "赫米斯的回歸測試 skill：系統性跑「變更前→變更後」對比、捕獲功能退化、整合進 handoff chain 尾...",
+      "platforms": [
+        "linux",
+        "macos"
       ],
       "conditions": {
         "fallback_for_toolsets": [],
