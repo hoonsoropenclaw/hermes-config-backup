@@ -385,7 +385,8 @@ python3 -m venv /tmp/nodriver-env
    `0.0.0.0:9377`. This is fine for local use; do not expose port 9377 externally without
    setting `CAMOFOX_API_KEY`.
 8. **Browser engine disconnects (`browserConnected: false`)**: The camoufox browser process can crash independently of the API server process. The API server stays alive (`docker ps` shows container running) but `browserConnected` becomes false. Detected reactively (task fails) unless watchdog is deployed. **Recovery**: `docker restart camofox-browser` + wait 2-3 min. See `references/camofox-session-recovery.md`.
-9. **Watchdog script permission issue (cron runs as root, skill dir is 0700)**: The script at `skills/browser/camofox/scripts/camofox-watchdog.sh` is owned by `hoonsoropenclaw` with `drwx------` (0700). Cron runs as root which cannot enter the `.hermes` directory. **Fix**: Copy to `/tmp/camofox-watchdog.sh` and update crontab:
+9. **Watchdog only restarts Docker, not the browser process — `browserConnected: false` persists**: The deployed watchdog (`/tmp/camofox-watchdog.sh`) does `docker restart camofox-browser`, but the browser engine (`camoufox-bin`) runs as a **standalone process outside Docker**. The Docker container only holds the Node.js API server. Restarting Docker restarts the API server, which then relaunches the browser as a child process — so Docker restart **indirectly** fixes it. However, if the browser keeps crashing, the root cause is likely the `browserIdleTimeout` (5-min idle → shutdown) or memory pressure. **Full diagnosis**: `ps aux | grep camoufox-bin` to check if browser process is alive; `docker logs camofox-browser` for crash traces. See `references/watchdog-docker-only-fallacy.md` (2026-06-12).
+10. **Watchdog script permission issue (cron runs as root, skill dir is 0700)**: The script at `skills/browser/camofox/scripts/camofox-watchdog.sh` is owned by `hoonsoropenclaw` with `drwx------` (0700). Cron runs as root which cannot enter the `.hermes` directory. **Fix**: Copy to `/tmp/camofox-watchdog.sh` and update crontab:
    ```bash
    cp ~/.hermes/skills/browser/camofox/scripts/camofox-watchdog.sh /tmp/camofox-watchdog.sh
    chmod +x /tmp/camofox-watchdog.sh
@@ -654,8 +655,7 @@ sleep 2
 - `references/youtube-cookie-import-2026-05-31.md` — YouTube cookie import session log with
 IP-mismatch analysis and the critical finding: **YouTube Login ≠ Google Login**.
 - `references/oauth-headless-recipe.md` — **(2026-06-07 新增)** Complete recipe for running Google OAuth on N100 headless server. Three strategies (Device Code Flow, Localhost Redirect, RSS), why VNC black screen happens, why Desktop client type fails Device Code, scope restrictions, test users trap, background process logging gotcha, full session log of the 2-hour YouTube OAuth debugging session.
-- `scripts/camofox-watchdog.sh` — Production watchdog script for auto-restart on disconnect.
-  Run `chmod +x` then add to crontab: `* * * * * /path/to/camofox-watchdog.sh`
+- `scripts/camofox-watchdog.sh` — Production watchdog script for auto-restart on disconnect. Note: see `references/watchdog-docker-only-fallacy.md` for critical architectural note — Docker restart targets API server, not the browser process directly.
 - `scripts/cookie-convert.py` — Python script to convert Cookie-Editor JSON export to
-Camofox API format. Run: `python3 scripts/cookie-convert.py cookies-export.json`.
+  Camofox API format. Run: `python3 scripts/cookie-convert.py cookies-export.json`.
 - `scripts/youtube_oauth_device.py` — **(2026-06-07 新增)** Reusable YouTube OAuth template using Device Code Flow. Reads from `~/.local/share/hermes/secrets/youtube_client.json`, writes tokens to `~/.hermes/youtube_tokens.json`, writes progress to `/tmp/oauth_poll.log`. Adapted to N100 headless (no browser, no VNC needed). User just types a code in their own Chrome.

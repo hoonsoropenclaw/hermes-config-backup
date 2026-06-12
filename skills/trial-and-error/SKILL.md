@@ -374,3 +374,38 @@ hermes chat -m MiniMax-M3 -q "$PROMPT" --cli --quiet --yolo --accept-hooks 2>&1 
 4. **若 log 還是 0 bytes** 60 秒後 → sub-process 失敗,看 `process(action='log', session_id=...)` 撈真實輸出
 
 **驗證**: background process 啟動後 60 秒內必 `ls <output-dir>` 跟 `ps -ef | grep`,2 項都對才視為成功。
+
+---
+
+### `last_status: error` + 修復已落地 = Stale State（2026-06-12 新增）
+
+**症狀**: cron job 的 `last_status: error`，但檢查後發現邏輯已修復（fix commit 在 cron run 之後才發生）。
+
+**根因**: `last_status` 跟 jobs.json 修復狀態完全解耦——jobs.json 修對、但 scheduler 還沒被 cron tick 跑過的話、狀態**不會**翻。
+
+**三步排除**：
+1. **手動跑該 script** 確認邏輯 OK（如 `bash ~/.hermes/scripts/hermes-backup-v4.sh --tier1`）
+2. **交叉驗證 jobs.json**（`script`/`prompt`/`timeout_seconds` 跟 trial-and-error 建議值一致）
+3. **看 cron output dir**（`ls -lat ~/.hermes/cron/output/<job_id>/`）+ **journalctl**（`journalctl -u hermes-gateway -n 30 --no-pager`）
+
+**判定**：
+- 三步都過 → **stale state**、**不是新 bug**、不進緊急修復模式
+- 三步任一失敗 → 真實 bug、走原 SOP（緊急修復）
+
+**強迫翻轉**（若要立即驗證）：
+```bash
+hermes cron run <job_name>     # schedule 到下一個 tick
+hermes cron tick                # 跑一次所有 due job
+```
+
+**驗證 last_status 翻轉**：
+```python
+import json
+d = json.load(open('/home/hoonsoropenclaw/.hermes/cron/jobs.json'))
+for j in d['jobs']:
+    if j.get('name') == '<job_name>':
+        print('last_status:', j.get('last_status'))
+        print('last_run_at:', j.get('last_run_at'))
+```
+
+**If→Then**: **If** cron job error 但修復 commit 時間 > cron run 時間 **Then** 這是 stale state、等下次 scheduled run 自動驗證、不需要緊急修復

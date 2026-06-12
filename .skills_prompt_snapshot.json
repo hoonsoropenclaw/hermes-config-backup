@@ -1310,8 +1310,8 @@
       39643
     ],
     "browser/camofox/SKILL.md": [
-      1780811036420677528,
-      26538
+      1781243876350092628,
+      27436
     ],
     "buddy-sings/SKILL.md": [
       1780110403137952298,
@@ -1608,6 +1608,10 @@
     "hermes-tier-router/SKILL.md": [
       1780758740543038468,
       12471
+    ],
+    "hr-document-automation/SKILL.md": [
+      1781243589510225313,
+      9208
     ],
     "ios-application-dev/SKILL.md": [
       1780110403171953343,
@@ -3634,8 +3638,8 @@
       8009
     ],
     "trial-and-error/SKILL.md": [
-      1781204849937137325,
-      29994
+      1781252357432066770,
+      31549
     ],
     "user-collaboration-style/SKILL.md": [
       1781196741125994496,
@@ -9187,6 +9191,21 @@
       "platforms": [
         "linux",
         "macos"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hr-document-automation",
+      "category": "hr-document-automation",
+      "frontmatter_name": "hr-document-automation",
+      "description": "HR 文件自動生成工作流 — 整合候選人追蹤（Linear）與文件生成（DOCX）。當用戶提到「錄取通知書」「聘用...",
+      "platforms": [
+        "linux"
       ],
       "conditions": {
         "fallback_for_toolsets": [],
