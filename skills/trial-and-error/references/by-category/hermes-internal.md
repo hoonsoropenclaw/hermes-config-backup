@@ -113,3 +113,38 @@ pgrep -af "hermes_cli.main gateway"   # 應該看到新 PID
 - `prompt` 為 `null`
 - `script` 為檔名（如 `run_skill_stats.sh`）
 - `no_agent` 為 `true`
+
+---
+
+### `gh auth git-credential` 在 cron 環境導致 SSH push 403
+
+**症狀**: cron job `v4-backup-tier1-daily` 失敗，error 為：
+```
+remote: Permission to hoonsoropenclaw/hermes-config-backup.git denied to hoonsor.
+fatal: unable to access 'https://github.com/hoonsoropenclaw/hermes-config-backup.git/': The requested URL returned error: 403
+```
+但 staging repo 是 SSH URL（`git@github.com:hoonsoropenclaw/hermes-config-backup.git`）。
+
+**根因**: `git config --global` 設定了 `credential.https://github.com.helper = !/usr/bin/gh auth git-credential`。SSH 推送時，git 的 credential helper 被錯誤觸發並回傳錯誤帳號（`hoonsor` 而非 `hoonsoropenclaw`）的 token，導致 HTTPS 403。cron 環境下 gh 可能回傳預設活躍帳號而非正確的 `hoonsoropenclaw`。
+
+**解法**: 移除 credential helper（SSH 推送不需要它）：
+```bash
+git config --global --remove-section credential.https://github.com
+git config --global --remove-section credential.https://gist.github.com
+```
+
+**驗證命令**:
+```bash
+# 確認 credential helpers 已移除
+git config --global --list | grep credential  # 應無輸出
+
+# 確認 staging SSH URL 不變
+cd ~/.hermes/hermes-backup-staging && git remote -v  # 應顯示 git@github.com:...
+
+# 驗證 push 成功
+git add -A && git commit -m "test" --allow-empty && git push origin main  # 應成功
+```
+
+**預防**: SSH 推送不需要 credential helper。若 GitHub 推送使用 SSH，應移除所有 `credential.https://*.helper` 設定，避免 cron 環境下 credential helper 被錯誤呼叫。
+
+**If→Then**: **If** cron job 的 SSH push 出現 403 且 error 顯示 `denied to hoonsor`（錯誤帳號）**Then** 檢查並移除 `git config --global` 中的 `credential.https://github.com.helper`

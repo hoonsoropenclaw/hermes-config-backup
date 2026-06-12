@@ -531,6 +531,7 @@ hermes cron run <job_id>
 | 任何 cron 失敗時 telegram 收到 N 段訊息（每段 4096 char）| 類型 P：scheduler.py `deliver_content` 沒截斷 `error` 變數 | 修 `hermes-agent/cron/scheduler.py` line 2105：失敗時 `error` 截斷到 500 字、完整版寫 `~/.hermes/cron/output/<id>/` |
 | `sudo systemctl restart hermes-gateway` 30 秒後仍 `deactivating` | 不是失敗、是 graceful stop 正常（systemd 預設 90s + hermes 預設 210s）| 等 3 分鐘看新 PID、**不要**重發指令 |
 | git push 被拒 `denied to hoonsor` 但 `gh auth status` 顯示 `hoonsoropenclaw` | 類型 J2：舊 hoonsor token 在 `~/.git-credentials-raphael` 把新的 `hoonsoropenclaw` token 蓋過 | 執行一次 `git push` 觸發 `gh auth git-credential store` 更新 store file；若仍無效則手動編輯 store file 把 `hoonsor` URL 置換成 `hoonsoropenclaw` |
+| git push 403 + SSH remote + 手動 push 成功 + credential helper 設定存在 | 類型 J2-SSH：SSH push 被 credential helper 劫持、回傳錯誤帳號 token | 移除 `credential.https://github.com.helper`；見 `references/ssh-push-credential-helper-403.md` |
 | git push 403 + 手動 push 成功 + 憑證檔正確 | 類型 J3：間歇性 GitHub rate limit（非 credential bug） | stale state，等待下一個 scheduler tick，不要進緊急修復。見 `references/stale-state-2026-06-11-fixes.md` |
 | "Script not found" 含 `--tier2 --upload-tier2` args | 早期 `hermes cron edit --script` bug 殘留（jobs.json prompt 欄位含 args）| 檢查 jobs.json `prompt` 是否為 null；是則 stale state，下個 tick 清除 |
 | hermes-backup-coverage-check exit 1 但手動跑 exit 0 | 真實 warnings 已修復，之前是 warnings-only exit 0 政策未生效 | stale state，驗證：手動跑 `bash ~/.hermes/scripts/hermes-backup-coverage-check.sh` 確認 exit 0 |
@@ -730,6 +731,7 @@ git push origin main  # 應成功
 - `references/stale-state-recovery.md` — 2026-06-11：`last_status` 跟 jobs.json 解耦的 4 步排除 SOP（含 `hermes cron run` 強迫翻轉指令）
 - `references/git-credential-stale-housor-housoropenclaw.md` — 類型 J2：Git HTTPS push 在 cron 環境因 `~/.git-credentials-raphael` 含舊 `hoonsor` token 導致 403，修復（SSH remote 或 gh auth store 更新）+ 預防方案
 - `references/failure-cases-2026-06.md` — 已知失敗案例 + 修復記錄（2026-06 eval-sync 401 key mask、skill-usage-daily-v3 git recovery、camofox watchdog 每 6 分鐘重啟、backup_hermes.sh v2 timeout → v3 修復）
+- `references/ssh-push-credential-helper-403.md` — 類型 J2-SSH：SSH push 被 `credential.https://github.com.helper` 劫持導致 403（2026-06-12）
 - `references/nullglob-set-e-bug.md` — 類型 O：glob 匹配 0 檔 + set -e + exit code 2 bug（2026-06-10）
 - `references/dry-run-vs-real-run.md` — 2026-06-11：dry-run 成功不等於 real-run 成功，backup cron job 驗證必須包含 real-run（git push 實際成功檢查）
 - `references/stale-state-2026-06-11-fixes.md` — 2026-06-11 新增：4 個 cron error 均為 stale state 的交叉驗證報告，含 Type J3（間歇性 GitHub rate limit 403 vs credential bug）、coverage check exit code 解析、v4-backup-tier2-daily "Script not found" 謎題根本原因（早期 `hermes cron edit --script` bug 殘留）+ 驗證命令清單
