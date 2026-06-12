@@ -22,15 +22,15 @@
       "schedule_display": "every 120m",
       "repeat": {
         "times": null,
-        "completed": 143
+        "completed": 147
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-30T11:56:33.423422+08:00",
-      "next_run_at": "2026-06-12T04:55:10.641778+08:00",
-      "last_run_at": "2026-06-12T00:54:31.385451+08:00",
+      "next_run_at": "2026-06-12T13:12:13.780372+08:00",
+      "last_run_at": "2026-06-12T09:12:08.074149+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -59,15 +59,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 8
+        "completed": 9
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-03T21:36:37.533729+08:00",
-      "next_run_at": "2026-06-12T09:00:00+08:00",
-      "last_run_at": "2026-06-11T09:00:22.886186+08:00",
+      "next_run_at": "2026-06-13T09:00:00+08:00",
+      "last_run_at": "2026-06-12T09:00:20.926424+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -133,15 +133,15 @@
       "schedule_display": "0 10 * * *",
       "repeat": {
         "times": null,
-        "completed": 11
+        "completed": 12
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-03T22:24:52.905388+08:00",
-      "next_run_at": "2026-06-12T10:00:00+08:00",
-      "last_run_at": "2026-06-11T10:00:04.431750+08:00",
+      "next_run_at": "2026-06-13T10:00:00+08:00",
+      "last_run_at": "2026-06-12T10:00:16.232623+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -209,15 +209,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 8
+        "completed": 9
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-04T22:12:29.200675+08:00",
-      "next_run_at": "2026-06-12T09:00:00+08:00",
-      "last_run_at": "2026-06-11T09:35:18.552233+08:00",
+      "next_run_at": "2026-06-13T09:00:00+08:00",
+      "last_run_at": "2026-06-12T09:00:28.353334+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -519,17 +519,17 @@
       "schedule_display": "0 4 * * *",
       "repeat": {
         "times": null,
-        "completed": 2
+        "completed": 3
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-10T22:03:23.429440+08:00",
-      "next_run_at": "2026-06-12T04:00:00+08:00",
-      "last_run_at": "2026-06-11T04:00:56.397282+08:00",
-      "last_status": "error",
-      "last_error": "Script exited with code 1\nstdout:\n\u26a0\ufe0f  WARN  \u5099\u4efd\u8986\u84cb\u7387\u4e0d\u5b8c\u6574\uff081 \u500b warning\uff09\n\u5efa\u8b70\u4fee\u6cd5\uff1a\n  1. \u770b\u54ea\u4e9b\u672c\u6a5f\u65b0\u8def\u5f91 v4 \u6c92\u5217\n  2. \u7de8\u8f2f ~/.hermes/docs/INVENTORY.md \u52a0\u9032\u300ev4 \u540c\u6b65\u6e05\u55ae\u300f\n  3. \u7de8\u8f2f ~/.hermes/scripts/hermes-backup-v4.sh \u52a0 rsync \u6bb5\n\u8a73\u7d30: /home/hoonsoropenclaw/.hermes/logs/backup-coverage.log",
+      "next_run_at": "2026-06-13T04:00:00+08:00",
+      "last_run_at": "2026-06-12T04:00:11.167188+08:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
       "deliver": "local",
       "origin": null,
@@ -538,5 +538,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-06-12T03:00:26.525745+08:00"
+  "updated_at": "2026-06-12T11:12:13.780876+08:00"
 }

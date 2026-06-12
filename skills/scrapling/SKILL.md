@@ -376,4 +376,10 @@ def collect_competition_info():
 
 ---
 
-*最後更新：2026-05-07*
+## 參考資料
+
+- 📖 [stealth-browser-2026.md](references/stealth-browser-2026.md) — 2026 年 stealth browser benchmark（nodriver 28/31 零封鎖）、三層指紋原理、抉擇樹更新
+
+---
+
+*最後更新：2026-06-12*

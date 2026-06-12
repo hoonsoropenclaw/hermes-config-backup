@@ -26,6 +26,7 @@ requires the external `himalaya` CLI.
 
 - `references/configuration.md` (config file setup + IMAP/SMTP authentication)
 - `references/message-composition.md` (MML syntax for composing emails)
+- `references/hr-recruitment-workflow.md` (HR recruitment email automation: interview invites, offer letters, rejection notices — school HR specific)
 
 ## Prerequisites
 

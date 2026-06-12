@@ -287,7 +287,7 @@ webbrowser.open(url)
 
 | 現有 Skill | 整合方式 |
 |-----------|----------|
-| `anthropic-draft-content` | 生成職缺描述（用於 Linear issue description） |
+| `himalaya` | 發送招募 email（面試邀請、offer letter、拒絕通知）並與 Linear 狀態同步 |\n| `anthropic-draft-content` | 生成職缺描述（用於 Linear issue description） |
 | `anthropic-customer-research` | 評估候選人背景 |
 | `anthropic-call-prep` | 面試準備 |
 | `anthropic-compliance-check` | 確認教師任用法規限制 |
