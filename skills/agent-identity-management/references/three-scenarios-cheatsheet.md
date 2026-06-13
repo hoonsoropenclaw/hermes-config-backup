@@ -1,10 +1,7 @@
 ---
-name: agent-identity-cheatsheet
-description: 代理身份管理 3 種情境快速判斷 cheat sheet — 給未來 agent 緊急判斷用,30 秒內判斷該走「身份繼承」「身份重塑」「SOP 演進」哪條 SOP。基於 agent-identity-management 三大情境(2026-06-10 確立)。
-risk: safe
-source: hermes-internal
-date_added: "2026-06-10"
-last_updated: "2026-06-10"
+title: 代理身份管理 3 種情境 — 1 頁 Cheat Sheet
+source_skill: agent-identity-cheatsheet (archived 2026-06-13)
+date_consolidated: "2026-06-13"
 ---
 
 # 代理身份管理 3 種情境 — 1 頁 Cheat Sheet

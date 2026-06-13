@@ -1,10 +1,7 @@
 ---
-name: deploy-preflight-safelist
-description: "赫米斯部署/推送「前」的 preflight SOP — 補 deployment-verification-sop 的「前」半段。觸發:任何 Vercel/Netlify/GitHub push/Supabase DDL/雲端部署、token 寫入檔案/命令列、棒 1 DDL、cron 改動的「前一刻」。使用者說「部署」「推送」「上線」「apply」「建網站」「deploy」「vercel」「git push」時強制觸發。核心原則:「token 必在 env 不在 stdin」「DDL commit 前必先 DB 驗證」「棒 1 SQL commit 時間必晚於 DB schema 建立時間」「E2E 必跑 happy + error path」「push 必 sleep 3s 重試機制」。"
-version: 1.0.0
-author: Hermes Agent (auto-saved, 2026-06-11 school-bulletin 22-事件慘案歸納)
-license: MIT
-platforms: [linux, macos]
+title: deploy-preflight-safelist (demoted to reference)
+source_skill: deploy-preflight-safelist (archived 2026-06-13)
+date_consolidated: "2026-06-13"
 ---
 
 # 部署 Preflight Safelist (Deploy Preflight Safelist)
@@ -202,7 +199,7 @@ curl -s -H "Authorization: Bearer $VERCEL_API_TOKEN" \
 
 ## 與其他 skill 的關係
 
-- **本 skill 負責「部署**前** preflight」、`deployment-verification-sop` 負責「部署**後**驗證」** — 兩者互補不重複
+- **本 reference 負責「部署**前** preflight」、同 umbrella `hermes-deployment-sop/references/post-deploy-verification.md` 負責「部署**後**驗證」** — 兩者互補不重複
 - 技術細節 (DNS propagation、GH013 細節、Supabase RLS) 見 `trial-and-error/references/by-category/` 對應分類
 - 棒 1 race / 多棒 handoff 細節見 `handoff-chain-timeout-sop.md`
 

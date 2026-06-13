@@ -382,4 +382,48 @@ def collect_competition_info():
 
 ---
 
-*最後更新：2026-06-12*
+*最後更新：2026-06-13*/
+
+---
+
+## URL → D2 架構圖 Pipeline（2026-06-13 新增）
+
+當用戶要求「分析 URL 並生成網站架構圖」時，使用以下工具鏈：
+
+**工具鏈**：`python3.12 + playwright`（fetch + structure analysis） → `/tmp/d2`（D2 → SVG render）
+
+### D2 安裝（不走 pip）
+
+```bash
+# 從 GitHub releases 直接下載
+curl -fsSL "https://api.github.com/repos/terrastruct/d2/releases/latest" | \
+  python3 -c "import sys,json; r=json.load(sys.stdin); [print(a['browser_download_url']) for a in r['assets'] if 'linux-amd64' in a['name']]"
+
+curl -fsSL "https://github.com/terrastruct/d2/releases/download/v0.7.1/d2-v0.7.1-linux-amd64.tar.gz" \
+  -o /tmp/d2.tar.gz && tar xzf /tmp/d2.tar.gz -C /tmp
+cp /tmp/d2-v0.7.1-linux-amd64/bin/d2 /tmp/d2 && chmod +x /tmp/d2
+```
+**驗證**：`/tmp/d2 version`
+
+### D2 語法要點（v0.7.1）
+
+- **CLI**：`d2 input.d2 output.svg`（不用 `-f` flag）
+- **字串跳脫**：所有含 `:`、`"`、`{}`、`#` 的 label 用雙引號包住並 `\"` 內部雙引號，否則報 `"unexpected text after double quoted string"`
+- **形狀**：用 `shape: rectangle`（`browser` shape 在 v0.7.1 不可用）
+- **style**：用 `style.fill: "#color"`（不是 `style: { fill: ... }`）
+
+### 完整 Pipeline 腳本
+
+見 `references/url-to-d2-architecture.md`。
+
+**快速使用**：`python3.12 /tmp/url_to_d2.py "https://example.com" /tmp/output.d2`
+產出 `/tmp/output.d2` 和 `/tmp/output.svg`
+
+### 與 Scrapling 的抉擇
+
+| 需求 | 工具 |
+|------|------|
+| 直接解析 HTML 元素 | Scrapling |
+| 生成視覺化架構圖 | Playwright + D2 |
+| anti-bot 嚴格 | nodriver |
+| 需 JS 渲染 + 架構圖 | DynamicFetcher + D2 |

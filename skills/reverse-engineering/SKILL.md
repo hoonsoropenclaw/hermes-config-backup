@@ -37,6 +37,7 @@ Use these files on demand instead of loading the whole method every time.
 | Surface mapping | `interface-map.md` |
 | Deliverable templates | `deliverables.md` |
 | Safety boundaries | `boundaries.md` |
+| LLM + diagram research | `references/llm-architecture-diagrams.md` |
 
 ## Requirements
 
@@ -78,6 +79,31 @@ Use these files on demand instead of loading the whole method every time.
 - Every session should end with concrete outputs from `deliverables.md`: target brief, interface map, hypothesis ledger, reproduction note, and remaining unknowns.
 - Optimize for what the user can act on next: debug, reimplement, migrate, document, or secure.
 - Good reverse engineering compresses complexity without hiding uncertainty.
+
+### 7. Route diagrams to the right tool
+
+When the Explain phase requires architecture diagrams, use this tool chain:
+
+**Mermaid** → `beautiful-mermaid` skill:
+```bash
+node ~/.hermes/skills/beautiful-mermaid/scripts/render.js \
+  input.mmd -t tokyo-night -p glass -o output.svg
+```
+Do NOT skip `preview.html` — open it first to confirm layout before bulk rendering.
+
+**C4 / structured container diagrams** → prefer Mermaid `graph TD` or `classDiagram` directly in skill output. If structured grid layout is needed, use `diagram-generator` MCP server (Draw.io or Excalidraw format).
+
+**Diagram type routing for reverse engineering:**
+
+| View | Mermaid type | Best for |
+|------|-------------|----------|
+| Module topology | `graph TD/LR` | Component call graph, layering |
+| State machine | `stateDiagram-v2` | Lifecycle, transitions |
+| Data flow | `graph LR` with subgraphs | Request→processing→storage |
+| Sequence | `sequenceDiagram` | Time-ordered interactions |
+| Class/ER | `classDiagram` / `erDiagram` | Data model, schema |
+
+> **If → Then**: **If** the target is a website or SPA **Then** prefer `graph LR` with subgraphs for data flow and `sequenceDiagram` for critical user interaction paths.
 
 ## Common Traps
 

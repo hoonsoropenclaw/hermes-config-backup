@@ -1,217 +1,88 @@
-# Linear API Quickstart (2026-06-09)
+# Linear API Quickstart & Troubleshooting
 
-## 核心事實
+## 2026-06-13 新增：API Key 驗證腳本
 
-| 項目 | 值 |
-|------|-----|
-| Endpoint | `https://api.linear.app/graphql` |
-| 認證 | Personal API Key — `Authorization: Bearer <key>` |
-| 格式 | GraphQL（不是 REST） |
-| Python 整合 | Raw `requests`（不走 `linear-api` pip 包） |
-| 原因 | System Python 3.11 有 PEP 668，無法 `pip install linear-api` |
+LINEAR_API_KEY 目前**未設定**於 `~/.hermes/.env`。使用此 skill 前必須完成設定。
 
-## 驗證 API Key
+### 步驟 1：確認 Key 是否存在
+
+```bash
+grep LINEAR_API_KEY ~/.hermes/.env && echo "EXISTS" || echo "MISSING"
+```
+
+### 步驟 2：若不存在，引導用戶取得並存入
+
+1. 登入 Linear → 右上角頭像 → Settings → API
+2. **注意**：Linear 有兩處 API 頁面：
+   - `Settings > Account > Security & access > Personal API keys` ← **個人 key（用這個）**
+   - `Settings > API` ← **只顯示 OAuth App 和 workspace key，沒有個人 key**
+3. 建立 Personal API Key（任意名稱）
+4. 存入 `~/.hermes/.env`：`LINEAR_API_KEY=lin_api_...`
+5. 驗證：`python3 -c "import os,requests; r=requests.post('https://api.linear.app/graphql',headers={'Authorization':os.getenv('LINEAR_API_KEY'),'Content-Type':'application/json'},json={'query':'{ viewer { id name } }'}); print(r.json())"`
+
+---
+
+## ⚠️ Authorization Header 格式（重要修正）
+
+**Linear API Key 不使用 `Bearer` 前綴**。正確格式：
+
+```python
+# ✅ 正確
+HEADERS = {
+    'Authorization': LINEAR_API_KEY,   # 直接放 key，無 Bearer
+    'Content-Type': 'application/json'
+}
+
+# ❌ 錯誤（不要用）
+HEADERS = {
+    'Authorization': f'Bearer {LINEAR_API_KEY}',  # Linear 不接受 Bearer
+    'Content-Type': 'application/json'
+}
+```
+
+**根因**：Linear API 文件使用 `Authorization: $LINEAR_API_KEY`（無 Bearer），GraphQL API 不是 OAuth 2.0 flow。
+
+---
+
+## 常見錯誤對照表
+
+| 錯誤訊息 | 原因 | 解法 |
+|---------|------|------|
+| `{"errors":[{"code":"unauthorized","type":"UnauthorizedException"}]}` | API key 無效或過期 | 重新取得 key 並更新 `~/.hermes/.env` |
+| `{"errors":[{"code":"not_found","type":"NotFoundException"}]}` | Team ID 或 Issue ID 不存在 | 確認 team id：`teams(first:10)` query |
+| `{"errors":[{"code":"validation_error","type":"ValidationException"}]}` | GraphQL 變數格式錯誤 | 檢查必填欄位（如 `teamId`） |
+| HTTP 400 + `RATELIMITED` | 每小時 2,500 次限制 | 等 `X-RateLimit-Requests-Reset` 時間到 |
+| `{"errors":[{"code":"complexity_limit"}]}` | 複雜度點數超標 | 減少 `first:N` 的 N 值 |
+
+---
+
+## Python 驗證腳本（含錯誤處理）
 
 ```python
 import os, requests
-key = os.getenv('LINEAR_API_KEY')
-r = requests.post('https://api.linear.app/graphql',
-    headers={'Authorization': key, 'Content-Type': 'application/json'},
-    json={'query': '{ viewer { id email name } }'})
-print(r.json())
-# 預期：{'data': {'viewer': {'id': '...', 'email': '...', 'name': '...'}}}
-# 401：key 過期或無效
-# 200 但 errors：有 GraphQL 語法錯誤
+
+def verify_linear_api_key():
+    key = os.getenv('LINEAR_API_KEY')
+    if not key:
+        print("ERROR: LINEAR_API_KEY not found in environment")
+        return False
+    
+    r = requests.post(
+        'https://api.linear.app/graphql',
+        headers={'Authorization': key, 'Content-Type': 'application/json'},
+        json={'query': '{ viewer { id name email } }'}
+    )
+    data = r.json()
+    
+    if 'errors' in data:
+        error = data['errors'][0]
+        print(f"API Error: {error['code']} - {error.get('message', '')}")
+        return False
+    
+    viewer = data['data']['viewer']
+    print(f"✅ Connected as: {viewer['name']} ({viewer['email']})")
+    return True
+
+if __name__ == '__main__':
+    verify_linear_api_key()
 ```
-
-## 查詢 Teams
-
-```python
-query = """
-{
-  teams(first: 10) {
-    nodes { id name identifier }
-  }
-}
-"""
-r = requests.post('https://api.linear.app/graphql',
-    headers=HEADERS, json={'query': query})
-teams = r.json()['data']['teams']['nodes']
-```
-
-## 建立 Issue（mutation）
-
-```python
-mutation = """
-mutation issueCreate($title: String!, $teamId: String!, $description: String) {
-  issueCreate(input: {title: $title, teamId: $teamId, description: $description}) {
-    success
-    issue { id identifier title state { name } }
-  }
-}
-"""
-r = requests.post('https://api.linear.app/graphql', headers=HEADERS, json={
-    'query': mutation,
-    'variables': {
-        'title': '【代理】數學代課老師 - 張三',
-        'teamId': team_id,
-        'description': '## 候選人資料\n- 應徵科目：數學\n- 教師證：有\n- 可到職日：2026-09-01'
-    }
-})
-issue = r.json()['data']['issueCreate']['issue']
-```
-
-## 常見錯誤
-
-| 錯誤 | 原因 | 解法 |
-|------|------|------|
-| `401 Unauthorized` | API key 過期/無效 | Linear Settings → API → 重新產生 key，更新 `~/.hermes/.env` |
-| `403 Forbidden` | 帳號無該 workspace 權限 | 確認 key 來自正確 workspace |
-| GraphQL errors array | 語法/欄位名錯誤 | 檢查 query 語法，Linear 嚴格 schema |
-| `{}` 空回應 | network timeout 或 blocking | 增加 timeout 或檢查 proxy 設定 |
-
-## 與 GitHub 整合
-
-Linear ↔ GitHub 雙向同步：
-- **Linear → GitHub**：在 PR description 寫 `Closes LINEAR-123`，PR merge 時自動 close Linear issue
-- **GitHub → Linear**：在 Linear 建立 issue 時可自動建立 branch
-
-## 學校 HR 應用場景
-
-1. **候選人追蹤**：每個求職者建立一個 Linear issue
-2. **面試流程**：用 Linear cycle 管理面試階段
-3. **代理教師**：即時需求，用 `linear.new` 語法快速建立
-
-## Rate Limiting（2026-06-10 新增）
-
-| 認證方式 | 限制 | 期間 |
-|---------|------|------|
-| API key | 2,500 requests | 1 小時 |
-| OAuth App | 5,000 requests | 1 小時 |
-
-**避免被限流的最佳實踐**：
-1. 永遠指定分頁 limit（如 `first: 10` 而非預設 50）
-2. 用 webhooks 取代 polling
-3. 用 `updatedAt` 排序而非 `createdAt`
-4. 監控 `X-RateLimit-Requests-Remaining` header
-
-**複雜度計算**（Linear 1 點 = 1 complexity point）：
-- 單一 query 上限：10,000 點
-- 預設分頁 50 條：connections × 50 points
-- 簡單屬性：0.1 point/個
-
-**如果被限流**（HTTP 400, code: RATELIMITED）：
-- 等待 `X-RateLimit-Requests-Reset` 時間後重試
-- 或聯繫 Linear support 申請提升限制
-
-## 批次建立（issueBatchCreate）
-
-一次最多建立 50 個 issue：
-```python
-mutation = """
-mutation issueBatchCreate($teamId: String!, $c0: IssueCreateInput!, $c1: IssueCreateInput!) {
-  issueBatchCreate(input: {teamId: $teamId, issues: [$c0, $c1]}) {
-    success
-    issues { id identifier title }
-  }
-}
-"""
-r = requests.post('https://api.linear.app/graphql', headers=HEADERS, json={
-    'query': mutation,
-    'variables': {
-        'teamId': team_id,
-        'c0': {'title': '【代理】數學 - 張三', 'description': '10年經驗'},
-        'c1': {'title': '【代理】英文 - 李四', 'description': '5年經驗'},
-    }
-})
-issues = r.json()['data']['issueBatchCreate']['issues']
-```
-
-## 更新 Issue 狀態（issueUpdate）
-
-```python
-mutation = """
-mutation issueUpdate($id: String!, $stateId: String!) {
-  issueUpdate(id: $id, input: {stateId: $stateId}) {
-    success
-    issue { id identifier state { name } }
-  }
-}
-"""
-# 先查狀態 ID：query { states(first: 10) { nodes { id name } } }
-r = requests.post('https://api.linear.app/graphql', headers=HEADERS, json={
-    'query': mutation,
-    'variables': {'id': 'issue_id', 'stateId': 'state_id'}
-})
-```
-
-## 分頁查詢（Cursor-based）
-
-```python
-query = """
-query issues($teamId: String!, $after: String) {
-  issues(first: 10, after: $after, filter: {team: {id: {eq: $teamId}}}) {
-    pageInfo { hasNextPage endCursor }
-    nodes { id identifier title updatedAt }
-  }
-}
-"""
-cursor = None
-all_issues = []
-while True:
-    r = requests.post('https://api.linear.app/graphql', headers=HEADERS, json={
-        'query': query,
-        'variables': {'teamId': team_id, 'after': cursor}
-    })
-    data = r.json()['data']['issues']
-    all_issues.extend(data['nodes'])
-    if not data['pageInfo']['hasNextPage']:
-        break
-    cursor = data['pageInfo']['endCursor']
-```
-
-## linear.new URL（即時建立）
-
-```python
-import urllib.parse, webbrowser
-title = "【代理】數學代課老師 - 張三"
-desc = "## 候選人資料\n- 科目：數學\n- 可到職日：2026-09-01"
-url = f"https://linear.new/issue/linear/{urllib.parse.quote(title)}?description={urllib.parse.quote(desc)}"
-webbrowser.open(url)
-# 自動建立 GitHub branch
-```
-
-## Webhook（取代 polling）
-
-Linear 支援 Webhook 推送，減少 API 輪詢：
-- 設定：Linear Settings → API → Webhooks → 新建
-- 監聽事件：`Issue, Comment, IssueLabel, Project, Cycle`
-- 驗證：HMAC-SHA256 signature（header `Linear-Webhook-Signature-256`）
--你家伺服器需有公開 HTTPS 端點（可用 ngrok 測試）
-
-```python
-# Flask 接收 Webhook 示例
-from flask import Flask, request, hmac, hashlib
-app = Flask(__name__)
-@app.route('/webhook', methods=['POST'])
-def webhook():
-    sig = request.headers.get('Linear-Webhook-Signature-256', '')
-    secret = os.getenv('LINEAR_WEBHOOK_SECRET')
-    expected = 'sha256=' + hmac.new(secret.encode(), request.data, hashlib.sha256).hexdigest()
-    if not hmac.compare_digest(sig, expected):
-        return 'Unauthorized', 401
-    payload = request.json
-    event_type = payload.get('type')  # e.g. "Issue", "Comment"
-    action = payload.get('action')     # e.g. "created", "updated"
-    # 處理事件
-    return 'OK'
-```
-
-## 參考資源
-
-- Linear 開發者文檔：https://linear.app/developers/graphql
-- Linear Rate Limiting：https://linear.app/developers/rate-limiting
-- Linear Webhooks：https://linear.app/developers/webhooks
-- linear-api PyPI：https://pypi.org/project/linear-api（需要 venv 才能安裝）
-- dltHub Linear pipeline：https://dlthub.com/context/source/linear
-- Apollo Studio Schema：https://studio.apollographql.com/public/Linear-API/variant/current

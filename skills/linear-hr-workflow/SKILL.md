@@ -1,7 +1,7 @@
 ---
 name: linear-hr-workflow
 description: "Linear API + GitHub 整合工作流，用於學校人事招聘自動化。觸發於用戶提到 Linear、GitHub Issues、學校招聘、教師招募時啟用。核心能力：GraphQL API 操作、HR 工作流整合、gh CLI 自動化。"
-version: 1.1.0
+version: 1.2.0
 author: Hermes Agent (metacognitive-learner)
 platforms: [linux]
 metadata:
@@ -18,10 +18,12 @@ metadata:
 ## 核心原理
 
 ### Linear API 架構
-- **認證**：Personal API Key（`Authorization: Bearer ***`
+- **認證**：Personal API Key（**無 `Bearer` 前綴**，`Authorization: <key>` 直接放 key）
 - **端點**：`https://api.linear.app/graphql`
 - **格式**：GraphQL（不是 REST）
 - **Python 整合**：用 `requests` 庫直接發 GraphQL mutation/query（`linear-api` pip 包需要 venv，hermes 預設用 system python3.11）
+
+> ⚠️ **常見錯誤**：不要寫 `Authorization: f'Bearer {key}'` — Linear API 不是 OAuth 2.0，沒有 Bearer token。
 
 ### Rate Limiting
 | 認證方式 | 限制 | 期間 |
@@ -303,4 +305,4 @@ webbrowser.open(url)
 
 ## 支援檔案
 
-- **`references/linear-api-quickstart.md`** — Linear GraphQL API 核心語法、驗證脚本、常見錯誤對照表
+- **`references/linear-api-quickstart.md`** — Linear API Key 設定（含 Bearer 格式修正）、驗證腳本、常見錯誤對照表。**使用前必讀。**

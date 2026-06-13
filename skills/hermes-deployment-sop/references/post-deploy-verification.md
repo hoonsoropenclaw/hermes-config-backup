@@ -1,10 +1,7 @@
 ---
-name: deployment-verification-sop
-description: "赫米斯部署/推送任何東西後的「先驗證後啟動」SOP。觸發:任何 vercel/netlify/github push/雲端部署完成、cron 部署生效、webhook 註冊、第三方服務帳號建立後。使用者說「部署」「推送」「上線」「apply」「activate」「讓它跑」「先驗證」時強制觸發。核心原則:「我能跑 ≠ 使用者能跑」、「單管道驗證 ≠ 多管道驗證」、「自報 ≠ 驗證」。"
-version: 1.0.0
-author: Hermes Agent (auto-saved)
-license: MIT
-platforms: [linux, macos]
+title: deployment-verification-sop (demoted to reference)
+source_skill: deployment-verification-sop (archived 2026-06-13)
+date_consolidated: "2026-06-13"
 ---
 
 # 部署驗證 SOP (Deployment Verification SOP)

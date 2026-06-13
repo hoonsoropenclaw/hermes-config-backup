@@ -178,8 +178,8 @@ Sprint 結束時:
 | **defensive 程式** | 5 | bash-defensive-patterns, python-anti-patterns, python-observability, python-resilience, security-review |
 | **TDD + 工程方法論** | 6 | tdd-workflow, code, software-development, writing-plans, plan, systematic-debugging |
 | **Git/GitHub** | 2 | github, code-review, requesting-code-review |
-| **代理編排** | 7 | agent-orchestrator, agent-orchestration-multi-agent-optimize, autonomous-ai-agents, subagent-driven-development, agent-memory-systems, agent-identity-management, agent-identity-cheatsheet |
-| **反 slop + 工具輔助** | 8 | anti-panic-protocol, anti-pattern-czar, anti-slop-design, antislop, deployment-verification-sop, connection-resilience, skill-docker, vision-analysis |
+| **代理編排** | 6 | agent-orchestrator, agent-orchestration-multi-agent-optimize, autonomous-ai-agents, subagent-driven-development, agent-memory-systems, agent-identity-management |
+| **反 slop + 工具輔助** | 8 | anti-panic-protocol, anti-pattern-czar, anti-slop-design, antislop, hermes-deployment-sop, connection-resilience, skill-docker, vision-analysis |
 | **文檔/輸出格式** | 8 | minimax-docx, minimax-pdf, minimax-xlsx, docx, pdf, xlsx, pptx-generator, beautiful-mermaid |
 | **瀏覽器/搜尋/視覺** | 4 | web_search, agent-browser, browser, diagram-generator, diagramming |
 | **資料分析/視覺化** | 13 | anthropic-analyze, anthropic-build-dashboard, anthropic-create-viz, anthropic-data-visualization, anthropic-statistical-analysis, anthropic-explore-data, anthropic-write-query, anthropic-sql-queries, anthropic-validate-data, anthropic-metrics-review, ontology, research, scrapling |

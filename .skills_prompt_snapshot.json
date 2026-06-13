@@ -13,13 +13,9 @@
       1780586516739536040,
       10800
     ],
-    "agent-identity-cheatsheet/SKILL.md": [
-      1781065196034181725,
-      4493
-    ],
     "agent-identity-management/SKILL.md": [
-      1781065012135749145,
-      41108
+      1781325890936548927,
+      41531
     ],
     "agent-memory-systems/SKILL.md": [
       1780148625704028834,
@@ -1282,8 +1278,8 @@
       12774
     ],
     "autonomous-ai-agents/metacognitive-learner/SKILL.md": [
-      1781148612897857495,
-      39820
+      1781320679848918551,
+      41972
     ],
     "autonomous-ai-agents/opencode/SKILL.md": [
       1780109239567525090,
@@ -1417,14 +1413,6 @@
       1780109239588525927,
       5285
     ],
-    "deploy-preflight-safelist/SKILL.md": [
-      1781192453077258514,
-      8812
-    ],
-    "deployment-verification-sop/SKILL.md": [
-      1780752148899246175,
-      6333
-    ],
     "design-taste-frontend/SKILL.md": [
       1780672542408635568,
       90408
@@ -1444,10 +1432,6 @@
     "devops/hermes-config-layout/SKILL.md": [
       1781196049174602009,
       32612
-    ],
-    "devops/hermes-deploy-verification/SKILL.md": [
-      1781189191687651525,
-      21910
     ],
     "devops/kanban-orchestrator/SKILL.md": [
       1780832652682839848,
@@ -1605,6 +1589,14 @@
       1781152616138788648,
       9134
     ],
+    "hermes-deployment-sop/SKILL.md": [
+      1781325752561873583,
+      11902
+    ],
+    "hermes-deployment-sop/hermes-deploy-verification/SKILL.md": [
+      1781325646078307803,
+      21910
+    ],
     "hermes-tier-router/SKILL.md": [
       1780758740543038468,
       12471
@@ -1622,8 +1614,8 @@
       4524
     ],
     "linear-hr-workflow/SKILL.md": [
-      1781219491289188231,
-      11369
+      1781313139376663636,
+      11580
     ],
     "mcp/native-mcp/SKILL.md": [
       1780109239591526046,
@@ -1846,12 +1838,12 @@
       103375
     ],
     "reverse-engineering/SKILL.md": [
-      1779974331409125242,
-      6092
+      1781358902821879206,
+      7378
     ],
     "scrapling/SKILL.md": [
-      1781204777319132517,
-      9899
+      1781343724891838248,
+      11575
     ],
     "security-review/SKILL.md": [
       1780405274874377044,
@@ -3810,19 +3802,6 @@
       "category": "agent-browser",
       "frontmatter_name": "Agent Browser",
       "description": "A fast Rust-based headless browser automation CLI with No...",
-      "platforms": [],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
-      "skill_name": "agent-identity-cheatsheet",
-      "category": "agent-identity-cheatsheet",
-      "frontmatter_name": "agent-identity-cheatsheet",
-      "description": "代理身份管理 3 種情境快速判斷 cheat sheet — 給未來 agent 緊急判斷用,30 秒內判斷該走「...",
       "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
@@ -8507,38 +8486,6 @@
       }
     },
     {
-      "skill_name": "deploy-preflight-safelist",
-      "category": "deploy-preflight-safelist",
-      "frontmatter_name": "deploy-preflight-safelist",
-      "description": "赫米斯部署/推送「前」的 preflight SOP — 補 deployment-verification-so...",
-      "platforms": [
-        "linux",
-        "macos"
-      ],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
-      "skill_name": "deployment-verification-sop",
-      "category": "deployment-verification-sop",
-      "frontmatter_name": "deployment-verification-sop",
-      "description": "赫米斯部署/推送任何東西後的「先驗證後啟動」SOP。觸發:任何 vercel/netlify/github pus...",
-      "platforms": [
-        "linux",
-        "macos"
-      ],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
       "skill_name": "design-taste-frontend",
       "category": "design-taste-frontend",
       "frontmatter_name": "design-taste-frontend",
@@ -8605,19 +8552,6 @@
         "macos",
         "windows"
       ],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
-      "skill_name": "hermes-deploy-verification",
-      "category": "devops",
-      "frontmatter_name": "hermes-deploy-verification",
-      "description": "標準化的部署前/中/後驗證流程，覆蓋本地驗證、production 多管道測試、DNS 同步、alias prop...",
-      "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],
@@ -9179,6 +9113,32 @@
       "category": "hermes-architecture",
       "frontmatter_name": "hermes-resident-agent",
       "description": "在 Hermes Agent 內建「常駐代理」架構的 SOP。當使用者要求建立長期運作的專屬代理（例如「建一個常駐...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hermes-deployment-sop",
+      "category": "hermes-deployment-sop",
+      "frontmatter_name": "hermes-deployment-sop",
+      "description": "赫米斯部署完整生命週期 class-level skill — 涵蓋部署**前** preflight 預防（to...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hermes-deploy-verification",
+      "category": "hermes-deployment-sop",
+      "frontmatter_name": "hermes-deploy-verification",
+      "description": "標準化的部署前/中/後驗證流程，覆蓋本地驗證、production 多管道測試、DNS 同步、alias prop...",
       "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
