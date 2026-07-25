@@ -1,13 +1,14 @@
 ---
 name: agent-system-backup
 description: 赫米斯型 AI agent 的全狀態備份 SOP。涵蓋 v4.6 雙層 GPG 加密（Tier 1 GitHub + Tier 2 Google Drive）+ INVENTORY.md 同步清單 + 每日路徑覆蓋率 cron 檢查、USER_KEY 自動還原、4 份還原說明檔、cron 排程、secret 掃描、in-house 還原 SOP、AI 友善的還原說明。2026-06-10 v4.6 擴充 8→14 個同步目標。**未來 AI 處理任何『備份/還原/異機還原/GPG/passphrase/USER_KEY/INVENTORY 同步』任務必先載入本 skill**。
-version: 1.3.0
+version: 1.3.1
 author: Hermes Agent (auto-saved)
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
     tags: [backup, disaster-recovery, restore, rclone, github, google-drive, cron, hermes-agent, gpg, user-key, v4, v4.5, v4.6, inventory, coverage-check]
+    last_cycle: "534 — §10.18新增：last_error Stale State鑑別流程（hermes-backup-v4成功後cron仍報error的observability gap）；Cycle 532 GH013 Prevention SOP鞏固"
     triggers:
       # 主要觸發:使用者說什麼時要載入
       - 備份
@@ -487,18 +488,17 @@ ln -sf ~/.hermes/skills/agent-system-backup/scripts/verify-recovery-chain.sh \
 ```python
 # Step 1: 在 rsync jobs.json 後執行 Python 後處理遮蔽
 python3 -c "
-import json
+import json, re
 path = '~/.hermes/hermes-backup-staging/cron/jobs.json'
 data = json.load(open(path))
 secret_patterns = ['vcp_', 'ghp_', 'sk-', 'gho_', 'glpat-']
 redacted = 0
 for job in data.get('jobs', []):
     for field in ['last_error', 'last_delivery_error']:
-        val = job.get(field, '')
+        val = job.get(field, '') or ''
         if any(p in val for p in secret_patterns):
             for p in secret_patterns:
-                import re
-                val = re.sub(p + r'[A-Za-z0-9_-]{20,}', f'{p}[REDACTED]', val)
+                val = re.sub(p + r'[A-Za-z0-9_-]{20,}', p + '[REDACTED]', val)
             job[field] = val
             redacted += 1
 with open(path, 'w') as f:
@@ -522,6 +522,34 @@ grep -c "vcp_\|ghp_\|sk-\|gho_\|glpat-" ~/.hermes/hermes-backup-staging/cron/job
 # 確認 push 成功
 git push origin main  # 應無 GH013 error
 ```
+
+### 🆕 10.18 `last_error` Stale State — 修復成功後 cron 仍報告 Error（Cycle 534, 2026-07-21）
+
+**問題**：`hermes-config-backup-daily` 和 `v4-backup-tier1-daily` 在 GH013 修復成功後（staging repo 已 clean，git push 回 "Everything up-to-date"），但 `hermes cron list` 仍顯示 `error: Script exited with code 1`。交叉驗證確認：**實際腳本正常、remote 正常，但 jobs.json 的 `last_error`/`last_status` 欄位未更新**。
+
+**根因**：`hermes-backup-v4.sh` 的 commit + push 成功後，**沒有更新本機 `~/.hermes/cron/jobs.json`** 的 `last_status`/`last_error` 欄位。Cron 系統根據 jobs.json 顯示狀態，不反映真實系統狀態。這不是 active failure，是 jobs.json 和實際狀態之間的**observability gap**。
+
+**三步交叉驗證鑑別流程**（每次看到 cron error 必做）：
+```
+1. 手動跑 script：
+   bash ~/.hermes/scripts/hermes-backup-v4-brief-tier1.sh; echo $?
+   → EXIT:0 = 腳本正常
+
+2. 確認 git 狀態：
+   cd ~/.hermes/hermes-backup-staging && git status && git log --oneline origin/main | head -1
+   → clean + local HEAD = origin/main = 實際正常
+
+3. 確認 jobs.json 的 error 是否為歷史殘留：
+   jobs.json last_error 的時間戳 < 最近一次成功 commit 時間 → 確認為 stale
+```
+
+**修復後的 jobs.json `last_error` 欄位更新**：目前無自動機制。需要手動更新或依賴下次成功執行的 `hermes cron` 系統自動更新。這是 **hermes cron 系統的 observability 設計問題**，不是 backup 腳本的 bug。
+
+**If→Then（cron error stale state 鑑別）**：
+**If** `hermes cron list` 報告 error，但腳本本身正常（EXIT:0）且 git push 回 "Everything up-to-date"
+**Then** 這是 **stale state**，套用三步交叉驗證（見上），確認後無需緊急修復；只需在日誌中記錄為「已確認 stale」
+
+**預防設計缺口**：Hermes cron 系統的 jobs.json `last_error`/`last_status` 更新依賴 cron 執行後的內部狀態寫回，**沒有獨立的 observability 層**。建議日後在 `hermes cron list` 輸出中附加「上次成功時間」和「error 發生時間」，方便判斷是否為 stale。
 
 ### 🆕 10.15 Git Credential Helper Chain Pollution — 403 陷阱（v4.6.1 新增）
 **問題**：`hermes-config-backup-daily` push fails with 403 "denied to hoonsor"，但 interactive session 中 `git push` 成功。
@@ -790,7 +818,7 @@ HERMES_USER_KEY="<key>" bash ~/.hermes/skills/agent-system-backup/scripts/verify
 
 | 版本 | 日期 | 變更 |
 |------|------|------|
-| 1.3.0 | 2026-07-11 | **Curator 合併**: 原 `devops/backup-coverage-check` skill 已歸檔,其「哪些該備、哪些不該備」決策樹(`references/coverage-decision-tree.md`)+ 每日驗證腳本(`scripts/hermes-backup-coverage-check.sh`)已 re-home 至本 skill 的 `references/` 跟 `scripts/`。v4.6 架構跟 coverage check 邏輯全部整合至本 skill,後續維護一份 single source of truth 即可。|
+| 1.3.1 | 2026-07-21 | **Cycle 534**: §10.18 新增 — `last_error` Stale State 鑑別流程（三步交叉驗證 + If→Then）；Cycle 532 GH013 Prevention SOP 鞏固；version → 1.3.1 |
 | 1.2.3 | 2026-06-15 | v4.6.2：新增 §10.17 cron-only script env fallback（verify-recovery-chain.sh HERMES_USER_KEY 降級路徑）+ `references/cron-only-script-env-fallback.md` + `scripts/verify-recovery-chain.sh` 已修補（新增 Layer 2 降級讀取 `.hermes-user-key` 檔）。|
 | 1.2.2 | 2026-06-15 | v4.6.2：新增 §10.16 Skill script 0 bytes 陷阱（verify-recovery-chain.sh 兩處皆清空，附完整修復 SOP + 預防規則）。|
 | 1.2.1 | 2026-06-12 | v4.6.1：新增 §10.15 Git Credential Helper Chain Pollution 403 陷阱 + `references/git-credential-helper-chain-pollution.md`（~/.git-credentials-raphael 污染導致 cron/script 環境 403）。hermes-config-backup-daily 根因已識別。|

@@ -1,7 +1,7 @@
 ---
 name: mmx-cli
 description: "MiniMax MMX-CLI 官方工具：圖片生成（T2I）、影片生成（T2V/I2V）、語音合成（T2A）、音樂生成。赫米斯缺乏圖片生成引導導致用戶 2026-06-16 跑 98 msgs 來回——建立此 skill 結構化覆蓋。"
-version: 1.3.0
+version: 1.4.0
 author: Hermes metacognitive-learner
 platforms: [linux]
 metadata:
@@ -473,13 +473,26 @@ print(result.stdout)  # mmx 直接輸出圖片 URL
 |--------|------|---------|
 | `scripts/mmx-image-gen.sh` | 圖片生成 wrapper | ✅ exit 0, 210KB mountain lake 生成正常（2026-07-09 實測） |
 
-| Script | Purpose | Usage |
-|--------|---------|-------|
-| `scripts/mmx-image-gen.sh` | Image generation wrapper | `mmx-image-gen.sh "prompt" [output_dir] [aspect_ratio]` |
+## 10. 跨多張風格一致性（2026-07-21 新增）
 
-**Why this matters**: Without these scripts, every image generation requires manual Python subprocess handling, API key extraction, and JSON parsing — ~20+ lines of boilerplate per session.
+**問題**：prompt-only 風格描述在多張生成後會漂移（3-5 張後開始不一致）。
+用戶 2026-06-15+16 共跑了 261 條訊息來回處理此問題。
+
+**解法**：
+```bash
+# 使用 --first-frame（I2V）墊圖保持風格一致性
+mmx image generate --prompt "<style anchor>" --aspect-ratio 16:9 --n 1
+# 找到滿意的圖 → 用於後續生成的 --first-frame
+
+mmx image generate --prompt "<new scene, same aesthetic>" --first-frame anchor.jpg
+# 或用 --subject-image（S2V）保持主體一致性
+```
+
+**詳見**：`skill_view('mmx-cli', 'references/style-consistency-20260721.md')`
 
 ---
+
+## 與現有 Skill 關係
 
 ## 與現有 Skill 關係
 
