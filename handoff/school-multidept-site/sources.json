@@ -1,0 +1,92 @@
+{
+  "collected_at": "2026-06-09",
+  "collection_method": "Ollama Web Search API (主) / Tavily (備)",
+  "queries_executed": 13,
+  "total_results_screened": 80,
+  "selected_sources": 50,
+  "categories": {
+    "direct_competitors_taiwan": [
+      {"name": "巨耀資訊 (oneplus)", "url": "https://www.oneplus.com.tw", "category": "校務行政系統"},
+      {"name": "天方科技", "url": "https://www.skytek.com.tw/solution/software", "category": "校務行政整合系統建置"},
+      {"name": "亞昕資訊 (assota)", "url": "https://www.assota.com.tw/%E7%94%A2%E5%93%81%E5%B0%88%E5%8D%80/%E6%A0%A1%E5%8B%99%E8%A1%8C%E6%94%BF", "category": "校務行政+教育部申報"},
+      {"name": "欣河資訊", "url": "https://www.shin-her.com.tw/AboutUs", "category": "校務系統+活動報名+投票模組"},
+      {"name": "臺北科大高中校務行政雲端系統", "url": "https://ws.moe.edu.tw/001/Upload/23/relfile/8338/60706/07585ae0-2719-4362-b08d-a9a52d303979.pdf", "category": "國教署委辦,免費提供新北基隆"},
+      {"name": "教育部智慧網路環境提升計畫 (核定版)", "url": "https://www.ey.gov.tw/File/E8982903761524F7", "category": "政策文件,國立高中五大系統向上集中"}
+    ],
+    "direct_competitors_international": [
+      {"name": "Edlio Reviews (G2)", "url": "https://www.g2.com/products/edlio/reviews", "rating": "4.4/5 from 8 reviews", "category": "K-12 學校網站 CMS"},
+      {"name": "Edlio G2 Sellers Page", "url": "https://www.g2.com/sellers/edlio", "category": "K-12 學校網站 CMS"},
+      {"name": "Finalsite School Websites (G2)", "url": "https://www.g2.com/products/finalsite-school-websites/reviews", "category": "K-12 學校網站+招生"},
+      {"name": "Finalsite Pricing (Quora)", "url": "https://www.quora.com/What-is-the-price-of-creating-an-independent-religious-school-website-using-Finalsite", "category": "價格結構"},
+      {"name": "Finalsite Reddit Discussion", "url": "https://www.reddit.com/r/k12sysadmin/comments/tspsof/website_providers", "category": "競品價格比較"},
+      {"name": "Edlio Pricing (Learning Counsel)", "url": "https://thelearningcounsel.com/articles/app-of-the-week/connecting-k-12-education-communities-with-websites-powered-by-edlios-content-management-system", "category": "年訂閱制"},
+      {"name": "SchoolMessenger (HDSB)", "url": "https://www.hdsb.ca/media/zbjp3ev3/school_messenger-schinese.pdf", "category": "家長簡訊通知"}
+    ],
+    "indirect_competitors": [
+      {"name": "Google Sites 教學與限制", "url": "https://site-now.app/google-sites-tutorial", "category": "免費網站架設"},
+      {"name": "Google Sites 數位學習 (宜蘭縣)", "url": "https://isupport.ilc.edu.tw/4804", "category": "縣市推廣 Google Sites"},
+      {"name": "Notion 公開頁教育應用", "url": "https://www.notion.com/zh-tw/help/notion-for-education", "category": "免費教育版"},
+      {"name": "Notion 限制 (Notionlife)", "url": "https://notionlife.net/notion-web", "category": "個人網站缺點"},
+      {"name": "Notion SEO 不行 (Threads)", "url": "https://www.threads.com/@iamraven.tw/post/DOLQUnMieFM/", "category": "公開 URL 結構與 SEO"},
+      {"name": "Notion 個人網站 (mycontentstrategies)", "url": "https://mycontentstrategies.com/notion/notion-site", "category": "無法遷站+流量轉換限制"},
+      {"name": "Notion 教師教育版免費 (104學習)", "url": "https://nabi.104.com.tw/posts/nabi_post_98dbaef9-01d0-45ae-89a9-932feeab9cf8", "category": "個人+100 guests"},
+      {"name": "Accupass vs Google Form", "url": "https://blog.accupass.com/accupass-vs-googleform.html", "category": "活動報名平台比較"},
+      {"name": "線上報名系統比較 (品科技)", "url": "https://www.pintech.com.tw/tw/article/593/online-registration-system-performance-and-function-analysis", "category": "5款報名平台"}
+    ],
+    "cross_domain_benchmark": [
+      {"name": "Dropbox Business 團隊資料夾 (官方)", "url": "https://help.dropbox.com/zh-tw/organize/shared-folder-differences", "category": "權限模型"},
+      {"name": "Dropbox 外部共享管控 (官方)", "url": "https://help.dropbox.com/zh-tw/share/manage-team-sharing", "category": "權限模型"},
+      {"name": "Moodle 雲端平台 (體育課應用 PDF)", "url": "https://teric.naer.edu.tw/wSite/PDFReader?xmlId=&fileName=1556312416345&format=pdf", "category": "LMS 權限"},
+      {"name": "Moodle (Google Sites 教學比較 PDF)", "url": "https://www.edb.gov.hk/attachment/tc/edu-system/primary-secondary/applicable-to-primary-secondary/it-in-edu/CoE/pdp201516/SKHSMCMHY_20151007.pdf", "category": "LMS"},
+      {"name": "政府公開資料平台", "url": "https://data.gov.tw/datasets/search?tg=1768", "category": "開放資料授權"},
+      {"name": "EIP 教育資訊網 (宜蘭縣)", "url": "https://it.ilc.edu.tw", "category": "縣市 EIP"},
+      {"name": "雲林縣資訊入口平台", "url": "https://eip.yunlin.gov.tw", "category": "縣市 EIP"},
+      {"name": "臺師大資訊入口網", "url": "https://iportal.ntnu.edu.tw", "category": "大學 SSO"},
+      {"name": "教育雲登入", "url": "https://cloud.edu.tw/main-layout.php?name=login", "category": "OpenID 跨縣市帳號"}
+    ],
+    "user_complaints": [
+      {"text": "老師行政每間學校都有,敝校不是特殊案例", "source": "PTT Teacher 板 M.1733365341.A.773", "url": "https://www.pttweb.cc/bbs/Teacher/M.1733365341.A.773", "category": "行政負擔"},
+      {"text": "新課綱推動,兼任行政教師大換血,行政大逃亡", "source": "PTT Teacher 板 (引自協作中心文件)", "url": "https://ws.moe.edu.tw/001/Upload/23/relfile/8338/60706/07585ae0-2719-4362-b08d-a9a52d303979.pdf", "category": "行政大逃亡"},
+      {"text": "因為敝校行政到現在還有三個缺其中還有學務主任", "source": "PTT Teacher 板 Disp BBS 1ePgI3FW", "url": "https://disp.cc/ptt/Teacher/1ePgI3FW", "category": "行政逃亡"},
+      {"text": "教務主任群組戲稱'行政大逃亡'", "source": "教育部協作中心 PDF", "url": "https://ws.moe.edu.tw/001/Upload/23/relfile/8338/60706/07585ae0-2719-4362-b08d-a9a52d303979.pdf", "category": "行政大逃亡"},
+      {"text": "全台教師逃亡潮!校園濫訴、行政爆量師:靈魂已死", "source": "YouTube 新聞", "url": "https://www.youtube.com/watch?v=AN-x2PnC7ek", "category": "行政爆量"},
+      {"text": "教師做行政屎缺", "source": "Dcard 教師板 253411478", "url": "https://www.dcard.tw/f/teacher/p/253411478", "category": "行政雜事"},
+      {"text": "剛開學就後悔接行政", "source": "Dcard 教師板 253120548", "url": "https://www.dcard.tw/f/teacher/p/253120548", "category": "行政後悔"},
+      {"text": "國小好想罷工喔", "source": "Dcard 教師板 258343575", "url": "https://www.dcard.tw/f/teacher/p/258343575", "category": "行政爆量"},
+      {"text": "學校行政人員的態度大部分都好差,校網寫的也沒那麼清楚", "source": "Dcard 臺北教育大學板 260634748", "url": "https://www.dcard.tw/f/ntue/p/260634748", "category": "校網難找"},
+      {"text": "教師學校的系統師功能是什麼? 跟資訊組長差別", "source": "Dcard 教師板 259748644", "url": "https://www.dcard.tw/f/teacher/p/259748644", "category": "資訊組長職責混淆"},
+      {"text": "系統師功能/系統師/系統師", "source": "Dcard 教師板 259748644", "url": "https://www.dcard.tw/f/teacher/p/259748644", "category": "資訊組長職責混淆"},
+      {"text": "活動報名系統網頁被擋(Google 警告惡意軟體)", "source": "Dcard 輔仁大學板 608060", "url": "https://www.dcard.tw/f/fju/p/608060", "category": "舊系統被標惡意"},
+      {"text": "學生活動報名系統打不開(手機不行/桌機才行)", "source": "Dcard 輔仁大學板 261368191", "url": "https://www.dcard.tw/f/fju/p/261368191", "category": "RWD 沒做"},
+      {"text": "活動報名系統自動用學校信箱,沒習慣去看所以沒收到通知", "source": "Dcard 淡江大學板 237949975", "url": "https://www.dcard.tw/f/tku/p/237949975", "category": "通知沒 push"},
+      {"text": "最近學校的活動報名系統網頁更新了,還是有很多同學不知道,都會下意識點進去舊網頁", "source": "Facebook 揪甘心職涯中心", "url": "https://www.facebook.com/ncucc/posts/...597318962397810", "category": "舊網址沒導流"},
+      {"text": "Threads: 真正荒謬的是:老師其實根本沒要求家長回覆,只是公告這件事需要處理,家長們自發演化出回覆生態鏈", "source": "Threads @kevinboss DOVWb7MjcL9", "url": "https://www.threads.com/@kevinboss/post/DOVWb7MjcL9/", "category": "LINE 群組亂象"},
+      {"text": "學生把老師加入Line群組後,瘋狂標記洗貼圖後再踢出", "source": "Facebook 趙一凡", "url": "https://www.facebook.com/zhao.yi.fan.188453/posts/...2051597475285124", "category": "LINE 群組失控"},
+      {"text": "Google Workspace 教育版 2022 開始雲端空間設限,不再提供無限容量", "source": "Facebook junehao", "url": "https://www.facebook.com/junehao/posts/...10167507746468289", "category": "GWS 容量限縮"},
+      {"text": "超過儲存上限:無法上傳、編輯檔案、提交表單及錄製 Meet 會議", "source": "Micloud 教學", "url": "https://micloud.tw/google-workspace-for-education%E5%85%8D%E8%B2%BB%E7%89%88%E8%88%87%E4%BB%98%E8%B2%BB%E7%89%88%E6%9C%89%E4%BB%80%E9%BA%BC%E5%B7%AE%E7%95%B0", "category": "GWS 容量限縮影響"},
+      {"text": "Google Sites SEO 功能極度陽春,版面彈性有限,主題僅 6 種、字型僅 12 種、無法插入自訂 CSS", "source": "Site-now 教學", "url": "https://site-now.app/google-sites-tutorial", "category": "Google Sites 限制"},
+      {"text": "Notion 公開網址沒有結構、SEO 不行、無法遷站", "source": "Threads + Notionlife", "url": "https://notionlife.net/notion-web", "category": "Notion 限制"},
+      {"text": "Notion 個人網站 1.無法遷站 2.功能侷限 3.流量轉換限制", "source": "mycontentstrategies", "url": "https://mycontentstrategies.com/notion/notion-site", "category": "Notion 限制"},
+      {"text": "每當我遇到不懂的知識點要搜尋時,卻被內湖高中這個爛網路給妨礙了", "source": "Instagram 高中網路抱怨", "url": "https://www.instagram.com/p/DU5t4MlDK6Q", "category": "校園網路+校網搜尋差"},
+      {"text": "Threads 群組聊天將登場,目前來看不太可能挑戰 Line", "source": "Yahoo 新聞", "url": "https://tw.news.yahoo.com/快訊-脆友敲碗成功-threads推網頁版-群組聊天-將登場-040227407.html", "category": "Line 在台灣教育生態無可取代"},
+      {"text": "Dcard 大學生專屬不存在:中年人國高中生亂入", "source": "LINE TODAY 華視", "url": "https://today.line.me/tw/v3/article/aGEzzV2", "category": "學生平台不純"}
+    ],
+    "regulations_and_security": [
+      {"name": "教育部委外辦理要點 (資通安全+個資)", "url": "https://edu.law.moe.gov.tw/LawContent.aspx?id=GL000423", "category": "法規"},
+      {"name": "資通安全管理法", "url": "https://law.moda.gov.tw/LawContent.aspx?id=FL088622", "category": "法規"},
+      {"name": "教育體系資通安全暨個人資料管理規範 2019 版", "url": "https://iscb.nchu.edu.tw/2019/07/blog-post_8.html", "category": "規範"},
+      {"name": "國教署資通安全管理政策 (15 項管理事項)", "url": "https://www.k12ea.gov.tw/Tw/Common/SinglePage?filter=09F12D00-FE92-4301-B8B6-01857EF0388D", "category": "政策"},
+      {"name": "基隆高中公版網站 資安附件", "url": "https://www.klsh.kl.edu.tw/gov/lib/isec/isecatt", "category": "校網實務"},
+      {"name": "臺南女中資安專區", "url": "https://www.tngs.tn.edu.tw/department/lib/info/cs", "category": "校網實務"},
+      {"name": "新民高中每日資安新聞", "url": "https://www.shinmin.tc.edu.tw/p/403-1000-113-1.php", "category": "校網實務"}
+    ],
+    "taiwan_bid_examples": [
+      {"name": "亞昕資訊標得台灣招標案 NT$870,000", "url": "https://acebidx.com", "category": "校務系統標案行情"},
+      {"name": "國立華僑高中 2024 標案列表", "url": "https://www.taiwanbuying.com.tw/ShowOrgYearClose.ASP?OrgID=24750&Y=2024", "category": "高中標案行情"},
+      {"name": "國教署 2025 招標案件列表", "url": "https://www.taiwanbuying.com.tw/ShowOrgYearClose.ASP?OrgID=24712&Y=2025", "category": "國教署標案行情"},
+      {"name": "臺北市立士林高商標案列表", "url": "https://openfunltd.github.io/pcc-viewer/unit.html?unit_id=3.79.5.32", "category": "高中標案行情"},
+      {"name": "教育部全球資訊網", "url": "https://www.edu.tw", "category": "政策入口"},
+      {"name": "國教署入口", "url": "https://www.k12ea.gov.tw", "category": "政策入口"}
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+[
+  {
+    "session_id": "proc_f6197940ddf8",
+    "command": "hermes chat -q \"你是 web-worker。台灣校園公告真實痛點抓取任務。\n\n# 你的身份\n- 你是獨立 hermes session,**不繼承任何 persona / SOUL / skill**\n- 你**只整理事實,不做分析、總結、建議**\n- 完成後**只輸出 DONE**\n\n# 任務\n抓「台灣高中 / 國中校園公告」的**真實抱怨與痛點**,至少 15 則真實聲音,涵蓋學生 / 家長 / 老師 / 行政人員 4 種身分。\n\n# 必抓來源(不可漏)\n1. **PTT 看板**:Teacher、HighSchool、JuniorHigh、ParentChild、School 板\n2. **Dcard 搜尋**:「學校公告」、「校務系統」、「tNotice」、「校園 APP」、「親師生平台」、「家長 Line 群」\n3. **Facebook 公開社團搜尋**:抱怨文、家長社團、教師社群\n4. **Mobile01 / iT 邦 / 部落格**:家長 / 老師 / 行政人員的抱怨文\n5. **Google 搜尋**:「學校公告 難用」、「Line 群 洗版 公告」、「校務 APP 抱怨」\n\n# 每則聲音整理的欄位\n- **原文擷取**(關鍵 1-2 句,具體講出處室/平台/痛點)\n- **來源 URL**\n- **來源平台**(PTT/Dcard/Facebook/Mobile01/...)\n- **發文者身分**:學生/家長/老師/行政人員(若看得出來)\n- **提煉的痛點**:\n  - 多處室沒統一平台(各自 Line 群 / FB 社團 / email)\n  - Line 群洗版,重要公告被埋沒\n  - 附件下載不便(word/PDF 散落各處)\n  - 標籤/分類缺失,無法快速篩選「我家小孩年級」/「特定處室」\n  - 行動裝置體驗差(電腦版才能看完整)\n  - 權限混亂(學生看到不該看的、人事室公告跑給家長看)\n  - 推播過多/過少\n  - 公告過期沒清\n  - 跨校(兄弟姊妹)要登入多個系統\n  - 已讀/未讀狀態不清楚\n- **痛感**(高/中/低)\n- **頻率標記**(這則是同類議題的第 N 次出現)\n\n# 搜尋策略\n- web_search 搜:「PTT 學校 公告 Line 群」、「Dcard 校務系統 難用」、「家長 學校 公告 抱怨」、「校園 APP 不好用」、「tNotice 評價」、「學校 Line 群 洗版」\n- 至少要抓到涵蓋「行政人員」、「學生」、「家長」三種身分的聲音\n\n# 輸出格式\n寫到絕對路徑 **/home/hoonsoropenclaw/.hermes/handoff/school-bulletin/_raw/worker-4-taiwan-painpoints.md**\n\n格式:\n```markdown\n# Worker 4:台灣校園公告真實痛點\n抓取日期:2026-06-11\n總則數:N 則\n平台分布:PTT X 則 / Dcard Y 則 / FB Z 則 / 其他 W 則\n\n---\n\n## 一、行政人員抱怨(老師/教務處/學務處)\n### 1.1 [簡短標題]\n- 原文:「...」\n- 來源:URL\n- 平台:PTT Teacher 板 / 部落格 / ...\n- 痛點:...\n- 痛感:高 / 中 / 低\n- 同類議題出現次數:N 次\n\n## 二、學生抱怨\n## 三、家長抱怨\n## 四、痛點頻率彙整\n| 痛點類型 | 出現次數 | 代表聲音 |\n| --- | --- | --- |\n```\n\n# 硬性要求\n- ✅ 至少 15 則真實聲音\n- ✅ 至少覆蓋 3 種身分(學生/家長/老師/行政)\n- ✅ 同類議題要標出現次數\n- ✅ 每則附 URL\n- ✅ 完成後**只輸出 DONE**\n- ❌ 不要做分析、建議\n- ❌ 不要寫假評論或自編故事\n\n開始執行。\" --cli",
+    "pid": 2762903,
+    "pid_scope": "host",
+    "cwd": "/home/hoonsoropenclaw",
+    "started_at": 1781158707.9389474,
+    "task_id": "default",
+    "session_key": "20260611_141607_d776b4",
+    "watcher_platform": "telegram",
+    "watcher_chat_id": "8209753986",
+    "watcher_user_id": "8209753986",
+    "watcher_user_name": "Luke0415",
+    "watcher_thread_id": "",
+    "watcher_message_id": "3693",
+    "watcher_interval": 5,
+    "notify_on_complete": true,
+    "watch_patterns": []
+  },
+  {
+    "session_id": "proc_b459724c8c52",
+    "command": "PROMPT=$(cat /tmp/worker-3-prompt.txt); hermes chat -q \"$PROMPT\" --cli",
+    "pid": 2763443,
+    "pid_scope": "host",
+    "cwd": "/home/hoonsoropenclaw",
+    "started_at": 1781158810.424547,
+    "task_id": "default",
+    "session_key": "20260611_141607_d776b4",
+    "watcher_platform": "telegram",
+    "watcher_chat_id": "8209753986",
+    "watcher_user_id": "8209753986",
+    "watcher_user_name": "Luke0415",
+    "watcher_thread_id": "",
+    "watcher_message_id": "3693",
+    "watcher_interval": 5,
+    "notify_on_complete": true,
+    "watch_patterns": []
+  }
+]

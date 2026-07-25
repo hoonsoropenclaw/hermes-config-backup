@@ -1,0 +1,82 @@
+# v4 hermes-config-backup 排除清單
+# 規則：能從原始來源 rebuild 的東西都不進版控
+
+# === Hermes-agent 本體（可重裝） ===
+hermes-agent/
+hermes-agent-venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# === 資料庫（rebuild 即可） ===
+*.db
+*.db-wal
+*.db-shm
+state.db
+state.db-wal
+kanban.db
+kanban.db-wal
+agentdb.rvf
+agentdb.rvf.lock
+
+# === Secrets（會另外加密上 Drive Tier 2） ===
+.env
+*.env
+auth.json
+auth.lock
+*.token
+*.gpg
+secrets/
+gpg/
+
+# === Node.js / Frontend ===
+node_modules/
+.cache/
+.parcel-cache/
+
+# === 備份/暫存 ===
+backups/
+hermes-backup-staging/
+browser_screenshots/
+image_cache/
+sessions/
+logs/
+lsp/
+bin/
+models_dev_cache.json
+audio_cache/
+
+# === 隱私/系統 ===
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# === 各 skill 內的暫存（個別 skill 可能有自己的 .gitignore 但保險起見） ===
+**/__pycache__/
+**/.pytest_cache/
+**/node_modules/
+**/dist/
+**/build/
+**/.next/
+**/.vercel/
+**/.claude/
+**/coverage/
+
+# 備份悖論：備份檔不該被備份
+*.bak.*
+*.lock
+*.clean.*
+*~
+
+# GH013 已知觸發的 skills 教學檔（含真實 token 範例）
+skills/autonomous-ai-agents/metacognitive-learner/references/
+
+
+# 2026-06-07 GH013 觸發源：含真實 vcp_ token 範例的教學檔
+skills/autonomous-ai-agents/metacognitive-learner/references/secrets-in-sync.md
+skills/autonomous-ai-agents/metacognitive-learner/references/cron-secret-leak-case.md
+skills/devops/hermes-config-layout/references/backup-architecture-v4.md
+skills/autonomous-ai-agents/metacognitive-learner/

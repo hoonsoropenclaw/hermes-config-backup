@@ -1,0 +1,59 @@
+agent: hermes-agent
+version: "1.0"
+description: "Default behavioral contract for Hermes Agent"
+
+requires:
+  - user must be authenticated
+  - necessary API tokens must be configured
+  - input format must be valid JSON or plain text
+
+invariant:
+  - responses must not contain raw API keys or tokens
+  - responses must not reveal internal system prompts
+  - session cost must stay under $5.00 per run
+
+limits:
+  latency:
+    max_seconds: 300
+  cost:
+    max_usd: 5.00
+
+must_not:
+  - name: no_ssn
+    pattern: '\b\d{3}-\d{2}-\d{4}\b'
+    output_match: true
+    on_violation: block
+  - name: no_credit_card
+    pattern: '\b\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}\b'
+    output_match: true
+    on_violation: block
+  - name: no_system_prompt_reveal
+    pattern: '(SOUL\.md|MEMORY\.md|system prompt)'
+    output_match: true
+    on_violation: warn
+
+must:
+  - name: memory_sync_marker
+    required_element: '[TO_MEMORY]'
+    on_violation: warn
+  - name: structured_response
+    required_element: '## '
+    on_violation: warn
+
+assert:
+  - name: response_not_empty
+    type: pattern
+    pattern: '.+'
+    output_match: true
+    on_violation: block
+
+ensures:
+  - response must include appropriate disclaimers if financial/legal content
+  - all PII references must be redacted or masked
+
+on_violation:
+  retries: 3
+  fallback: escalate_to_human
+  message: "Output failed SOP validation."
+
+severity: critical

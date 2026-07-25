@@ -1,0 +1,14 @@
+# auth.json template（v4 secrets 範本）
+# 真實內容包含 tokens、會另外加密上 Drive Tier 2
+# 還原時用 hermes-restore-v4.sh 解密 .gpg 寫回 ~/.hermes/auth.json
+
+{
+  "_comment": "Template only. 實際 token 不在此檔。",
+  "_secrets_storage": "Drive Tier 2: hermes_backup_<ts>_full/auth.json.gpg",
+  "providers": {
+    "minimax": { "_env": "MINIMAX_API_KEY" },
+    "openai": { "_env": "OPENAI_API_KEY" },
+    "anthropic": { "_env": "ANTHROPIC_API_KEY" },
+    "deepseek": { "_env": "DEEPSEEK_API_KEY" }
+  }
+}

@@ -1,0 +1,2223 @@
+﻿# =============================================================================
+# Agent Skills Benchmark Configuration (Claude Code CLI Mode)
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Global settings
+# -----------------------------------------------------------------------------
+global:
+  workspace_dir: "/workspace"
+  golden_reference_dir: "/tmp/golden_reference"
+  reports_dir: "./reports"
+  log_level: "INFO"
+  # Task file base directory; combined with active_batch at runtime → tasks/{active_batch}
+  tasks_dir: "tasks"
+  # Test file base directory; combined with active_batch at runtime → tests/{active_batch}
+  tests_dir: "tests"
+  # All available evaluation batches
+  batches: [batch1]
+  # Active batch for single-skill runs (run_all_skills.py overrides this per batch)
+  active_batch: "batch1"
+  # Network mode: "none" for full isolation, "bridge" to allow network access
+  # Note: environment setup may require bridge to install git and clone repositories
+  # Later stages (build/test) can use none for isolation
+  network_mode: "bridge"
+
+# -----------------------------------------------------------------------------
+# Skill definitions
+# -----------------------------------------------------------------------------
+skills:
+  # =========================================================================
+  # Skill: add-uint-support
+  # =========================================================================
+  - id: "add-uint-support"
+    name: "Add UInt Support"
+    description: "Restore uint32/uint64 operator support in PyTorch"
+    type: "repair"
+
+    # Repository settings
+    repo:
+      url: null  # "https://github.com/pytorch/pytorch.git"  # Repo already present in the image; no need to clone
+      commit: # "3d7b5bf813d0a7a92179b1bb395ca4b069fa148d"  
+      # Sparse checkout (optional)
+      sparse_checkout: []
+
+    # Docker environment settings - user-provided image
+    environment:
+      # Base image
+      base_image: "zhangyiiiiii/swe-skills-bench-pytorch:latest"
+
+      # Or build via Dockerfile (choose one: this or base_image)
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      # Resource limits
+      limits:
+        cpus: "4"
+        memory: "16g"
+        timeout_per_command: 300
+
+      # Environment variables
+      env_vars: {}
+
+      # Initialization commands after container starts
+      setup_commands: []
+
+      # Pre-process (optional, set to null if not needed)
+      pre_process: null
+
+      # Interaction limits
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      # Task instruction (Claude Code CLI mode)
+      # tasks/add-uint-support.md stores the task description (required)
+
+      evaluation:
+        # L1: Build check
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "cd pytorch && MAX_JOBS=4 USE_CUDA=0 python setup.py develop"
+            expected_exit_code: 0
+            timeout: 3600
+
+        # L2: Unit tests
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_add_uint_support.py -v --tb=short"
+            min_pass_rate: 0.5 # Baseline expectation: 3 of 6 tests pass, 3 fail
+            timeout: 600
+
+  # =========================================================================
+  # Skill: fix (React Code Fix & Linter)
+  # =========================================================================
+  - id: "fix"
+    name: "React Code Fix & Linter"
+    description: "See task file for detailed mission requirements."
+    type: "fix"
+
+    repo:
+      url: "https://github.com/michaelasper/upgradle"
+      commit: "5f292188e9b427a96d3573b29e5677e4cdce58ea"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            # Explicitly run the test file copied into the container (/workspace/tests/)
+            test_command: "python -m pytest /workspace/tests/test_fix.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 600
+
+  # =========================================================================
+  # Skill: tdd-workflow (TDD Workflow)
+  # =========================================================================
+  - id: "tdd-workflow"
+    name: "TDD Workflow"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/tdd-starters/python"
+      commit: "a1a2d04ae69bd50aba9dac2783737dfda8f048c9"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_tdd_workflow.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: security-review (Security Review)
+  # =========================================================================
+  - id: "security-review"
+    name: "Security Review (zh-TW)"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/babybuddy/babybuddy"
+      commit: "b307200149ae92d0d95dfde82e320d5401148dcf"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_security_review.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 600
+
+  # =========================================================================
+  # Skill: springboot-tdd (Spring Boot TDD)
+  # =========================================================================
+  - id: "springboot-tdd"
+    name: "Spring Boot TDD"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/spring-projects/spring-petclinic"
+      commit: "edf4db28affcc4741c79850a3d95bc3f177b5ff9"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-jvm"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 600
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 2400
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "./mvnw compile -DskipTests"
+            expected_exit_code: 0
+            timeout: 600
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_springboot_tdd.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 600
+
+  # =========================================================================
+  # Skill: add-admin-api-endpoint (Ghost Admin API)
+  # =========================================================================
+  - id: "add-admin-api-endpoint"
+    name: "Ghost Admin API Endpoint Creator"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/TryGhost/Ghost"
+      commit: "56a3ec2fb2474025da9541c924b207db98737322"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_add_admin_api_endpoint.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 600
+
+  # =========================================================================
+  # Skill: mcp-builder (MCP Server Builder)
+  # =========================================================================
+  - id: "mcp-builder"
+    name: "MCP Server Builder"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/modelcontextprotocol/servers"
+      commit: "f4244583a6af9425633e433a3eec000d23f4e011"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "cd src/markdown-sqlite && npm run build"
+            expected_exit_code: 0
+            timeout: 300
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_mcp_builder.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: python-resilience (Python Resilience Patterns)
+  # =========================================================================
+  - id: "python-resilience"
+    name: "Python Resilience Patterns"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/encode/httpx"
+      commit: "b5addb64f0161ff6bfe94c124ef76f6a1fba5254"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_python_resilience.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: xlsx (Excel & Spreadsheet Automation)
+  # =========================================================================
+  - id: "xlsx"
+    name: "Excel & Spreadsheet Automation"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/ericgazoni/openpyxl"
+      commit: "c55988e4904d4337ce4c35ab8b7dc305bca9de23"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_xlsx.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: turborepo (Turborepo Monorepo Build System)
+  # =========================================================================
+  - id: "turborepo"
+    name: "Turborepo Monorepo Build System"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/vercel/turbo"
+      commit: "2e2f8c37bb705163831718aac69bc4c7ae1f7372"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 600
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "cd examples/cache-demo && npm install && npm run build"
+            expected_exit_code: 0
+            timeout: 600
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_turborepo.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: github-actions-templates (GitHub Actions Templates)
+  # =========================================================================
+  - id: "github-actions-templates"
+    name: "GitHub Actions Templates"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/actions/starter-workflows"
+      commit: "affda94109f2228d5a7f542a28d23272ae31e00b"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_github_actions_templates.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 60
+
+  # =========================================================================
+  # Skill: analytics-events (Metabase Frontend Analytics Events)
+  # =========================================================================
+  - id: "analytics-events"
+    name: "Metabase Frontend Analytics Events"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/metabase/metabase"
+      commit: "d8bb291939a60c44d8ba6eb7bb132a5e0f271cf1"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "16g"
+        timeout_per_command: 600
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 2400
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_analytics_events.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: prometheus-configuration (Prometheus Configuration)
+  # =========================================================================
+  - id: "prometheus-configuration"
+    name: "Prometheus Configuration"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/prometheus/prometheus"
+      commit: "df61021436e3aa53917a76ae8a4599d2c7fe6097"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-golang"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 600
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "go build ./..."
+            expected_exit_code: 0
+            timeout: 600
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_prometheus_configuration.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: python-anti-patterns (Python Anti-Pattern Review)
+  # =========================================================================
+  - id: "python-anti-patterns"
+    name: "Python Anti-Pattern Review"
+    description: "See task file for detailed mission requirements."
+    type: "refactor"
+
+    repo:
+      url: "https://github.com/mahmoud/boltons"
+      commit: "207651ee6055aabd0d9cdeac2e00140cdc208d44"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_python_anti_patterns.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: implementing-jsc-classes-zig (Bun Zig-JS Class Generator)
+  # =========================================================================
+  - id: "implementing-jsc-classes-zig"
+    name: "Bun Zig-JS Class Generator"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/oven-sh/bun"
+      commit: "2e610b1402f5cc17f11803b01b87cbc59f563fab"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "8"
+        memory: "32g"
+        timeout_per_command: 1800
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 7200
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "bun run build"
+            expected_exit_code: 0
+            timeout: 3600
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_implementing_jsc_classes_zig.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 600
+
+  # =========================================================================
+  # Skill: implementing-jsc-classes-cpp (JSC C++ Class Implementation)
+  # =========================================================================
+  # Skill `implementing-jsc-classes-cpp` removed.
+
+  # =========================================================================
+  # Skill: add-malli-schemas (Metabase Malli Schema Architect)
+  # =========================================================================
+  - id: "add-malli-schemas"
+    name: "Metabase Malli Schema Architect"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/metabase/metabase"
+      commit: "d8bb291939a60c44d8ba6eb7bb132a5e0f271cf1"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-clojure"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "16g"
+        timeout_per_command: 600
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 2400
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_add_malli_schemas.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 600
+
+  # =========================================================================
+  # Skill: clojure-write (Clojure Development & REPL Workflow)
+  # =========================================================================
+  - id: "clojure-write"
+    name: "Clojure Development & REPL Workflow"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/metabase/metabase"
+      commit: "d8bb291939a60c44d8ba6eb7bb132a5e0f271cf1"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-clojure"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "16g"
+        timeout_per_command: 600
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 2400
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_clojure_write.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 600
+
+  # =========================================================================
+  # Skill: django-patterns (Django Architecture Patterns)
+  # =========================================================================
+  - id: "django-patterns"
+    name: "Django Architecture Patterns"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/saleor/saleor"
+      commit: "b6051eb07680de7b1f5609f4bee706b6ceb6de92"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_django_patterns.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: python-background-jobs (Python Background Jobs)
+  # =========================================================================
+  - id: "python-background-jobs"
+    name: "Python Background Jobs"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/celery/celery"
+      commit: "c38600d429eb0d457ce57ae4ec6b52fe9e40a28d"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_python_background_jobs.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: python-configuration (Python Configuration Management)
+  # =========================================================================
+  - id: "python-configuration"
+    name: "Python Configuration Management"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/fastapi/fastapi"
+      commit: "937d3075f9456dfcdfe2e1f6bc3b8b7b9a6c6cad"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_python_configuration.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+
+  # =========================================================================
+  # Skill: creating-financial-models (Financial Modeling Suite)
+  # =========================================================================
+  - id: "creating-financial-models"
+    name: "Financial Modeling Suite"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/lballabio/QuantLib"
+      commit: "d570a9170894671bfeac9e815977f7e26ad46c05"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 1800
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 7200
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "cmake -DCMAKE_BUILD_TYPE=Release -B build && cmake --build build --target quantlib-test-suite"
+            expected_exit_code: 0
+            timeout: 3600
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_creating_financial_models.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 600
+
+  # =========================================================================
+  # Skill: prompt-engineering-patterns (Prompt Engineering Patterns)
+  # =========================================================================
+  - id: "prompt-engineering-patterns"
+    name: "Prompt Engineering Patterns"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/langchain-ai/langchain"
+      commit: "5fd07f7f94645c4298cd917b586b7ba5e2b2ce43"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_prompt_engineering_patterns.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: risk-metrics-calculation (Risk Metrics Calculation)
+  # =========================================================================
+  - id: "risk-metrics-calculation"
+    name: "Risk Metrics Calculation"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/quantopian/pyfolio"
+      commit: "4b901f6d73aa02ceb6d04b7d83502e5c6f2e81aa"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_risk_metrics_calculation.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: vector-index-tuning (Vector Index Tuning)
+  # =========================================================================
+  - id: "vector-index-tuning"
+    name: "Vector Index Tuning"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/facebookresearch/faiss"
+      commit: "0759009bd7ddf290170c930c70a722badd05aa7d"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "16g"
+        timeout_per_command: 600
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 2400
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "cmake -B build && cmake --build build"
+            expected_exit_code: 0
+            timeout: 1200
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_vector_index_tuning.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: rag-implementation (RAG Implementation Framework)
+  # =========================================================================
+  - id: "rag-implementation"
+    name: "RAG Implementation Framework"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/langchain-ai/langchain"
+      commit: "5fd07f7f94645c4298cd917b586b7ba5e2b2ce43"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_rag_implementation.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: spark-optimization (Spark Optimization)
+  # =========================================================================
+  - id: "spark-optimization"
+    name: "Spark Optimization"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/apache/spark"
+      commit: "932f9f70d2e6b5495c80a6cc53397aa1343d342b"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-jvm"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "16g"
+        timeout_per_command: 1800
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 7200
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "./build/mvn -DskipTests package"
+            expected_exit_code: 0
+            timeout: 3600
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_spark_optimization.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 600
+
+  # =========================================================================
+  # Skill: similarity-search-patterns (Similarity Search Patterns)
+  # =========================================================================
+  - id: "similarity-search-patterns"
+    name: "Similarity Search Patterns"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/milvus-io/milvus"
+      commit: "4bec0269ee2a32c8df31d4c7d97cde4971e5ba14"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-golang"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "16g"
+        timeout_per_command: 600
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 2400
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "make milvus"
+            expected_exit_code: 0
+            timeout: 1200
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_similarity_search_patterns.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: llm-evaluation (LLM Evaluation)
+  # =========================================================================
+  - id: "llm-evaluation"
+    name: "LLM Evaluation"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/stanford-crfm/helm"
+      commit: "2fd9c305bf6bbcdcd0e86fb5069e185de29f0e41"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_llm_evaluation.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: analyze-ci (CI Failure Analyzer)
+  # =========================================================================
+  - id: "analyze-ci"
+    name: "CI Failure Analyzer"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/getsentry/sentry"
+      commit: "6cabd8cddd3bfb4657c19ef7119b3293f7866bce"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_analyze_ci.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 120
+
+  # =========================================================================
+  # Skill: python-packaging (Python Packaging & Distribution)
+  # =========================================================================
+  - id: "python-packaging"
+    name: "Python Packaging & Distribution"
+    description: "See task file for detailed mission requirements."
+    type: "test"
+
+    repo:
+      url: "https://github.com/pypa/packaging"
+      commit: "5d3ab595f9e1d564e7c48a2253c96ac38444ae63"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_python_packaging.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+
+  # =========================================================================
+  # Skill: gitops-workflow (GitOps Workflow for Kubernetes)
+  # =========================================================================
+  - id: "gitops-workflow"
+    name: "GitOps Workflow for Kubernetes"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/fluxcd/flux2"
+      commit: "d9f51d047dbb2e3184539ca40740f7b6f808f8d7"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-golang"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "go build ./..."
+            expected_exit_code: 0
+            timeout: 300
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_gitops_workflow.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 120
+
+  # =========================================================================
+  # Skill: linkerd-patterns (Linkerd Service Mesh Patterns)
+  # =========================================================================
+  - id: "linkerd-patterns"
+    name: "Linkerd Service Mesh Patterns"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/linkerd/linkerd2"
+      commit: "00344cfe03011638f2ad7b2012ccc0969a1f0486"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-golang"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "go build ./..."
+            expected_exit_code: 0
+            timeout: 300
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_linkerd_patterns.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 120
+
+  # =========================================================================
+  # Skill: changelog-automation (Changelog Automation)
+  # =========================================================================
+  - id: "changelog-automation"
+    name: "Changelog Automation"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/github-changelog-generator/github-changelog-generator"
+      commit: "5a0cbdb6860ffc449e838541faf3f24e10d75722"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-ruby"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_changelog_automation.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: k8s-manifest-generator (Kubernetes Manifest Generator)
+  # =========================================================================
+  - id: "k8s-manifest-generator"
+    name: "Kubernetes Manifest Generator"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/kubernetes-sigs/kustomize"
+      commit: "29bf16c673061f95dedeb502f5700cedc9cfe1f8"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-golang"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "go build ./..."
+            expected_exit_code: 0
+            timeout: 300
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_k8s_manifest_generator.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 60
+
+  # =========================================================================
+  # Skill: nx-workspace-patterns (Nx Workspace Patterns)
+  # =========================================================================
+  - id: "nx-workspace-patterns"
+    name: "Nx Workspace Patterns"
+    description: "See task file for detailed mission requirements."
+    type: "test"
+
+    repo:
+      url: "https://github.com/nrwl/nx"
+      commit: "b3cb4d826144ceadce28dda7f614fd357bc61fd0"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 600
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 2400
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "pnpm install && pnpm build"
+            expected_exit_code: 0
+            timeout: 600
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_nx_workspace_patterns.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 600
+
+  # =========================================================================
+  # Skill: bazel-build-optimization (Bazel Build Optimization)
+  # =========================================================================
+  - id: "bazel-build-optimization"
+    name: "Bazel Build Optimization"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/bazelbuild/bazel"
+      commit: "cca38cb9d3b46e92ea008eea8dfef701efdcbb6b"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-bazel"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "16g"
+        timeout_per_command: 1800
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 7200
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "cd examples/python-bazel && bazel build //..."
+            expected_exit_code: 0
+            timeout: 600
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_bazel_build_optimization.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: istio-traffic-management (Istio Traffic Management)
+  # =========================================================================
+  - id: "istio-traffic-management"
+    name: "Istio Traffic Management"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/istio/istio"
+      commit: "f9e2236290e696a1ffae4c6c4e41ec3253fafb1e"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_istio_traffic_management.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 120
+
+  # =========================================================================
+  # Skill: bash-defensive-patterns (Bash Defensive Patterns)
+  # =========================================================================
+  - id: "bash-defensive-patterns"
+    name: "Bash Defensive Patterns"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/koalaman/shellcheck"
+      commit: "cd41f794383b6159757575c9debbf198426b21aa"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_bash_defensive_patterns.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 600
+
+  # =========================================================================
+  # Skill: gitlab-ci-patterns (GitLab CI Patterns)
+  # =========================================================================
+  - id: "gitlab-ci-patterns"
+    name: "GitLab CI Patterns"
+    description: "See task file for detailed mission requirements."
+    type: "fix"
+
+    repo:
+      url: "https://github.com/gitlabhq/gitlabhq"
+      commit: "d91b0b33f4c63b5f4b7307059a9b70d9b82a7b41"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-ruby"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "16g"
+        timeout_per_command: 600
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 2400
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_gitlab_ci_patterns.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 600
+
+  # =========================================================================
+  # Skill: implementing-agent-modes (PostHog Agent Mode Architect)
+  # =========================================================================
+  - id: "implementing-agent-modes"
+    name: "PostHog Agent Mode Architect"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/PostHog/posthog"
+      commit: "ded7ef313da2a3b04ff0af9e781619a30dae3517"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_implementing_agent_modes.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: python-observability (Python Observability Patterns)
+  # =========================================================================
+  - id: "python-observability"
+    name: "Python Observability Patterns"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/open-telemetry/opentelemetry-python"
+      commit: "742593b01f47cc47a8bc8d8f3057297258357192"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_python_observability.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: distributed-tracing (Distributed Tracing & Observability)
+  # =========================================================================
+  - id: "distributed-tracing"
+    name: "Distributed Tracing & Observability"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/open-telemetry/opentelemetry-collector"
+      commit: "01ca8295bb51a66326354322b829b1e2cd2cf7aa"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-golang"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "go build ./..."
+            expected_exit_code: 0
+            timeout: 300
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_distributed_tracing.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: service-mesh-observability (Service Mesh Observability)
+  # =========================================================================
+  - id: "service-mesh-observability"
+    name: "Service Mesh Observability"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/linkerd/linkerd2"
+      commit: "00344cfe03011638f2ad7b2012ccc0969a1f0486"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-golang"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "go build ./viz/..."
+            expected_exit_code: 0
+            timeout: 300
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_service_mesh_observability.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: slo-implementation (SLO Implementation Framework)
+  # =========================================================================
+  - id: "slo-implementation"
+    name: "SLO Implementation Framework"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/google/slo-generator"
+      commit: "771848d6b7eeccfebb939042f5aa27463ee5d426"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_slo_implementation.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: python-performance-optimization (Python Performance Optimizer)
+  # =========================================================================
+  - id: "python-performance-optimization"
+    name: "Python Performance Optimizer"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/benfred/py-spy"
+      commit: "5e14e32f8d43be38cf538cd104531494f508c6d4"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-rust"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "cargo build --release"
+            expected_exit_code: 0
+            timeout: 600
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_python_performance_optimization.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: grafana-dashboards (Grafana Dashboards)
+  # =========================================================================
+  - id: "grafana-dashboards"
+    name: "Grafana Dashboards"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/grafana/grafana"
+      commit: "311636cc570127168117962c2f4e258a09d5eb2b"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-golang"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "16g"
+        timeout_per_command: 600
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 2400
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "go build ./..."
+            expected_exit_code: 0
+            timeout: 600
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_grafana_dashboards.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: dbt-transformation-patterns (dbt Transformation Patterns)
+  # =========================================================================
+  - id: "dbt-transformation-patterns"
+    name: "dbt Transformation Patterns"
+    description: "See task file for detailed mission requirements."
+    type: "test"
+
+    repo:
+      url: "https://github.com/dbt-labs/dbt-core"
+      commit: "984005a5ea1f745ecc3238616deebe6d154894fc"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_dbt_transformation_patterns.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 600
+
+  # =========================================================================
+  # Skill: langsmith-fetch (LangSmith Fetch)
+  # =========================================================================
+  - id: "langsmith-fetch"
+    name: "LangSmith Fetch"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/langchain-ai/langchain"
+      commit: "5fd07f7f94645c4298cd917b586b7ba5e2b2ce43"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "4"
+        memory: "8g"
+        timeout_per_command: 300
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 1800
+
+      evaluation:
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_langsmith_fetch.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 300
+
+  # =========================================================================
+  # Skill: v3-performance-optimization (V3 Performance Optimization)
+  # =========================================================================
+  - id: "v3-performance-optimization"
+    name: "V3 Performance Optimization"
+    description: "See task file for detailed mission requirements."
+    type: "feature"
+
+    repo:
+      url: "https://github.com/Dao-AILab/flash-attention"
+      commit: "abd9943b66704f650ea1485a17126cd3817d1b1d"
+      sparse_checkout: []
+
+    environment:
+      base_image: "zhangyiiiiii/swe-skills-bench-python"
+      dockerfile: ""
+      build_context: ""
+      build_args: {}
+
+      limits:
+        cpus: "8"
+        memory: "32g"
+        timeout_per_command: 1800
+
+      env_vars: {}
+      setup_commands: []
+      pre_process: null
+
+      limits:
+        max_iterations: 1
+        total_timeout_sec: 7200
+
+      evaluation:
+        - level: "L1"
+          method: "build_check"
+          enabled: true
+          params:
+            build_command: "pip install -e . && python -c 'import flash_attn'"
+            expected_exit_code: 0
+            timeout: 1800
+
+        - level: "L2"
+          method: "unit_test"
+          enabled: true
+          params:
+            test_command: "python -m pytest /workspace/tests/test_v3_performance_optimization.py -v --tb=short"
+            min_pass_rate: 1.0
+            timeout: 600
