@@ -1,5 +1,19 @@
 # Python Sandbox Pitfalls — Hermes Agent Environment
 
+## `execute_code` 的 `hermes_tools.read_file()` 內容含行號前綴（2026-07-25）
+
+**症狀**：在 `execute_code` 裡用 `read_file(path)` 讀取現有檔案，再把回傳的 `content` 交給 `write_file()` 做「附加」，結果原檔每行被寫成 `1|...`、`2|...`。若用 `startswith(original_content)` 驗證，也會因顯示格式與 raw bytes 不同而失敗。
+
+**根因**：Hermes 的 `read_file` 是給 agent 閱讀的顯示工具，回傳內容可能帶行號前綴；它不是 raw-byte round-trip API。把該結果直接寫回磁碟會污染檔案。
+
+**If→Then**：
+- **If** 要做 byte-preserving append / backup restore / SHA256 驗證 **Then** 不要用 `hermes_tools.read_file()` 的 `content` 當原始資料；改在 `terminal` 裡用 Python `Path.read_bytes()` / `Path.write_bytes()`，並以 `tempfile.mkstemp + fsync + os.replace` 原子替換。
+- **If** 已誤寫 **Then** 立即用事前 SHA256 相符的備份恢復，再 raw-byte append；驗證 `current.startswith(original_bytes)`、marker count = 1、且不存在 `1|` 行號污染。
+
+**已驗證案例**：GitHub Trending review queue 附加時，驗證鏈抓到 `first_diff_offset=0`；從 `/tmp` 備份恢復 `16,534` bytes 後 raw append，最終 `original_prefix_sha_verified=True`、marker count `1`、mode `0600`。
+
+---
+
 ## `***` token filter eats env-var NAMES in Python source (2026-06-16)
 
 **Official confirmation (2026-06-25)**: Hermes官方文档（hermes-agent.nousresearch.com/docs）明确说明：

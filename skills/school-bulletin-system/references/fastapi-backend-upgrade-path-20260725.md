@@ -158,3 +158,5 @@ PostgreSQL with `schema_per_tenant` or `database_per_tenant` isolation. Each sch
 3. **slowapi `request` parameter**: `@limiter.limit()` decorated endpoints MUST have `request: Request` as first parameter (even if unused)
 4. **Route ordering**: `/random` must come before `/{id}` otherwise FastAPI matches `/random` as an `id` parameter
 5. **Atomic writes**: use `tempfile.mkstemp` + `os.replace()` for corruption-safe report writes
+6. **`async_sessionmaker` + `yield Depends()` pattern** (Cycle 537): `async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)` + `async def get_db() → AsyncGenerator[AsyncSession, None]` with `yield` for per-request setup/teardown. Endpoint param: `session: AsyncSession = Depends(get_db)`
+7. **BLOCKING sync I/O in async endpoint = event loop blocked** (Cycle 537): FastAPI async endpoint declared `async def` that calls synchronous blocking DB operations blocks the entire event loop. Use `async_sessionmaker` + native `async def` DB operations, OR declare route as `def` (not `async def`) to run in threadpool
