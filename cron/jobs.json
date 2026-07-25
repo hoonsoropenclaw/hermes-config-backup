@@ -29,7 +29,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-30T11:56:33.423422+08:00",
-      "next_run_at": "2026-07-26T02:58:57.121453+08:00",
+      "next_run_at": "2026-07-26T04:59:20.595864+08:00",
       "last_run_at": "2026-07-26T00:58:57.121453+08:00",
       "last_status": "ok",
       "last_error": null,
@@ -255,7 +255,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-06T14:48:00.047140+08:00",
-      "next_run_at": "2026-07-26T03:00:00+08:00",
+      "next_run_at": "2026-07-27T03:00:00+08:00",
       "last_run_at": "2026-07-21T03:00:41.682298+08:00",
       "last_status": "error",
       "last_error": "Script exited with code 1\nstderr:\n\u001b[0;31m[03:00:41] \u2717\u001b[0m push \u5931\u6557\u3001\u770b\u4e0a\u9762\u932f\u8aa4\u8a0a\u606f\n\u001b[0;31m[03:00:41] \u2717\u001b[0m Tier 1 \u5931\u6557\u3001\u8df3\u904e Tier 2\uff08\u907f\u514d\u767d\u505a 285M secrets \u52a0\u5bc6\uff09\n\u001b[0;31m[03:00:41] \u2717\u001b[0m \u8a73\u7d30\u932f\u8aa4\u770b\u4e0a\u9762\u8a0a\u606f\u3001\u6216\u770b ~/.hermes/logs/20260721_*.log\nstdout:\n\u001b[0;32m========================================\u001b[0m\n\u001b[0;32m  Hermes Backup v4 (Tier 1 + Tier 2)  \u001b[0m\n\u001b[0;32m========================================\u001b[0m\n\nTier 1 (GitHub):   true\nTier 2 (Drive):    true\nUpload Tier 2:     false\nDry run:           false\n\n\u001b[0;36m[03:00:36]\u001b[0m === Tier 1: GitHub (staging \u2192 hoonsoropenclaw/hermes-config-backup) ===\n\u001b[0;36m[03:00:36]\u001b[0m Step 1: \u540c\u6b65 ~/.hermes/ \u8b8a\u52d5\u5230 staging...\n\u001b[0;36m[03:00:37]\u001b[0m Step 2: git add + commit\n[main cf5fe84] backup: 20260720_190037Z (v4 tier1 auto)\n 1 file changed, 5 insertions(+), 5 deletions(-)\nremote:            path: cron/jobs.json:222        \nremote:             \nremote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.        \nremote:        https://github.com/hoonsoropenclaw/hermes-config-backup/security/secret-scanning/unblock-secret/3GmIi7Bdd0SRqgy9ecZ9CdNLSpE        \nremote:             \nremote: \nremote: \nTo github.com:hoonsoropenclaw/hermes-config-backup.git\n ! [remote rejected] main -> main (push declined due to repository rule violations)\nerror: failed to push some refs to 'github.com:hoonsoropenclaw/hermes-config-backup.git'\n\u274c v4 backup FAIL \u2014 Tier 1 error\uff08\u770b ~/.hermes/logs/20260721_hermes-backup-v4.log\uff09",
@@ -286,7 +286,7 @@
       "schedule_display": "0 2 * * *",
       "repeat": {
         "times": null,
-        "completed": 48
+        "completed": 49
       },
       "enabled": true,
       "state": "scheduled",
@@ -294,9 +294,9 @@
       "paused_reason": null,
       "created_at": "2026-06-07T13:33:27.569449+08:00",
       "next_run_at": "2026-07-27T02:00:00+08:00",
-      "last_run_at": "2026-07-21T02:00:43.176462+08:00",
-      "last_status": "error",
-      "last_error": "Script exited with code 1\nstderr:\n\u001b[0;31m[02:00:41] \u2717\u001b[0m push \u5931\u6557\u3001\u770b\u4e0a\u9762\u932f\u8aa4\u8a0a\u606f\n\u001b[0;31m[02:00:41] \u2717\u001b[0m Tier 1 \u5931\u6557\u3001\u8df3\u904e Tier 2\uff08\u907f\u514d\u767d\u505a 285M secrets \u52a0\u5bc6\uff09\n\u001b[0;31m[02:00:41] \u2717\u001b[0m \u8a73\u7d30\u932f\u8aa4\u770b\u4e0a\u9762\u8a0a\u606f\u3001\u6216\u770b ~/.hermes/logs/20260721_*.log\nstdout:\n\u274c v4 backup FAIL \u2014 Tier 1 error\uff08\u770b ~/.hermes/logs/20260721_hermes-backup-v4.log\uff09",
+      "last_run_at": "2026-07-26T02:00:25.924831+08:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
       "deliver": "telegram",
       "origin": null,
@@ -324,15 +324,15 @@
       "schedule_display": "30 2 * * *",
       "repeat": {
         "times": null,
-        "completed": 47
+        "completed": 48
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-07T13:33:27.569485+08:00",
-      "next_run_at": "2026-07-26T02:30:00+08:00",
-      "last_run_at": "2026-07-21T02:31:03.255467+08:00",
+      "next_run_at": "2026-07-27T02:30:00+08:00",
+      "last_run_at": "2026-07-26T02:30:51.841071+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -483,7 +483,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-10T16:43:42.394014+08:00",
-      "next_run_at": "2026-07-26T03:00:00+08:00",
+      "next_run_at": "2026-08-02T03:00:00+08:00",
       "last_run_at": "2026-07-19T03:00:46.567998+08:00",
       "last_status": "ok",
       "last_error": null,
@@ -538,5 +538,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-07-26T02:00:20.199898+08:00"
+  "updated_at": "2026-07-26T03:00:20.611677+08:00"
 }
