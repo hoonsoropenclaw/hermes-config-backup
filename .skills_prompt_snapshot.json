@@ -1258,8 +1258,8 @@
       12774
     ],
     "autonomous-ai-agents/metacognitive-learner/SKILL.md": [
-      1784612455009163936,
-      11999
+      1784969331000110204,
+      12643
     ],
     "autonomous-ai-agents/orchestrator-worker-architecture/SKILL.md": [
       1781930848018930547,
@@ -1674,8 +1674,8 @@
       7378
     ],
     "school-bulletin-system/SKILL.md": [
-      1784469433587793925,
-      10313
+      1784969300864060103,
+      10495
     ],
     "school-hr-recruitment/SKILL.md": [
       1783140982098824005,
@@ -8164,7 +8164,7 @@
       "skill_name": "kanban-orchestrator",
       "category": "devops",
       "frontmatter_name": "kanban-orchestrator",
-      "description": "",
+      "description": "Decomposition playbook + anti-temptation rules for an orc...",
       "platforms": [
         "linux",
         "macos",
@@ -8181,7 +8181,7 @@
       "skill_name": "kanban-worker",
       "category": "devops",
       "frontmatter_name": "kanban-worker",
-      "description": "",
+      "description": "Pitfalls, examples, and edge cases for Hermes Kanban work...",
       "platforms": [
         "linux",
         "macos",
