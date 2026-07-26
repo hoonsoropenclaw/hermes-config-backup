@@ -1,0 +1,15 @@
+{
+  "log_offsets": {
+    "/var/log/syslog": 5198913,
+    "/var/log/kern.log": 37193,
+    "/var/log/auth.log": 1078493
+  },
+  "alert_fingerprints": {},
+  "consecutive_crit": {
+    "disk_percent:/snap/canonical-livepatch/406": 2,
+    "disk_percent:/snap/core22/2411": 2,
+    "disk_percent:/snap/snapd/27406": 2,
+    "disk_percent:/snap/snapd/27591": 2
+  },
+  "alerts_sent_today": {}
+}

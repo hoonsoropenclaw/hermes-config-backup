@@ -1,0 +1,155 @@
+{
+  "ts": "2026-07-27T02:28:10.551712",
+  "self_check": {
+    "cpu_percent": 1.0,
+    "cpu_count": 4,
+    "mem": {
+      "percent": 5.6,
+      "used_gb": 1.74,
+      "total_gb": 31.06,
+      "available_gb": 29.32
+    },
+    "disks": [
+      {
+        "mountpoint": "/",
+        "device": "/dev/mapper/ubuntu--vg-ubuntu--lv",
+        "fstype": "ext4",
+        "percent": 40.6,
+        "used_gb": 88.88,
+        "total_gb": 230.67
+      },
+      {
+        "mountpoint": "/snap/canonical-livepatch/406",
+        "device": "/dev/loop0",
+        "fstype": "squashfs",
+        "percent": 100.0,
+        "used_gb": 0.01,
+        "total_gb": 0.01
+      },
+      {
+        "mountpoint": "/snap/core22/2411",
+        "device": "/dev/loop1",
+        "fstype": "squashfs",
+        "percent": 100.0,
+        "used_gb": 0.07,
+        "total_gb": 0.07
+      },
+      {
+        "mountpoint": "/snap/snapd/27406",
+        "device": "/dev/loop3",
+        "fstype": "squashfs",
+        "percent": 100.0,
+        "used_gb": 0.05,
+        "total_gb": 0.05
+      },
+      {
+        "mountpoint": "/boot",
+        "device": "/dev/nvme0n1p2",
+        "fstype": "ext4",
+        "percent": 11.0,
+        "used_gb": 0.2,
+        "total_gb": 1.9
+      },
+      {
+        "mountpoint": "/boot/efi",
+        "device": "/dev/nvme0n1p1",
+        "fstype": "vfat",
+        "percent": 0.6,
+        "used_gb": 0.01,
+        "total_gb": 1.05
+      },
+      {
+        "mountpoint": "/snap/snapd/27591",
+        "device": "/dev/loop4",
+        "fstype": "squashfs",
+        "percent": 100.0,
+        "used_gb": 0.05,
+        "total_gb": 0.05
+      }
+    ],
+    "load_avg_1": 0.1181640625,
+    "zombie_count": 0,
+    "boot_time": "2026-07-25T14:40:29",
+    "process_count": 185
+  },
+  "findings": [
+    {
+      "key": "disk_percent:/snap/canonical-livepatch/406",
+      "level": "crit",
+      "value": 100.0,
+      "threshold": 92.0,
+      "message": "Disk /snap/canonical-livepatch/406 100.0% (0.01G/0.01G) >= crit 92.0%",
+      "context": {
+        "mountpoint": "/snap/canonical-livepatch/406",
+        "device": "/dev/loop0",
+        "fstype": "squashfs",
+        "percent": 100.0,
+        "used_gb": 0.01,
+        "total_gb": 0.01
+      }
+    },
+    {
+      "key": "disk_percent:/snap/core22/2411",
+      "level": "crit",
+      "value": 100.0,
+      "threshold": 92.0,
+      "message": "Disk /snap/core22/2411 100.0% (0.07G/0.07G) >= crit 92.0%",
+      "context": {
+        "mountpoint": "/snap/core22/2411",
+        "device": "/dev/loop1",
+        "fstype": "squashfs",
+        "percent": 100.0,
+        "used_gb": 0.07,
+        "total_gb": 0.07
+      }
+    },
+    {
+      "key": "disk_percent:/snap/snapd/27406",
+      "level": "crit",
+      "value": 100.0,
+      "threshold": 92.0,
+      "message": "Disk /snap/snapd/27406 100.0% (0.05G/0.05G) >= crit 92.0%",
+      "context": {
+        "mountpoint": "/snap/snapd/27406",
+        "device": "/dev/loop3",
+        "fstype": "squashfs",
+        "percent": 100.0,
+        "used_gb": 0.05,
+        "total_gb": 0.05
+      }
+    },
+    {
+      "key": "disk_percent:/snap/snapd/27591",
+      "level": "crit",
+      "value": 100.0,
+      "threshold": 92.0,
+      "message": "Disk /snap/snapd/27591 100.0% (0.05G/0.05G) >= crit 92.0%",
+      "context": {
+        "mountpoint": "/snap/snapd/27591",
+        "device": "/dev/loop4",
+        "fstype": "squashfs",
+        "percent": 100.0,
+        "used_gb": 0.05,
+        "total_gb": 0.05
+      }
+    }
+  ],
+  "log_hits": [
+    {
+      "source": "syslog",
+      "line": "2026-07-27T02:28:03.318357+08:00 hoonsoropenclaw systemd[900]: mcp-dashboard.service: Main process exited, code=exited, status=209/STDOUT",
+      "level": "crit",
+      "matched_pattern": "status=2\\d\\d/"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-27T02:28:03.318573+08:00 hoonsoropenclaw systemd[900]: mcp-dashboard.service: Failed with result 'exit-code'.",
+      "level": "crit",
+      "matched_pattern": "Failed with result ['\\\"]exit-code['\\\"]"
+    }
+  ],
+  "alert_stats": {
+    "console": 0,
+    "log": 0
+  }
+}
