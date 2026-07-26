@@ -37,6 +37,8 @@ description: "赫米斯踩過的坑目錄 — **MUST LOAD BEFORE EXECUTION**。�
 - **Python sandbox**：`execute_code` / `python3.12` / `subprocess` / `sandbox` → `references/by-category/python-sandbox.md`
 - **瀏覽器自動化**：`browser` / `playwright` / `headless` / `camofox` → `references/by-category/browser-automation.md`
 - **Bash 腳本**：`for f in` / `2>&1` / `pipefail` / `array` / `set -e` → `references/by-category/bash-defensive-patterns.md`
+- **Python 生產工具**：`python3` / `urllib` / `telegram bot` / `wttr` / `weather api` / `stdlib` / `long-polling` / `signal handler` → `references/by-category/stdlib-production-tool-pattern.md`
+- **FastAPI / async SQLAlchemy**：`FastAPI` / `async_sessionmaker` / `yield Depends` / `async SQLAlchemy` / `stale read` / `expire_on_commit` → `references/by-category/fastapi-async-session-pitfalls.md`（**2026-07-26 新增**：stale read problem + async/sync deadlock + StaticPool）
 觸發關鍵字:
 - **Hermes 內部 / CLI 派遣 sub-agent**:`hermes cron` / `hermes status` / `config` / `gateway` / `hermes chat` / `delegate_task` / `sub-agent` / `subagent` / `parallel` / `--yolo` / `--accept-hooks` / `notify_on_complete` / `background=true` / `git push` / `SSH` / `403` → `references/by-category/hermes-internal.md`（**改**:2026-12 新增 SSH 403 修復 + stale state 排除流程 + 重啟 gateway 時間成本）
 - **輸出精簡化 / SNR 過高**：`簡化` / `精簡` / `不要那麼多` / `太長` / `輸出壓縮` / `brief` / `--brief` → `references/by-category/hermes-internal.md`（**改**:2026-07-09 新增，Context Compression 輸出管理）
@@ -521,6 +523,22 @@ for j in d['jobs']:
 
 ---
 
+### 教訓 36：stdlib-first 生產工具建構（Cycle 538, 2026-07-26）
+
+**發現**: Cycle 538 確認用戶今日極度活躍（30+ CLI sessions），最新焦點在 Python stdlib 建構生產級工具（Telegram bot + weather API, wttr.in, long-polling）。發現 3 個具體 pitfall：surrogate pair emoji bug（`\\ud83d\\udccd` 寫成兩個 lone surrogate）、免費 API `lang=zh` 只動 one-liner 不動 JSON data、中文 unicode escape 錯字難 debug。
+
+**If→Then（stdlib-first 生產工具）**:
+**If** 用戶要求建構「訊息接收 → API 查詢 → 回應」工具 bot **Then** 優先 stdlib（`urllib` + `signal` + `dataclass`），不分離 `api_module.py`（可獨立 CLI）+ `bot.py`（訊號處理 + long-polling）+ 三層防護（allowlist + rate-limit + sanitization）；**禁止**拉 `requests`/`python-telegram-bot` 等第三方依賴
+**警示**：Python f-string 的 `f"\\ud83d\\udccd"` 是 surrogate pair bug，要直接寫 emoji literal `📍`；免費 API 的 `lang=` 只影響 one-liner，不影響 JSON data 欄位（永遠英文）
+
+### 教訓 37：FastAPI async SQLAlchemy session lifecycle — stale read + deadlock（Cycle 539, 2026-07-26）
+
+**發現**: Cycle 539 深度研究發現 FastAPI `yield Depends(get_db)` 產生之 AsyncSession 跨越整個請求生命週期——第一次 `db.query()` 會快取結果，若請求中期呼叫外部服務修改了資料庫記錄，後續查詢返回舊資料（stale read）。另一個發現：`async def` endpoint 內使用同步 `sessionmaker` + `.query()`，100 個 concurrent requests 就會让伺服器完全冻结（deadlock）。
+
+**If→Then（FastAPI session lifecycle）**:
+**If** FastAPI endpoint 使用 `yield Depends(get_db)` 且會在請求中期呼叫外部服務修改資料庫記錄 **Then** 在每次外部修改後呼叫 `await db.refresh(user)` 或重新執行查詢——不要依賴 identity map 快取
+**警示**：async endpoint 必須配 `async_sessionmaker` + `await db.execute()`，嚴禁混用同步 `sessionmaker`——會 blocking event loop 導致 deadlock；`expire_on_commit=False` 是標配，否則 commit 後懶加載 relationships 會拋 `DetachedInstanceError`
+
 ### 教訓 31：創意輸出品質驗證需要「意圖-輸出對照框架」
 
 **發現**: Cycle 507/499/498/490 全部處理創意生成（風格限制/moderation recovery/意圖歧義），但沒有一個 cycle 建立「如何驗證輸出是否符合原始創意意圖」的系統化框架。用戶 sessions（2026-07-08 到 2026-06-15）持續涉及 AI 圖片生成與風格限制、審查拒絕恢復。理論研究（aiml.qa AI QA Scorecard 2026、arXiv AIGVE survey）確認了「意圖-輸出對齊」是核心缺口。
@@ -574,3 +592,41 @@ for j in d['jobs']:
 **修復**: 不需要新建 skill，需要做一次「端到端驗證」串接三個現有技能
 
 **If→Then**: **If** 識別了某 gap 但現有 skills 已有相關 components **Then** 先做端到端串接驗證，不要提「新建 skill」
+
+### D2 迴圈陷阱：SKILL.md 超標已連續識別但遲遲不執行遷移（Cycle 546, 2026-07-27）
+
+**發現**: `school-interview-scheduler` SKILL.md 為 324 行 / 14 KB，連續多個 cycle 識別「需要遷移」但每次都說「下次執行」。本 cycle 立即執行遷移後：324 行 → 137 行 / 5 KB，所有 API 範例 / 10+ 行 OAuth2 流程 / Phase 4 維度設計表 / D3 exit 驗證步驟（20+ 行）全部遷移到 `references/` 目錄對應檔案。
+
+**If→Then（SKILL.md 大小 D2 迴圈打斷）**:
+**If** 某 skill 的 SKILL.md 行數 > 300 或大小 > 20 KB，且已在連續 2+ cycles 記錄「需要遷移」但未執行
+**Then** 立即執行遷移（不研究、不討論）：
+  1. 列出 `references/` 現有檔案（每個檔案對應一類技術細節）
+  2. 將該類技術細節從 SKILL.md 遷移到對應 reference 檔
+  3. SKILL.md 保留：frontmatter + 核心定位（5-10 行）+ If→Then 速查表（≤ 50 行）+ 執行命令摘要（≤ 20 行）+ 一句話參考檔案連結
+  4. 驗證：遷移後 SKILL.md ≤ 300 行且每個參考檔案內容仍完整
+**Why**: D2 迴圈 =「每次說下次執行 = 從未執行」；立即遷移比每次研究省時
+**驗證命令**:
+```python
+from pathlib import Path
+p = Path.home() / ".hermes/skills/<skill-name>/SKILL.md"
+c = p.read_text()
+print(f"lines={len(c.splitlines())}, KB={p.stat().st_size//1024}")
+```
+
+---
+
+### delegate_task Has No Built-in Shared State (Cycle 543)
+
+**發現**: `delegate_task` spawns sub-agents in fully isolated contexts. Each worker gets its own conversation, terminal session, and tool state. **No shared state object** — sub-agents cannot read each other's variables unless the main session explicitly relays it.
+
+**三大框架對照**:
+| Framework | State Model |
+|-----------|------------|
+| LangGraph | Explicit shared state dict |
+| CrewAI | Per-task context |
+| AutoGen | Shared conversation history |
+| **Hermes** | **No built-in shared state** |
+
+**赫米斯缺口**: 主 session 變數 → sub-agent 看不見；sub-agent A 輸出 → sub-agent B 看不見。
+
+**If→Then**: **If** multi-agent 任務需要 sub-agents 共享中繼狀態 **Then** 用 `~/.hermes/agent_state/<task_id>.json` 作為 external state store，並在 ticket 中規範「誰寫入/誰讀取」順序

@@ -260,4 +260,5 @@ bash /tmp/school-bulletin-watchdog.sh  # 驗證 exit 0
 - `references/watchdog-404-fix-20260621.md` — watchdog `/api/health` 404 假性失敗修復（2026-06-21）
 - `references/line-bot-webhook-integration-20260719.md` — LINE Bot webhook 整合彌補計畫（填補「無 webhook」已知限制）
 - `references/fastapi-backend-upgrade-path-20260725.md` — FastAPI 後端升級路徑（Quote API 72 測試驗證 FastAPI 生產級交付能力可直接遷移到 bulletin 系統）
+- `references/fastapi-async-session-lifecycle-pitfalls-20260726.md` — **2026-07-26 新增**：async session stale read problem (`yield Depends` caches across request lifecycle) + async/sync deadlock risk + `expire_on_commit=False` 必要性
 - `references/seed-sh-d3-exit-20260623.md` — seed.sh wrapper D3 exit 完整紀錄（三坑：路徑推導/.env 雙引號/tsx 不讀 .env.local）

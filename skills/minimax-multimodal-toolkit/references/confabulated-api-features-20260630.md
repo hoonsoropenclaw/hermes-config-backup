@@ -48,3 +48,19 @@ If zero matches → do NOT say the flag name to the user. Rephrase the explanati
 
 - `trial-and-error/references/by-category/mmx-cli-image-gen.md` §11 — the 2026-06-30 finding that triggered this reference
 - `minimax-multimodal-toolkit/SKILL.md` — "Confabulated API Features" pitfall added to image generate flags table
+
+---
+
+## `--sref` is confabulated for video subject-consistency (2026-07-26)
+
+**What happened:** Cycle 543 D3-learn test mentioned `--sref` flag for subject-consistency video (S2V-01 model). The flag does not exist in mmx-cli.
+
+**Verification:**
+```bash
+$ npx -y mmx-cli video generate --help 2>&1 | grep -iE "sref|subject-image|subject-ref"
+--subject-ref <params>  Subject reference for face-consistency video (requires S2V-01)
+```
+
+**Correct flag:** `--subject-ref` (for S2V-01 face-consistency video). The confabulation likely came from Midjourney's `--sref` (style reference) which has different semantics.
+
+**Self-correction rule:** If you mention `--sref` in any video generation context, stop and run `mmx video generate --help | grep -iE "sref|subject"` to verify. If zero matches for `--sref`, use `--subject-ref` instead.

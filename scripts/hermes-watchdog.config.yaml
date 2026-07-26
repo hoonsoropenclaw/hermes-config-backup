@@ -1,0 +1,53 @@
+# hermes-watchdog config
+# 修改此檔即可調整所有閾值，不必碰主程式
+# 任何欄位都可省略 → 走內建預設
+
+sample_interval_seconds: 60        # 資源監控取樣週期
+alert_cooldown_seconds: 1800      # 同一告警 fingerprint 冷卻（避免洗版）
+journal_lookback_seconds: 300     # 每次輪詢時拉 journal 過去幾秒的新行
+
+thresholds:
+  cpu_percent_warn: 85            # CPU 使用率 > 此值 → warn
+  cpu_percent_crit: 95           # CPU > 此值 → crit
+  mem_percent_warn: 80
+  mem_percent_crit: 92
+  swap_percent_warn: 50
+  swap_percent_crit: 80
+  disk_percent_warn: 85           # 任何掛載點 > 此值 → warn
+  disk_percent_crit: 95
+  load_per_cpu_warn: 1.5          # load avg / CPU 核心數 > 此值 → warn
+  load_per_cpu_crit: 3.0
+
+log_patterns:                     # 命中 journal 訊息 → 升級告警
+  - id: oom_killer
+    priority: crit
+    pattern: "Out of memory|Killed process"
+    source: kernel
+  - id: segfault
+    priority: crit
+    pattern: "segfault at|general protection fault"
+    source: kernel
+  - id: kernel_panic
+    priority: crit
+    pattern: "kernel panic|BUG: soft lockup"
+    source: kernel
+  - id: io_error
+    priority: crit
+    pattern: "I/O error|EXT4-fs error|XFS .* error"
+    source: kernel
+  - id: sshd_bruteforce
+    priority: warn
+    pattern: "Failed password|Invalid user"
+    source: sshd
+  - id: service_failed
+    priority: crit
+    pattern: "Failed with result|service entered failed state"
+    source: systemd
+  - id: hermes_gateway_down
+    priority: crit
+    pattern: "Gateway unavailable|HermesAgent.*exited"
+    source: hermes-agent
+
+notify:
+  enabled: true                   # notify-send（headless 無 GUI 時靜默略過，不會 fail）
+  desktop_title_prefix: "[hermes-watchdog]"

@@ -187,6 +187,9 @@ Region is auto-detected. Override with `--region global` or `--region cn`.
 
 **Diagnosing auth failures (2026-06-22):**
 If `mmx auth login` reports "API key validation failed" but the same key works via direct curl to `https://api.minimax.io/v1/text/chatcompletion_v2`, the key is a Token Plan key (`sk-cp-`), not a Platform API key. The Token Plan key is fully functional for chat — it just doesn't work with mmx-cli's region-detection auth flow. Workaround: pass `--api-key <key>` per-call (not persisted login). Future: obtain a Platform API key from MiniMax dashboard.
+
+**Music generation limitation on `sk-cp-` keys (2026-07-26):**
+Token Plan keys (`sk-cp-`) do NOT support the music generation endpoint. Verified 2026-07-26: `mmx music generate` times out after 90 seconds on `sk-cp-` keys while the same keys work fine for text chat, image generation, and video generation (T2V and I2V). If music generation is needed, a Platform API key (`sk-` without `-cp-` prefix) is required. All other mmx-cli modes (text, image, T2V, I2V) work correctly on `sk-cp-` keys.
 Region is auto-detected. Override with `--region global` or `--region cn`.
 
 ---

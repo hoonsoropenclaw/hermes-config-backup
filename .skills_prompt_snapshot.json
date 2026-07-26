@@ -1258,8 +1258,8 @@
       12774
     ],
     "autonomous-ai-agents/metacognitive-learner/SKILL.md": [
-      1784991323615709962,
-      12979
+      1785050656196928108,
+      13649
     ],
     "autonomous-ai-agents/orchestrator-worker-architecture/SKILL.md": [
       1781930848018930547,
@@ -1498,8 +1498,8 @@
       12093
     ],
     "hallmark/skills/hallmark/SKILL.md": [
-      1780405266883106699,
-      63900
+      1785058059267662036,
+      2157
     ],
     "hermes-architecture/hermes-resident-agent/SKILL.md": [
       1781152616138788648,
@@ -1554,8 +1554,8 @@
       15818
     ],
     "minimax-multimodal-toolkit/SKILL.md": [
-      1783140885667016954,
-      51604
+      1785073757363858622,
+      52100
     ],
     "minimax-pdf/SKILL.md": [
       1780110403189953897,
@@ -1674,16 +1674,16 @@
       7378
     ],
     "school-bulletin-system/SKILL.md": [
-      1784969300864060103,
-      10495
+      1785013703771511009,
+      10738
     ],
     "school-hr-recruitment/SKILL.md": [
       1783140982098824005,
       17240
     ],
     "school-interview-scheduler/SKILL.md": [
-      1782200604743555889,
-      14695
+      1785088414441112243,
+      5727
     ],
     "scrapling/SKILL.md": [
       1782744242071324266,
@@ -3458,8 +3458,8 @@
       8009
     ],
     "trial-and-error/SKILL.md": [
-      1784597046299062925,
-      48465
+      1785088522230805860,
+      53460
     ],
     "user-collaboration-style/SKILL.md": [
       1783876771312061651,
@@ -8593,7 +8593,9 @@
       "category": "hallmark/skills",
       "frontmatter_name": "hallmark",
       "description": "Anti-AI-slop design skill for greenfield pages, audits, r...",
-      "platforms": [],
+      "platforms": [
+        "linux"
+      ],
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],
