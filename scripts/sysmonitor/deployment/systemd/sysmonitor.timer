@@ -1,0 +1,13 @@
+[Unit]
+Description=sysmonitor — 每分鐘跑一次
+Documentation=file:///home/hoonsoropenclaw/.hermes/scripts/sysmonitor/README.md
+
+[Timer]
+# 系統啟動後 30 秒 + 之後每分鐘
+OnBootSec=30s
+OnUnitActiveSec=60s
+AccuracySec=5s
+Persistent=false
+
+[Install]
+WantedBy=timers.target

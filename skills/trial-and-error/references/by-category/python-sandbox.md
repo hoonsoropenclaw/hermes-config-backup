@@ -83,3 +83,20 @@ for l in open(os.path.expanduser('~/.hermes/.env')):
 **Cross-links**:
 - `minimax-multimodal-toolkit` SKILL.md — "Auth: mmx is ISOLATED from hermes `.env`" section has the working Python pattern for extracting MiniMax keys
 - `hermes-image-gen-vs-mmx.md` reference — same `split('=', 1)` pattern with auth reliability table
+
+---
+
+## `/tmp/inspect.py` 遮蔽 stdlib `inspect`(2026-07-27)
+
+**症狀**:`AttributeError: module 'inspect' has no attribute 'get_annotations'` — **任何** `@dataclass` 定義在 /tmp 工作目錄都炸。
+
+**根因**:`/tmp/inspect.py` 這個檔案是別的 session 留下的 GitHub trending scraper test script(mode 0600,只有 owner 寫的歷史測試)。Python 3 的 import 機制是「當前目錄優先於 sys.path」,所以 `import inspect` 會先撈到 `/tmp/inspect.py`,而這個 stub 沒有 `get_annotations` 函式。Python 3.12 的 `dataclasses` 模組需要 `inspect.get_annotations()` 評估 type hints,所以所有 `@dataclass` 都炸。
+
+**If→Then**:
+- **If** 在 `/tmp` 跑 Python 3.12 腳本、出現 `module 'inspect' has no attribute 'get_annotations'` **Then** 立刻 `ls /tmp/inspect.py /tmp/typing.py /tmp/re.py /tmp/json.py` 查有沒有同名 stdlib 模組被遮蔽
+- **If** 確認是遮蔽 **Then** `mv /tmp/inspect.py /tmp/inspect_legacy_<用途>.py`(綠區允許的 rename,留下 audit 軌跡)— **不要**直接 `rm`(可能被別的 session 還在跑、可能是有用的東西)
+- **If** `/tmp` 真的有需要寫的 test script **Then** 永遠放在 `/tmp/<timestamp>_<用途>/` 子目錄,**不要**直接放在 `/tmp/根檔名.py` — 一旦跟 stdlib 模組同名就會撞
+
+**為何會發生**:先前測試的 agent 寫 `/tmp/inspect.py` 時,沒意識到 Python 會把 cwd 優先於 sys.path。這是「sandbox 命名空間沒做隔離」的經典坑。
+
+**已驗證案例**:weather-telegram-bot 的 config.py / weather.py 都用 `@dataclass`,verify 階段 `python3 verify_weather.py` 一直報這個錯;mv 掉 /tmp/inspect.py 後立即通過。

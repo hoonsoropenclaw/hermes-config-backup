@@ -159,13 +159,20 @@ def run_once(state: State, dry_run: bool = False) -> int:
     # 7. 健全報告
     alert.print_summary(findings, log_hits, stats, sc, state)
 
-    # 8. 存 state
-    state.save()
+    # 8. 存 state（盡力而為，失敗只記錄、不中斷）
+    try:
+        state.save()
+    except Exception as e:
+        print(f"[sysmonitor] WARNING: state save failed: {e}", file=sys.stderr)
 
-    # 9. 退出碼
+    # 9. 退出碼（crit from either source → 1）
     elapsed = time.time() - started
     print(f"[sysmonitor] cycle done in {elapsed:.2f}s → report={report_path}", file=sys.stderr)
-    return 1 if any(f.level == "crit" for f in findings) else 0
+    has_crit = (
+        any(f.level == "crit" for f in findings)
+        or any(h.level == "crit" for h in log_hits)
+    )
+    return 1 if has_crit else 0
 
 
 def main() -> int:

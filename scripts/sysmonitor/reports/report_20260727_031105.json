@@ -1,0 +1,350 @@
+{
+  "ts": "2026-07-27T03:11:05.391338",
+  "self_check": {
+    "cpu_percent": 1.5,
+    "cpu_count": 4,
+    "mem": {
+      "percent": 4.5,
+      "used_gb": 1.38,
+      "total_gb": 31.06,
+      "available_gb": 29.68
+    },
+    "disks": [
+      {
+        "mountpoint": "/",
+        "device": "/dev/mapper/ubuntu--vg-ubuntu--lv",
+        "fstype": "ext4",
+        "percent": 41.2,
+        "used_gb": 90.24,
+        "total_gb": 230.67
+      },
+      {
+        "mountpoint": "/boot",
+        "device": "/dev/nvme0n1p2",
+        "fstype": "ext4",
+        "percent": 11.0,
+        "used_gb": 0.2,
+        "total_gb": 1.9
+      },
+      {
+        "mountpoint": "/boot/efi",
+        "device": "/dev/nvme0n1p1",
+        "fstype": "vfat",
+        "percent": 0.6,
+        "used_gb": 0.01,
+        "total_gb": 1.05
+      }
+    ],
+    "load_avg_1": 0.07080078125,
+    "zombie_count": 0,
+    "boot_time": "2026-07-25T14:40:29",
+    "process_count": 193
+  },
+  "findings": [],
+  "log_hits": [
+    {
+      "source": "syslog",
+      "line": "2026-07-26T05:22:30.405438+08:00 hoonsoropenclaw sysmon: [WARN] hoonsoropenclaw warn=4 crit=0 — WARN:Swap 使用率 0.0% WARN:本次 boot journal 27365 條 (>500) WARN:本次 boot ERROR+ 3482 條 (>30) WARN:/var/log/syslog 大小 992KB (>500KB)",
+      "level": "warn",
+      "matched_pattern": "\\bWARN\\b|warn:|\\bdeprecated\\b"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T05:22:33.830772+08:00 hoonsoropenclaw sysmon: [WARN] hoonsoropenclaw warn=4 crit=0 — WARN:Swap 使用率 0.0% WARN:本次 boot journal 27366 條 (>500) WARN:本次 boot ERROR+ 3482 條 (>30) WARN:/var/log/syslog 大小 992KB (>500KB)",
+      "level": "warn",
+      "matched_pattern": "\\bWARN\\b|warn:|\\bdeprecated\\b"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T05:22:37.256316+08:00 hoonsoropenclaw sysmon: [CRITICAL] hoonsoropenclaw warn=4 crit=1 — CRIT:CPU 使用率 1.7% (>=0.05%) WARN:Swap 使用率 0.0% WARN:本次 boot journal 27372 條 (>500) WARN:本次 boot ERROR+ 3483 條 (>30) WARN:/var/log/syslog 大小 992KB (>500KB)",
+      "level": "warn",
+      "matched_pattern": "\\bWARN\\b|warn:|\\bdeprecated\\b"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T05:23:13.792488+08:00 hoonsoropenclaw sysmon: [WARN] hoonsoropenclaw warn=3 crit=0 — WARN:本次 boot journal 27389 條 (>500) WARN:本次 boot ERROR+ 3486 條 (>30) WARN:/var/log/syslog 大小 996KB (>500KB)",
+      "level": "warn",
+      "matched_pattern": "\\bWARN\\b|warn:|\\bdeprecated\\b"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T05:23:16.216522+08:00 hoonsoropenclaw sysmon: [CRITICAL] hoonsoropenclaw warn=3 crit=1 — CRIT:CPU 使用率 2.0% (>=0.05%) WARN:本次 boot journal 27390 條 (>500) WARN:本次 boot ERROR+ 3486 條 (>30) WARN:/var/log/syslog 大小 996KB (>500KB)",
+      "level": "warn",
+      "matched_pattern": "\\bWARN\\b|warn:|\\bdeprecated\\b"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T05:23:56.972725+08:00 hoonsoropenclaw sysmon: [WARN] hoonsoropenclaw warn=3 crit=0 — WARN:本次 boot journal 27410 條 (>500) WARN:本次 boot ERROR+ 3493 條 (>30) WARN:/var/log/syslog 大小 996KB (>500KB)",
+      "level": "warn",
+      "matched_pattern": "\\bWARN\\b|warn:|\\bdeprecated\\b"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T17:15:14.542070+08:00 hoonsoropenclaw kernel: 9 invoked oom-killer: gfp_mask=0x140cca(GFP_HIGHUSER_MOVABLE|__GFP_COMP), order=0, oom_score_adj=100",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T17:15:14.543263+08:00 hoonsoropenclaw kernel: oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=user.slice,mems_allowed=0,global_oom,task_memcg=/system.slice/cron.service,task=python3,pid=595399,uid=1000",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T17:15:14.543263+08:00 hoonsoropenclaw kernel: Out of memory: Killed process 595399 (python3) total-vm:37456588kB, anon-rss:30479616kB, file-rss:2688kB, shmem-rss:0kB, UID:1000 pgtables:73320kB oom_score_adj:0",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T17:15:14.663872+08:00 hoonsoropenclaw systemd[1]: cron.service: A process of this unit has been killed by the OOM killer.",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T17:15:14.665481+08:00 hoonsoropenclaw systemd[1]: cron.service: Failed with result 'oom-kill'.",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T17:15:16.933011+08:00 hoonsoropenclaw kernel: oom_reaper: reaped process 595399 (python3), now anon-rss:44kB, file-rss:52kB, shmem-rss:0kB",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T18:25:48.126596+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_632628/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java) total-vm:8000000kB|",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T18:25:53.749702+08:00 hoonsoropenclaw linux-watchdog: oom-kill: 4 match(es) in /var/log/syslog since last run (thr=1); samples: 2026-07-26T17:15:14.543263+08:00 hoonsoropenclaw kernel: Out of memory: Killed process 595399 (python3) total-vm:37456588kB, anon-rss:30479616kB, file-rss:2688kB, shmem-rss:0kB, UID:1000 pgtables:73320kB oom_score_adj:0|2026-07-26T17:15:14.665481+08:00 hoonsoropenclaw systemd[1]: cron.service: Failed with result 'oom-kill'.|2026-07-26T18:25:48.126596+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_632628/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java) total-vm:8000000kB||",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T18:26:53.261552+08:00 hoonsoropenclaw linux-watchdog: oom-kill: 5 match(es) in /var/log/syslog since last run (thr=1); samples: 2026-07-26T17:15:14.665481+08:00 hoonsoropenclaw systemd[1]: cron.service: Failed with result 'oom-kill'.|2026-07-26T18:25:48.126596+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_632628/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java) total-vm:8000000kB||2026-07-26T18:25:53.749702+08:00 hoonsoropenclaw linux-watchdog: oom-kill: 4 match(es) in /var/log/syslog since last run (thr=1); samples: 2026-07-26T17:15:14.543263+08:00 hoonsoropenclaw kernel: Out of memory: Killed process 595399 (python3) total-vm:37456588kB, anon-rss:30479616kB, file-rss:2688kB, shmem-rss:0kB, UID:1000 pgtables:73320kB oom_score_adj:0|2026-07-26T17:15:14.665481+08:00 hoonsoropenclaw systemd[1]: cron.service: Failed with result 'oom-kill'.|2026-07-26T18:25:48.126596+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T18:27:20.226771+08:00 hoonsoropenclaw linux-watchdog: oom-kill: 4 match(es) in /var/log/syslog since last run (thr=1); samples: 2026-07-26T17:15:14.543263+08:00 hoonsoropenclaw kernel: Out of memory: Killed process 595399 (python3) total-vm:37456588kB, anon-rss:30479616kB, file-rss:2688kB, shmem-rss:0kB, UID:1000 pgtables:73320kB oom_score_adj:0|2026-07-26T17:15:14.665481+08:00 hoonsoropenclaw systemd[1]: cron.service: Failed with result 'oom-kill'.|2026-07-26T18:25:48.126596+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_632628/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java) total-vm:8000000kB||",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T18:27:32.392478+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_634428/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java) total-vm:8000000kB|",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T18:27:40.359760+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_634782/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java) total-vm:8000000kB|",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T18:27:48.583119+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_635154/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java) total-vm:8000000kB|",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T18:27:56.986074+08:00 hoonsoropenclaw linux-watchdog: oom-kill: 7 match(es) in /var/log/syslog since last run (thr=1); samples: 2026-07-26T18:27:32.392478+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_634428/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java) total-vm:8000000kB||2026-07-26T18:27:40.359760+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_634782/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java) total-vm:8000000kB||2026-07-26T18:27:48.583119+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_635154/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java) total-vm:8000000kB||",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T18:28:09.134618+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_635868/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java) total-vm:8000000kB|",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T18:28:17.767874+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_636248/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java) total-vm:8000000kB|",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T18:29:53.406143+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_637230/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java)|",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T18:30:05.989812+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_637568/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java)|",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T18:31:40.191419+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_638991/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java)|",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T18:31:50.193377+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_639373/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java)|",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T18:32:10.708650+08:00 hoonsoropenclaw linux-watchdog: oom-kill: 10 match(es) in /var/log/syslog since last run (thr=1); samples: 2026-07-26T18:30:05.989812+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_637568/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java)||2026-07-26T18:31:40.191419+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_638991/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java)||2026-07-26T18:31:50.193377+08:00 hoonsoropenclaw linux-watchdog-test: oom-kill: 1 match(es) in /tmp/watchdog_test_639373/fakelogs/syslog since last run (thr=1); samples: 2026-07-26T10:00:00Z host kernel: Out of memory: Killed process 1234 (java)||",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T21:13:29.877712+08:00 hoonsoropenclaw systemd[1]: system.slice: A process of this unit has been killed by the OOM killer.",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T23:13:55+08:00 hermes-test kernel: Out of memory: Killed process 12345 (evil) total-vm:1GB, anon-rss:512MB",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T23:15:01+08:00 hermes-test kernel: Out of memory: Killed process 99999 (real) total-vm:2GB anon-rss:1GB",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T23:15:46+08:00 hermes-test kernel: Out of memory: Killed process 88888 (final) total-vm:3GB",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T23:15:55+08:00 hermes-test kernel: Out of memory: Killed process 88888 (final) total-vm:3GB",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T23:16:37+08:00 hermes-test kernel: Out of memory: Killed process 77777 (e2e) total-vm:5GB",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T23:17:36+08:00 hermes-test kernel: Out of memory: Killed process 11111 (e2e-final) total-vm:6GB",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T23:18:23+08:00 hermes-test kernel: Out of memory: Killed process 55555 (clean-e2e) total-vm:8GB",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-26T23:20:00+08:00 hermes-test kernel: Out of memory: Killed process 44444 (final-e2e) total-vm:9GB anon-rss:8GB",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-27T03:09:10+08:00 hoonsoropenclaw kernel: TEST_FAKE: Out of memory: Killed process 99999 (python3) total-vm:1kB",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "syslog",
+      "line": "2026-07-27T03:09:34+08:00 hoonsoropenclaw kernel: TEST_FAKE2: segfault at 0xdeadbeef ip 0xcafebabe",
+      "level": "crit",
+      "matched_pattern": "segfault|general protection|GPU hang"
+    },
+    {
+      "source": "kern.log",
+      "line": "2026-07-26T17:15:14.542070+08:00 hoonsoropenclaw kernel: 9 invoked oom-killer: gfp_mask=0x140cca(GFP_HIGHUSER_MOVABLE|__GFP_COMP), order=0, oom_score_adj=100",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "kern.log",
+      "line": "2026-07-26T17:15:14.543263+08:00 hoonsoropenclaw kernel: oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=user.slice,mems_allowed=0,global_oom,task_memcg=/system.slice/cron.service,task=python3,pid=595399,uid=1000",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "kern.log",
+      "line": "2026-07-26T17:15:14.543263+08:00 hoonsoropenclaw kernel: Out of memory: Killed process 595399 (python3) total-vm:37456588kB, anon-rss:30479616kB, file-rss:2688kB, shmem-rss:0kB, UID:1000 pgtables:73320kB oom_score_adj:0",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "kern.log",
+      "line": "2026-07-26T17:15:16.933011+08:00 hoonsoropenclaw kernel: oom_reaper: reaped process 595399 (python3), now anon-rss:44kB, file-rss:52kB, shmem-rss:0kB",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "auth.log",
+      "line": "2026-07-26T23:13:55.099233+08:00 hoonsoropenclaw sudo: hoonsoropenclaw : PWD=/home/hoonsoropenclaw/.hermes/projects/learning_1785078607_1 ; USER=root ; COMMAND=/usr/bin/bash -c 'echo \"2026-07-26T23:13:55+08:00 hermes-test kernel: Out of memory: Killed process 12345 (evil) total-vm:1GB, anon-rss:512MB\" >> /var/log/syslog'",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "auth.log",
+      "line": "2026-07-26T23:15:01.093904+08:00 hoonsoropenclaw sudo: hoonsoropenclaw : PWD=/home/hoonsoropenclaw/.hermes/projects/learning_1785078607_1 ; USER=root ; COMMAND=/usr/bin/bash -c 'echo \"2026-07-26T23:15:01+08:00 hermes-test kernel: Out of memory: Killed process 99999 (real) total-vm:2GB anon-rss:1GB\" >> /var/log/syslog'",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "auth.log",
+      "line": "2026-07-26T23:15:46.381556+08:00 hoonsoropenclaw sudo: hoonsoropenclaw : PWD=/home/hoonsoropenclaw/.hermes/projects/learning_1785078607_1 ; USER=root ; COMMAND=/usr/bin/bash -c 'echo \"$(date -Iseconds) hermes-test kernel: Out of memory: Killed process 88888 (final) total-vm:3GB\" >> /var/log/syslog'",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "auth.log",
+      "line": "2026-07-26T23:15:55.851536+08:00 hoonsoropenclaw sudo: hoonsoropenclaw : PWD=/home/hoonsoropenclaw/.hermes/projects/learning_1785078607_1 ; USER=root ; COMMAND=/usr/bin/bash -c 'echo \"$(date -Iseconds) hermes-test kernel: Out of memory: Killed process 88888 (final) total-vm:3GB\" >> /var/log/syslog'",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "auth.log",
+      "line": "2026-07-26T23:16:37.765838+08:00 hoonsoropenclaw sudo: hoonsoropenclaw : PWD=/home/hoonsoropenclaw/.hermes/projects/learning_1785078607_1 ; USER=root ; COMMAND=/usr/bin/bash -c 'echo \"$(date -Iseconds) hermes-test kernel: Out of memory: Killed process 77777 (e2e) total-vm:5GB\" >> /var/log/syslog'",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "auth.log",
+      "line": "2026-07-26T23:17:36.290565+08:00 hoonsoropenclaw sudo: hoonsoropenclaw : PWD=/home/hoonsoropenclaw/.hermes/projects/learning_1785078607_1 ; USER=root ; COMMAND=/usr/bin/bash -c 'echo \"$(date -Iseconds) hermes-test kernel: Out of memory: Killed process 11111 (e2e-final) total-vm:6GB\" >> /var/log/syslog'",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "auth.log",
+      "line": "2026-07-26T23:18:23.214842+08:00 hoonsoropenclaw sudo: hoonsoropenclaw : PWD=/home/hoonsoropenclaw/.hermes/projects/learning_1785078607_1 ; USER=root ; COMMAND=/usr/bin/bash -c 'echo \"$(date -Iseconds) hermes-test kernel: Out of memory: Killed process 55555 (clean-e2e) total-vm:8GB\" >> /var/log/syslog'",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    },
+    {
+      "source": "auth.log",
+      "line": "2026-07-26T23:20:00.388785+08:00 hoonsoropenclaw sudo: hoonsoropenclaw : PWD=/home/hoonsoropenclaw/.hermes/projects/learning_1785078607_1 ; USER=root ; COMMAND=/usr/bin/bash -c 'echo \"$(date -Iseconds) hermes-test kernel: Out of memory: Killed process 44444 (final-e2e) total-vm:9GB anon-rss:8GB\" >> /var/log/syslog'",
+      "level": "crit",
+      "matched_pattern": "\\bOOM\\b|Out of memory|oom-kill|oom_reaper"
+    }
+  ],
+  "alert_stats": {
+    "console": 20,
+    "log": 20
+  }
+}

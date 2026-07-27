@@ -75,6 +75,9 @@ def _sample_disks() -> list[dict[str, float]]:
         "cgroup2", "securityfs", "bpf", "autofs", "mqueue", "pstore",
         "debugfs", "tracefs", "hugetlbfs", "configfs", "fusectl",
         "ramfs", "binfmt_misc", "nsfs", "fuse.gvfsd-fuse",
+        "squashfs",   # snap / docker readonly 層，100% 是正常的
+        "overlay",    # docker / containerd
+        "iso9660",    # 光碟
     }
     for part in psutil.disk_partitions(all=False):
         if part.fstype in SKIP_FSTYPES:

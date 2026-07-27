@@ -67,6 +67,7 @@ WARN_LOG_PATTERNS = [
 # 應忽略的雜訊（避免 false positive）
 LOG_IGNORE_PATTERNS = [
     r"systemd\[\d+\]: mcp-dashboard.*restart counter is at \d+\.",  # 已知重啟迴圈服務
+    r"systemd\[\d+\]: mcp-dashboard\.service:.* (Scheduled restart|Failed to set up standard output|Main process exited|Failed with result)",  # 已知壞掉的 mcp-dashboard
     r"resolvconf.*resolv\.conf",                                     # 正常的 DNS reload
 ]
 

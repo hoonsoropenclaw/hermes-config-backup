@@ -1,0 +1,28 @@
+[Unit]
+Description=sysmonitor — Linux 系統日誌 + 資源監控
+Documentation=file:///home/hoonsoropenclaw/.hermes/scripts/sysmonitor/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=hoonsoropenclaw
+Group=hoonsoropenclaw
+WorkingDirectory=/home/hoonsoropenclaw/.hermes/scripts/sysmonitor
+ExecStart=/usr/bin/python3 /home/hoonsoropenclaw/.hermes/scripts/sysmonitor/sysmonitor.py --once
+StandardOutput=append:/home/hoonsoropenclaw/.hermes/scripts/sysmonitor/logs/cycle.log
+StandardError=append:/home/hoonsoropenclaw/.hermes/scripts/sysmonitor/logs/cycle.log
+TimeoutStartSec=180s
+TimeoutStopSec=30s
+
+# 環境硬化
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=true
+# 讀 /var/log 需要 — 不能 ProtectSystem=strict 卻沒 Allow 規則
+ReadOnlyPaths=/var/log /home/hoonsoropenclaw/.hermes/scripts/sysmonitor
+ReadWritePaths=/home/hoonsoropenclaw/.hermes/scripts/sysmonitor
+
+[Install]
+WantedBy=multi-user.target

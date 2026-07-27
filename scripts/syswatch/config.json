@@ -1,0 +1,77 @@
+{
+  "_comment": "syswatch threshold config — values tuned for 4-core/31GB/N100 mini PC. Adjust via 'syswatch --init-config' to write a local override.",
+
+  "thresholds": {
+    "cpu_percent_warn": 80,
+    "cpu_percent_critical": 95,
+
+    "memory_percent_warn": 80,
+    "memory_percent_critical": 92,
+
+    "swap_percent_warn": 40,
+    "swap_percent_critical": 70,
+
+    "load_per_cpu_warn": 1.5,
+    "load_per_cpu_critical": 3.0,
+
+    "disk_percent_warn": 80,
+    "disk_percent_critical": 92,
+
+    "disk_inodes_percent_warn": 80,
+    "disk_inodes_percent_critical": 92,
+
+    "iowait_percent_warn": 30,
+    "iowait_percent_critical": 60
+  },
+
+  "log_scan": {
+    "auth_log_path": "/var/log/auth.log",
+    "syslog_path": "/var/log/syslog",
+    "kern_log_path": "/dev/kmsg",
+    "dmesg_command": ["dmesg", "--since", "-15min", "--level", "err,crit,emerg,alert"],
+
+    "ssh_failed_login_window_minutes": 15,
+    "ssh_failed_login_threshold_warn": 5,
+    "ssh_failed_login_threshold_critical": 20,
+
+    "ssh_invalid_user_window_minutes": 60,
+    "ssh_invalid_user_threshold_warn": 10,
+    "ssh_invalid_user_threshold_critical": 50,
+
+    "oom_kill_lookback_minutes": 60,
+    "segfault_lookback_minutes": 60,
+    "segfault_threshold_warn": 3,
+    "segfault_threshold_critical": 10,
+
+    "disk_error_lookback_minutes": 60,
+    "disk_error_threshold_warn": 2,
+    "disk_error_threshold_critical": 5
+  },
+
+  "alerts": {
+    "output_dir": "/var/log/syswatch",
+    "fallback_output_dir": "/home/hoonsoropenclaw/.local/share/syswatch/log",
+    "urgent_flag_path": "/var/run/syswatch.urgent",
+    "fallback_urgent_flag_path": "/tmp/syswatch.urgent",
+    "report_basename": "syswatch-report",
+    "log_basename": "syswatch.log",
+    "keep_reports_days": 14,
+
+    "console": true,
+    "syslog_ident": "syswatch",
+
+    "cooldown_seconds_between_alerts": 600
+  },
+
+  "monitored_mounts": ["/", "/home"],
+
+  "exclude_fs_types": [
+    "tmpfs", "devtmpfs", "proc", "sysfs", "devpts",
+    "cgroup", "cgroup2", "overlay", "squashfs", "iso9660",
+    "autofs", "binfmt_misc", "configfs", "debugfs",
+    "tracefs", "mqueue", "pstore", "ramfs", "fusectl",
+    "hugetlbfs", "rpc_pipefs", "nsfs",
+    "securityfs", "efivarfs", "bpf", "fuse.gvfsd-fuse",
+    "selinuxfs", "systemd-1"
+  ]
+}

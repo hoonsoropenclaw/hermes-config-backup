@@ -115,3 +115,23 @@ python3 test_unit.py          # → 12/12 passed
 python3 test_smoke.py         # → ALL OK
 python3 wttr_weather.py Paris # → "Paris: ☀️ +30°C"
 ```
+
+---
+
+## HTMLParser + Atomic Output Pitfalls（GitHub Trending，2026-07-27）
+
+### Pitfall 5: HTML void elements must not increase parser depth
+
+Python `HTMLParser.handle_starttag()` also receives void elements such as `img`, `br`, and `meta`. These elements do not have matching end tags in normal HTML. If a stateful card parser increments its nesting depth for every start tag, one `img` can leave the depth permanently off by one and prevent the surrounding `article` from closing.
+
+**If→Then**: **If** a stdlib `HTMLParser` uses depth to delimit records **Then** maintain a `VOID_ELEMENTS` set and do not increment depth for those tags; for `br` inside captured text, append a space so words do not concatenate.
+
+**Regression fixture**: include both `<br>` inside a description and `<img>` inside the same record, followed by a second record. Assert both records parse successfully.
+
+### Pitfall 6: fixed sibling `.tmp` names collide under concurrent automation
+
+`output.with_name(f".{output.name}.tmp")` is atomic for one process but not concurrency-safe: two cron runs can overwrite or replace the same temp file.
+
+**If→Then**: **If** an automated script atomically updates an output that can have overlapping runs **Then** use `tempfile.mkstemp(dir=output.parent, prefix=f".{output.name}.", suffix=".tmp")`, write + flush + `os.fsync()`, then `os.replace()`; delete the temp file on exceptions.
+
+**Verification**: output exists, no `.<name>.*.tmp` remains, and invalid input leaves the previous successful output unchanged.

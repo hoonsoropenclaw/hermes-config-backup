@@ -1,0 +1,49 @@
+{
+  "ts": "2026-07-27T03:11:07.544092",
+  "self_check": {
+    "cpu_percent": 1.0,
+    "cpu_count": 4,
+    "mem": {
+      "percent": 4.5,
+      "used_gb": 1.41,
+      "total_gb": 31.06,
+      "available_gb": 29.65
+    },
+    "disks": [
+      {
+        "mountpoint": "/",
+        "device": "/dev/mapper/ubuntu--vg-ubuntu--lv",
+        "fstype": "ext4",
+        "percent": 41.2,
+        "used_gb": 90.24,
+        "total_gb": 230.67
+      },
+      {
+        "mountpoint": "/boot",
+        "device": "/dev/nvme0n1p2",
+        "fstype": "ext4",
+        "percent": 11.0,
+        "used_gb": 0.2,
+        "total_gb": 1.9
+      },
+      {
+        "mountpoint": "/boot/efi",
+        "device": "/dev/nvme0n1p1",
+        "fstype": "vfat",
+        "percent": 0.6,
+        "used_gb": 0.01,
+        "total_gb": 1.05
+      }
+    ],
+    "load_avg_1": 0.06494140625,
+    "zombie_count": 0,
+    "boot_time": "2026-07-25T14:40:29",
+    "process_count": 193
+  },
+  "findings": [],
+  "log_hits": [],
+  "alert_stats": {
+    "console": 0,
+    "log": 0
+  }
+}

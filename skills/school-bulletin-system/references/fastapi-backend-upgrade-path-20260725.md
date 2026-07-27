@@ -72,6 +72,7 @@ class Tenant(BaseModel):
 ### Phase 1: Extract Backend Logic (Low Risk)
 
 **Goal**: Mirror current Supabase-backed functionality in FastAPI endpoints
+**Pattern choice (Cycle 549)**: Use **sync SQLAlchemy** (`sessionmaker` + `def` + `db.execute()`), NOT async. Quote API (72 tests) proves sync pattern reaches production quality. Async adds 3 pitfall categories (stale reads, async/sync deadlock, `expire_on_commit=False`) with no benefit for bulletin-scale workloads. Use `postgresql+psycopg2://` to connect to Supabase. See `references/fastapi-sync-vs-async-decision-20260727.md` for full analysis.
 
 Extract from Next.js Route Handlers into FastAPI:
 - `POST /api/announcements` → FastAPI `POST /announcements`
@@ -160,3 +161,4 @@ PostgreSQL with `schema_per_tenant` or `database_per_tenant` isolation. Each sch
 5. **Atomic writes**: use `tempfile.mkstemp` + `os.replace()` for corruption-safe report writes
 6. **`async_sessionmaker` + `yield Depends()` pattern** (Cycle 537): `async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)` + `async def get_db() → AsyncGenerator[AsyncSession, None]` with `yield` for per-request setup/teardown. Endpoint param: `session: AsyncSession = Depends(get_db)`
 7. **BLOCKING sync I/O in async endpoint = event loop blocked** (Cycle 537): FastAPI async endpoint declared `async def` that calls synchronous blocking DB operations blocks the entire event loop. Use `async_sessionmaker` + native `async def` DB operations, OR declare route as `def` (not `async def`) to run in threadpool
+8. **Sync SQLAlchemy reaches production quality** (Cycle 549): Quote API uses sync `sessionmaker` + `def` + `db.execute()` (NOT async) — 72 tests prove this pattern is sufficient for CRUD + rate limiting + full-text search. Prefer sync for Phase 1 migration to avoid 3 async pitfall categories.

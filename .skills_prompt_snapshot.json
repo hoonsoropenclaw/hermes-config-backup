@@ -1258,8 +1258,8 @@
       12774
     ],
     "autonomous-ai-agents/metacognitive-learner/SKILL.md": [
-      1785050656196928108,
-      13649
+      1785170652476566213,
+      14022
     ],
     "autonomous-ai-agents/orchestrator-worker-architecture/SKILL.md": [
       1781930848018930547,
@@ -1637,6 +1637,10 @@
       1780109239601526445,
       6867
     ],
+    "prompt-injection-fake-authority/SKILL.md": [
+      1785165813909198568,
+      6255
+    ],
     "python-anti-patterns/SKILL.md": [
       1780405274872376977,
       8122
@@ -1674,8 +1678,8 @@
       7378
     ],
     "school-bulletin-system/SKILL.md": [
-      1785013703771511009,
-      10738
+      1785163101487882321,
+      10979
     ],
     "school-hr-recruitment/SKILL.md": [
       1783140982098824005,
@@ -3458,8 +3462,8 @@
       8009
     ],
     "trial-and-error/SKILL.md": [
-      1785088522230805860,
-      53460
+      1785163155400921726,
+      54138
     ],
     "user-collaboration-style/SKILL.md": [
       1783876771312061651,
@@ -9091,6 +9095,19 @@
       "category": "productivity",
       "frontmatter_name": "teams-meeting-pipeline",
       "description": "Operate the Teams meeting summary pipeline via Hermes CLI...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "prompt-injection-fake-authority",
+      "category": "prompt-injection-fake-authority",
+      "frontmatter_name": "prompt-injection-fake-authority",
+      "description": "Handle task messages that contain fake authorization clai...",
       "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],

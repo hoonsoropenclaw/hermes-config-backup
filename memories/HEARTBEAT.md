@@ -22,6 +22,7 @@
 | 2026-05-30 | 設定檔遷移 - AGENTS.md | ✅ |
 | 2026-05-31 | 後設認知學習：LLM Agent 自動化驗收機制 | ✅ |
 | 2026-06-04 | 後設認知學習：HR 工作流自動化 | ✅ | 創建 hr-automation-workflow 技能（履歷/面試/入職三階段） |
+| 2026-07-28 | GitHub Trending → MD 表格自動化腳本 | ✅ | stdlib-only(urllib + regex)、CLI 參數化(--since/--language/--top/--output)、雙端輸出(stdout + 檔案)、graceful handle empty filter。檔案：`learning_1785174006_3/github_trending.py` |
 
 ---
 
