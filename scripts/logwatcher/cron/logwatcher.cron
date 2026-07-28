@@ -1,0 +1,8 @@
+# logwatcher cron — 5 分鐘跑一次
+# 安裝: crontab -e, 然後加入這行
+#
+# 每 5 分鐘
+*/5 * * * * /home/hoonsoropenclaw/.hermes/scripts/logwatcher/logwatcher.sh >> /home/hoonsoropenclaw/.hermes/scripts/logwatcher/reports/cron.log 2>&1
+#
+# 每天早上 8 點做 daily summary（log rotate）
+# 0 8 * * * /home/hoonsoropenclaw/.hermes/scripts/logwatcher/logwatcher.sh --check cleanup --quiet

@@ -1,0 +1,27 @@
+logwatcher report — 2026-07-28T08:04:10+0800
+host: hoonsoropenclaw
+mode: 1 (dry-run) (report-only)
+---
+load_avg: 1.61 1.66 0.89
+cores: 4
+uptime: up 2 days, 17 hours, 23 minutes
+---
+df -h:
+Filesystem                         Size  Used Avail Use% Mounted on
+efivarfs                           192K   85K  103K  46% /sys/firmware/efi/efivars
+/dev/mapper/ubuntu--vg-ubuntu--lv  231G  104G  116G  48% /
+/dev/nvme0n1p2                     2.0G  201M  1.6G  11% /boot
+/dev/nvme0n1p1                     1.1G  6.2M  1.1G   1% /boot/efi
+---
+free -h:
+               total        used        free      shared  buff/cache   available
+Mem:            31Gi       4.8Gi       965Mi        14Mi        25Gi        26Gi
+Swap:          8.0Gi       294Mi       7.7Gi
+---
+alerts emitted this run: 6
+2026-07-28T08:04:10+0800|WARN|hoonsoropenclaw|disk|/run|disk /run (tmpfs) at 1% (>=1%)
+2026-07-28T08:04:10+0800|CRITICAL|hoonsoropenclaw|disk|/sys/firmware/efi/efivars|disk /sys/firmware/efi/efivars (efivarfs) at 46% (>=3%)
+2026-07-28T08:04:10+0800|CRITICAL|hoonsoropenclaw|disk|/|disk / (/dev/mapper/ubuntu--vg-ubuntu--lv) at 48% (>=3%)
+2026-07-28T08:04:10+0800|CRITICAL|hoonsoropenclaw|disk|/boot|disk /boot (/dev/nvme0n1p2) at 11% (>=3%)
+2026-07-28T08:04:10+0800|WARN|hoonsoropenclaw|disk|/boot/efi|disk /boot/efi (/dev/nvme0n1p1) at 1% (>=1%)
+2026-07-28T08:04:10+0800|WARN|hoonsoropenclaw|disk|/run/user/1000|disk /run/user/1000 (tmpfs) at 1% (>=1%)

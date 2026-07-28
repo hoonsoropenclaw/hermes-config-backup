@@ -59,6 +59,22 @@ def get_db():
 
 ---
 
+## Uvicorn Proxy Trust Is a Server-Layer Boundary (2026-07-28)
+
+**If→Then #2 (rate-limit identity behind Uvicorn)**:
+
+> **If** a FastAPI rate limiter keys by client IP **Then** the application must use only `request.client.host` from the ASGI scope; do not parse raw `X-Forwarded-For` / `X-Real-IP` again in app code. Configure trust once at Uvicorn with `proxy_headers` + a narrow `forwarded_allow_ips` list.
+> **Why**: Uvicorn may rewrite `request.client.host` before FastAPI sees the request. Conversely, app-level raw-header parsing can bypass Uvicorn's trusted-proxy allowlist. In a real TCP smoke test, an injected `X-Forwarded-For` changed the limiter bucket until the runner used `--no-proxy-headers`; the durable fix was a secure-by-default runner plus ASGI-scope-only keying.
+> **Verification**: exhaust one bucket, send another request with a forged `X-Forwarded-For`, and require `429 + Retry-After`. Test through a real Uvicorn TCP process, not only `TestClient`.
+
+## SQLite Data Directory Must Not Chmod Existing Shared Parents (2026-07-28)
+
+**If→Then #3 (SQLite file-mode hardening)**:
+
+> **If** a service creates a private SQLite DB directory **Then** create that new directory under `umask(0077)` and set `0700`; set DB/WAL/SHM to `0600`.
+> **If** the configured parent directory already exists with a broader mode **Then** fail closed with a clear error; do not silently `chmod 0700` an existing shared directory such as `/tmp` or a project root.
+> **Verification**: regression test an existing `0755` parent, assert startup raises, parent mode remains `0755`, and no DB file is created.
+
 ## Related Files
 
 - `school-bulletin-system/references/fastapi-sync-vs-async-decision-20260727.md` — full decision analysis

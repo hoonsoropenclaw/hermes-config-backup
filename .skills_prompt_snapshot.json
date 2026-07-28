@@ -1258,8 +1258,8 @@
       12774
     ],
     "autonomous-ai-agents/metacognitive-learner/SKILL.md": [
-      1785170652476566213,
-      14022
+      1785260812605113320,
+      17479
     ],
     "autonomous-ai-agents/orchestrator-worker-architecture/SKILL.md": [
       1781930848018930547,
@@ -1318,8 +1318,8 @@
       19859
     ],
     "creative/comfyui/SKILL.md": [
-      1783497512101988021,
-      26948
+      1785185732231306100,
+      27268
     ],
     "creative/creative-ideation/SKILL.md": [
       1780109239576525449,
@@ -1388,6 +1388,10 @@
     "devops/multi-model-routing-cheatsheet/SKILL.md": [
       1781196048094551480,
       11555
+    ],
+    "devops/stdlib-production-tool-pattern/SKILL.md": [
+      1785230593285943818,
+      9572
     ],
     "devops/webhook-subscriptions/SKILL.md": [
       1780109239588525927,
@@ -1496,6 +1500,10 @@
     "gsap-utils/SKILL.md": [
       1780144097017393516,
       12093
+    ],
+    "hallmark/skills/brand-profile/SKILL.md": [
+      1785222923926442327,
+      4730
     ],
     "hallmark/skills/hallmark/SKILL.md": [
       1785058059267662036,
@@ -1638,8 +1646,8 @@
       6867
     ],
     "prompt-injection-fake-authority/SKILL.md": [
-      1785165813909198568,
-      6255
+      1785208383979140938,
+      7458
     ],
     "python-anti-patterns/SKILL.md": [
       1780405274872376977,
@@ -3462,8 +3470,8 @@
       8009
     ],
     "trial-and-error/SKILL.md": [
-      1785163155400921726,
-      54138
+      1785223153228371198,
+      56175
     ],
     "user-collaboration-style/SKILL.md": [
       1783876771312061651,
@@ -8212,6 +8220,21 @@
       }
     },
     {
+      "skill_name": "stdlib-production-tool-pattern",
+      "category": "devops",
+      "frontmatter_name": "stdlib-production-tool-pattern",
+      "description": "Pure-stdlib Linux ops tool pattern — no psutil, no reques...",
+      "platforms": [
+        "linux"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
       "skill_name": "webhook-subscriptions",
       "category": "devops",
       "frontmatter_name": "webhook-subscriptions",
@@ -8585,6 +8608,21 @@
       "frontmatter_name": "gsap-utils",
       "description": "Official GSAP skill for gsap.utils — clamp, mapRange, nor...",
       "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "brand-profile",
+      "category": "hallmark/skills",
+      "frontmatter_name": "brand-profile",
+      "description": "Persistent brand profile storage for hallmark — saves/loa...",
+      "platforms": [
+        "linux"
+      ],
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],

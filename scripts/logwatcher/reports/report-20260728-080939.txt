@@ -1,0 +1,25 @@
+logwatcher report — 2026-07-28T08:09:38+0800
+host: hoonsoropenclaw
+mode: 1 (dry-run) (report-only)
+---
+load_avg: 0.90 1.36 1.01
+cores: 4
+uptime: up 2 days, 17 hours, 29 minutes
+---
+df -h:
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              3.2G  5.0M  3.2G   1% /run
+efivarfs                           192K   85K  103K  46% /sys/firmware/efi/efivars
+/dev/mapper/ubuntu--vg-ubuntu--lv  231G  104G  116G  48% /
+tmpfs                               16G     0   16G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/nvme0n1p2                     2.0G  201M  1.6G  11% /boot
+/dev/nvme0n1p1                     1.1G  6.2M  1.1G   1% /boot/efi
+tmpfs                              3.2G   20K  3.2G   1% /run/user/1000
+---
+free -h:
+               total        used        free      shared  buff/cache   available
+Mem:            31Gi       3.2Gi       2.4Gi        14Mi        25Gi        27Gi
+Swap:          8.0Gi       294Mi       7.7Gi
+---
+alerts emitted this run: 0

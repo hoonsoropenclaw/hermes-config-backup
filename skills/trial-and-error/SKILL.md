@@ -617,6 +617,31 @@ print(f"lines={len(c.splitlines())}, KB={p.stat().st_size//1024}")
 
 ---
 
+### 2.14 Persistent Brand Profile Storage — hallmark D2→D3 Exit (Cycle 551, 2026-07-28)
+
+**Problem**: `hallmark study` extracts brand DNA but has no persistent storage. Each session rebuilds from scratch. Gap persisted 25+ cycles.
+
+**Root Cause**: `study` writes to `design.md` (project-level), not user-level persistent storage. `creative_brand_profiles/` was planned but never built.
+
+**If** `hallmark study` is used frequently and brand DNA needs reuse across sessions, **then**:
+1. Create `~/.hermes/creative_brand_profiles/<slug>.json` with JSON schema covering: `name/slug/studiedAt/source/typography{body,display,mono}/color{brand,accent,cobalt,jade,rose,neutral,paper}/macrostructure{archetype,columns}/motion{signature,antiPatterns}/notes`
+2. Create `~/.hermes/creative_brand_profiles/_schema.md` documenting the schema
+3. Add `hallmark/skills/brand-profile/SKILL.md` with save/list/delete verbs
+4. Add `hallmark/skills/hallmark/references/verbs/brand-profile.md` for verb implementation
+5. Patch `hallmark-05-commands.md` to include `save`, `list-brands`, `delete-brand` commands
+
+**Verification**: `ls ~/.hermes/creative_brand_profiles/*.json | wc -l` → 3+ profiles; each JSON has required fields (name/slug/typography/color/macrostructure); hallmark commands reference the new verbs.
+
+**D2→D3 Exit**: Gap was identified 25+ cycles ago (Cycle 525-550). D3 exit required: (a) creating the actual directory + JSON profiles, (b) writing the skill files, (c) patching hallmark-05-commands.md. Not just documenting the gap.
+
+### 2.13 hallmark Study: URL Mode vs Image Mode Extraction Accuracy (Cycle 548)
+
+**發現**: `hallmark study` URL mode extracts exact OKLCH/hex from CSS + exact font names from `@font-face`. Image mode estimates from vision pass with candidate fonts from canon. This accuracy difference matters for brand fidelity.
+
+**If** studying a brand from URL **then** prefer URL mode for exact tokens; **If** from screenshot **then** note that tokens are estimated and fonts are role-based candidates.
+
+---
+
 ### delegate_task Has No Built-in Shared State (Cycle 543)
 
 **發現**: `delegate_task` spawns sub-agents in fully isolated contexts. Each worker gets its own conversation, terminal session, and tool state. **No shared state object** — sub-agents cannot read each other's variables unless the main session explicitly relays it.

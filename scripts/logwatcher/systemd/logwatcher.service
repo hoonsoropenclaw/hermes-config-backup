@@ -1,0 +1,28 @@
+[Unit]
+Description=Logwatcher — Linux 系統日誌與資源監控
+Documentation=file:///home/hoonsoropenclaw/.hermes/scripts/logwatcher/README.md
+After=network.target
+# 不要等 network-online（webhook 失敗時 fallback 已在腳本內）
+
+[Service]
+Type=oneshot
+ExecStart=/home/hoonsoropenclaw/.hermes/scripts/logwatcher/logwatcher.sh
+WorkingDirectory=/home/hoonsoropenclaw/.hermes/scripts/logwatcher
+# 環境變數（如需 Telegram 通知）
+# Environment="TG_BOT_TOKEN=xxx"
+# Environment="TG_CHAT_ID=xxx"
+# 失敗有 alert 觸發（exit 2）也要記錄下來
+StandardOutput=journal
+StandardError=journal
+# 高負載時不要殺 process
+TimeoutStartSec=120
+TimeoutStopSec=30
+# 資源限制
+MemoryMax=128M
+CPUQuota=50%
+# 安全
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/hoonsoropenclaw/.hermes/scripts/logwatcher

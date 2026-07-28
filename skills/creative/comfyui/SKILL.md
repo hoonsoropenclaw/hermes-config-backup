@@ -50,6 +50,11 @@ for workflow execution.
   generation tool routing decision (verdict: cloud, MiniMax image-01 vs ComfyUI
   Cloud, content filter quirks). **Always read before generating images on a
   machine without a dedicated GPU.**
+- `design-token-bridge-20260728.md` — Design token (W3C DTCG JSON) → ComfyUI
+  prompt bridge: how to translate brand tokens into style prompts for
+  workflow_api.json injection. Covers Style Dictionary v5 role, the semantic
+  translation layer, and IPAdapter / mmx `--first-frame` as complementary
+  visual anchors.
 
 **Scripts (`scripts/`):**
 

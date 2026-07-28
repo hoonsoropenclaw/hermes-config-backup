@@ -12,6 +12,39 @@ Load [`references/verbs/redesign.md`](references/verbs/redesign.md) and follow i
 
 ---
 
+## `hallmark save <brand-slug>`
+
+Saves the current `hallmark study` diagnosis as a persistent brand profile in `~/.hermes/creative_brand_profiles/<slug>.json`.
+
+**Prerequisite**: `hallmark study` must have been run in the current session.
+
+After `hallmark study` completes, say: *"Run `hallmark save <brand-slug>` to store this brand's DNA for reuse across sessions."*
+
+Load [`references/verbs/brand-profile.md`](references/verbs/brand-profile.md) and follow it.
+
+---
+
+## `hallmark list-brands`
+
+Lists all saved brand profiles from `~/.hermes/creative_brand_profiles/`.
+
+Output format:
+```
+N brand profiles found:
+  <slug>    <name>    studied <date>   source: <url|screenshot>
+  ...
+```
+
+Load [`references/verbs/brand-profile.md`](references/verbs/brand-profile.md) and follow it.
+
+---
+
+## `hallmark delete-brand <slug>`
+
+Deletes a brand profile. Requires user confirmation. Load [`references/verbs/brand-profile.md`](references/verbs/brand-profile.md) and follow it.
+
+---
+
 ## `hallmark study`
 
 The user has supplied a reference — either an attached screenshot or a URL to a live page — of a design they admire. They want to learn from it — its shape, its type, its rhythm — and apply that *DNA* to their own content. They do not want a pixel-faithful copy.

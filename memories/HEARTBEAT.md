@@ -23,6 +23,8 @@
 | 2026-05-31 | 後設認知學習：LLM Agent 自動化驗收機制 | ✅ |
 | 2026-06-04 | 後設認知學習：HR 工作流自動化 | ✅ | 創建 hr-automation-workflow 技能（履歷/面試/入職三階段） |
 | 2026-07-28 | GitHub Trending → MD 表格自動化腳本 | ✅ | stdlib-only(urllib + regex)、CLI 參數化(--since/--language/--top/--output)、雙端輸出(stdout + 檔案)、graceful handle empty filter。檔案：`learning_1785174006_3/github_trending.py` |
+| 2026-07-28 | 系統健康監控腳本 syshealth_monitor.py | ✅ | stdlib-only、5 個檢查器(CPU/RAM/Disk/Journal/Zombie)、閾值 YAML 可覆寫、雙端輸出(--brief + 詳細 JSON log)、退出碼 0/1/2、紅區不寫不動。檔案：`~/.hermes/scripts/syshealth/`。**首次實跑抓到 mcp-dashboard.service 真實 crit（236 err/h）** — 證明工具有效，不是擺設 |
+| 2026-07-28 | Telegram 天氣 bot 重做 (Cycle 545) | ✅ | 新檔 `weather.py` + `telegram_bot.py` + `test_unit.py` + `test_smoke.py` + `run.sh` + `.env.example`，**33 unit tests + 3 smoke tests 全綠**；stdlib-only、`signal` graceful shutdown、3 層防禦(allowlist + rate-limit + sanitize)、HTTPS-only token URL、`.env` 拒絕 symlink / mode≠600。CLI 4 城市實跑 `🌤️ 多雲 27°C` 中文 i18n 正確。專案根目錄：`/home/hoonsoropenclaw/projects/weather-bot/` |
 
 ---
 

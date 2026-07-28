@@ -1,0 +1,25 @@
+[Unit]
+Description=mlogwatch — Linux system log & resource monitor
+Documentation=https://github.com/hoonsoropenclaw/hermes-scripts
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/env bash -c 'exec /home/hoonsoropenclaw/.hermes/scripts/mlogwatch/run.sh'
+WorkingDirectory=/home/hoonsoropenclaw/.hermes/scripts/mlogwatch
+User=root
+# 硬化:能讀不能寫的目錄是 strict,允許 /var/log/state
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=true
+NoNewPrivileges=true
+# 失敗也別把整個 machine 帶下水
+Restart=no
+# 60 秒夠長了 (平常 0.5 秒內跑完)
+TimeoutStartSec=60
+StandardOutput=append:/home/hoonsoropenclaw/.hermes/scripts/mlogwatch/systemd.log
+StandardError=append:/home/hoonsoropenclaw/.hermes/scripts/mlogwatch/systemd.log
+
+[Install]
+WantedBy=multi-user.target

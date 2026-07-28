@@ -1,0 +1,56 @@
+# mlogwatch 預設配置 (v2)
+# 任何沒寫的 key 都會用 mlogwatch.py 內建的 fallback default
+# 路徑覆寫可用環境變數:
+#   MLOGWATCH_CONFIG      設定檔路徑 (預設本檔)
+#   MLOGWATCH_STATE_DIR   stamp / cpu delta state
+#   MLOGWATCH_LOCK_DIR    並發鎖
+#   MLOGWATCH_REPORT_DIR  報告 + alerts.log
+
+notify:
+  cooldown_seconds: 1800          # 同一 (check, target, level) 30 分鐘內不重發
+  webhook_url: ""                 # 留空 = 跳過 webhook (本地/CI 友善)
+                                  # 例: "http://127.0.0.1:9000/hooks/mlogwatch"
+
+checks:
+  disk:
+    warn: 70
+    alert: 85
+    critical: 95
+    exclude_fs_types: [tmpfs, devtmpfs, overlay, squashfs, efivarfs]
+    # 不監控的 mountpoint (regex match 完全路徑)
+    exclude_mounts: ["^/run$", "^/sys$", "^/dev$", "^/proc$"]
+    # 若想限定只監控特定 mount,把 include_mounts 設成非空 (白名單)
+    include_mounts: []
+
+  memory:
+    warn: 75
+    alert: 88
+    critical: 95
+
+  load:
+    warn: 0.7       # 1-min load 平均每核超過 0.7 警告
+    alert: 1.0
+    critical: 1.5
+
+  cpu:
+    warn: 70        # delta-based,需要兩次跑才有值
+    alert: 85
+    critical: 95
+
+  inode:
+    warn: 70
+    alert: 85
+    critical: 95
+    exclude_fs_types: [tmpfs, devtmpfs, overlay, squashfs, efivarfs]
+    exclude_mounts: ["^/run$", "^/sys$", "^/dev$"]
+
+  journal:
+    window_min: 5   # 看過去 5 分鐘 journalctl
+    alert_threshold: 3     # 至少 3 條才 alert
+    error_patterns:
+      - "Out of memory"
+      - "I/O error"
+      - "segfault"
+      - "panic"
+      - "Traceback"
+      - "Connection refused"   # 看場合刪除

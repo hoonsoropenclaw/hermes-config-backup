@@ -1,0 +1,13 @@
+[Unit]
+Description=mlogwatch periodic check
+Requires=mlogwatch.service
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+AccuracySec=10s
+# 開機後 2 分鐘才第一次跑 (避免 boot 期間資源暴增假警報)
+# 之後每 5 分鐘一次,±10s jitter
+
+[Install]
+WantedBy=timers.target

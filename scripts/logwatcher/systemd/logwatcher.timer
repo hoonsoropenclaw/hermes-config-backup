@@ -1,0 +1,15 @@
+[Unit]
+Description=Logwatcher 每 5 分鐘跑一次
+Documentation=file:///home/hoonsoropenclaw/.hermes/scripts/logwatcher/README.md
+
+[Timer]
+# 開機 1 分鐘後開始第一次, 之後每 5 分鐘
+OnBootSec=1min
+OnUnitActiveSec=5min
+# 容忍時鐘漂移
+AccuracySec=30s
+# 開機沒網時跳過
+Persistent=true
+
+[Install]
+WantedBy=timers.target

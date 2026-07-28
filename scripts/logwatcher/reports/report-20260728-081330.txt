@@ -1,0 +1,31 @@
+logwatcher report — 2026-07-28T08:13:28+0800
+host: hoonsoropenclaw
+mode: 1 (dry-run) (report-only)
+---
+load_avg: 1.53 1.67 1.24
+cores: 4
+uptime: up 2 days, 17 hours, 33 minutes
+---
+df -h:
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              3.2G  5.0M  3.2G   1% /run
+efivarfs                           192K   85K  103K  46% /sys/firmware/efi/efivars
+/dev/mapper/ubuntu--vg-ubuntu--lv  231G  104G  116G  48% /
+tmpfs                               16G     0   16G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/nvme0n1p2                     2.0G  201M  1.6G  11% /boot
+/dev/nvme0n1p1                     1.1G  6.2M  1.1G   1% /boot/efi
+tmpfs                              3.2G   20K  3.2G   1% /run/user/1000
+---
+free -h:
+               total        used        free      shared  buff/cache   available
+Mem:            31Gi       4.8Gi       714Mi        14Mi        26Gi        26Gi
+Swap:          8.0Gi       294Mi       7.7Gi
+---
+alerts emitted this run: 6
+2026-07-28T08:13:28+0800|CRITICAL|hoonsoropenclaw|disk|/|disk / (/dev/mapper/ubuntu--vg-ubuntu--lv) at 48% (>=3%)
+2026-07-28T08:13:28+0800|CRITICAL|hoonsoropenclaw|disk|/boot|disk /boot (/dev/nvme0n1p2) at 11% (>=3%)
+2026-07-28T08:13:28+0800|WARN|hoonsoropenclaw|disk|/boot/efi|disk /boot/efi (/dev/nvme0n1p1) at 1% (>=1%)
+2026-07-28T08:13:28+0800|CRITICAL|hoonsoropenclaw|memory|system|memory 4849MB/31806MB = 15% (>=3%)
+2026-07-28T08:13:28+0800|CRITICAL|hoonsoropenclaw|swap|system|swap 3% (>=3%)
+2026-07-28T08:13:28+0800|CRITICAL|hoonsoropenclaw|load|1m|loadavg1 1.53 / 4 cores = 0.38x (>=0.03x)

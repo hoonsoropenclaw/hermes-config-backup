@@ -1,0 +1,31 @@
+# syshealth_monitor.py — 預設閾值範例檔
+#
+# 複製到 ~/.hermes/config/syshealth.yaml 後改值即可覆寫預設閾值。
+# 任何「沒列在此檔」的 key 都會用 syshealth_monitor.py 的內建預設值。
+#
+# 語法: 兩層 YAML, 每個 key 對應一個檢查器, warn/crit 是數字。
+#        只要符合「key: warn, crit」格式就生效, 其他行被忽略。
+
+cpu:
+  warn: 0.8       # load1 / nproc; 0.8 = 4-core 機 load1=3.2 觸發 warn
+  crit: 1.5       # 1.5/core = load1=6.0 on 4-core
+
+ram_used_pct:
+  warn: 75.0      # RAM 使用率 %
+  crit: 90.0
+
+swap_used_pct:
+  warn: 25.0      # swap 使用率 %
+  crit: 50.0
+
+disk_used_pct:
+  warn: 75.0      # 各 mount point 使用率 %
+  crit: 90.0
+
+journal_errors_1h:
+  warn: 5         # 過去 1 小時 err 級 journal 條目數
+  crit: 20
+
+zombie_procs:
+  warn: 1         # zombie process 數量
+  crit: 5

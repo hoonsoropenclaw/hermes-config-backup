@@ -187,6 +187,28 @@ else:
 
 ---
 
+### 補充：Creative Brand Profile Storage 已於 Cycle 551 實作（D2→D3 Exit）
+
+Cycle 525-550 連續識別 gap 但從未執行，Cycle 551 一次完成。
+
+**實作狀態**（Cycle 551 verified）：
+- `~/.hermes/creative_brand_profiles/stripe.json` ✅
+- `~/.hermes/creative_brand_profiles/linear.json` ✅
+- `~/.hermes/creative_brand_profiles/vercel.json` ✅
+- `~/.hermes/creative_brand_profiles/_schema.md` ✅
+- `hallmark/skills/brand-profile/SKILL.md` ✅（save/list/delete verbs）
+- `hallmark/skills/hallmark/references/verbs/brand-profile.md` ✅
+- `hallmark/skills/hallmark/references/hallmark-05-commands.md` patched ✅
+
+**Schema 說明**（相對於 Cycle 519 原始定義）：
+Cycle 519 格式用於創意生成（dominant_style, color_preferences[], lighting, successful_prompts[]）。Cycle 551 hallmark 格式用於品牌建設（typography/color/macrostructure/signature）。兩者可共存：hallmark study → Cycle 551 schema，創意生成 → Cycle 519 user_default schema。
+
+**brand-profile verbs**：`hallmark save <slug>` / `hallmark list-brands` / `hallmark delete-brand <slug>` / `hallmark build --brand <slug> <brief>`
+
+**驗證**：`ls ~/.hermes/creative_brand_profiles/*.json | wc -l` → 3+
+
+---
+
 ## 關聯條目
 
 - `creative-intent-classification-20260716.md` — 請求分類

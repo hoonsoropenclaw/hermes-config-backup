@@ -1,0 +1,137 @@
+# logwatcher 配置檔
+# 所有閾值都可以在觀察期內動態調整，腳本啟動時會 re-read
+# 單位說明:
+#   - percent: 0-100 整數
+#   - MB: 整數（會轉成 KB 給 df 判斷）
+#   - count: 整數
+#   - minutes: 整數（look-back 視窗）
+
+# 主開關
+enabled: true
+
+# 觀察最近 N 分鐘的 log（journalctl / syslog 起始時間）
+window_minutes: 10
+
+# === 資源閾值 ===
+resources:
+  # 磁碟使用率警告門檻（任何掛載點超過）
+  disk:
+    warn_percent: 80
+    alert_percent: 90
+    critical_percent: 95
+    # 跳過的 filesystem 類型（虛擬的不要管）
+    exclude_fs_types:
+      - tmpfs
+      - devtmpfs
+      - overlay
+      - squashfs
+      - proc
+      - sysfs
+      - cgroup
+      - cgroup2
+    # 跳過的 mount prefix
+    exclude_mount_prefixes:
+      - /snap
+      - /run
+      - /sys
+      - /proc
+      - /dev
+
+  # 記憶體使用率（MemTotal / MemAvailable 推算）
+  memory:
+    warn_percent: 75
+    alert_percent: 88
+    critical_percent: 95
+
+  # SWAP 使用率
+  swap:
+    warn_percent: 30
+    alert_percent: 60
+    critical_percent: 85
+
+  # CPU 負載（loadavg / nproc 比值）
+  load:
+    warn_ratio: 1.5   # 1.5 倍核心數
+    alert_ratio: 2.5
+    critical_ratio: 4.0
+
+  # inode 用量 / 容量
+  inode:
+    warn_percent: 70
+    alert_percent: 85
+    critical_percent: 93
+
+# === 系統日誌檢查 ===
+logs:
+  # 系統錯誤關鍵字（journalctl / syslog 搜尋）
+  # 命中一次算 1 分，>5 分/視窗 = alert
+  kernel_error_patterns:
+    - "segfault"
+    - "Out of memory"
+    - "Kernel panic"
+    - "I/O error"
+    - "Hardware name"
+    - "machine check"
+    - "Thermal"
+    - "Call Trace"
+
+  # 認證失敗（auth.log / secure / journald SSH subsystem）
+  auth_failure_patterns:
+    - "Failed password"
+    - "Invalid user"
+    - "authentication failure"
+    - "Disconnected from authenticating user"
+    - "POSSIBLE BREAK-IN ATTEMPT"
+
+  # 服務失敗
+  service_failure_patterns:
+    - "Failed to start"
+    - "Unit entered failed state"
+    - "systemd\\[1\\]: .* failed"
+    - "dead.*pid"
+    - "killed by signal"
+
+  # 觸發 alert 的命中次數門檻（每視窗）
+  thresholds:
+    kernel_error_count: 1      # kernel error 通常零容忍
+    auth_failure_count: 10
+    service_failure_count: 3
+
+# === 通知 ===
+notification:
+  # 警報抑制：同樣的 (check, target) 在 cooldown 內只發一次
+  cooldown_minutes: 30
+
+  # 通知檔（永遠會寫，方便程式讀）
+  alerts_log: "/home/hoonsoropenclaw/.hermes/scripts/logwatcher/reports/alerts.log"
+
+  # 是否也輸出到 stderr（給 cron mail / journalctl 看）
+  stderr: true
+
+  # Webhook（可選, Telegram / Discord / Slack / Line Notify 通用）
+  # 留空 = 不打 webhook
+  webhook_url: ""
+  webhook_timeout_sec: 5
+
+  # Telegram 簡易支援（如果有設 TG_BOT_TOKEN / TG_CHAT_ID 環境變數會自動用）
+  # 沒設就跳過
+
+# === 自我保留 ===
+maintenance:
+  # 警報歷史保留天數
+  alerts_retention_days: 30
+  # 狀態檔保留天數（stamp / 抑制用）
+  state_retention_days: 7
+  # 報告保留天數（純報告,不是 alert）
+  report_retention_days: 14
+
+# === 行為 ===
+behavior:
+  # 同時跑多個 watch 鎖定（避免重疊）
+  lock_timeout_sec: 600
+  # 失敗時繼續跑其他 check，不要整個 fatal
+  keep_going_on_error: true
+  # 自我測試（不需要 root 也能跑）
+  self_test: false
+  # 報告模式（healthy / all / critical_only）
+  report_mode: "all"

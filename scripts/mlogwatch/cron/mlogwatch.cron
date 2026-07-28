@@ -1,0 +1,13 @@
+# mlogwatch cron 範例
+# 安裝方式:
+#   crontab -e
+#   加上這一行 (或複製到 /etc/cron.d/mlogwatch):
+#
+# mtime: 每 5 分鐘跑一次
+*/5 * * * * hoonsoropenclaw /home/hoonsoropenclaw/.hermes/scripts/mlogwatch/run.sh --quiet >> /home/hoonsoropenclaw/.hermes/scripts/mlogwatch/cron.log 2>&1
+#
+# 重啟排程 (手動觸發):
+#   /home/hoonsoropenclaw/.hermes/scripts/mlogwatch/run.sh --quiet
+#
+# 解除安裝:
+#   從 crontab 移除該行;stamp state / locks 不需清,自然會被下一次覆寫
