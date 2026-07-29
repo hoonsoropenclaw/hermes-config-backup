@@ -1,0 +1,127 @@
+{
+  "$metadata": {
+    "name": "Default Brand Profile",
+    "brand_category": "universal",
+    "version": "1.0.0",
+    "description": "Universal brand profile for Hermite agent — adapt to user's inferred category when no explicit brand is specified. Covers dark-tech, luxury, editorial, consumer-app, and gaming."
+  },
+  "color": {
+    "$type": "color",
+    "$root": {
+      "$value": {
+        "hex": "#0A0A0A",
+        "colorSpace": "srgb"
+      }
+    },
+    "surface": {
+      "$value": {
+        "hex": "#141414",
+        "colorSpace": "srgb"
+      }
+    },
+    "border": {
+      "$value": {
+        "hex": "#2A2A2A",
+        "colorSpace": "srgb"
+      }
+    },
+    "accent": {
+      "primary": {
+        "$value": {
+          "hex": "#7B61FF",
+          "colorSpace": "srgb"
+        }
+      },
+      "secondary": {
+        "$value": {
+          "hex": "#00D4AA",
+          "colorSpace": "srgb"
+        }
+      },
+      "warm": {
+        "$value": {
+          "hex": "#FF6B35",
+          "colorSpace": "srgb"
+        }
+      }
+    },
+    "text": {
+      "primary": {
+        "$value": {
+          "hex": "#FAFAFA",
+          "colorSpace": "srgb"
+        }
+      },
+      "muted": {
+        "$value": {
+          "hex": "#666666",
+          "colorSpace": "srgb"
+        }
+      }
+    },
+    "status": {
+      "error": {
+        "$value": {
+          "hex": "#FF4757",
+          "colorSpace": "srgb"
+        }
+      },
+      "success": {
+        "$value": {
+          "hex": "#2ED573",
+          "colorSpace": "srgb"
+        }
+      },
+      "warning": {
+        "$value": {
+          "hex": "#FFA502",
+          "colorSpace": "srgb"
+        }
+      }
+    }
+  },
+  "typography": {
+    "$type": "fontFamily",
+    "heading": {
+      "$value": "Inter, sans-serif"
+    },
+    "body": {
+      "$value": "Inter, sans-serif"
+    },
+    "label": {
+      "$value": "JetBrains Mono, monospace"
+    }
+  },
+  "spacing": {
+    "$type": "dimension",
+    "unit": {
+      "$value": "4px"
+    },
+    "gutter": {
+      "$value": "16px"
+    },
+    "section": {
+      "$value": "32px"
+    }
+  },
+  "logo_symbol": {
+    "$description": "Versatile mark — adaptable geometric form that can express AI, security, productivity, or social depending on context",
+    "shape_language": "geometric-minimal",
+    "elements": ["orb", "node", "path"],
+    "construction": "1.5px stroke, circular primary form with radial extension"
+  },
+  "texture": {
+    "preferred": ["grain", "none"],
+    "density": "light"
+  },
+  "mood": {
+    "keywords": ["intelligent", "trustworthy", "premium", "approachable"],
+    "reference_tone": "dark product UI with subtle depth and precise spacing"
+  },
+  "generation_prompt_seed": {
+    "layout": "3×3 full identity system",
+    "composition": "presentation grid with generous gutters, restrained typography, generous negative space",
+    "color_application": "accent purple as primary brand signal, teal as secondary, warm orange for CTAs",
+    "text_placement": "center-aligned labels, subtle hierarchy"
+  }
+}

@@ -335,6 +335,10 @@ For multi-agent systems, Layer 3 (external validation) is the only reliable mech
 
 **Critical insight**: The validator must NOT be the agent itself (otherwise back to Layer 1). For Hermes, the main agent should validate sub-agent outputs against SOP before delivery.
 
+## Sub-Agent Decision Transparency (Isolated Context Trust Mechanism)
+
+> **New (Cycle 559)**: When sub-agents make out-of-scope decisions in isolated contexts, **transparency is the only trust mechanism available**. See `references/subagent-decision-transparency-20260729.md` for the full If→Then rules and case studies (engineering-lead tyai-clone T1 = compliant, school-bulletin 22 = GH013 non-compliant).
+
 ## Sub-Agent Handoff Contract Design (Orchestrator → Worker Pattern)
 
 When designing an Orchestrator → Worker handoff, the interface contract must contain **four mandatory elements**:

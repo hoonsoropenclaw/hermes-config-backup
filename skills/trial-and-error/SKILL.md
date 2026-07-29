@@ -39,7 +39,8 @@ description: "赫米斯踩過的坑目錄 — **MUST LOAD BEFORE EXECUTION**。�
 - **Bash 腳本**：`for f in` / `2>&1` / `pipefail` / `array` / `set -e` → `references/by-category/bash-defensive-patterns.md`
 - **Python 生產工具**：`python3` / `urllib` / `telegram bot` / `wttr` / `weather api` / `stdlib` / `long-polling` / `signal handler` → `references/by-category/stdlib-production-tool-pattern.md`
 - **FastAPI / async SQLAlchemy**：`FastAPI` / `async_sessionmaker` / `yield Depends` / `async SQLAlchemy` / `stale read` / `expire_on_commit` → `references/by-category/fastapi-async-session-pitfalls.md`（**2026-07-26 新增**：stale read problem + async/sync deadlock + StaticPool）
-- **FastAPI / sync pattern vs async decision**：`FastAPI sync` / `sync SQLAlchemy` / `async vs sync` / `sessionmaker` / `quote-api` / bulletin FastAPI migration → `references/by-category/fastapi-sync-vs-async-pattern-20260727.md`（**2026-07-27 新增**：Quote API 72 tests proves sync reaches production quality; async adds 3 pitfall categories with no bulletin-scale benefit）
+- **FastAPI / sync SQLAlchemy deadlock**：`QueuePool` / `TimeoutError` / `pool timeout` / `connection timed out` / `15 connections` / `deadlock` → `references/by-category/fastapi-sync-sqlalchemy-deadlock.md`（**2026-07-29 新增**：GitHub #15353，sync `get_db()` 40 threads vs 15-connection ceiling，3 workarounds）
+- **FastAPI / sync pattern vs async decision**：`FastAPI sync` / `sync SQLAlchemy` / `async vs sync` / `sessionmaker` / `quote-api` / bulletin FastAPI migration → `references/by-category/fastapi-sync-vs-async-pattern-20260727.md`（**2026-07-27 新增**：Quote API 72 tests proves sync reaches production quality; async adds 3 pitfall categories with no bulletin-scale benefit；⚠️ **2026-07-29 更新**：sync 模式有 QueuePool deadlock 天花板（15 connections vs 40 threads），見 `fastapi-sync-sqlalchemy-deadlock.md`）
 - **FastAPI / JWT 認證**：`JWT` / `python-jose` / `passlib` / `OAuth2PasswordBearer` / `bcrypt` / `token 驗證` / `401` / `access_token` / `refresh_token` → `references/by-category/fastapi-jwt-auth-20260727.md`（**2026-07-27 新增**：Cycle 544 確認 gap，session_search 零匹配）
 觸發關鍵字:
 - **Hermes 內部 / CLI 派遣 sub-agent**:`hermes cron` / `hermes status` / `config` / `gateway` / `hermes chat` / `delegate_task` / `sub-agent` / `subagent` / `parallel` / `--yolo` / `--accept-hooks` / `notify_on_complete` / `background=true` / `git push` / `SSH` / `403` → `references/by-category/hermes-internal.md`（**改**:2026-12 新增 SSH 403 修復 + stale state 排除流程 + 重啟 gateway 時間成本）
@@ -540,6 +541,15 @@ for j in d['jobs']:
 **If→Then（FastAPI session lifecycle）**:
 **If** FastAPI endpoint 使用 `yield Depends(get_db)` 且會在請求中期呼叫外部服務修改資料庫記錄 **Then** 在每次外部修改後呼叫 `await db.refresh(user)` 或重新執行查詢——不要依賴 identity map 快取
 **警示**：async endpoint 必須配 `async_sessionmaker` + `await db.execute()`，嚴禁混用同步 `sessionmaker`——會 blocking event loop 導致 deadlock；`expire_on_commit=False` 是標配，否則 commit 後懶加載 relationships 會拋 `DetachedInstanceError`
+
+### 教訓 38：FastAPI sync SQLAlchemy QueuePool deadlock ceiling — 15 connections vs 40 threads（Cycle 557, 2026-07-29）
+
+**發現**: GitHub FastAPI Discussion #15353（FastAPI collaborator YuriiMotov April 2026 確認）——官方文件推薦的 `def get_db() → Iterator[Session]` + sync SQLAlchemy 模式存在已知的連接池天花板：40 anyio threads（預設）vs 15 max connections（pool_size=5 + max_overflow=10）。超過 15 個併發請求時觸發 30 秒 QueuePool timeout。Pydantic 序列化發生在路由處理器返回之後、連接釋放之前，導致連接被請求完整生命週期持有。
+
+**If→Then（QueuePool deadlock 診斷）**:
+**If** FastAPI 使用 sync `def get_db()` + `Session` 且收到 > 15 個併發請求 **Then** 會觸發 `sqlalchemy.exc.TimeoutError: QueuePool limit of size 5 overflow 10 reached, connection timed out`（30 秒 timeout）
+**Fix options**: (a) `pip install fastapi-overflow` + `MonkeyPatch.patch()`（最簡單，零程式碼改動）；(b) 遷移到 `async def get_db()` + `AsyncSession`（全量改寫 ORM）；(c) 扩容 pool + threadpool 並配置 PgBouncer（運維複雜度最高）
+**警示**: school-bulletin-system 選用 sync 模式時未評估此天花板；若系統擴展到 15+ 同時在線使用者，立即套用 fastapi-overflow monkeypatch
 
 ### 教訓 31：創意輸出品質驗證需要「意圖-輸出對照框架」
 

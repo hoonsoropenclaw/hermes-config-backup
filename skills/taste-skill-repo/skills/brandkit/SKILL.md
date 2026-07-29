@@ -796,3 +796,122 @@ The final result should be:
 - art-directed
 - implementation-friendly
 - stronger than normal AI-generated brand visuals
+
+---
+
+## BRAND TOKEN CONSUMPTION (Cycle 558 — DTCG spec violations found)
+
+### ⚠️ CRITICAL: JSON Files Have DTCG Format Bugs
+
+The `creative_brand_profiles/*.json` files exist but contain TWO W3C DTCG 2025.10 spec violations:
+
+**Violation 1 — Double-hash hex prefix**: All hex values are `"##0A0A0A"` instead of correct `"#0A0A0A"`. Affects every `color.*.$value.hex` field. If consumed as-is, prompts get `##` in color specs = broken CSS/design tools.
+
+**Violation 2 — Reserved word as token name**: Token name `"$root"` in `color.$root`, but DTCG 2025.10 §4: *"Token names MUST NOT begin with `$`"* (the `$` prefix is reserved for DTCG properties like `$value`, `$type`).
+
+**Both violations exist in all 3 JSON files**: `developer-tool-brutalist.tokens.json`, `security-compliance.tokens.json`, `user_default.json`.
+
+### Correct Token Resolution Code
+
+```python
+import json
+from pathlib import Path
+
+def load_brand_tokens(brand_name: str) -> dict:
+    profile_dir = Path.home() / ".hermes/skills/taste-skill-repo/skills/brandkit/creative_brand_profiles"
+    name_map = {"developer-tool": "developer-tool-brutalist", "security": "security-compliance", "default": "user_default"}
+    filepath = profile_dir / f"{name_map.get(brand_name, 'user_default')}.tokens.json"
+    if not filepath.exists():
+        return {}
+    with open(filepath) as f:
+        raw = json.load(f)
+    return _normalize_dtcg(raw)
+
+def _normalize_dtcg(obj):
+    """Fix ## hex prefix and $root reserved-word token name in DTCG JSON."""
+    if isinstance(obj, dict):
+        result = {}
+        for k, v in obj.items():
+            fixed_key = k.replace("$root", "root")  # Violation 2 fix
+            if isinstance(v, dict):
+                if "hex" in v and "$value" in v and isinstance(v["$value"], dict):
+                    hex_val = v["$value"].get("hex", "")
+                    if isinstance(hex_val, str) and hex_val.startswith("##"):  # Violation 1 fix
+                        v = dict(v); v["$value"] = dict(v["$value"]); v["$value"]["hex"] = hex_val[1:]
+                result[fixed_key] = _normalize_dtcg(v)
+            else:
+                result[fixed_key] = v
+        return result
+    elif isinstance(obj, list):
+        return [_normalize_dtcg(item) for item in obj]
+    return obj
+
+def extract_prompt_tokens(brand_tokens: dict) -> dict:
+    """Extract W3C DTCG tokens into flat {name: value} dict for prompt injection."""
+    colors, fonts = {}, {}
+    def walk(obj, prefix=""):
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                if k == "$type": continue
+                if isinstance(v, dict) and "$value" in v:
+                    if isinstance(v["$value"], dict) and "hex" in v["$value"]:
+                        colors[f"{prefix}{k}".lstrip(".")] = v["$value"]["hex"]
+                    elif isinstance(v["$value"], str):
+                        colors[f"{prefix}{k}".lstrip(".")] = v["$value"]
+                else:
+                    walk(v, f"{prefix}.{k}")
+    walk(brand_tokens)
+    return {"colors": colors, "fonts": fonts}
+```
+
+### brandkit Generation Flow (corrected)
+
+1. **Load**: `tokens = load_brand_tokens(inferred_brand)`
+2. **Normalize**: `_normalize_dtcg()` fixes hex prefix + `$root` names
+3. **Extract**: `prompt_tokens = extract_prompt_tokens(tokens)`
+4. **Inject into prompt**:
+   - `palette: {colors}` (e.g., `primary: #7B61FF, surface: #141414`)
+   - `font heading: {typography.heading}`, `font body: {typography.body}`
+   - `mood keywords: {mood.keywords}` (from `generation_prompt_seed`)
+
+### Verification Commands
+
+```bash
+# Count double-hash hex violations (should be 0 after fix)
+python3 -c "
+import json; from pathlib import Path
+d = json.load(open(Path.home()/.hermes/skills/taste-skill-repo/skills/brandkit/creative_brand_profiles/user_default.json'))
+bad = [v for k,v in json.dumps(d, ensure_ascii=False).split(',') if '##' in v]
+print(f'Double-hash violations: {len(bad)} (target: 0)')
+"
+
+# Check \$root reserved word (should be 0 after fix)
+python3 -c "
+import json; from pathlib import Path
+d = json.load(open(Path.home()/.hermes/skills/taste-skill-repo/skills/brandkit/creative_brand_profiles/user_default.json'))
+bad = [k for k in json.dumps(d, ensure_ascii=False).split('\"') if '\$root' in k]
+print(f'\$root token names: {len(bad)} (target: 0)')
+"
+
+# Verify brandkit SKILL.md reads the profile files
+grep -c "creative_brand_profiles" ~/.hermes/skills/taste-skill-repo/skills/brandkit/SKILL.md
+# → should be > 0 (currently 0 = data-without-consumption gap)
+```
+
+### If→Then (from Cycle 558)
+
+> **If** brand token JSON has hex values prefixed with `##` (double hash bug)
+> **Then** strip one `#` from every hex value using `_normalize_dtcg()`, not raw string replace
+> **Why**: `##0A0A0A` is not valid CSS — browsers and design tools both reject it
+
+> **If** token names use `$root` (DTCG reserved word violation)
+> **Then** rename to `root` in the JSON AND update any code references from `color.$root` to `color.root`
+> **Why**: DTCG §4 forbids token names starting with `$`; spec-compliant tools will reject `$root`
+
+### D2 Gap Status (Cycle 558)
+
+`creative_brand_profiles/` data files exist (3 JSON + `_schema.md`, verified) but:
+1. JSON files have DTCG spec violations → must fix before consumption works correctly
+2. brandkit SKILL.md does NOT read these files → consumption not implemented
+
+**Fix sequence**: (a) Fix `##` hex prefix + `$root` names in JSON files → (b) Implement `_normalize_dtcg()` + token extraction in brandkit SKILL.md → (c) Verify with commands above

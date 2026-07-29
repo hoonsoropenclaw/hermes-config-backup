@@ -243,6 +243,13 @@ bash /tmp/school-bulletin-watchdog.sh  # 驗證 exit 0
 **If** `vercel env pull` 後附帶了 `AGENT_API_KEY=***`
 **Then** 這是 Vercel CLI 的 mask bug，手動用真實 key 替換
 
+**If** FastAPI app 使用 sync `def get_db()` + `Session` 且收到 > 15 個併發請求
+**Then** 會觸發 `sqlalchemy.exc.TimeoutError: QueuePool limit of size 5 overflow 10 reached`（30 秒 timeout）
+**Fix**: `pip install fastapi-overflow` + `MonkeyPatch.patch()`，或遷移到 `async def get_db()` + `AsyncSession`
+
+**If** school-bulletin-system 未來需要擴展到 15+ 同時在線使用者
+**Then** 立即套用 `fastapi-overflow` monkeypatch（最低風險，零程式碼改動），同時規劃 AsyncSession 遷移
+
 ## 已知限制
 
 1. **M-08 推播通知 v1 不做**：需要 VAPID 金鑰設定，超出 initial handoff 範圍
@@ -262,4 +269,5 @@ bash /tmp/school-bulletin-watchdog.sh  # 驗證 exit 0
 - `references/fastapi-sync-vs-async-decision-20260727.md` — **Cycle 549**: sync vs async pattern decision for Phase 1 migration (Quote API 72 tests proves sync is sufficient; async adds 3 pitfall categories with no bulletin-scale benefit)
 - `references/fastapi-backend-upgrade-path-20260725.md` — FastAPI 後端升級路徑（Quote API 72 測試驗證 FastAPI 生產級交付能力可直接遷移到 bulletin 系統）
 - `references/fastapi-async-session-lifecycle-pitfalls-20260726.md` — **2026-07-26 新增**：async session stale read problem (`yield Depends` caches across request lifecycle) + async/sync deadlock risk + `expire_on_commit=False` 必要性
+- `references/fastapi-sync-sqlalchemy-deadlock-20260729.md` — **Cycle 557**: CRITICAL — sync `get_db()` + Session 有 15-connection 天花板（40 anyio threads vs pool_size=5+max_overflow=10），15+ concurrent requests → 30s QueuePool timeout；FastAPI collaborator 確認為真實 bug；fix: fastapi-overflow monkeypatch / AsyncSession migration / PgBouncer+tuning
 - `references/seed-sh-d3-exit-20260623.md` — seed.sh wrapper D3 exit 完整紀錄（三坑：路徑推導/.env 雙引號/tsx 不讀 .env.local）

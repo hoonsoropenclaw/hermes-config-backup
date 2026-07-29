@@ -1,0 +1,115 @@
+{
+  "$metadata": {
+    "name": "Forge Dev",
+    "brand_category": "developer-tool",
+    "version": "1.0.0",
+    "description": "Industrial developer tool brand — precision, scaffolding, control. Core metaphor: building with structured materials."
+  },
+  "color": {
+    "$type": "color",
+    "$root": {
+      "$value": {
+        "hex": "#0D0D0D",
+        "colorSpace": "srgb"
+      }
+    },
+    "surface": {
+      "$value": {
+        "hex": "#1A1A1A",
+        "colorSpace": "srgb"
+      }
+    },
+    "border": {
+      "$value": {
+        "hex": "#2E2E2E",
+        "colorSpace": "srgb"
+      }
+    },
+    "accent": {
+      "primary": {
+        "$value": {
+          "hex": "#E8FF00",
+          "colorSpace": "srgb"
+        }
+      },
+      "secondary": {
+        "$value": {
+          "hex": "#00E5FF",
+          "colorSpace": "srgb"
+        }
+      }
+    },
+    "text": {
+      "primary": {
+        "$value": {
+          "hex": "#F5F5F5",
+          "colorSpace": "srgb"
+        }
+      },
+      "muted": {
+        "$value": {
+          "hex": "#888888",
+          "colorSpace": "srgb"
+        }
+      }
+    },
+    "status": {
+      "error": {
+        "$value": {
+          "hex": "#FF3B3B",
+          "colorSpace": "srgb"
+        }
+      },
+      "success": {
+        "$value": {
+          "hex": "#00FF88",
+          "colorSpace": "srgb"
+        }
+      }
+    }
+  },
+  "typography": {
+    "$type": "fontFamily",
+    "heading": {
+      "$value": "JetBrains Mono, monospace"
+    },
+    "body": {
+      "$value": "IBM Plex Mono, monospace"
+    },
+    "label": {
+      "$value": "Space Grotesk, sans-serif"
+    }
+  },
+  "spacing": {
+    "$type": "dimension",
+    "unit": {
+      "$value": "8px"
+    },
+    "gutter": {
+      "$value": "24px"
+    },
+    "section": {
+      "$value": "48px"
+    }
+  },
+  "logo_symbol": {
+    "$description": "Geometric construction diagram — intersecting frame lines suggesting scaffold/grid",
+    "shape_language": "geometric-linear",
+    "elements": ["frame", "crosshair", "grid-node"],
+    "construction": "2px stroke weight, 45-degree intersecting axes"
+  },
+  "texture": {
+    "preferred": ["grain", "halftone"],
+    "density": "medium"
+  },
+  "mood": {
+    "keywords": ["industrial", "precise", "structured", "powerful"],
+    "reference_tone": "terminal UI meets brutalist architecture"
+  },
+  "generation_prompt_seed": {
+    "layout": "2×3 cinematic brand deck",
+    "composition": "grid-based panels with strong gutters, sparse typography, dark charcoal canvas",
+    "color_application": "accent yellow as primary highlight, cyan as secondary data indicator",
+    "text_placement": "bottom-aligned labels, page numbers top-right"
+  }
+}

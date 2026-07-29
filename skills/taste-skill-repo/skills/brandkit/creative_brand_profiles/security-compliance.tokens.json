@@ -1,0 +1,127 @@
+{
+  "$metadata": {
+    "name": "Aegis Security",
+    "brand_category": "security-compliance",
+    "version": "1.0.0",
+    "description": "Security and compliance brand — vigilance, protection, trust, order. Core metaphor: shield, seal, protected core. Dark authority with institutional weight."
+  },
+  "color": {
+    "$type": "color",
+    "$root": {
+      "$value": {
+        "hex": "#0B0F14",
+        "colorSpace": "srgb"
+      }
+    },
+    "surface": {
+      "$value": {
+        "hex": "#111827",
+        "colorSpace": "srgb"
+      }
+    },
+    "border": {
+      "$value": {
+        "hex": "#1F2937",
+        "colorSpace": "srgb"
+      }
+    },
+    "accent": {
+      "primary": {
+        "$value": {
+          "hex": "#00C2FF",
+          "colorSpace": "srgb"
+        }
+      },
+      "secondary": {
+        "$value": {
+          "hex": "#00FF88",
+          "colorSpace": "srgb"
+        }
+      },
+      "alert": {
+        "$value": {
+          "hex": "#FF3B3B",
+          "colorSpace": "srgb"
+        }
+      }
+    },
+    "text": {
+      "primary": {
+        "$value": {
+          "hex": "#F9FAFB",
+          "colorSpace": "srgb"
+        }
+      },
+      "muted": {
+        "$value": {
+          "hex": "#6B7280",
+          "colorSpace": "srgb"
+        }
+      }
+    },
+    "status": {
+      "error": {
+        "$value": {
+          "hex": "#FF3B3B",
+          "colorSpace": "srgb"
+        }
+      },
+      "success": {
+        "$value": {
+          "hex": "#00FF88",
+          "colorSpace": "srgb"
+        }
+      },
+      "warning": {
+        "$value": {
+          "hex": "#FFB800",
+          "colorSpace": "srgb"
+        }
+      }
+    }
+  },
+  "typography": {
+    "$type": "fontFamily",
+    "heading": {
+      "$value": "IBM Plex Sans, sans-serif"
+    },
+    "body": {
+      "$value": "IBM Plex Sans, sans-serif"
+    },
+    "label": {
+      "$value": "IBM Plex Mono, monospace"
+    }
+  },
+  "spacing": {
+    "$type": "dimension",
+    "unit": {
+      "$value": "4px"
+    },
+    "gutter": {
+      "$value": "20px"
+    },
+    "section": {
+      "$value": "40px"
+    }
+  },
+  "logo_symbol": {
+    "$description": "Shield or eye motif — closed eye with radiating rings suggesting vigilance and monitoring. Geometric seal construction.",
+    "shape_language": "geometric-authoritative",
+    "elements": ["shield", "eye", "seal", "radiating-ring"],
+    "construction": "2px stroke, concentric geometric forms, minimal interior detail"
+  },
+  "texture": {
+    "preferred": ["none", "grain-light"],
+    "density": "minimal"
+  },
+  "mood": {
+    "keywords": ["vigilant", "institutional", "protected", "authoritative"],
+    "reference_tone": "government-grade security dashboard meets premium fintech"
+  },
+  "generation_prompt_seed": {
+    "layout": "2×3 cinematic brand deck",
+    "composition": "authoritative grid, institutional weight, dark authority with bright cyan accents for active/alert states",
+    "color_application": "cyan as primary trust signal, green for verified/secure states, red for alert/danger",
+    "text_placement": "top-aligned metadata, bottom-aligned status indicators"
+  }
+}
