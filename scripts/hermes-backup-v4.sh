@@ -78,6 +78,16 @@ tier1_github() {
     "config.yaml"
     "SOUL.md"
     ".skills_prompt_snapshot.json"
+    "smart_heartbeat.py"
+    "distill_knowledge.py"
+    "art_director.py"
+    "consolidate_skills.py"
+    "generate_learning_log.py"
+    "update_mindmap.py"
+    "generate_telemetry.py"
+    "test_safe.py"
+    "security_auditor.py"
+
   )
   for f in "${ROOT_SINGLE_FILES[@]}"; do
     if [[ -f "$HERMES_HOME/$f" ]]; then

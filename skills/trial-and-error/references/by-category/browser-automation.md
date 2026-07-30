@@ -166,3 +166,51 @@ curl -s http://localhost:9377/health | grep browserConnected
 - **If** 需要生成網站架構圖 **Then** 直接跑 `python3.12 /tmp/url_to_d2.py "<URL>" /tmp/output.d2"`（D2 已在 /tmp）
 - **If** 多頁面爬蟲 + anti-bot **Then** Scraping Spider 框架 + StealthyFetcher
 - **If** 複雜網站（認證、SPA）需理解整體結構 **Then** reverse-engineering skill（TRACE 協議）→ Scrapling → D2
+
+## Dribbble 三層 DOM 結構（2026-07-30，learning_1785404409_2 歸納）
+
+Dribbble list 頁（`/shots/popular`）的資料藏在三個層級，每層可拿到的欄位不同：
+
+| 層級 | 觸發條件 | wrapper | 可拿到的欄位 |
+|------|---------|---------|-------------|
+| 1. SSR HTML | curl 直接抓 | `<li id="screenshot-N" class="shot-thumbnail ...">` | title、image、shot.id |
+| 2. Hydrated DOM | JS 跑完 | `<div class="shot-thumbnail js-thumbnail ...">` | + `.display-name`、`.js-shot-likes-count`、`.js-shot-views-count`、PRO badge |
+| 3. Hover state | mouse hover 才顯示 | `.shot-thumbnail-overlay` | + tag chips、shot-byline |
+
+**If→Then**：
+- **If** 抓 Dribbble 只需要 title/image **Then** `requests` + BeautifulSoup 就夠
+- **If** 還要 author + 互動數 **Then** 用 Playwright `page.evaluate()` 直接讀 hydrated DOM
+- **If** 還要 tags **Then** 必須在 Playwright 觸發 hover（hover 觸發的 React state 才有 tags）
+
+**Dribbble anti-bot 行為**：
+- `requests` 抓 `https://dribbble.com/shots/popular` 回 **HTTP 202 + 空 body**（不是 403、不是 200）
+- Selenium/Playwright 執行 JS 後才有完整 HTML — 純 requests 永遠拿不到 list
+- `window.__INITIAL_STATE__` 注入 `props.contentBlocks`（圖片陣列）但**不含** likes/views/comments
+- shot 詳情頁的 `__INITIAL_STATE__` 也只有 `contentBlocks` + `isCaseStudy` 旗標，互動數藏在後續 AJAX
+
+**Dribbble robots.txt 守門重點**：
+- 公開 `/robots.txt` 沒給 Allow，只有 39 條 Disallow
+- 採「Disallow-only」政策 → 沒說不行的路徑仍可爬
+- 自定黑名單必加 `/messages`, `/auth`, `/account/edit`, `/admin`, `/ads`, `/jobs/`
+- 自定 Crawl-delay 至少 3 秒（官方未指定）
+
+**Playwright + Dribbble 踩坑**：
+- `page.content()` 回 hydrated 後 HTML，但 `.shot-title` 在某些 case study 是空字串
+  → **fallback**：從 img alt 拿（格式 "Title concept dark theme ..."，取第一段）或 `.accessibility-text`（"View <Title>"）
+- 抓 author 用 `.display-name`（優先）或 `.user-information` 內的第一個 `<a href="/...">`
+- 抓 likes：`.js-shot-likes-container .color-deep-blue-sea-light-20` 內的文字（"146"）或 `[data-shot-like-count]`
+- 抓 views：`.js-shot-views-count` 內文字（含 "k" / "m" 縮寫，需自寫 parser）
+- 抓 comments：`.js-shot-comments-count` 或 `shot-statistics` 區塊內的第三個數字
+- 用 `page.evaluate("window.scrollTo(0, document.body.scrollHeight)")` 觸發 lazy load 後再 evaluate
+
+**為什麼「高評分」用 likes 當代理**：
+- Dribbble 沒公開「評分」欄位（不像 Behance 的 Appreciations）
+- likes 是設計師社群共識品質訊號（按讚 = 認可）
+- 評分公式：`likes * 1 + views * 0.0001 + comments * 3 + (30 if PRO)`
+- comments 權重高於 views（高互動 = 高品質；views 可能灌水）
+- PRO 徽章 +30（付費設計師，作品品質通常較高）
+
+**為什麼環境 chromedriver auto-discovery 會 work**：
+- N100 環境有內建 chromedriver（系統包裝），`webdriver.Chrome()` 不傳 service 也能跑
+- 但 Selenium 拿的是 SSR HTML（page_source），沒 author → 仍要走 Playwright 拿 hydrated DOM
+- 解法：雙驅動抽象 — Selenium 當 fallback，Playwright 當主力（page.evaluate 拿 React 狀態）

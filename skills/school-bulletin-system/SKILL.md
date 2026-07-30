@@ -1,7 +1,7 @@
 ---
 name: school-bulletin-system
 description: "學校公告系統建置與維運 skill。當用戶提到「建立學校公告系統」「校園公告」「處室各自發布公告」「公告標籤篩選」「家長師生分流看公告」「學校網站」時啟用。核心功能：Next.js 15 + Supabase (PostgreSQL) 公告系統，含 RBAC 權限矩陣（6 角色 × 4 權限）、標籤 OR/AND 篩選、簽收回條。部署於 Vercel。"
-version: 1.1.0
+version: 1.1.1
 author: Hermes Agent (metacognitive-learner)
 platforms: [linux]
 metadata:
@@ -250,13 +250,25 @@ bash /tmp/school-bulletin-watchdog.sh  # 驗證 exit 0
 **If** school-bulletin-system 未來需要擴展到 15+ 同時在線使用者
 **Then** 立即套用 `fastapi-overflow` monkeypatch（最低風險，零程式碼改動），同時規劃 AsyncSession 遷移
 
+**If** 學校公告系統要實作 LINE 推播通知
+**Then** 用 `MessagingApi.multicast()` + 已儲存的 `line_user_id` 清單，不要用 `broadcast()`——這樣才能按角色分眾（家長/師生/班級）；詳見 `references/line-bot-messaging-v3-bulletin-notify-20260730.md`
+
 ## 已知限制
 
 1. **M-08 推播通知 v1 不做**：需要 VAPID 金鑰設定，超出 initial handoff 範圍
 2. **無「內部公告」機制**：v4 簡化為「全部可見」，未來加 `audience_type` 欄位可還原受眾分流
 3. **無 webhook**：公告變化無即時通知，未來可用 Supabase Realtime 或 Pipedream
 4. **Session 8 小時**：HMAC session 有時限，長期不操作需重新登入
-5. **LINE Bot webhook 整合（進行中）**：見 `references/line-bot-webhook-integration-20260719.md` — 將「無 webhook」改為「LINE Bot 即時通知」
+4. **LINE Bot webhook 整合（進行中）**：✅ **SDK 模式已文檔化**，⬜ **實際部署未完成**
+   - ✅ `references/line-bot-messaging-v3-bulletin-notify-20260730.md` — line-bot-sdk v3（v3.25.0）FastAPI webhook + multicast 推播 + Flex Message 模式
+   - ✅ `references/line-bot-webhook-integration-20260719.md` — webhook 整合架構規劃
+   - ✅ `trial-and-error/references/by-category/line-bot-sdk-v3-fastapi-patterns-20260730.md` — SDK v3 context manager 模式
+   - ✅ `trial-and-error/references/by-category/line-bot-webhook-server-deployment-20260730.md` — **Cycle 562**：Cloudflare Tunnel vs ngrok 部署抉擇；家庭 NAT 無公開 IP → Cloudflare Tunnel 為首選方案
+   - ⬜ **部署缺口**：LINE Platform 需要公開 HTTPS webhook callback URL；Hermes 主機位於家庭 NAT 之後，需 Cloudflare Tunnel 解決；LINE Bot server 程式碼尚未寫入 `~/permanent-projects/school-bulletin/`
+   - ⬜ **LINE user_id 收集**：學校家長的 LINE user_id 需在家長第一次加入 bot 時capture並存入 `user_role_assignments.line_user_id`；目前 DB schema 倘未確認有此欄位
+   - ⚠️ **外部核查（Cycle 562）**：`ls ~/permanent-projects/school-bulletin/*line*.py` → 0 檔案；`ls ~/permanent-projects/school-bulletin/src/app/api/ | grep line` → 0 routes；LINE Bot 整合僅存在於文件階段，未實際寫入專案
+
+**注意**：Phase 522 時期曾參考 `~/permanent-projects/` 下的 `school_admin_bot.py`、`rich_menu_manager.py`、`school_calendar.py`，但 Cycle 562 外部核查無法確認這些檔案是否仍存在；建議以 `~/permanent-projects/school-bulletin/` 為準，未實作前不依賴這些檔案。
 
 ## 參考檔案
 
@@ -265,7 +277,8 @@ bash /tmp/school-bulletin-watchdog.sh  # 驗證 exit 0
 - `~/permanent-projects/school-bulletin/README.md` — 技術文件
 - `skills/trial-and-error/references/by-category/audience-permission-logic.md` — C 方案 v4 受眾邏輯鐵律（任何改 audience 前必讀）
 - `references/watchdog-404-fix-20260621.md` — watchdog `/api/health` 404 假性失敗修復（2026-06-21）
-- `references/line-bot-webhook-integration-20260719.md` — LINE Bot webhook 整合彌補計畫（填補「無 webhook」已知限制）
+- `references/line-bot-integration-status-20260730.md` — **Cycle 563**：LINE Bot 整合狀態追蹤；外部核查確認 `cloudflared` 未安裝（blocking），LINE 程式碼 0 檔案；含下一步行動清單
+- `trial-and-error/references/by-category/line-bot-webhook-server-deployment-20260730.md` — **Cycle 562**：LINE Bot webhook server 部署架構抉擇；Cloudflare Tunnel 為家庭 NAT 環境首選（ngrok 免費版 URL 不穩定）；FastAPI webhook handler 完整程式碼
 - `references/fastapi-sync-vs-async-decision-20260727.md` — **Cycle 549**: sync vs async pattern decision for Phase 1 migration (Quote API 72 tests proves sync is sufficient; async adds 3 pitfall categories with no bulletin-scale benefit)
 - `references/fastapi-backend-upgrade-path-20260725.md` — FastAPI 後端升級路徑（Quote API 72 測試驗證 FastAPI 生產級交付能力可直接遷移到 bulletin 系統）
 - `references/fastapi-async-session-lifecycle-pitfalls-20260726.md` — **2026-07-26 新增**：async session stale read problem (`yield Depends` caches across request lifecycle) + async/sync deadlock risk + `expire_on_commit=False` 必要性

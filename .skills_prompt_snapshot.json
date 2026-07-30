@@ -1258,12 +1258,12 @@
       12774
     ],
     "autonomous-ai-agents/metacognitive-learner/SKILL.md": [
-      1785343437933477730,
-      15976
+      1785426463365103993,
+      16794
     ],
     "autonomous-ai-agents/orchestrator-worker-architecture/SKILL.md": [
-      1781930848018930547,
-      23857
+      1785426548902040651,
+      25225
     ],
     "backend/supabase-integration/SKILL.md": [
       1781931271073268410,
@@ -1601,6 +1601,10 @@
       1778080486311148076,
       4377
     ],
+    "phaser-2d-animation-pipeline/SKILL.md": [
+      1785370456065190662,
+      6092
+    ],
     "playwright-skill/skills/playwright-skill/SKILL.md": [
       1780405268592164554,
       13930
@@ -1686,8 +1690,8 @@
       7378
     ],
     "school-bulletin-system/SKILL.md": [
-      1785320812474383515,
-      11882
+      1785418993647773050,
+      14072
     ],
     "school-hr-recruitment/SKILL.md": [
       1783140982098824005,
@@ -3470,8 +3474,8 @@
       8009
     ],
     "trial-and-error/SKILL.md": [
-      1785320890395655549,
-      57988
+      1785426584544895428,
+      58536
     ],
     "user-collaboration-style/SKILL.md": [
       1783876771312061651,
@@ -7715,9 +7719,9 @@
       "skill_name": "metacognitive-learner",
       "category": "autonomous-ai-agents",
       "frontmatter_name": "metacognitive-learner",
-      "description": "赫米斯的後設認知引擎：持續識別技能缺口、主動學習、將經驗固化為 If→Then 格式。",
+      "description": "",
       "platforms": [
-        "linux"
+        "[linux]"
       ],
       "conditions": {
         "fallback_for_toolsets": [],
@@ -8968,6 +8972,19 @@
       "category": "pdf",
       "frontmatter_name": "pdf",
       "description": "",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "phaser-2d-animation-pipeline",
+      "category": "phaser-2d-animation-pipeline",
+      "frontmatter_name": "phaser-2d-animation-pipeline",
+      "description": "Phaser 3 2D 動畫流水線 (animation pipeline) 優化 — Spritesheet、O...",
       "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],

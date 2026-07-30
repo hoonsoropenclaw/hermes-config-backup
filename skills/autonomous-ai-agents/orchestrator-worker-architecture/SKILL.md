@@ -356,6 +356,8 @@ EOF
 - **If** 任務是「同一問題多視角分析」（非事實類）**Then** 結果彙整不走 LLM synthesis，改走「列點 + 衝突標記 + Orchestrator 裁決」
 - **If** 任務是「各自獨立事實蒐集」**Then** 結果彙整可以 LLM synthesis，但必須先驗每檔非空
 - **If** `delegate_task(tasks=[...])` 超過 5 個 **Then** 拆成兩批（每批 2-3 個）+ 中間彙整，避免 N(N-1)/2 衝突增長
+- **If** Orchestrator 有高連接度 hub 節點 **Then** 在每階段之間加 phase gates，獨立驗證每個 worker 輸出（防範 cascade failure：hub injection 可在 LangGraph 造成 100% 系統失敗）
+- **If** 任務在最外層需要「自由協作」**Then** 重新設計為 supervisor 模式：協作封裝為受控 subroutine，2026 年生產驗證確認 free mesh 在外層是 anti-pattern
 
 ## 失敗處理
 
@@ -385,6 +387,9 @@ EOF
 - `web-worker-template` — 此架構的 web-worker 範本 skill
 - `summarizer-worker-template` — 此架構的 summarizer 範本 skill
 - `user-collaboration-style` Rule 16 — 架構改完必做 v1 vs vN 內容比對
+
+- **`references/multi-agent-5-patterns-cascade-20260730.md`** — **2026 5 patterns (fan-out/pipeline/supervisor/debate/swarm) + 'From Spark to Fire' cascade failure research**: hub injection → 100% LangGraph / 100% vs 15.9% CrewAI system failure; free mesh survives only as controlled subroutine inside supervisor (not outer architecture); phase gate + hidden selector + final arbiter as defenses; framework comparison table (2026-07-30 新增）
+- **`references/multi-agent-cascade-defense-20260730.md`** — **Cascade failure defense implementation patterns** (Phase Gate + Hub Verifier Gating + Source Provenance): arXiv 2603.04474v2 governance layer; Microsoft `langgraph-trust` adapter (`pip install langgraph-trust`); `should_continue` conditional edge pattern; `interrupt()` for human-in-the-loop on high-risk actions; hub vs leaf injection Impact Factor table (LangGraph 10.31×, CrewAI 6.29×); If→Then implementation rules (2026-07-30 新增）
 
 ## 相關檔案
 
