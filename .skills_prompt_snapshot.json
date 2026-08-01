@@ -22,8 +22,8 @@
       37388
     ],
     "agent-orchestration-multi-agent-optimize/SKILL.md": [
-      1785335878334948346,
-      24100
+      1785441608332325313,
+      25038
     ],
     "agent-orchestrator/SKILL.md": [
       1778082967415894045,
@@ -1198,8 +1198,8 @@
       12326
     ],
     "anti-panic-protocol/SKILL.md": [
-      1779975046533499803,
-      2188
+      1785448917916479923,
+      5176
     ],
     "anti-pattern-czar/SKILL.md": [
       1779975046544499727,
@@ -1282,8 +1282,8 @@
       39643
     ],
     "browser/camofox/SKILL.md": [
-      1782031365453730220,
-      28558
+      1785500762589901397,
+      31408
     ],
     "buddy-sings/SKILL.md": [
       1780110403137952298,
@@ -1724,6 +1724,10 @@
     "social-media/xurl/SKILL.md": [
       1780832652683839110,
       15518
+    ],
+    "social-media/yuanbao/SKILL.md": [
+      1780109239612526883,
+      3795
     ],
     "soft-design/SKILL.md": [
       1780212133656710058,
@@ -3500,10 +3504,6 @@
     "xlsx/SKILL.md": [
       1778080518771125925,
       2892
-    ],
-    "yuanbao/SKILL.md": [
-      1780109239612526883,
-      3795
     ],
     "apple/DESCRIPTION.md": [
       1780109239566525051,
@@ -9435,6 +9435,23 @@
       }
     },
     {
+      "skill_name": "yuanbao",
+      "category": "social-media",
+      "frontmatter_name": "yuanbao",
+      "description": "Yuanbao (元宝) groups: @mention users, query info/members.",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
       "skill_name": "soft-design",
       "category": "soft-design",
       "frontmatter_name": "high-end-visual-design",
@@ -15235,23 +15252,6 @@
       "frontmatter_name": "xlsx",
       "description": "",
       "platforms": [],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
-      "skill_name": "yuanbao",
-      "category": "yuanbao",
-      "frontmatter_name": "yuanbao",
-      "description": "Yuanbao (元宝) groups: @mention users, query info/members.",
-      "platforms": [
-        "linux",
-        "macos",
-        "windows"
-      ],
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],

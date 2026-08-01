@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-31T00:00:25.150256",
-  "total_skills": 216,
+  "generated_at": "2026-08-02T00:00:48.582242",
+  "total_skills": 218,
   "daily": {
     "2026-06-01": {
       "__all__": 1
@@ -58,7 +58,8 @@
     "2026-07-28": {},
     "2026-07-29": {},
     "2026-07-30": {},
-    "2026-07-31": {}
+    "2026-07-31": {},
+    "2026-08-02": {}
   },
   "cumulative": {
     "Agent Browser": 25,
@@ -73,16 +74,16 @@
     "agent-identity-management": 19,
     "agent-memory-mcp": 3,
     "agent-memory-systems": 20,
-    "agent-orchestration-multi-agent-optimize": 19,
+    "agent-orchestration-multi-agent-optimize": 21,
     "agent-orchestrator": 10,
     "agent-skills-audit": 1,
     "agent-system-backup": 31,
     "agentfolio": 4,
-    "ai-agent-development": 13,
+    "ai-agent-development": 15,
     "ai-tools-usage": 1,
     "alt-token-secrets-layout": 13,
     "android-native-dev": 1,
-    "anti-panic-protocol": 6,
+    "anti-panic-protocol": 9,
     "anti-pattern-czar": 1,
     "anti-slop-design": 17,
     "antigravity-design-expert": 10,
@@ -109,7 +110,8 @@
     "beautiful-mermaid": 2,
     "brandkit": 2,
     "browser-automation": 1,
-    "camofox": 28,
+    "browser/camofox": 1,
+    "camofox": 31,
     "camofox-browser": 16,
     "claude-code": 1,
     "claude-design": 6,
@@ -138,6 +140,7 @@
     "diagram-generator": 3,
     "docuseal": 1,
     "dogfood": 9,
+    "dspy": 2,
     "e2e-minimum-checklist": 28,
     "evaluating-llms-harness": 1,
     "excalidraw": 4,
@@ -204,7 +207,7 @@
     "minimax-multimodal-toolkit": 31,
     "minimax-music-gen": 8,
     "minimax-pdf": 1,
-    "mmx-cli": 104,
+    "mmx-cli": 106,
     "multi-model-routing-cheatsheet": 4,
     "nano-pdf": 0,
     "nextjs": 8,
@@ -229,10 +232,10 @@
     "productivity/google-workspace": 4,
     "productivity/portal-auto-upload": 6,
     "program-project-planner": 7,
-    "prompt-injection-fake-authority": 358,
+    "prompt-injection-fake-authority": 405,
     "python-anti-patterns": 19,
     "python-observability": 18,
-    "python-resilience": 26,
+    "python-resilience": 27,
     "python-sandbox": 1,
     "react-native-dev": 2,
     "regression-testing": 12,
@@ -249,7 +252,7 @@
     "site-qa-checklist": 16,
     "sketch": 2,
     "skill-docker": 1,
-    "skill-usage-tracker": 43,
+    "skill-usage-tracker": 44,
     "software-development/hermes-agent-skill-authoring": 1,
     "songwriting-and-ai-music": 2,
     "spike": 5,
@@ -263,8 +266,8 @@
     "test-driven-development": 70,
     "testing-strategy": 6,
     "tradingagents": 1,
-    "trial-and-error": 1184,
-    "user-collaboration-style": 307,
+    "trial-and-error": 1189,
+    "user-collaboration-style": 310,
     "v4-p7-skills-sync-bug": 1,
     "validate-data": 1,
     "vercel": 2,
@@ -278,5 +281,5 @@
     "xurl": 2,
     "yuanbao": 3
   },
-  "last_updated": "2026-07-31 00:00:25"
+  "last_updated": "2026-08-02 00:00:48"
 }

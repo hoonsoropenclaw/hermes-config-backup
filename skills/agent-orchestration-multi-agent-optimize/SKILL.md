@@ -322,6 +322,18 @@ depth 2 = sub-agent's sub-agent → blocked by max_spawn_depth=1
 
 To enable hierarchical teams (Orchestrator → Workers), raise `max_spawn_depth` to 2 or 3. Risk: complex debugging, unbounded recursion if misconfigured.
 
+## Task Decomposition: Heuristic vs LLM-Based (2026-07-31)
+
+A new reference file `references/nl-task-decomposition.md` covers the gap between "Orchestrator receives ambiguous task" and "Orchestrator produces structured sub-task plan" — the **before-delegation step** that the four delegation architectures don't address.
+
+**Key insight**: Heuristic parsing (activation words → if/else) works for ≤10 closed-domain actions but fails on open domains, multi-lingual input, and failure recovery. The replacement pattern is **DSPy Signature + ReAct** — the LLM decides actions dynamically from tool descriptions rather than hard-coded activation words.
+
+See `references/nl-task-decomposition.md` for:
+- Heuristic vs LLM decomposition comparison with code examples
+- DSPy v3.2.1 API (`dspy.configure(lm=...)` not `dspy.LM()`)
+- Integration point in Orchestrator flow (before delegation)
+- If→Then rules for when to use each strategy
+
 ## SOP Enforcement & Policy Validation (Layer 3)
 
 For multi-agent systems, Layer 3 (external validation) is the only reliable mechanism — without it, agents may deviate from defined SOPs.
