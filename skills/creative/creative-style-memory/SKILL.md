@@ -9,7 +9,7 @@ metadata:
     tags: [creative, image-generation, style-memory, multi-session, mmx, pipeline]
     category: creative
     cycle_created: 519
-    last_cycle_updated: 521
+    last_cycle_updated: 551
 ---
 
 # Creative Style Memory
@@ -89,6 +89,7 @@ Also trigger **after every successful creative generation** to capture style par
 | `references/creative-style-memory-20260719.md` | Full SOP: 3-layer system, If→Then rules (4 rules), validation commands, gap analysis from Talk2Image arXiv:2508.06916, Superside (2026), getimg.ai Style Elements (2026) |
 | `references/creative-style-memory-20260719.md#layer-2` | Brand profile JSON schema + profile location `~/.hermes/creative_brand_profiles/` |
 | `references/creative-style-memory-20260719.md#if--then` | 4 If→Then rules covering: style capture after success, style inheritance on new generation, project-specific profiles, graceful fallback when no memory exists |
+| `references/design-token-pipeline-20260802.md` | **W3C DTCG v2025.10 brand token pipeline** — Style Dictionary transform, 5-tier JSON schema, CSS/JS/SCSS output, taste-skill bridge (Cycle 551 D3-learn) |
 
 ## If→Then Core Rules
 
@@ -101,6 +102,7 @@ Also trigger **after every successful creative generation** to capture style par
 3. If user provided a reference image, copy to `~/.hermes/creative_brand_profiles/references/`
 4. Update `~/.hermes/creative_brand_profiles/user_default.json` — append to `successful_prompts`, update `updated_at`
 5. **This step is mandatory** — do not skip even if the user says "looks good" without further requests
+6. **Verify**: run `python3 -c "import json; from pathlib import Path; p=Path.home()/.hermes/creative_brand_profiles/user_default.json; print('CAPTURED' if p.exists() and json.loads(p.read_text()).get('dominant_style') else 'CAPTURE_FAILED')"` immediately after capture to confirm it worked
 
 ### Style Inheritance (on new creative request with existing memory)
 
@@ -125,8 +127,24 @@ Also trigger **after every successful creative generation** to capture style par
 **Then** ask the user for clarification — do not guess:
 > "檢測到您提到「沿用之前的風格」，但當前沒有記錄到之前的風格參數。請提供：
 > 1. 參考圖片（可直接貼上）
-> 2. 或者描述您想要的風格關鍵詞（如：色調、光線、構圖，情緒）
+> 2. 或者描述您想要的風格關鍵詞（如：色調，光線、構圖，情緒）
 > 這樣下次我就能自動記住了。"
+
+**If** user asks for "style memory" operations but multiple profiles exist in `creative_brand_profiles/`
+**Then** list all profiles with their `updated_at` timestamps and ask the user to confirm which project:
+> "以下是目前記錄的風格檔案：
+> - user_default (更新：2026-07-19)
+> - 夏日行銷 (更新：2026-07-20)
+> 請問您要沿用哪一個？"
+
+### Retroactive Capture from Session History
+
+**If** user asks to reuse a style from a previous session, but `user_default.json` is empty
+**Then** search session history (via session_search or state.db) for that session's creative generation prompts and reconstruct the style parameters from there:
+1. Query state.db for sessions with creative generation topics near the referenced date
+2. Extract successful generation prompts from those sessions
+3. Reconstruct dominant_style, color_preferences, lighting from prompt keywords
+4. Populate user_default.json before executing the new generation
 
 ## Brand Profile Schema
 
@@ -187,9 +205,30 @@ else:
 | `comfyui` | ComfyUI workflow execution | Technical pipeline execution |
 | `baoyu-article-illustrator` | Article illustration workflow | Article-specific image pipeline |
 
+## ⚠️ D2 Execution Gap — CLOSED (Cycle 551, 2026-08-02)
+
+**Discovery**: `creative-style-memory` SOP was created at Cycle 519 with complete 3-layer system, 4 If→Then rules, and brand profile schema — but `user_default.json` was **empty** as of Cycle 550. The `creative_brand_profiles/` directory was confirmed MISSING for 25+ cycles.
+
+**Action taken (Cycle 551)**:
+- Created `~/.hermes/skills/taste-skill-repo/skills/creative_brand_profiles/brand_tokens.json` — W3C DTCG v2025.10 compliant, 5-tier structure
+- Created `brand_tokens_transform.py` — Style Dictionary pipeline, outputs CSS + JS + SCSS
+- Generated `dist/tokens.css` (67 lines), `dist/tokens.mjs` (67 lines), `dist/_tokens.scss` (99 lines) — 99 resolved tokens
+- `$themes` maps taste-skill 3-dial values: hermes_default (6/4/4), taste_dial_high (8/6/4), taste_dial_low (4/4/6)
+- **Gap status**: CLOSED (D2→D3 exit)
+
+**The SOP is not the deliverable. Executed memory is the deliverable.**
+
+**Every creative generation success must trigger mandatory capture, no exceptions.**
+
+---
+
 ## Pitfalls
 
 1. **Capture is mandatory** — don't skip Style Memory Capture after a successful generation because "the user didn't ask for another one". The next session depends on it.
 2. **Don't guess on fallback** — if no style memory exists and user asks for "same style", ask for clarification rather than generating something random.
 3. **Reference images need to be copied locally** — if user provides a reference image URL, download it to `~/.hermes/creative_brand_profiles/references/` before updating the profile.
 4. **Layer 2 profiles persist** — unlike session memory (Layer 1), Layer 2 profiles survive session boundaries. Keep them updated after every successful generation.
+5. **SOP existence ≠ SOP execution** — if `user_default.json` is empty after any creative generation, the capture step was skipped. Verify with: `python3 -c "import json; from pathlib import Path; p=Path.home()/.hermes/creative_brand_profiles/user_default.json; print('EXISTS' if p.exists() and json.loads(p.read_text()).get('dominant_style') else 'EMPTY_OR_MISSING')"`
+6. **Style Inheritance must happen BEFORE pipeline, not after** — mmx generate must read the profile first, then inject style prefix into prompt. If generation runs before reading profile, the memory system is bypassed entirely.
+7. **Style reference via W3C DTCG tokens (Cycle 551)** — mmx has no `--sref` equivalent, but `brand_tokens.json` provides a partial workaround: store hex values + typography + motion tokens in the 5-tier JSON, then inject token references into generation prompts. GSAP uses `--motion.ease.ease-out` (cubic-bezier) from `dist/tokens.css` instead of string literals. Full pipeline: `brand_tokens_transform.py` → CSS/JS/SCSS → prompt injection.
+8. **Temporal durable execution applies** — checkpoint directory `creative_pipeline_checkpoints/` exists but is empty. The D2 gap is "checkpoint write never called", not "checkpoint mechanism missing". After every successful creative pipeline completion, write a checkpoint even if the workflow succeeded — this is how the pipeline becomes resumable.

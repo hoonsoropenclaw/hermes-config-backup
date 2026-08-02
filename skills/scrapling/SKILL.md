@@ -7,7 +7,7 @@ description: Scrapling - 自適應網頁爬蟲框架，45k+ Stars。支援自動
 
 ## 概述
 
-Scrapling 是一個強大的自適應網頁爬蟲框架，GitHub 45,969 ⭐。其核心特色是能自動學習並重新定位元素位置，應對網站結構變更。
+Scrapling 是一個強大的自適應網頁爬蟲框架，GitHub 71.5k ⭐（2026-08 更新）。其核心特色是能自動學習並重新定位元素位置，應對網站結構變更。
 
 **GitHub**: https://github.com/D4Vinci/Scrapling  
 **文檔**: https://scrapling.readthedocs.io  
@@ -90,15 +90,25 @@ MySpider().start()
 
 ### 安裝
 
-**重要：PEP 668 限制** — 系統 python3 無法直接 `pip install`，需要建立 venv：
+**標準安裝（在 hermes venv 中直接可用）**：
 ```bash
-# 正確方式（建立 venv）
-uv venv /tmp/scrapling-env --python 3.12
-uv pip install --python /tmp/scrapling-env/bin/python scrapling
+# 核心解析器
+pip install scrapling
 
-# 錯誤方式（會失敗）
-pip install scrapling  # → externally-managed-environment error
+# 含 fetchers（推薦，已實測成功）
+pip install "scrapling[fetchers]"
+pip install curl_cffi browserforge patchright  # 額外依賴
+
+# 安裝完成後需初始化瀏覽器
+scrapling install
 ```
+
+**完整功能**：
+```bash
+pip install "scrapling[all]"
+```
+
+**⚠️ 注意**：`pip install scrapling` 預設只裝核心解析器，HTTP fetching 需要額外依賴 `curl_cffi`、`browserforge`，瀏覽器自動化需要 `patchright`。使用 `scrapling[fetchers]` 可一次安裝所有 fetchers 相關依賴。
 
 ### 基本抓取
 
@@ -303,11 +313,22 @@ Scrapling MCP Server 提供 10 個工具：
 | **Camofox** | Firefox (Docker) | 需要 cookies 認證（Google/YouTube） | `docker ps` 確認 `camofox-browser` 運行中 |
 | **nodriver** | Chrome CDP | 最高規避（31/31 Cloudflare 零封鎖） | `uv venv /tmp/nd --python 3.12 && uv pip install --python /tmp/nd/bin/python nodriver` |
 
-**抉擇樹**：
+**抉擇樹（三層評估框架）**：
+
+**第一層：評估頁面類型**
+- 靜態 HTML + 簡單解析 → `web_extract`（最快最輕量）
+- JS 渲染 / 登入後內容 / 互動操作 → `browser_navigate`
+- 生產級長期爬蟲 + 網站可能改版 → Scrapling
+
+**第二層：反爬強度**
 - anti-bot 嚴格（Cloudflare）→ nodriver（需 venv + Chrome binary）
 - 一般爬蟲 / QA → Playwright（`/usr/bin/python3.12` 最穩）
 - 需要 cookies 認證 → Camofox（先 `curl -s http://localhost:9377/health`）
-- 網站結構會動態變化 → Scrapling（自適應解析）
+
+**第三層：維運需求**
+- 一次性抓取 → `web_extract`
+- 需要彈性應對網站改版 → Scrapling（自適應追蹤）
+- 大規模爬蟲（並發、分頁、代理輪換）→ Scrapling Spider 框架
 
 ---
 
@@ -410,14 +431,14 @@ def collect_competition_info():
 | 宣稱 | 來源 | 驗證狀態 |
 |------|------|----------|
 | nodriver 31/31 Cloudflare 零封鎖 | stealth-browser-2026.md | ❌ 未驗證 |
-| Scrapling StealthyFetcher 可繞過 Cloudflare Turnstile | SKILL.md 理論章節 | ❌ 未實測 |
+| Scrapling Fetcher 基本 HTTP 抓取 quotes.toscrape.com | SKILL.md 理論章節 | ✅ 2026-08-02 實測成功（quotes.toscrape.com，10 筆引言） |
 | camofox 可對比 nodriver 成功率 | 抉擇樹 | ❌ 未實測 |
 
 **If** 需要對 Cloudflare 保護站點抓取 **Then** 先用 `https://nowsecure.nl` 做基準測試，驗證 StealthyFetcher 實際效果後再投入正式任務
 
 ---
 
-*最後更新：2026-06-29*/
+*最後更新：2026-08-02*/
 
 ---
 
