@@ -1,0 +1,44 @@
+{
+  "target": "http://127.0.0.1:8765/web_output.html",
+  "mode": "capture",
+  "passed": 0,
+  "failed": 6,
+  "cases": [
+    {
+      "browser": "chromium",
+      "viewport": "desktop",
+      "status": "FAIL",
+      "error": "chromium/desktop: unexpected title: Visual Regression Test Page"
+    },
+    {
+      "browser": "chromium",
+      "viewport": "mobile",
+      "status": "FAIL",
+      "error": "chromium/mobile: unexpected title: Visual Regression Test Page"
+    },
+    {
+      "browser": "firefox",
+      "viewport": "desktop",
+      "status": "FAIL",
+      "error": "firefox/desktop: unexpected title: Visual Regression Test Page"
+    },
+    {
+      "browser": "firefox",
+      "viewport": "mobile",
+      "status": "FAIL",
+      "error": "firefox/mobile: unexpected title: Visual Regression Test Page"
+    },
+    {
+      "browser": "webkit",
+      "viewport": "desktop",
+      "status": "FAIL",
+      "error": "webkit/desktop: unexpected title: Visual Regression Test Page"
+    },
+    {
+      "browser": "webkit",
+      "viewport": "mobile",
+      "status": "FAIL",
+      "error": "webkit/mobile: unexpected title: Visual Regression Test Page"
+    }
+  ]
+}

@@ -322,6 +322,77 @@ curl -s -X POST "http://localhost:9377/tabs/$TAB_ID/navigate" \
 
 ---
 
+## Alternative: camoufox Python Library (Standalone, v0.5.4+)
+
+The `camoufox` pip package (v0.5.4 installed in hermes-agent venv) provides a standalone Firefox browser without Docker. **API differs significantly from older documented patterns** — always use the v0.5.4 pattern below.
+
+### Quick Test (verify binary first)
+```bash
+pip show camoufox | grep Version   # confirm v0.5.4
+python3 -c "import camoufox; print(camoufox.__version__)"
+```
+
+### v0.5.4 Correct API Pattern
+```python
+import camoufox
+
+browser = camoufox.Camoufox(headless=True).start()
+page = browser.new_page()          # NOT .pages.new_page()
+page.goto('https://httpbin.org/headers')
+print(page.title())
+content = page.content()
+print(len(content), 'bytes')
+browser.close()
+```
+
+**Key API facts**:
+- `Camoufox` (capital C) — the browser launcher class
+- `.start()` — launches and returns a `Browser` object
+- `.new_page()` — creates a new page (NOT `.pages.new_page()`)
+- `browser.close()` — clean shutdown
+
+### Common Errors
+
+| Error | Cause | Fix |
+|-------|-------|-----|
+| `AttributeError: 'Camoufox' object has no attribute 'new_page'` | Using v0.5.x API with v0.4.x pattern | Use `browser = Camoufox(...).start()` then `browser.new_page()` |
+| `CamoufoxNotInstalled: official/stable is not installed` | Firefox binary missing | Run `python3 -c "import camoufox; camoufox.fetch()"` (~713MB download) |
+| `AttributeError: module 'camoufox' has no attribute 'Browser'` | Old v0.4.x `Browser` class removed in v0.5.x | Use `camoufox.Camoufox(...).start()` instead |
+
+### When to Use Standalone vs Docker
+
+| Scenario | Tool | Notes |
+|----------|------|-------|
+| N100 headless VM, anti-bot moderate | camoufox lib (standalone) | Docker Camofox API server often stale (`browserConnected: false`) |
+| Chrome/Edge targets, highest bypass | nodriver | ~90% bypass, but VM CDP matching issues remain |
+| Firefox targets, anti-bot strict | camoufox lib | Engine-level fingerprint patching |
+| Quick curl/Playwright tasks | playwright / curl | No anti-bot needed |
+| Docker Camofox API server healthy | Camofox Docker (port 9377) | See Docker Deployment section above |
+
+**2026-08-04 observation**: Camofox Docker API (port 9377) was running but `browserConnected: false` — a documented stale state. The standalone camoufox lib with its own Firefox binary would have been the more reliable path for this cycle.
+
+### If Docker Camofox Is Stale
+```bash
+# Check status
+curl -s http://localhost:9377/health | python3 -c "
+import sys,json; d=json.load(sys.stdin)
+print('browserConnected:', d['browserConnected'])
+print('browserRunning:', d['browserRunning'])
+"
+
+# If false: restart Docker
+docker restart camofox-browser
+sleep 180  # wait for Firefox pre-warm
+curl -s http://localhost:9377/health | python3 -c "
+import sys,json; d=json.load(sys.stdin)
+print('After restart — browserConnected:', d['browserConnected'])
+"
+```
+
+**⚠️ SKILL.md exists ≠ Camofox Docker is operational** — always verify `browserConnected: true` before issuing any browsing commands.
+
+---
+
 ## Alternative: nodriver（Chrome 系目標）
 
 Camofox 是 Firefox 系。對於 Chrome 系目標且需要最高隱蔽性，nodriver 是更強的選擇：
