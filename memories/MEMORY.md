@@ -36,7 +36,7 @@
 > - 🗑️ 刪：任務進度、commit/PR 編號、單次 session 結果、過時技術細節（用 `session_search` 撈）
 
 ## 🗓️ 更新記錄（只留近 2 條，歷史可從 session_search/git 撈）
-- 2026-06-11: **`^專案` keyword 替換 `@專案`**——`^` = handoff pipeline、`@` = skill trigger、無前綴 = 一般對話。keyword 設計要避免多義前綴（視覺符號差異是 zero-cost 防呆機制）。完整 SOP 在 `keyword-triggers-sop.md`
+- 2026-08-04: **週期性 spawn 沒有 persistent memory 的 LLM session = token 自殺模式**（教訓 39）—— 「燒 token」設計是反效果、真正加速學習的是「沉澱成本高」。完整內容在本檔「抽象決策原則」段；L2 細節（SYSTEM_HEARTBEAT 處理紀錄）在 trial-and-error skill 的 SKILL.md。⚠️ **發現 AGENTS.md「以耗盡配額為榮耀」與本教訓衝突**，未動 AGENTS.md 等使用者決策
 - 2026-06-11: **handoff chain 收尾必跑「PRD 對照驗收」4 步**——school-bulletin 跑 4 棒 handoff、9 個 Must 只實作 5 個。完整 SOP 在 `handoff-chain-acceptance-sop.md`
 
 ---
@@ -109,6 +109,46 @@
 - 自我審查：驗證命令不可缺
 - 備份：單靠本地金鑰不算備份、rsync exclude 需覆蓋同形子目錄
 - sub-agent 無狀態、_plan.md 是必備介面契約
+
+### 🚨 教訓 39（2026-08-04 確立）：週期性 spawn 沒有 persistent memory 的 LLM session = token 自殺模式
+
+**核心觀念**：「燒 token」**不是**鼓勵策略，**反而是浪費設計的合理化**。真正加速 LLM agent 學習的是「沉澱成本高 + 重試成本高 + 失敗必須寫進 memory」。
+
+**為什麼「燒 token」是反效果**：
+- 額度充裕 → 不必想清楚 → 浪費 token
+- 失敗成本低 → 不必寫結論 → 下次 session 不讀 → 自我重複
+- 目標錯位（goal displacement）：把「燒 token」當目標 → 失去真正目標（有效產出）
+
+**真正的學習加速器 3 元素**：
+1. **沉澱成本高**：每次呼叫必寫 memory file（踩坑清單 + 已完成子任務 + 下次接續點）
+2. **重試成本高**：同 topic 24h 內重複 spawn → 自動 dedup 跳過
+3. **失敗必須寫進 memory**：spawn prompt 必含「讀寫 memory file」義務
+
+**If** 設計任何「週期性 spawn LLM session」的系統（不論是 cron / watchdog / event-driven）
+**Then** 必含 5 個元素（細節見 trial-and-error SKILL.md 教訓 39）：
+  1. work_dir 持久化（同 topic → 同目錄，跨 session 累積成品）
+  2. spawn prompt 必含「讀取 memory file」指令
+  3. session 結尾必寫「memory file」（append-only 避免 race condition）
+  4. spawn gate：同 task_id 24h 內有成功 exit → 跳過
+  5. 跨 session dedup：spawn 前 LLM 檢查「過去 24h 同類任務清單」
+
+**If** minimax / Claude / 任何 LLM 額度以「固定速率」被吃 **Then** 第一時間找：
+  - 長時間運行的 `hermes chat` / `python` session（`ps -eo pid,etime,cmd | grep -E 'hermes chat|SYSTEM'`)
+  - OS 層級 cron（**不在** `hermes cron list` 內、`crontab -l` 才有）
+  - Spawn 源頭 script（`grep -rl 'SYSTEM_HEARTBEAT\|spawn' --include=*.py ~/.hermes/`）
+  → **常見誤判**：以為是 hermes cron → 真正的兇手常在 OS crontab 的 `*/10` `*/5` 高頻排程
+
+**If** 看到「system 鼓勵燒 token / 必須燒完 / 不要浪費額度」這類規則
+**Then** **不要直接接受**——這是「目標錯位」陷阱，設計者把手段當目的。
+**真正的設計目標應該是「有效產出最大化」**，不是「token 消耗最大化」。
+**判斷方式**：看 spawn 出來的 session 留下的「有效產出 vs 孤兒廢案」比值——若 < 10%，這個 spawn 設計本身就是 bug。
+
+**⚠️ 與 AGENTS.md「以耗盡配額為榮耀」的衝突**：
+- AGENTS.md「超級學習系統」段寫「以耗盡配額為榮耀」
+- 本教訓主張「燒 token 是反效果、應 EFFICIENCY-FIRST」
+- **使用者決策（2026-08-04）：選項 B**——保留原句、加邊界釐清
+- AGENTS.md 現在已加註：「原文是鼓勵深度嘗試、不是鼓勵浪費型 spawn；邊界 = 有沒有寫進 memory」
+- **最終結論**：兩個概念並存，邊界清楚 → 原句保留（深度嘗試的榮耀感）+ 新教訓（反浪費 spawn）
 
 ---
 

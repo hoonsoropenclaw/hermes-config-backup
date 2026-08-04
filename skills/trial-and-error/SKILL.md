@@ -528,6 +528,73 @@ for j in d['jobs']:
 
 ---
 
+### 教訓 39：週期性 spawn 沒有 persistent memory 的 LLM session = 自我重複的 token 自殺模式（2026-08-04 SYSTEM_HEARTBEAT 慘案）
+
+**症狀**: minimax 額度以**固定速率**被消耗；OS cron 跑 `*/10 * * * *` 觸發 Python script，script 內呼叫 minimax 當「Strategist」決定要不要 spawn 新的 `hermes chat` session，每個新 session 跑 3 小時 timeout、結束後 10 分鐘內又被 spawn。實際 spawn 出來的 `hermes chat` session 跑 Playwright 視覺回歸測試，**4 輪 session 各自重做同樣的事**（cross-browser runner、visual regression diff、build report、device matrix），每輪都從零開始。N100 累積了 200+ 個 `projects/learning_<timestamp>_<i>/` 孤兒目錄，每個只有 100-200KB local.log。
+
+**根因（三層）**:
+1. **L1 表面**：smart_heartbeat.py 的 spawn 設計沒有上限檢查、不感知「同類任務已做過幾次」、不讀上次 session 留下的成品
+2. **L2 結構**：每個 spawn 出來的 hermes chat session 是**完全 fresh context**，不知道上次踩過什麼坑、不知道已有什麼 helper script、不知道上次寫到一半的程式碼在哪
+3. **L3 哲學**：把「任務」當一次性事件（spawn → run → forget），而不是「持續實作中的專案」（accumulate → resume → extend）
+
+**證據**（從 SYSTEM_HEARTBEAT 留下 105MB 的 `learning_output.log`）：
+- 同樣的「使用 Playwright 實現跨瀏覽器自動化測試並整合視覺回歸測試」任務在 4 個不同時段重複（04:00 / 06:00 / 08:00 / 10:00 學習 log）
+- 每次 session 結尾都自我承認「已內化」的踩坑（device descriptor 用 `p.devices[name]`、PIL RGBA→RGB、baseline 兩階段邏輯）→ **下一個 session 不會讀這段**
+- 最後一個 session 成功交付（5/5 cross-browser tests + 3/3 visual regression），但**前 4 輪的精品腳本被埋在孤兒目錄裡**
+
+**If→Then #1（識別固定速率額度消耗的真凶）**:
+**If** minimax 額度以「固定速率」被吃（不是突波、不是手動操作）**Then** 第一時間 `ps -eo pid,etime,cmd | grep -E 'hermes chat|SYSTEM_HEARTBEAT'` 找長時間運行的 chat session + `crontab -l | grep -v '^#'` 找 OS 層級 cron（OS cron 不在 `hermes cron list` 內）+ `grep -rl 'SYSTEM_HEARTBEAT\|hermes chat' --include=*.py /home/hoonsoropenclaw/` 找 spawn 源頭 script
+→ **常見誤判**: 以為是 `hermes cron list` 裡的 job（通常不是）→ 真正的 spawn 源頭常在 OS crontab 的 `*/10` `*/5` 高頻排程
+
+**If→Then #2（停止自我重複 spawn）**:
+**If** 找到 spawn 源頭（如 smart_heartbeat.py、autonomous_loop.py、recursive_learner.py）**Then** 不要只 kill 當前 hermes chat session（會被 10 分鐘內重 spawn）；改用兩段處理：
+  1. **止血**：`crontab -l > /tmp/crontab.backup.$(date +%s) && <註解掉 spawn 源頭那行> | crontab -`
+  2. **根治（未來）**：改 spawn 設計（見下方「必須改的設計」）
+
+**If→Then #3（spawn 設計必須有的 5 個元素）**:
+**If** 設計任何「週期性 spawn LLM session」的系統 **Then** 必含：
+  1. **work_dir 持久化**：同一個任務用同一個 work_dir，不開 `learning_<timestamp>_<i>/` 新目錄（每輪 session 讀寫同一個目錄才能累積成品）
+  2. **強制讀取 memory**：spawn 出來的 session prompt 必含「讀取 `~/.hermes/agent_memory/<task_id>.md` 看上次進度」，不只是讀「上次 local.log」
+  3. **memory 寫入義務**：session 結尾必寫入「踩坑清單 + 已完成的子任務 + 下次接續點」到 `~/.hermes/agent_memory/<task_id>.md`
+  4. **spawn 上限**：同 task_id 在 N 小時內最多 spawn 1 次（避免「同樣的事做 5 輪」）；若上次 session 正常 exit（exit code 0），下輪 spawn 前先檢查「這次任務還沒做完嗎？」→ 是就 resume、否才新 spawn
+  5. **跨 session deduplication**：spawn 前用 LLM 檢查「過去 24 小時有沒有同類任務完成？」→ 有就不要再 spawn，標記為「已完成」
+
+**為什麼這是 L3 教訓（不是 L2 bug fix）**:
+- **L2 解法**：改 smart_heartbeat.py 個別邏輯（if/else、加 sleep、改 max_concurrent）→ 治標，下次 spawn 還是會自我重複
+- **L3 解法**：改 spawn 設計的根本哲學（從「spawn and forget」改成「spawn and accumulate」）→ 治本，未來設計任何 spawn 系統都不會重蹈覆轍
+- 跟教訓 34（D2 缺口 = SOP 存在但執行層從未調用）是同一類：**「系統設計天生鼓勵浪費」比「個別 bug」更深層**
+
+**完整重設計 SOP 與 5 元素模板**：見 `autonomous-agent-loop-design` skill（含三層根因診斷框架、work_dir 持久化 pattern、memory file 結構、dedup gate、max_running_count 硬編碼原則、「燒 token」→「EFFICIENCY-FIRST」語氣轉換、9 個 dry-run test case）。
+
+**驗證命令**（已驗證於 2026-08-04）：
+```bash
+# 1. 找 spawn 源頭
+ps -eo pid,etime,cmd | grep -E 'SYSTEM_HEARTBEAT|hermes chat' | grep -v grep
+crontab -l | grep -v '^#' | grep -E 'spawn|heartbeat|learn'
+
+# 2. 量化「自我重複」嚴重度
+grep -l "使用 Playwright" /home/hoonsoropenclaw/.hermes/projects/learning_*/local.log | wc -l
+# 如果 >= 3 → 同類任務做 3+ 輪 = 確認 spawn 設計有問題
+
+# 3. 確認 N100 孤兒目錄數
+ls -d /home/hoonsoropenclaw/.hermes/projects/learning_* | wc -l
+# 100+ = 已長期自我重複
+```
+
+**禁止**：
+- ❌ 只 kill 當前 hermes chat session（10 分鐘內會被重 spawn）
+- ❌ 只暫停 hermes cron list 裡的 job（OS cron 不在裡面）
+- ❌ 把 spawn 源頭 script 刪掉（保留以便未來「改設計後重新啟用」）
+
+**恢復設計方向**（使用者決定前不要動）：
+1. 在 `~/.hermes/agent_memory/` 建目錄，spawn 時強制讀寫
+2. 改 `smart_heartbeat.py` L207 的 work_dir 公式：`learning_<timestamp>_<i>` → 改成「同 topic 共用同一個目錄」
+3. 在 spawn 決策 prompt 加「過去 24 小時同類任務完成清單」當 dedup 依據
+4. 在 session 結尾 prompt 加「必寫 memory file」義務
+5. 在 spawn 源頭加「同 task 24 小時最多 1 次」硬上限
+
+---
+
 ### 教訓 36：stdlib-first 生產工具建構（Cycle 538, 2026-07-26）
 
 **發現**: Cycle 538 確認用戶今日極度活躍（30+ CLI sessions），最新焦點在 Python stdlib 建構生產級工具（Telegram bot + weather API, wttr.in, long-polling）。發現 3 個具體 pitfall：surrogate pair emoji bug（`\\ud83d\\udccd` 寫成兩個 lone surrogate）、免費 API `lang=zh` 只動 one-liner 不動 JSON data、中文 unicode escape 錯字難 debug。
