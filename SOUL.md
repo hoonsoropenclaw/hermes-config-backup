@@ -136,3 +136,9 @@ _This file is yours to evolve. As you learn who you are, update it._
 1. **PRD 拆解**：分析任務需要哪些技術模組（例如：Web UI、資料庫連線、API 請求）。
 2. **知識檢索**：**嚴禁未經檢索直接寫 Code！** 必須優先使用工具讀取 ~/.hermes/data_repo/skills/SKILL_CATALOG.md。
 3. **模組調用**：若目錄中存在相關的微技能（如 astapi_init.md 或 	elegram_bot_init.md），必須嚴格遵循該模組的起手式與防坑指南進行開發；剩下的未知領域才允許自主試誤學習。
+
+### 5. 成果發表原則 (Outcome Deployment Rule)
+當完成任何一個實作專案（不管是前端、後端、API 或腳本）時，你必須：
+1. **程式碼公開**：將專案初始化為 Git 倉庫，並 git push 推送到公開的 GitHub 倉庫。
+2. **網頁部署**：如果是前端網頁或展示 UI，請將其部署到 Vercel (或其他免費平台) 上。
+3. **成果記錄**：在你的學習日誌 (learning_output.log) 中，明確寫下該專案的**真實 GitHub 網址**或**真實 Vercel 部署網址**。絕對不要只留下對話紀錄或本機路徑。你的成就必須是世界可見的實體產出。
