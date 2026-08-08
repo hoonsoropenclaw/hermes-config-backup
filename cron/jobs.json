@@ -255,7 +255,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-06T14:48:00.047140+08:00",
-      "next_run_at": "2026-08-09T03:00:00+08:00",
+      "next_run_at": "2026-08-10T03:00:00+08:00",
       "last_run_at": "2026-08-08T03:03:02.032762+08:00",
       "last_status": "ok",
       "last_error": null,
@@ -286,7 +286,7 @@
       "schedule_display": "0 2 * * *",
       "repeat": {
         "times": null,
-        "completed": 61
+        "completed": 62
       },
       "enabled": true,
       "state": "scheduled",
@@ -294,7 +294,7 @@
       "paused_reason": null,
       "created_at": "2026-06-07T13:33:27.569449+08:00",
       "next_run_at": "2026-08-10T02:00:00+08:00",
-      "last_run_at": "2026-08-08T02:00:53.788858+08:00",
+      "last_run_at": "2026-08-09T02:00:12.803435+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -324,15 +324,15 @@
       "schedule_display": "30 2 * * *",
       "repeat": {
         "times": null,
-        "completed": 60
+        "completed": 61
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-07T13:33:27.569485+08:00",
-      "next_run_at": "2026-08-09T02:30:00+08:00",
-      "last_run_at": "2026-08-08T02:32:55.108393+08:00",
+      "next_run_at": "2026-08-10T02:30:00+08:00",
+      "last_run_at": "2026-08-09T02:32:19.316967+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -483,7 +483,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-10T16:43:42.394014+08:00",
-      "next_run_at": "2026-08-09T03:00:00+08:00",
+      "next_run_at": "2026-08-16T03:00:00+08:00",
       "last_run_at": "2026-08-02T03:03:15.497690+08:00",
       "last_status": "ok",
       "last_error": null,
@@ -538,5 +538,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-08-09T02:00:05.733398+08:00"
+  "updated_at": "2026-08-09T03:00:06.150427+08:00"
 }
