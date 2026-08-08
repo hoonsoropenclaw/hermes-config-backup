@@ -12,7 +12,11 @@ metadata:
     related_skills: [obsidian, arxiv]
 ---
 
-# Karpathy's LLM Wiki
+## Umbrella relationship (2026-08 curator pass)
+
+LLM Wiki is the curated markdown knowledge-base subsection. Pair with local RAG or Obsidian according to retrieval/editing needs; source- and topic-specific notes belong in the wiki, not new skills.
+
+
 
 Build and maintain a persistent, compounding knowledge base as interlinked markdown files.
 Based on [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f).

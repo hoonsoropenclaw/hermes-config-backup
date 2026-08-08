@@ -16,7 +16,11 @@ metadata:
       - /docs/guides/operate-teams-meeting-pipeline
 ---
 
-# Teams Meeting Pipeline
+## Umbrella relationship (2026-08 curator pass)
+
+Teams meetings are the Microsoft collaboration-adapter subsection. Keep Graph subscription renewal and pipeline commands here because they define a distinct external API contract; meeting-specific incidents belong in references, not new skills.
+
+
 
 Use this skill whenever the user asks about Microsoft Teams meeting summaries, transcripts, recordings, action items, Graph subscriptions, or any operational question about the Teams meeting pipeline. Works in any language — the triggers below are examples, not an exhaustive list.
 

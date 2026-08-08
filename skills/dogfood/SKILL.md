@@ -9,7 +9,11 @@ metadata:
     related_skills: []
 ---
 
-# Dogfood: Systematic Web Application QA Testing
+## Umbrella relationship (2026-08 curator pass)
+
+Dogfood is the exploratory-web-QA subsection of the verification class. Pair it with deployment verification and browser automation when relevant; keep app-specific bug reports as output artifacts, never as new skills.
+
+
 
 ## Overview
 

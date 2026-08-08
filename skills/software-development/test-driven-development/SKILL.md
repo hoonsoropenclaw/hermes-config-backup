@@ -11,7 +11,11 @@ metadata:
     related_skills: [systematic-debugging, writing-plans, subagent-driven-development]
 ---
 
-# Test-Driven Development (TDD)
+## Umbrella relationship (2026-08 curator pass)
+
+TDD is the test-first subsection of the engineering-quality class. Use it alongside, not as a replacement for, root-cause debugging and final SOP validation. Store framework-specific recipes in references; do not create a skill per test framework.
+
+
 
 ## Overview
 

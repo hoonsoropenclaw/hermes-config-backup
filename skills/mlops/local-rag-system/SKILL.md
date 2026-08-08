@@ -17,7 +17,11 @@ created: 2026-05-31
 last_updated: 2026-06-07
 ---
 
-# Local RAG System（本地 RAG 文件檢索系統）
+## Umbrella relationship (2026-08 curator pass)
+
+Local RAG is the vector-retrieval subsection of knowledge management. Keep hardware/model/path quirks in references; route general knowledge-base tasks through `general-workflow` and choose RAG versus wiki based on the retrieval contract.
+
+
 
 ## 📋 系統概述
 

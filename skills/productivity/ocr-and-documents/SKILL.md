@@ -11,7 +11,11 @@ metadata:
     related_skills: [powerpoint]
 ---
 
-# PDF & Document Extraction
+## Umbrella relationship (2026-08 curator pass)
+
+PDF/OCR extraction is the document-ingestion subsection of the document class. PowerPoint, DOCX, and workspace adapters should be selected by artifact type; keep extractor-specific recipes in support files instead of creating narrow format/error skills.
+
+
 
 For DOCX: use `python-docx` (parses actual document structure, far better than OCR).
 For PPTX: see the `powerpoint` skill (uses `python-pptx` with full slide/notes support).

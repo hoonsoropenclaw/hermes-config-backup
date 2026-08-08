@@ -9,7 +9,11 @@ metadata:
     triggers: [切換模型, 換 model, 便宜模型, 省 tokens, cheap model, model routing, multi-model, 2.7 vs M3, deepseek, sonnet, opus, haiku]
 ---
 
-# Multi-Model Routing 速查
+## Umbrella relationship (2026-08 curator pass)
+
+Model routing is the cost/capability subsection of Hermes operations. Keep provider catalogs and dated benchmarks in references; do not create a skill for each model comparison.
+
+
 
 ## 何時用這個 skill
 

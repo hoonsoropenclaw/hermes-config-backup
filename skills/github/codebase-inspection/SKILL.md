@@ -13,7 +13,11 @@ prerequisites:
   commands: [pygount]
 ---
 
-# Codebase Inspection with pygount
+## Umbrella relationship (2026-08 curator pass)
+
+Codebase inspection is the measurement subsection of engineering discovery. Keep language/tool-specific exclusions in references; do not create a skill per repository or metric report.
+
+
 
 Analyze repositories for lines of code, language breakdown, file counts, and code-vs-comment ratios using `pygount`.
 

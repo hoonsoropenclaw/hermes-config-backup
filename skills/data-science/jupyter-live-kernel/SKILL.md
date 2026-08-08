@@ -11,7 +11,11 @@ metadata:
     category: data-science
 ---
 
-# Jupyter Live Kernel (hamelnb)
+## Umbrella relationship (2026-08 curator pass)
+
+Jupyter live kernels are the stateful-exploration subsection of data work. Keep server startup and CLI argument quirks here; notebook- or dataset-specific procedures belong in notebooks/references, not new skills.
+
+
 
 Gives you a **stateful Python REPL** via a live Jupyter kernel. Variables persist
 across executions. Use this instead of `execute_code` when you need to build up

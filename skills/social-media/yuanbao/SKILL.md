@@ -9,7 +9,11 @@ metadata:
     related_skills: []
 ---
 
-# Yuanbao Group Interaction
+## Umbrella relationship (2026-08 curator pass)
+
+Yuanbao is a messaging-platform adapter subsection. Keep mention/DM mechanics here because they are tool-contract details; group-specific examples belong in references, not new skills.
+
+
 
 ## CRITICAL: How Messaging Works
 

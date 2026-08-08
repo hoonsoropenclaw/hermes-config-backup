@@ -6,7 +6,11 @@ author: hoonsor
 tags: [hermes, agent, profile, tmux, resident, persistent, architecture]
 ---
 
-# Hermes Resident Agent — 常駐代理架構 SOP
+## Umbrella relationship (2026-08 curator pass)
+
+Resident profiles are one lifecycle within the broader agent lifecycle class. Use this skill for profile + persona + handoff construction; use `agent-identity-management` for identity pivots and `autonomous-agent-loop-design` for persistent scheduled workers. Avoid creating one skill per profile or chain name.
+
+
 
 ## 核心概念
 

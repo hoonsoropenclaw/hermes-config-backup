@@ -4,7 +4,11 @@ description: "ASCII video: convert video/audio to colored ASCII MP4/GIF."
 platforms: [linux, macos, windows]
 ---
 
-# ASCII Video Production Pipeline
+## Umbrella relationship (2026-08 curator pass)
+
+ASCII video is the animated-media subsection of creative production and shares the static rendering principles with `ascii-art`. Keep codec-specific commands in support references/scripts; do not split by codec or effect.
+
+
 
 ## When to use
 

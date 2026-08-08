@@ -11,7 +11,11 @@ metadata:
     related_skills: [plan, requesting-code-review]
 ---
 
-# Authoring Hermes-Agent Skills (in-repo)
+## Umbrella relationship (2026-08 curator pass)
+
+Skill authoring is the library-maintenance subsection. It should enforce class-level design, support-file packaging, validation, and safe archiving; one-off skill requests should first patch an existing umbrella.
+
+
 
 ## Overview
 

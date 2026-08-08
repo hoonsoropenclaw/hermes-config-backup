@@ -5,7 +5,11 @@ license: Proprietary. LICENSE.txt has complete terms
 platforms: [linux, macos, windows]
 ---
 
-# Powerpoint Skill
+## Umbrella relationship (2026-08 curator pass)
+
+PowerPoint is the presentation-artifact subsection of document production. Keep template and renderer mechanics in support files; deck-specific content is an artifact, not a new skill.
+
+
 
 ## When to use
 

@@ -11,7 +11,11 @@ metadata:
     related_skills: [test-driven-development, writing-plans, subagent-driven-development]
 ---
 
-# Systematic Debugging
+## Umbrella relationship (2026-08 curator pass)
+
+Systematic debugging is the root-cause subsection of engineering quality. It owns the investigation lifecycle; dated error strings and provider incidents belong in `trial-and-error` references, not sibling diagnosis skills.
+
+
 
 ## Overview
 

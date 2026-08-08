@@ -279,7 +279,11 @@ If npx fails: fall back to REST API — `POST https://api.minimax.io/v1/image_ge
 | "cancel that" | REST | `curl -X POST http://HOST:8188/interrupt` |
 | "free GPU memory" | REST | `curl -X POST http://HOST:8188/free` |
 
-## Setup & Onboarding
+## Umbrella relationship (2026-08 curator pass)
+
+ComfyUI is the local generative-media execution subsection. Keep hardware checks, workflow JSON, and node/provider recipes in support files; do not split by model family or media type.
+
+
 
 When a user asks to set up ComfyUI, **the FIRST thing to do is ask whether
 they want Comfy Cloud (hosted, zero install, API key) or Local (install

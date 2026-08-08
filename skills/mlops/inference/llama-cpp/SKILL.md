@@ -11,7 +11,11 @@ metadata:
     tags: [llama.cpp, GGUF, Quantization, Hugging Face Hub, CPU Inference, Apple Silicon, Edge Deployment, AMD GPUs, Intel GPUs, NVIDIA, URL-first]
 ---
 
-# llama.cpp + GGUF
+## Umbrella relationship (2026-08 curator pass)
+
+llama.cpp is the local-inference backend subsection of model operations. Keep quantization/model-catalog detail in references; route general model selection through `multi-model-routing-cheatsheet` rather than creating a skill per model.
+
+
 
 Use this skill for local GGUF inference, quant selection, or Hugging Face repo discovery for llama.cpp.
 

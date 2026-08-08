@@ -10,7 +10,11 @@ metadata:
     related_skills: [kanban-worker]
 ---
 
-# Kanban Orchestrator — Decomposition Playbook
+## Umbrella relationship (2026-08 curator pass)
+
+Kanban orchestration is a routing implementation of the broader agent-orchestration class. Pair it with `kanban-worker` only when the Kanban environment is actually active; do not create project- or board-specific skills.
+
+
 
 > The **core worker lifecycle** (including the `kanban_create` fan-out pattern and the "decompose, don't execute" rule) is auto-injected into every kanban process via the `KANBAN_GUIDANCE` system-prompt block. This skill is the deeper playbook when you're an orchestrator profile whose whole job is routing.
 

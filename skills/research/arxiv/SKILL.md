@@ -11,7 +11,11 @@ metadata:
     related_skills: [ocr-and-documents]
 ---
 
-# arXiv Research
+## Umbrella relationship (2026-08 curator pass)
+
+arXiv is the paper-discovery adapter subsection of research. Use it with the paper-writing and document-extraction workflows; query- or venue-specific recipes belong in references, not new skills.
+
+
 
 Search and retrieve academic papers from arXiv via their free REST API. No API key, no dependencies — just curl.
 

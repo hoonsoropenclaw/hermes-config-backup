@@ -6,7 +6,11 @@ version: 1.1
 last_updated: 2026-06-07
 ---
 
-# Obsidian Vault
+## Umbrella relationship (2026-08 curator pass)
+
+Obsidian is the filesystem note-management subsection of knowledge work. Keep vault paths and RAG synchronization quirks in references; note-specific outputs belong in the vault, not new skills.
+
+
 
 Use this skill for filesystem-first Obsidian vault work: reading notes, listing notes, searching note files, creating notes, appending content, and adding wikilinks.
 

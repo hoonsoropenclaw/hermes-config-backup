@@ -11,7 +11,11 @@ date_added: "2026-06-10"
 last_updated: "2026-06-10"
 ---
 
-# Orchestrator + Worker + Summarizer 三層架構
+## Umbrella relationship (2026-08 curator pass)
+
+This is the context-isolation subsection of the agent orchestration class. Its durable contract is orchestrator → isolated workers → summarizer → verified handoff; individual research sessions belong in references, not new skills.
+
+
 
 > **目的**:解決單體 LLM agent「把所有 web 結果直接餵進 context」的 context 累積爆掉問題。
 > 從 2026-06-10 `consumer-researcher` v2 架構重構中提煉。

@@ -50,7 +50,11 @@ metadata:
       - USER_KEY 環境變數
 ---
 
-# Agent System Backup — 全狀態備份 class-level SOP
+## Umbrella relationship (2026-08 curator pass)
+
+Backup/restore is the disaster-recovery subsection of Hermes operations. Keep versioned provider recipes and incident evidence in references; use this class for the lifecycle, coverage, encryption, and restore contract rather than creating skills per backup incident.
+
+
 
 適用於任何「想把自己整套設定異機還原」的 agent 系統(不限 Hermes)。
 **2026-06-10 v4.6 擴充**：8 → 14 個同步目標、INVENTORY.md 同步清單、每日 coverage check cron 自動化驗證。

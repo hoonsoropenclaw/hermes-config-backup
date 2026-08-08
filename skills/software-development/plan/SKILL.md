@@ -11,7 +11,11 @@ metadata:
     related_skills: [subagent-driven-development, test-driven-development, requesting-code-review]
 ---
 
-# Plan Mode
+## Umbrella relationship (2026-08 curator pass)
+
+Planning is the pre-execution subsection of engineering delivery. Use it for explicit plan-only requests; otherwise the general workflow owns the full inspect → execute → verify lifecycle. Keep project plans as artifacts, not skills.
+
+
 
 Use this skill when the user wants a plan instead of execution.
 

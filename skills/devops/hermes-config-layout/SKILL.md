@@ -376,7 +376,11 @@ hermes config set agent.tool_use_enforcement true
 - `references/checklist-mempalace-mcp-config.md` — MemPalace MCP Server 配置
 - `references/checklist-token-priorities.md` — 各工具優先順序詳細說明
 
-## 設定檔結構總覽
+## Umbrella relationship (2026-08 curator pass)
+
+This skill is the Hermes configuration/operations subsection, not a separate task family. Route generic requests through `general-workflow`; use this document for config-specific file maps, cross-file dependencies, backups, and verification. Incident-specific secrets, stale state, and CLI failure evidence live in `trial-and-error` references.
+
+
 
 ```
 ~/.hermes/

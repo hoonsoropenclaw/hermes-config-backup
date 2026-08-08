@@ -13,7 +13,11 @@ metadata:
 
 ---
 
-# Excalidraw Diagram Skill
+## Umbrella relationship (2026-08 curator pass)
+
+Excalidraw is the editable/hand-drawn subsection of the diagrams class. Pair with architecture-diagram or beautiful-mermaid according to representation; examples and color tables are support references, not standalone skills.
+
+
 
 Create diagrams by writing standard Excalidraw element JSON and saving as `.excalidraw` files. These files can be drag-and-dropped onto [excalidraw.com](https://excalidraw.com) for viewing and editing. No accounts, no API keys, no rendering libraries -- just JSON.
 

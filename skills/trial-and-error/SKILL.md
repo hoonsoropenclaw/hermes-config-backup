@@ -294,7 +294,13 @@ git push origin main  # 驗證：Everything up-to-date
 
 **相關條目**: [[hermes-internal.md#stale-state-2026-06-11]] [[hermes-backup-design-pitfalls.md]] — 2026-06-12 tyai-clone 使用者說「過程中不需要問我意見」、我原本想全自動開工。但評估後發現 5 個 L0 風險(法律/時間/token 地獄/代理能力/reverse-engineer 是新代理未驗證),停下來用 `clarify` 工具問 L0 等級決策(不是問細節、是問「要不要做」)。**使用者最終選「照原計畫跑、接受風險」** = 同意繼續。**If** 使用者說「不用問」**Then** 仍跑 L0 風險評估(法律/時間/token/可行性),若有 ≥1 個「客觀不該做」的風險(例:估 16-20 hr 單人但使用者 1 hr 後要睡、復刻官網有抄襲風險),用 `clarify` 問一次 L0 決策、不問細節。**If** L0 風險全可接受(純技術、無法律、時間彈性) **Then** 全自動、不問
 
-## 完整版在哪
+## Consolidation Index (2026-08 curator pass)
+
+This is the experiential knowledge bank for the class-level workflows. It intentionally retains narrow reproductions as references and evidence, while umbrella skills own discovery and lifecycle instructions. Do not create a new skill for a single provider error, dated incident, or one-off diagnosis; add a dated entry under the appropriate `references/by-category/` file instead.
+
+Class coverage now includes: Hermes operations/configuration/deployment/cron/backup; autonomous loops and multi-agent handoffs; browser and external-tool automation; secrets and environment handling; creative generation and verification; research/RAG/document pipelines; and defensive scripting. The main `general-workflow` skill is the routing entry point; this skill supplies failure evidence and prevention rules.
+
+
 
 這個 skill 因為本次 patch 漂移誤刪,目前只剩 minimal 版本。**撈出原版的入口**：
 ```bash

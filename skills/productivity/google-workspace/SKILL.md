@@ -17,7 +17,11 @@ metadata:
     related_skills: [himalaya, school-interview-scheduler]
 ---
 
-# Google Workspace
+## Umbrella relationship (2026-08 curator pass)
+
+Google Workspace is the OAuth-backed productivity-adapter subsection. Gmail/IMAP, Teams, and calendar-specific workflows should remain adapter references or focused lifecycle skills only when they have distinct APIs and verification contracts.
+
+
 
 Gmail, Calendar, Drive, Contacts, Sheets, and Docs — through Hermes-managed OAuth and a thin CLI wrapper. When `gws` is installed, the skill uses it as the execution backend for broader Google Workspace coverage; otherwise it falls back to the bundled Python client implementation.
 

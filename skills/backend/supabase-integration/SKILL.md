@@ -3,7 +3,11 @@ name: supabase-integration
 description: 整合 Supabase 到 Vercel 部署的 Next.js / Node 專案的完整 SOP。涵蓋拿到兩把 key (anon + service_role)、SQL schema 設計、RLS 政策、JS SDK 整合、Vercel env 設定。觸發情境:使用者說「用 Supabase」「Supabase DB」「Postgres 雲端」「Supabase auth」「auth 用 supabase」時立即載入。
 ---
 
-# Supabase 整合 SOP
+## Umbrella relationship (2026-08 curator pass)
+
+Supabase is the backend integration subsection of full-stack delivery. Keep schema/RLS/env migration recipes in references and route generic database work through the general backend workflow; do not create skills per migration or project.
+
+
 
 > 給 N100 headless 環境 + Vercel 部署使用。涵蓋「拿到 key → 建 schema → 改 code → 部署」端到端流程。
 

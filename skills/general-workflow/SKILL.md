@@ -264,7 +264,24 @@ PYEOF
 
 ---
 
-## 快速參考清單
+
+### Cluster decisions left alone
+
+The following are intentionally retained as standalone class-level skills because their lifecycle or external contract is materially different: `agent-system-backup`, `hermes-agent`, `hermes-config-layout`, `hermes-deploy-verification`, `cron-job-health-monitor`, `camofox`, `supabase-integration`, `teams-meeting-pipeline`, `xurl`, `yuanbao`, `himalaya`, `google-workspace`, `local-rag-system`, `llm-wiki`, `comfyui`, `powerpoint`, and `ocr-and-documents`. They are now explicitly positioned as subsections/adapters and should absorb future narrow additions.
+
+
+This skill is the class-level entry point for cross-domain task execution. The following absorbed classes are now represented as labeled operational subsections or references rather than separate micro-skills:
+
+- **Agent lifecycle & delegation**: identity changes, resident profiles, orchestrator/worker/summarizer decomposition, Kanban routing/worker handoff, and autonomous-loop deduplication. Use the relevant section in `trial-and-error` for failure evidence and `hermes-agent` for current CLI semantics.
+- **Hermes operations**: configuration layout, deployment verification, cron health, backup/restore, model routing, and coupled infrastructure removal. Prefer the current Hermes documentation and the named support references.
+- **Engineering quality**: planning, spikes, systematic debugging, TDD, codebase inspection, and SOP validation. Select the narrow workflow only when the user explicitly requests that depth; otherwise apply the shared inspect → execute → verify loop here.
+- **Research & knowledge**: arXiv search, paper writing, local RAG, LLM wiki, Obsidian, and document extraction. Keep provider- or project-specific commands in references rather than creating one-session skills.
+- **Creative production**: diagrams, ASCII media, HTML design, style memory, ComfyUI, and presentation artifacts. Treat output validation and reusable templates as first-class support files.
+- **External tools**: Google Workspace, Himalaya, Teams, X, Yuanbao, and Jupyter are tool adapters; their credentials and command quirks belong in references, not standalone session artifacts.
+
+### Curator rule
+When a future task appears to need a new skill, first locate the applicable class above and patch its umbrella or add a support reference. Create a new skill only when the workflow has a genuinely different lifecycle, safety boundary, or tool contract.
+
 
 | 任務類型 | 建議流程 |
 |----------|----------|

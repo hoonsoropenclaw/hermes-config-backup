@@ -11,7 +11,11 @@ metadata:
     related_skills: [cron-job-health-monitor, systematic-debugging, trial-and-error]
 ---
 
-# Autonomous Agent Loop Design — 自我重複 spawn 模式的診斷與重設計
+## Umbrella relationship (2026-08 curator pass)
+
+Autonomous loop design is the persistence/dedup subsection of agent orchestration. Combine it with resident-profile and Kanban lifecycle work when needed; dated spawn incidents remain experiential references in `trial-and-error`.
+
+
 
 當赫米斯（或其他 LLM agent）進入「**週期性 spawn 沒有 persistent memory 的 session**」的模式時，會以**固定速率**消耗 token、把同一件事重做 N 輪、留下大量孤兒成品。本技能提供診斷三層根因 + 重設計 5 元素 + 驗證清單。
 
@@ -192,7 +196,11 @@ crontab -e  # 把註解取消
 | 最終成功的成品 | 1 個 | 最後一輪 Playwright 套件 |
 | **有效產出比** | **~1%** | 99% token 完全沒產出學習價值 |
 
-## 相關 SKILL
+
+## Deduplication boundary
+
+The loop redesign rules are intentionally reusable across cron, Kanban, resident agents, and scheduled workers. Do not fork this skill for a new scheduler, model, or project; add the scheduler-specific probe or fixture under `scripts/` or `references/`.
+
 
 - `cron-job-health-monitor` — 偵測 + 停止（本技能假設你已經抓到兇手）
 - `systematic-debugging` — Phase 4 step 5「3 次失敗 = 問架構」正好對應本技能的「spawn 設計哲學錯誤」

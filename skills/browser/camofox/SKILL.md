@@ -24,7 +24,11 @@ triggers:
 version: 1.2.0
 ---
 
-# Camofox Browser Setup & Operations
+## Umbrella relationship (2026-08 curator pass)
+
+Camofox is the authenticated headless-browser adapter subsection. Pair it with browser automation and dogfood; cookie/container/provider incidents belong in references, not one-skill-per-site artifacts.
+
+
 
 ## ⚠️ Pre-Flight Health Check (MANDATORY — do this before any operation)
 

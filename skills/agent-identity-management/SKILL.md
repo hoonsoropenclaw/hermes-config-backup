@@ -7,7 +7,11 @@ date_added: "2026-06-08"
 last_updated: "2026-06-13"
 ---
 
-# 代理身份管理（Agent Identity Management）
+## Umbrella relationship (2026-08 curator pass)
+
+Identity changes are the role/namespace subsection of agent lifecycle management. Keep cross-file synchronization and role-pivot contracts here; profile construction and recurring execution belong to resident-agent and autonomous-loop subsections. Do not split by agent name or one identity migration.
+
+
 
 > 赫米斯系統特有的 class-level skill — 處理「**同一個 AI 系統有多個名稱 / 多個時代 / 多個套件實作**」以及「**代理內部 SOP 演進**」這類身份層面與架構層面的變更任務
 

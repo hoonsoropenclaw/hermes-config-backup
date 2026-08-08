@@ -12,7 +12,11 @@ metadata:
     related_skills: [concept-diagrams, excalidraw]
 ---
 
-# Architecture Diagram Skill
+## Umbrella relationship (2026-08 curator pass)
+
+Architecture diagrams are the infrastructure-visualization subsection of creative diagrams. Use `excalidraw` for hand-drawn/editable diagrams and keep output-specific templates under support files; do not create one skill per diagram style.
+
+
 
 Generate professional, dark-themed technical architecture diagrams as standalone HTML files with inline SVG graphics. No external tools, no API keys, no rendering libraries — just write the HTML file and open it in a browser.
 

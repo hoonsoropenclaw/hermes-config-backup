@@ -10,7 +10,11 @@ metadata:
     related_skills: [kanban-orchestrator]
 ---
 
-# Kanban Worker — Pitfalls and Examples
+## Umbrella relationship (2026-08 curator pass)
+
+Kanban worker behavior is the worker-side handoff subsection of agent orchestration. Keep worker lifecycle details here and board-specific examples in references; do not split by ticket, board, or retry incident.
+
+
 
 > You're seeing this skill because the Hermes Kanban dispatcher spawned you as a worker with `--skills kanban-worker` — it's loaded automatically for every dispatched worker. The **lifecycle** (6 steps: orient → work → heartbeat → block/complete) also lives in the `KANBAN_GUIDANCE` block that's auto-injected into your system prompt. This skill is the deeper detail: good handoff shapes, retry diagnostics, edge cases.
 

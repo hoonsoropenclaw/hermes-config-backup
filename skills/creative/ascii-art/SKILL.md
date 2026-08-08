@@ -13,7 +13,11 @@ metadata:
 
 ---
 
-# ASCII Art Skill
+## Umbrella relationship (2026-08 curator pass)
+
+ASCII art is the static terminal-art subsection of creative media; `ascii-video` is its time-based sibling. Keep font tables and rendering recipes as references/templates rather than splitting by output format.
+
+
 
 Multiple tools for different ASCII art needs. All tools are local CLI programs or free REST APIs — no API keys required.
 

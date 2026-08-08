@@ -14,7 +14,11 @@ prerequisites:
   note: "On this N100 system himalaya v1.2.0 is installed at ~/bin/himalaya (installed via official install.sh, not apt)"
 ---
 
-# Himalaya Email CLI
+## Umbrella relationship (2026-08 curator pass)
+
+Himalaya is the terminal-mail adapter subsection. Keep provider/server configuration and HR-specific composition as references; do not create separate skills for each mailbox provider or send failure.
+
+
 
 Himalaya is a CLI email client that lets you manage emails from the terminal using IMAP, SMTP, Notmuch, or Sendmail backends.
 

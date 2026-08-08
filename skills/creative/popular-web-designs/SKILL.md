@@ -18,7 +18,11 @@ triggers:
   - website styled like
 ---
 
-# Popular Web Designs
+## Umbrella relationship (2026-08 curator pass)
+
+Popular web designs is the visual-vocabulary reference subsection of creative web production. Use it with `claude-design`, `design-md`, and `sketch` as needed; individual brand systems are reference material, not separate skills.
+
+
 
 54 real-world design systems ready for use when generating HTML/CSS. Each template captures a
 site's complete visual language: color palette, typography hierarchy, component styles, spacing

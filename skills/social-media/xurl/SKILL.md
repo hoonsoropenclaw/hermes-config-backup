@@ -14,7 +14,11 @@ metadata:
     upstream_skill: https://github.com/openclaw/openclaw/blob/main/skills/xurl/SKILL.md
 ---
 
-# xurl — X (Twitter) API via the Official CLI
+## Umbrella relationship (2026-08 curator pass)
+
+Xurl is the official social-media CLI adapter subsection. Keep endpoint/account-specific recipes in references and use outbound verification before irreversible actions; do not split by endpoint.
+
+
 
 `xurl` is the X developer platform's official CLI for the X API. It supports shortcut commands for common actions AND raw curl-style access to any v2 endpoint. All commands return JSON to stdout.
 

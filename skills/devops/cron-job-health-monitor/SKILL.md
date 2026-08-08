@@ -10,7 +10,11 @@ metadata:
     triggers: [cron list, last_error, GH013, 401 unauthorized, script exited, jobs.json]
 ---
 
-# Cron Job 健康監控與自我修復
+## Umbrella relationship (2026-08 curator pass)
+
+Cron health is the monitoring subsection of Hermes operations. Use this skill for the reusable scan/classify/verify loop; keep dated incidents and provider-specific remediation in `trial-and-error` references. Do not create separate skills for each `last_error` string.
+
+
 
 赫米斯的 cron jobs 是 24/7 自主運作的骨幹（每天自動同步評價、技能統計、scheduler、MEMORY 同步到 Vercel 等）。當任何 cron job 失敗且沒人主動介入，整個 autonomous 迴路就會靜默壞掉。
 

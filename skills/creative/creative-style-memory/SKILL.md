@@ -12,7 +12,11 @@ metadata:
     last_cycle_updated: 551
 ---
 
-# Creative Style Memory
+## Umbrella relationship (2026-08 curator pass)
+
+Creative style memory is the persistence subsection of creative production. It complements HTML/design, image/video generation, and delivery QA; brand- or session-specific profiles belong in its support data, not standalone skills.
+
+
 
 Persistent style memory system for AI creative generation — prevents every session starting from random noise.
 

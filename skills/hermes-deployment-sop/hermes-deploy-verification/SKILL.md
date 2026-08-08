@@ -3,7 +3,11 @@ name: hermes-deploy-verification
 description: 標準化的部署前/中/後驗證流程，覆蓋本地驗證、production 多管道測試、DNS 同步、alias propagation、JS 注入陷阱等常見雷區。**任何時候要把網站/應用部署到 Vercel/Netlify/GitHub Pages 之前必須先載入此 skill**。Trigger：gh repo create 後、vercel --prod 前、收到「部署」「發佈」「push 並部署」「上線」等指令時。
 ---
 
-# Hermes Deploy Verification SOP
+## Umbrella relationship (2026-08 curator pass)
+
+Deployment verification is the release-validation subsection of Hermes operations. Keep the four-layer verification lifecycle here; keep individual platform quirks and dated deployment failures in `trial-and-error` references rather than sibling skills.
+
+
 
 > **核心原則**：自我報告 ≠ 驗證。從 N100 內網 curl 成功 ≠ 從使用者電腦打得開。
 

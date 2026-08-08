@@ -11,7 +11,11 @@ metadata:
     related_skills: [sketch, subagent-driven-development, plan]
 ---
 
-# Spike
+## Umbrella relationship (2026-08 curator pass)
+
+Spikes are the feasibility-validation subsection of engineering planning. Keep spike-specific experiments disposable and store reusable findings in references; do not create one skill per experiment or prototype name.
+
+
 
 Use this skill when the user wants to **feel out an idea** before committing to a real build — validating feasibility, comparing approaches, or surfacing unknowns that no amount of research will answer. Spikes are disposable by design. Throw them away once they've paid their debt.
 
