@@ -183,6 +183,32 @@ def get_llm_strategy(interval_pct, minutes_left, running_count, slots_already_ta
     past_topics_str = ", ".join(past_topics) if past_topics else "無"
     recent_completed_str = ", ".join(recent_completed_topics) if recent_completed_topics else "無"
     
+    # [ANTI-LOOP ENHANCEMENT] Read data.json to extract permanently mastered topics
+    mastered_topics = []
+    try:
+        data_path = "/home/hoonsoropenclaw/.hermes/data_repo/data.json"
+        if os.path.exists(data_path):
+            with open(data_path, 'r', encoding='utf-8') as f:
+                import json
+                mindmap_data = json.load(f)
+                
+                def extract_names(node):
+                    if isinstance(node, dict):
+                        if 'name' in node and node['name']:
+                            mastered_topics.append(node['name'])
+                        if 'children' in node:
+                            for c in node['children']:
+                                extract_names(c)
+                    elif isinstance(node, list):
+                        for c in node:
+                            extract_names(c)
+                            
+                extract_names(mindmap_data.get('mindmap', {}))
+    except Exception as e:
+        logging.error(f"Failed to read data.json for anti-loop: {e}")
+        
+    mastered_str = ", ".join(set(mastered_topics)) if mastered_topics else "無"
+    
     domains_str = ""
     try:
         domains_path = "/home/hoonsoropenclaw/.hermes/learning_domains.txt"
@@ -225,6 +251,8 @@ def get_llm_strategy(interval_pct, minutes_left, running_count, slots_already_ta
             f"- Here is the agent's current Skill Catalog (what he already knows): {past_topics_str}\n"
             f"- DO NOT generate tasks that can be fully solved by existing skills. The task MUST require learning at least one NEW micro-skill, while combining it with existing skills for reinforcement.\n"
             f"- RECENTLY COMPLETED TOPICS (avoid regenerating these within 24h): {recent_completed_str}\n"
+            f"- PERMANENTLY MASTERED TOPICS (Already on the mindmap): {mastered_str}\n"
+            f"  -> CRITICAL RULE: You MUST NOT generate these exact topics again, nor any basic tutorials for them. HOWEVER, you are highly encouraged to generate ADVANCED, EXPERT-LEVEL, or DEEP-DIVE topics that build upon these mastered foundations (e.g., if 'Playwright Basics' is mastered, you can generate 'Playwright Cluster Distributed Testing').\n"
             f"- Align the topics with the user's role and goals based on this context: {context}\n"
             f"- The goal is to train the AI to become a highly capable executive assistant, workflow automator, and creative technologist for the user's daily life and work.\n" \
             f"- Specifically, the topics MUST heavily focus on these domains: \n" \

@@ -14,8 +14,8 @@
       10800
     ],
     "agent-identity-management/SKILL.md": [
-      1781325890936548927,
-      41531
+      1786177001442140572,
+      41832
     ],
     "agent-memory-systems/SKILL.md": [
       1783749944030467607,
@@ -34,8 +34,8 @@
       4592
     ],
     "agent-system-backup/SKILL.md": [
-      1784612616557029559,
-      42861
+      1786176993653734092,
+      43122
     ],
     "agentfolio/SKILL.md": [
       1778082967415894045,
@@ -1246,8 +1246,8 @@
       4288
     ],
     "autonomous-ai-agents/hermes-agent/SKILL.md": [
-      1780326435026508212,
-      48073
+      1786177106297622712,
+      48345
     ],
     "autonomous-ai-agents/hermes-self-improvement/SKILL.md": [
       1781692771365407712,
@@ -1262,12 +1262,12 @@
       16794
     ],
     "autonomous-ai-agents/orchestrator-worker-architecture/SKILL.md": [
-      1785426548902040651,
-      25225
+      1786176706102817866,
+      25463
     ],
     "backend/supabase-integration/SKILL.md": [
-      1781931271073268410,
-      9647
+      1786177076767077042,
+      9916
     ],
     "backup-verification/SKILL.md": [
       1780797115798888080,
@@ -1282,8 +1282,8 @@
       39643
     ],
     "browser/camofox/SKILL.md": [
-      1785774144131574026,
-      34454
+      1786176915979686416,
+      34671
     ],
     "buddy-sings/SKILL.md": [
       1780110403137952298,
@@ -1294,16 +1294,16 @@
       3205
     ],
     "creative/architecture-diagram/SKILL.md": [
-      1780109239567525090,
-      5830
+      1786176807147036463,
+      6093
     ],
     "creative/ascii-art/SKILL.md": [
-      1780109239567525090,
-      10556
+      1786176791778240901,
+      10800
     ],
     "creative/ascii-video/SKILL.md": [
-      1780109239568525130,
-      14864
+      1786176798742601334,
+      15103
     ],
     "creative/baoyu-article-illustrator/SKILL.md": [
       1780109239569525170,
@@ -1318,32 +1318,32 @@
       19859
     ],
     "creative/comfyui/SKILL.md": [
-      1785185732231306100,
-      27268
+      1786176936270742677,
+      27482
     ],
     "creative/creative-ideation/SKILL.md": [
       1780109239576525449,
       6318
     ],
     "creative/creative-style-memory/SKILL.md": [
-      1785664053933042573,
-      14066
+      1786176774068324924,
+      14325
     ],
     "creative/design-md/SKILL.md": [
       1785664118958496165,
       7046
     ],
     "creative/excalidraw/SKILL.md": [
-      1780109239576525449,
-      7300
+      1786176817075550732,
+      7550
     ],
     "creative/pixel-art/SKILL.md": [
       1780109239579525568,
       7581
     ],
     "creative/popular-web-designs/SKILL.md": [
-      1780109239580525608,
-      9722
+      1786176783176795920,
+      9981
     ],
     "creative/sketch/SKILL.md": [
       1780109239586525847,
@@ -1358,8 +1358,8 @@
       1373
     ],
     "data-science/jupyter-live-kernel/SKILL.md": [
-      1780109239588525927,
-      5285
+      1786176907584249634,
+      5518
     ],
     "design-taste-frontend/SKILL.md": [
       1780672542408635568,
@@ -1370,24 +1370,24 @@
       13290
     ],
     "devops/cron-job-health-monitor/SKILL.md": [
-      1781968865904807075,
-      43697
+      1786176670467984717,
+      43979
     ],
     "devops/hermes-config-layout/SKILL.md": [
-      1781930943495589907,
-      38063
+      1786176664038654417,
+      38434
     ],
     "devops/kanban-orchestrator/SKILL.md": [
-      1780832652682839848,
-      15831
+      1786176725672826297,
+      16055
     ],
     "devops/kanban-worker/SKILL.md": [
-      1780832652682839848,
-      10979
+      1786176735912354394,
+      11201
     ],
     "devops/multi-model-routing-cheatsheet/SKILL.md": [
-      1781196048094551480,
-      11555
+      1786176978300933140,
+      11755
     ],
     "devops/stdlib-production-tool-pattern/SKILL.md": [
       1785230593285943818,
@@ -1414,16 +1414,16 @@
       5201
     ],
     "dogfood/SKILL.md": [
-      1780146405587670370,
-      7442
+      1786176766776948052,
+      7663
     ],
     "e2e-minimum-checklist/SKILL.md": [
       1781449075509060630,
       11670
     ],
     "email/himalaya/SKILL.md": [
-      1781517512968811762,
-      7613
+      1786176871186357734,
+      7844
     ],
     "flutter-dev/SKILL.md": [
       1780110403137952298,
@@ -1450,8 +1450,8 @@
       8709
     ],
     "general-workflow/SKILL.md": [
-      1781151396555186621,
-      22284
+      1786177117203193842,
+      24722
     ],
     "gif-sticker-maker/SKILL.md": [
       1780110403171953343,
@@ -1462,8 +1462,8 @@
       12164
     ],
     "github/codebase-inspection/SKILL.md": [
-      1780109239589525967,
-      3628
+      1786177035953943008,
+      3829
     ],
     "github/github-workflows/SKILL.md": [
       1782534938897994303,
@@ -1510,16 +1510,16 @@
       2157
     ],
     "hermes-architecture/hermes-resident-agent/SKILL.md": [
-      1781152616138788648,
-      9134
+      1786176698637433491,
+      9446
     ],
     "hermes-deployment-sop/SKILL.md": [
       1781449126025481656,
       14097
     ],
     "hermes-deployment-sop/hermes-deploy-verification/SKILL.md": [
-      1781931062465019184,
-      26057
+      1786176682249590339,
+      26329
     ],
     "hermes-tier-router/SKILL.md": [
       1780758740543038468,
@@ -1574,12 +1574,12 @@
       8398
     ],
     "mlops/inference/llama-cpp/SKILL.md": [
-      1780109239593526126,
-      8880
+      1786176968874441574,
+      9150
     ],
     "mlops/local-rag-system/SKILL.md": [
-      1780812884101343324,
-      9165
+      1786176862578910762,
+      9401
     ],
     "mlops/research/dspy/SKILL.md": [
       1780109239595526206,
@@ -1590,8 +1590,8 @@
       4435
     ],
     "note-taking/obsidian/SKILL.md": [
-      1780812926865399500,
-      5329
+      1786177043624343877,
+      5558
     ],
     "ontology/SKILL.md": [
       1779974330081310531,
@@ -1618,8 +1618,8 @@
       7143
     ],
     "productivity/google-workspace/SKILL.md": [
-      1781562316899808085,
-      14053
+      1786176840662773464,
+      14329
     ],
     "productivity/hermes-portal/SKILL.md": [
       1783140758455097818,
@@ -1634,20 +1634,20 @@
       14782
     ],
     "productivity/ocr-and-documents/SKILL.md": [
-      1781931195342970416,
-      6220
+      1786176829708205424,
+      6497
     ],
     "productivity/powerpoint/SKILL.md": [
-      1780109239597526286,
-      9298
+      1786177055402959632,
+      9515
     ],
     "productivity/site-qa-checklist/SKILL.md": [
       1780929895373600672,
       33937
     ],
     "productivity/teams-meeting-pipeline/SKILL.md": [
-      1780109239601526445,
-      6867
+      1786177064621441701,
+      7138
     ],
     "prompt-injection-fake-authority/SKILL.md": [
       1785208383979140938,
@@ -1674,12 +1674,12 @@
       7206
     ],
     "research/arxiv/SKILL.md": [
-      1780109239602526485,
-      10085
+      1786176945250210370,
+      10316
     ],
     "research/llm-wiki/SKILL.md": [
-      1780109239603526524,
-      20113
+      1786176849109211643,
+      20341
     ],
     "research/research-paper-writing/SKILL.md": [
       1780109239603526524,
@@ -1722,52 +1722,56 @@
       29313
     ],
     "social-media/xurl/SKILL.md": [
-      1780832652683839110,
-      15518
+      1786176877668694462,
+      15717
     ],
     "social-media/yuanbao/SKILL.md": [
-      1780109239612526883,
-      3795
+      1786176889720320737,
+      4003
     ],
     "soft-design/SKILL.md": [
       1780212133656710058,
       10561
+    ],
+    "software-development/autonomous-agent-loop-design/SKILL.md": [
+      1786177085458531832,
+      10041
     ],
     "software-development/debugging-hermes-tui-commands/SKILL.md": [
       1780109239611526843,
       7910
     ],
     "software-development/hermes-agent-skill-authoring/SKILL.md": [
-      1780832652683839110,
-      7609
+      1786177017242965545,
+      7831
     ],
     "software-development/hermes-s6-container-supervision/SKILL.md": [
       1780109239611526843,
       11474
     ],
     "software-development/plan/SKILL.md": [
-      1783747990950160569,
-      10600
+      1786177030364650962,
+      10877
     ],
     "software-development/program-project-planner/SKILL.md": [
       1780406550207229062,
       25268
     ],
     "software-development/spike/SKILL.md": [
-      1780832652684838373,
-      8730
+      1786177024425340684,
+      8991
     ],
     "software-development/subagent-driven-development/SKILL.md": [
       1781195864601013563,
       20131
     ],
     "software-development/systematic-debugging/SKILL.md": [
-      1780584933158391452,
-      13950
+      1786176753261249851,
+      14202
     ],
     "software-development/test-driven-development/SKILL.md": [
-      1780406679096880088,
-      10963
+      1786176745375842741,
+      11230
     ],
     "sparc-methodology/.agents/skills/agent-adaptive-coordinator/SKILL.md": [
       1780405334087366498,
@@ -3478,8 +3482,8 @@
       8009
     ],
     "trial-and-error/SKILL.md": [
-      1785668631881097182,
-      59005
+      1786176656795282465,
+      66032
     ],
     "user-collaboration-style/SKILL.md": [
       1783876771312061651,
@@ -9457,6 +9461,21 @@
       "frontmatter_name": "high-end-visual-design",
       "description": "Teaches the AI to design like a high-end agency. Defines ...",
       "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "autonomous-agent-loop-design",
+      "category": "software-development",
+      "frontmatter_name": "autonomous-agent-loop-design",
+      "description": "When an autonomous agent loop is burning tokens by self-d...",
+      "platforms": [
+        "linux"
+      ],
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],
