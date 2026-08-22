@@ -21,7 +21,7 @@ The goal is to preserve Claude Design's useful design behavior and taste while r
 
 ## When To Use This Skill vs `popular-web-designs` vs `design-md`
 
-Hermes has three design-related skills under `skills/creative/`. They do different jobs — load the right one (or combine them):
+Hermes has three design-related skills under `skills/creative/` (plus absorbed variants of the former `sketch` skill, now in the [Throwaway Variants Mode](#throwaway-variants-mode-the-sketch-workflow) section below). They do different jobs — load the right one (or combine them):
 
 | Skill | What it gives you | Use when the user wants... |
 |---|---|---|
@@ -343,6 +343,122 @@ Variations can explore:
 Do not create variations that are merely color swaps unless color is the actual question.
 
 When the user picks a direction, consolidate. Do not leave the project as a pile of options forever.
+
+## Throwaway Variants Mode (the `sketch` workflow)
+
+This section captures the lightweight 2-3 disposable variants workflow previously in the standalone `sketch` skill (now archived). Use this when the user wants to **see a design direction before committing** rather than a polished single artifact. The point is comparison, not shipping.
+
+**Triggers**: "sketch this screen", "show me what X could look like", "compare layout A vs B", "give me 2-3 takes", "mockup this before I build".
+
+### When NOT to use this mode
+
+- User wants a production component — use the main `claude-design` workflow
+- User wants a polished one-off artifact (landing page, deck) — use the main `claude-design` workflow
+- User wants a diagram — use `excalidraw` or `architecture-diagram`
+- The design is already locked — just build it
+
+### The 5-step loop
+
+```
+intake  →  variants  →  head-to-head  →  pick winner (or iterate)
+```
+
+**1. Intake (skip if the user already gave you enough)**
+
+Ask three questions, one at a time:
+
+1. **Feel.** "What should this feel like? Adjectives, emotions, a vibe." — *"calm, editorial, like Linear"* tells you more than *"minimal"*.
+2. **References.** "What apps, sites, or products capture the feel you're imagining?" — actual references beat abstract descriptions.
+3. **Core action.** "What's the single most important thing a user does on this screen?" — variants should all serve this well.
+
+Reflect each answer briefly before the next question.
+
+**2. Variants (2-3, never 1, rarely 4+)**
+
+Produce 2-3 variants in one go. Each variant is a complete, standalone HTML file. **Don't describe variants — build them.** The point is comparison.
+
+Each variant should take a **different design stance**, not different pixel values. Three good axes:
+
+- **Density:** compact / airy / ultra-dense (pick two contrasting poles)
+- **Emphasis:** content-first / action-first / tool-first
+- **Aesthetic:** editorial / utilitarian / playful
+- **Layout:** single-column / sidebar / split-pane
+- **Grounding:** card-based / bare-content / document-style
+
+Pick one axis and pull apart from it. Two variants that differ only in accent color are wasted effort.
+
+**Variant naming**: describe the stance, not the number.
+
+```
+sketches/
+├── 001-calm-editorial/
+│   ├── index.html
+│   └── README.md
+├── 001-utilitarian-dense/
+│   ├── index.html
+│   └── README.md
+└── 001-playful-split/
+    ├── index.html
+    └── README.md
+```
+
+**3. Make them real HTML**
+
+Each variant is a single self-contained HTML file with inline `<style>`, system fonts or one Google Font, realistic fake content (actual sentences, not "Lorem ipsum"), and at least one state transition. **Verify visually** using browser tools — don't just write HTML and hope it renders.
+
+**4. Variant README** (each variant answers these 4 questions)
+
+```markdown
+## Variant: {stance name}
+### Design stance
+One sentence on the principle driving this variant.
+### Key choices
+- Layout: ...
+- Typography: ...
+- Color: ...
+- Interaction: ...
+### Trade-offs
+- Strong at: ...
+- Weak at: ...
+### Best for
+The kind of user or use case this variant actually serves.
+```
+
+**5. Head-to-head**
+
+Present a comparison table with **4-6 dimensions** (Density, Primary action visibility, Scan-ability, Feel, etc.). **Opinionate** — recommend a winner, don't just list. Let the user combine two into a hybrid or ask for another round.
+
+### Frontier mode (picking what to sketch next)
+
+If sketches already exist and the user asks what to sketch next, look for:
+
+- Consistency gaps (two winning variants from different sketches made independent choices not yet composed)
+- Unsketched screens (referenced but never explored)
+- State coverage (happy path sketched, but not empty/loading/error/1000-items)
+- Responsive gaps (validated at one viewport; does it hold at mobile/ultrawide?)
+- Interaction patterns (static layouts exist; transitions, drag, scroll behavior don't)
+
+Propose 2-4 named candidates. Let the user pick.
+
+### Theming (when the project has a visual identity)
+
+If the user has existing theme (colors, fonts, tokens), put shared tokens in `sketches/themes/tokens.css` and `@import` them in each variant. Keep tokens minimal:
+
+```css
+:root {
+  --color-bg: #fafafa;
+  --color-fg: #1a1a1a;
+  --color-accent: #0066ff;
+  --color-radius: 8px;
+  --font-display: "Inter", sans-serif;
+}
+```
+
+Don't over-tokenize a throwaway sketch — three colors and one font is usually enough.
+
+### If the user has the full GSD system installed
+
+If `gsd-sketch` shows up as a sibling skill (installed via `npx get-shit-done-cc --hermes`), prefer `gsd-sketch` for the full workflow: persistent `.planning/spikes/` with MANIFEST, frontier mode analysis, consistency audits. This mode in `claude-design` is the lightweight standalone version.
 
 ## Tweakable Designs in CLI/API Mode
 
