@@ -1314,8 +1314,8 @@
       16276
     ],
     "creative/claude-design/SKILL.md": [
-      1780109239574525369,
-      19859
+      1787386495321277282,
+      24860
     ],
     "creative/comfyui/SKILL.md": [
       1786176936270742677,
@@ -1344,10 +1344,6 @@
     "creative/popular-web-designs/SKILL.md": [
       1786176783176795920,
       9981
-    ],
-    "creative/sketch/SKILL.md": [
-      1780109239586525847,
-      9304
     ],
     "cron-secret-leak-emergency-fix/SKILL.md": [
       1780698280254252373,
@@ -8058,23 +8054,6 @@
       }
     },
     {
-      "skill_name": "sketch",
-      "category": "creative",
-      "frontmatter_name": "sketch",
-      "description": "Throwaway HTML mockups: 2-3 design variants to compare.",
-      "platforms": [
-        "linux",
-        "macos",
-        "windows"
-      ],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
       "skill_name": "cron-secret-leak-emergency-fix",
       "category": "cron-secret-leak-emergency-fix",
       "frontmatter_name": "cron-secret-leak-emergency-fix",
@@ -8184,7 +8163,7 @@
       "skill_name": "kanban-orchestrator",
       "category": "devops",
       "frontmatter_name": "kanban-orchestrator",
-      "description": "Decomposition playbook + anti-temptation rules for an orc...",
+      "description": "",
       "platforms": [
         "linux",
         "macos",
@@ -8201,7 +8180,7 @@
       "skill_name": "kanban-worker",
       "category": "devops",
       "frontmatter_name": "kanban-worker",
-      "description": "Pitfalls, examples, and edge cases for Hermes Kanban work...",
+      "description": "",
       "platforms": [
         "linux",
         "macos",
