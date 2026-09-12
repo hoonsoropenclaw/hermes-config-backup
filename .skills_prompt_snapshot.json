@@ -1297,13 +1297,9 @@
       1786176807147036463,
       6093
     ],
-    "creative/ascii-art/SKILL.md": [
-      1786176791778240901,
-      10800
-    ],
-    "creative/ascii-video/SKILL.md": [
-      1786176798742601334,
-      15103
+    "creative/ascii/SKILL.md": [
+      1788598870101588178,
+      12418
     ],
     "creative/baoyu-article-illustrator/SKILL.md": [
       1780109239569525170,
@@ -1373,13 +1369,9 @@
       1786176664038654417,
       38434
     ],
-    "devops/kanban-orchestrator/SKILL.md": [
-      1786176725672826297,
-      16055
-    ],
-    "devops/kanban-worker/SKILL.md": [
-      1786176735912354394,
-      11201
+    "devops/kanban/SKILL.md": [
+      1788598784364801796,
+      28575
     ],
     "devops/multi-model-routing-cheatsheet/SKILL.md": [
       1786176978300933140,
@@ -2345,10 +2337,6 @@
       1780405334119367567,
       16557
     ],
-    "sparc-methodology/.claude/skills/github-code-review/SKILL.md": [
-      1780405334119367567,
-      25665
-    ],
     "sparc-methodology/.claude/skills/github-multi-repo/SKILL.md": [
       1780405334120367601,
       22453
@@ -2496,10 +2484,6 @@
     "sparc-methodology/plugin/skills/flow-nexus-swarm/SKILL.md": [
       1780405334119367567,
       16557
-    ],
-    "sparc-methodology/plugin/skills/github-code-review/SKILL.md": [
-      1780405334119367567,
-      25665
     ],
     "sparc-methodology/plugin/skills/github-multi-repo/SKILL.md": [
       1780405334120367601,
@@ -7852,27 +7836,10 @@
       }
     },
     {
-      "skill_name": "ascii-art",
+      "skill_name": "ascii",
       "category": "creative",
-      "frontmatter_name": "ascii-art",
-      "description": "ASCII art: pyfiglet, cowsay, boxes, image-to-ascii.",
-      "platforms": [
-        "linux",
-        "macos",
-        "windows"
-      ],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
-      "skill_name": "ascii-video",
-      "category": "creative",
-      "frontmatter_name": "ascii-video",
-      "description": "ASCII video: convert video/audio to colored ASCII MP4/GIF.",
+      "frontmatter_name": "ascii",
+      "description": "ASCII art production class covering static terminal art (...",
       "platforms": [
         "linux",
         "macos",
@@ -8160,26 +8127,9 @@
       }
     },
     {
-      "skill_name": "kanban-orchestrator",
+      "skill_name": "kanban",
       "category": "devops",
-      "frontmatter_name": "kanban-orchestrator",
-      "description": "",
-      "platforms": [
-        "linux",
-        "macos",
-        "windows"
-      ],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
-      "skill_name": "kanban-worker",
-      "category": "devops",
-      "frontmatter_name": "kanban-worker",
+      "frontmatter_name": "kanban",
       "description": "",
       "platforms": [
         "linux",
@@ -11482,19 +11432,6 @@
       }
     },
     {
-      "skill_name": "github-code-review",
-      "category": "sparc-methodology/.claude/skills",
-      "frontmatter_name": "github-code-review",
-      "description": "Comprehensive GitHub code review with AI-powered swarm co...",
-      "platforms": [],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
       "skill_name": "github-multi-repo",
       "category": "sparc-methodology/.claude/skills",
       "frontmatter_name": "github-multi-repo",
@@ -11967,19 +11904,6 @@
       "category": "sparc-methodology/plugin/skills",
       "frontmatter_name": "flow-nexus-swarm",
       "description": "Cloud-based AI swarm deployment and event-driven workflow...",
-      "platforms": [],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
-      "skill_name": "github-code-review",
-      "category": "sparc-methodology/plugin/skills",
-      "frontmatter_name": "github-code-review",
-      "description": "Comprehensive GitHub code review with AI-powered swarm co...",
       "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
