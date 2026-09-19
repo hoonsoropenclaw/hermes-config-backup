@@ -2165,10 +2165,6 @@
       1780405334097366832,
       1471
     ],
-    "sparc-methodology/.agents/skills/github-code-review/SKILL.md": [
-      1780405334097366832,
-      26048
-    ],
     "sparc-methodology/.agents/skills/github-multi-repo/SKILL.md": [
       1780405334097366832,
       22796
@@ -10864,19 +10860,6 @@
       "category": "sparc-methodology/.agents/skills",
       "frontmatter_name": "github-automation",
       "description": "GitHub workflow automation, PR management, issue tracking...",
-      "platforms": [],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
-      "skill_name": "github-code-review",
-      "category": "sparc-methodology/.agents/skills",
-      "frontmatter_name": "github-code-review",
-      "description": "Comprehensive GitHub code review with AI-powered swarm co...",
       "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
