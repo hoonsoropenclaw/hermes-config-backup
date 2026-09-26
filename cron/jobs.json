@@ -255,7 +255,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-06T14:48:00.047140+08:00",
-      "next_run_at": "2026-09-27T03:00:00+08:00",
+      "next_run_at": "2026-09-28T03:00:00+08:00",
       "last_run_at": "2026-09-26T03:01:22.193381+08:00",
       "last_status": "ok",
       "last_error": null,
@@ -286,7 +286,7 @@
       "schedule_display": "0 2 * * *",
       "repeat": {
         "times": null,
-        "completed": 110
+        "completed": 111
       },
       "enabled": true,
       "state": "scheduled",
@@ -294,7 +294,7 @@
       "paused_reason": null,
       "created_at": "2026-06-07T13:33:27.569449+08:00",
       "next_run_at": "2026-09-28T02:00:00+08:00",
-      "last_run_at": "2026-09-26T02:00:52.924029+08:00",
+      "last_run_at": "2026-09-27T02:00:11.543100+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -324,15 +324,15 @@
       "schedule_display": "30 2 * * *",
       "repeat": {
         "times": null,
-        "completed": 109
+        "completed": 110
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-07T13:33:27.569485+08:00",
-      "next_run_at": "2026-09-27T02:30:00+08:00",
-      "last_run_at": "2026-09-26T02:31:33.575381+08:00",
+      "next_run_at": "2026-09-28T02:30:00+08:00",
+      "last_run_at": "2026-09-27T02:30:40.454442+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -483,7 +483,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-10T16:43:42.394014+08:00",
-      "next_run_at": "2026-09-27T03:00:00+08:00",
+      "next_run_at": "2026-10-04T03:00:00+08:00",
       "last_run_at": "2026-09-20T03:01:09.734765+08:00",
       "last_status": "ok",
       "last_error": null,
@@ -538,5 +538,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-09-27T02:00:04.065172+08:00"
+  "updated_at": "2026-09-27T03:00:04.483358+08:00"
 }
