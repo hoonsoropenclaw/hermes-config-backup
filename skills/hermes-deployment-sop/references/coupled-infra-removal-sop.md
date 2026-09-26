@@ -1,27 +1,9 @@
----
-name: coupled-infra-removal-sop
-description: "Disaster-safe removal workflow for infrastructure the agent itself depends on. TRIGGER when user says 'remove/uninstall/delete X' and X is a service, tool, package, or runtime that this agent, its MCPs, or another production system consumes (custom CLI tool, MCP server, daemon, cron-driven service, OAuth-providing app). 4 phases: (1) 依賴盤點 — find every dependency and write it down, (2) 備份 + 路徑轉移 — mirror critical data to an external location and change script paths to read from there, (3) 健康驗證 — confirm the agent and downstream systems still run from the new location, (4) 規劃 — write a multi-option removal plan with risks and ask for user sign-off BEFORE any destructive step. Core principle: 不可逆動作前必須有可逆備份 + 驗證證據;沒有驗證證據不動手。"
-version: 1.0.0
-author: Hermes Agent (auto-saved)
-license: MIT
-platforms: [linux, macos]
-metadata:
-  hermes:
-    tags: [DevOps, Migration, Safety, SOP, Destructive, Uninstallation, Removal]
-    related_skills: [trial-and-error, deployment-verification-sop, general-workflow, hermes-config-layout]
-trigger:
-  keywords:
-    - 移除
-    - 卸載
-    - 反安裝
-    - 清除
-    - uninstall
-    - remove
-    - 砍掉
-    - 刪除
-    - 清掉
-    - 不要了
-  when_agent_depends_on_target: true
+# Coupled Infrastructure Removal SOP — Inverse of Deployment
+
+> **來源**：2026-06-08 從移除一個耦合度極高的 gateway/CLI agent（OpenClaw 3.8GB + 11 cron + 3 MCP + 1 OAuth flow + 1 status site 源頭）建立。
+> **歸位**：本檔已從 `devops/coupled-infra-removal-sop` 獨立 skill 合併至此，作為部署生命週期的**反向章節**（拆除 / 卸載基礎設施的 SOP）。對應的部署正向往 `hermes-deployment-sop/SKILL.md` 與 `hermes-deploy-verification/`。
+> **核心鐵律**：不可逆動作前必須有可逆備份 + 驗證證據。沒有驗證證據不動手。
+
 ---
 
 # Coupled Infrastructure Removal SOP
@@ -279,3 +261,4 @@ du -sh <backup-root> <shared-infra-root>  # 預期都有內容
 | 版本 | 日期 | 變更 |
 |------|------|------|
 | 1.0.0 | 2026-06-08 | 從 OpenClaw 移除計畫建立。4 階段流程 + 4 個常見陷阱 + If→Then 速查 |
+

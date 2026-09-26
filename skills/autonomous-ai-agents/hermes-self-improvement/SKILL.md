@@ -183,7 +183,7 @@ LLM 推理（動態加權，不是剛性）
 
 ### 支援檔案
 - **`references/sop-enforcement.md`** — SOP 強制執行架構詳解
-- **`references/automated-sop-validation.md`** — Layer 2.5 實作路徑
+- **`references/automated-sop-validation.md`** — Layer 2.5 完整實作路徑（已從獨立 skill 合併：含 `contracts/*.yaml` 範本與 `scripts/sop_validator.py` 驗證腳本）
 - **`references/vercel-portal-401-troubleshooting.md`** — hermes-portal 401 排查實錄
 - **`references/hermes-dojo.md`** — Layer 3 自我改進系統（Yonkoo11/hermes-dojo，MIT）
 

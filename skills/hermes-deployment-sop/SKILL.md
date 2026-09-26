@@ -24,6 +24,7 @@ version: "1.0.0"
 | **A. Preflight (預防)** | 部署**前一刻** | token 安全 / DDL 驗證 / E2E 10 項 / push 重試 / Vercel API 必帶 gitSource.org | [`references/preflight-safelist.md`](references/preflight-safelist.md) |
 | **B. Deploy + 4 層驗證** | 部署中 + 完成 | 本地驗證 → 部署 + 取得 URL → 多管道驗證 → headless browser 視覺 + 11 個 Vercel/GitHub 雷區 + git worktree + Vercel preview SOP | [`hermes-deploy-verification/SKILL.md`](hermes-deploy-verification/SKILL.md) |
 | **C. Post-Deploy (驗證)** | 部署**完成後** | 「我能跑 ≠ 使用者能跑」/「單管道驗證 ≠ 多管道驗證」/「自報 ≠ 驗證」/「部署 URL ≠ 給使用者的 URL」4 條核心原則 + 4 步 SOP + 給使用者的回報格式 | [`references/post-deploy-verification.md`](references/post-deploy-verification.md) |
+| **D. Decommission (拆除)** | 卸載/移除基礎設施**前一刻** | 與部署相反：依賴盤點 → 備份 + 路徑轉移 → 健康驗證 → 規劃；4 階段防誤刪 SOP，原 `devops/coupled-infra-removal-sop` skill 合併至此 | [`references/coupled-infra-removal-sop.md`](references/coupled-infra-removal-sop.md) |
 
 > **未來 AI / 接手者**:看到本檔,先看這張表判斷你在哪一階段、然後跳到對應支援檔。**不要從頭讀到尾**。
 
