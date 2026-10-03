@@ -1250,8 +1250,8 @@
       48345
     ],
     "autonomous-ai-agents/hermes-self-improvement/SKILL.md": [
-      1781692771365407712,
-      11324
+      1790418293535739444,
+      11436
     ],
     "autonomous-ai-agents/kanban-codex-lane/SKILL.md": [
       1780109239567525090,
@@ -1356,10 +1356,6 @@
     "design-taste-frontend/SKILL.md": [
       1780672542408635568,
       90408
-    ],
-    "devops/coupled-infra-removal-sop/SKILL.md": [
-      1780921848736683088,
-      13290
     ],
     "devops/cron-job-health-monitor/SKILL.md": [
       1786176670467984717,
@@ -1502,8 +1498,8 @@
       9446
     ],
     "hermes-deployment-sop/SKILL.md": [
-      1781449126025481656,
-      14097
+      1790418331657357058,
+      14429
     ],
     "hermes-deployment-sop/hermes-deploy-verification/SKILL.md": [
       1786176682249590339,
@@ -1600,10 +1596,6 @@
     "pptx-generator/SKILL.md": [
       1780110403192953989,
       7930
-    ],
-    "productivity/automated-sop-validation/SKILL.md": [
-      1780216644860911685,
-      7143
     ],
     "productivity/google-workspace/SKILL.md": [
       1786176840662773464,
@@ -8075,22 +8067,6 @@
       }
     },
     {
-      "skill_name": "coupled-infra-removal-sop",
-      "category": "devops",
-      "frontmatter_name": "coupled-infra-removal-sop",
-      "description": "Disaster-safe removal workflow for infrastructure the age...",
-      "platforms": [
-        "linux",
-        "macos"
-      ],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
       "skill_name": "cron-job-health-monitor",
       "category": "devops",
       "frontmatter_name": "cron-job-health-monitor",
@@ -8941,21 +8917,6 @@
       "frontmatter_name": "pptx-generator",
       "description": "Generate, edit, and read PowerPoint presentations. Create...",
       "platforms": [],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
-      "skill_name": "automated-sop-validation",
-      "category": "productivity",
-      "frontmatter_name": "automated-sop-validation",
-      "description": "自動化 SOP 合規驗收 — 在任務完成後對照 SOP 檢查輸出，確保 Layer 2.5 的外部驗收機制運作。這...",
-      "platforms": [
-        "linux"
-      ],
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],
