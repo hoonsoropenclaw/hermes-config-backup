@@ -51,9 +51,20 @@ python scripts/office/unpack.py presentation.pptx unpacked/
 
 ## Creating from Scratch
 
-**Read [pptxgenjs.md](pptxgenjs.md) for full details.**
+**Read [pptxgenjs.md](pptxgenjs.md) for full details** when generating with pptxgenjs (Node).
 
 Use when no template or reference presentation is available.
+
+### python-pptx (Python)
+
+If you are using `python-pptx` instead of pptxgenjs (common for batch-generation pipelines, admin-report automation, or when Node is not available), read **[references/python-pptx-pitfalls.md](references/python-pptx-pitfalls.md)** before writing any layout code. Key traps it covers:
+
+- 16:9 dimensions (`prs.slide_width / prs.slide_height`) — easy to forget, breaks all centering math.
+- East-Asian typeface hint (`a:ea typeface`) — without it, LibreOffice headless renders Chinese as tofu boxes even when PowerPoint looks fine.
+- `vertical_anchor` is unreliable across LibreOffice vs PowerPoint — compute `top` explicitly instead of relying on it.
+- `top=` argument trap — if a helper hardcodes y, the caller's `top` is silently ignored and CTA boxes overlap bullets.
+- CTA + bullets need explicit y partitioning (≥ 0.4" gap between box bottom and bullet top).
+- Visual self-check loop: `soffice --convert-to pdf` → `pdftoppm -png -r 80` → vision inspection.
 
 ---
 
