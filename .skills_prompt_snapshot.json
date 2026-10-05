@@ -1265,6 +1265,10 @@
       1786176706102817866,
       25463
     ],
+    "autonomous-learning/SKILL.md": [
+      1791205198000000000,
+      4868
+    ],
     "backend/supabase-integration/SKILL.md": [
       1786177076767077042,
       9916
@@ -1618,8 +1622,8 @@
       6497
     ],
     "productivity/powerpoint/SKILL.md": [
-      1786177055402959632,
-      9515
+      1791138184560563728,
+      10555
     ],
     "productivity/site-qa-checklist/SKILL.md": [
       1780929895373600672,
@@ -7711,6 +7715,26 @@
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "autonomous-learning",
+      "category": "autonomous-learning",
+      "frontmatter_name": "autonomous-learning",
+      "description": "每日在使用者指定領域內自主學習、練習產出、自評與跨模型評價、修正自己的 SOP、偵察 GitHub 工具，並發布心...",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [
+          "terminal",
+          "web"
+        ],
         "fallback_for_tools": [],
         "requires_tools": []
       }
