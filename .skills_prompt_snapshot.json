@@ -1269,6 +1269,10 @@
       1791205198000000000,
       4868
     ],
+    "autonomous-learning/autonomous-learning-raphael-harness-pitfalls/SKILL.md": [
+      1791224594167309609,
+      5039
+    ],
     "backend/supabase-integration/SKILL.md": [
       1786177076767077042,
       9916
@@ -7735,6 +7739,21 @@
           "terminal",
           "web"
         ],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "autonomous-learning-raphael-harness-pitfalls",
+      "category": "autonomous-learning",
+      "frontmatter_name": "autonomous-learning-raphael-harness-pitfalls",
+      "description": "Raphael Harness daily-loop 實戰陷阱備忘 — 補 autonomous-learning...",
+      "platforms": [
+        "linux"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
         "fallback_for_tools": [],
         "requires_tools": []
       }
