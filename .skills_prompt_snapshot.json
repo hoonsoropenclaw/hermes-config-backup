@@ -1653,6 +1653,10 @@
       1780405274873377011,
       11159
     ],
+    "raphael-harness-daily-loop-gotchas/SKILL.md": [
+      1791321560078461606,
+      2517
+    ],
     "react-native-dev/SKILL.md": [
       1780110403193954019,
       7273
@@ -9135,6 +9139,19 @@
       "category": "python-resilience",
       "frontmatter_name": "python-resilience",
       "description": "Python resilience patterns including automatic retries, e...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "raphael-harness-daily-loop-gotchas",
+      "category": "raphael-harness-daily-loop-gotchas",
+      "frontmatter_name": "raphael-harness-daily-loop-gotchas",
+      "description": "Raphael Harness 每日循環中 journal/SOP/卡片系統的隱藏欄位與欄位驗證規則（card I...",
       "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
