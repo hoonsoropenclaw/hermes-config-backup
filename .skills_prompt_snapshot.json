@@ -1265,6 +1265,10 @@
       1786176706102817866,
       25463
     ],
+    "autonomous-learning-2026-10-08-learnings/SKILL.md": [
+      1791397441865383662,
+      8102
+    ],
     "autonomous-learning/SKILL.md": [
       1791205198000000000,
       4868
@@ -7719,6 +7723,19 @@
       "category": "autonomous-ai-agents",
       "frontmatter_name": "orchestrator-worker-architecture",
       "description": "處理 LLM context 累積的「Orchestrator + Worker + summarizer」三層架...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "autonomous-learning-2026-10-08-learnings",
+      "category": "autonomous-learning-2026-10-08-learnings",
+      "frontmatter_name": "autonomous-learning-2026-10-08-learnings",
+      "description": "2026-10-08 cron 跑 day-1 跨天專案時撞到的 6 條 pitfall（tool-call 預算...",
       "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
