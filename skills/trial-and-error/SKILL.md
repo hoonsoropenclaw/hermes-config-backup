@@ -30,6 +30,7 @@ description: "赫米斯踩過的坑目錄 — **MUST LOAD BEFORE EXECUTION**。�
 ### 🚨 觸發關鍵字 → 載入對應分類
 
 - **部署類**：`vercel` / `deploy` / `Vercel` / `cloudflare` / `netlify` / `github pages` / `CDN` → `references/by-category/vercel-deployment.md`
+- **Playwright e2e 寫好但從未跑過**（SPA auth 預設 state 自動跳走 / `page.goto` 噴掉 React state / webServer 搶 port / chromium-1243 binary 缺失）→ `references/by-category/playwright-e2e-actually-run-20261009.md`（**2026-10-09 新增**：跨天專案 day-1 寫了 e2e 但沒跑、day-2 第一次跑就踩 3 個 timeout 的完整除錯記錄 + 4 個陷阱 + 必跑驗證 SOP）
 - **Git 操作**：`git push` / `git filter-branch` / `BFG` / `GH013` / `GH001` / `large file` / `git history` / `force push` → `references/by-category/gh-cli-and-github.md`
 - **加密類**：`GPG` / `gpg` / `encrypt` / `decrypt` / `簽章` / `key` / `passphrase` → `references/by-category/gpg-encryption.md`
 - **雲端備份**：`rclone` / `Drive` / `備份` / `backup` / `purge` / `crypt` → `references/by-category/hermes-backup-strategy.md` + `hermes-backup-design-pitfalls.md`

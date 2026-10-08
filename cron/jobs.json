@@ -255,7 +255,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-06T14:48:00.047140+08:00",
-      "next_run_at": "2026-10-09T03:00:00+08:00",
+      "next_run_at": "2026-10-10T03:00:00+08:00",
       "last_run_at": "2026-10-08T03:02:52.041592+08:00",
       "last_status": "ok",
       "last_error": null,
@@ -286,7 +286,7 @@
       "schedule_display": "0 2 * * *",
       "repeat": {
         "times": null,
-        "completed": 122
+        "completed": 123
       },
       "enabled": true,
       "state": "scheduled",
@@ -294,7 +294,7 @@
       "paused_reason": null,
       "created_at": "2026-06-07T13:33:27.569449+08:00",
       "next_run_at": "2026-10-10T02:00:00+08:00",
-      "last_run_at": "2026-10-08T02:00:47.670022+08:00",
+      "last_run_at": "2026-10-09T02:00:58.296775+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -324,15 +324,15 @@
       "schedule_display": "30 2 * * *",
       "repeat": {
         "times": null,
-        "completed": 121
+        "completed": 122
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-07T13:33:27.569485+08:00",
-      "next_run_at": "2026-10-09T02:30:00+08:00",
-      "last_run_at": "2026-10-08T02:32:48.871717+08:00",
+      "next_run_at": "2026-10-10T02:30:00+08:00",
+      "last_run_at": "2026-10-09T02:32:58.546572+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -559,17 +559,17 @@
       "schedule_display": "13 2,5,8 * * *",
       "repeat": {
         "times": null,
-        "completed": 12
+        "completed": 13
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-10-04T16:13:26.473573+08:00",
-      "next_run_at": "2026-10-09T02:13:00+08:00",
-      "last_run_at": "2026-10-08T08:13:49.272577+08:00",
-      "last_status": "ok",
-      "last_error": null,
+      "next_run_at": "2026-10-09T05:13:00+08:00",
+      "last_run_at": "2026-10-09T02:24:36.877865+08:00",
+      "last_status": "error",
+      "last_error": "RuntimeError: ## Day-2 \u81ea\u4e3b\u5b78\u7fd2\u6458\u8981(2026-10-09)\n\n**\u8907\u7fd2 (review)**\n- `dev-web-platform--rbac-\u6b0a\u9650\u6a21\u578b\u8207\u524d\u7aef\u8def\u7531\u5b88\u885b` \u2192 3 \u5206\n- `dev-web-platform--react-flow-\u81ea\u8a02\u7bc0\u9ede\u8207\u72c0\u614b\u7ba1\u7406` \u2192 3 \u5206\n- `office-automatio--openpyxl-\u8207-pandas-\u8655\u7406-excel` \u2192 4 \u5206\n- `office-automatio--\u6392\u7a0b\u8207\u932f\u8aa4\u901a\u77e5` \u2192 4 \u5206\n\n**\u65b0\u5b78 (learn)**:\u65b0\u589e 4 \u5f35 `dev-ui-design` \u5361\u7247\n- \u8a2d\u8a08 Token(\u8272\u5f69\u3001\u9593\u8ddd\u3001\u5b57\u7d1a)\u8207\u4e3b\u984c\u5207\u63db\n- \u8996\u89ba\u5c64\u7d1a\u8207\u6392\u7248\u7bc0\u594f\n- \u5fae\u52d5\u756b\u6642\u6a5f\u8207 prefers-reduced-motion\n- \u7121\u969c\u7919\u5c0d\u6bd4\u8207\u9375\u76e4\u64cd\u4f5c(WCAG 4.5:1\u3001Tab/focus-visible)\n\n**\u7df4\u7fd2 (practice)**:\u63a5\u7e8c\u8de8\u5929\u5c08\u6848 `proj-20261008-021500-deb0-\u4eba\u4e8b\u6848\u4ef6\u7c3d\u6838\u6d41\u7a0b\u7de8\u8f2f\u5668-react-flow-r`\n- (a) \u7bc0\u9ede\u5167\u5efa \u6838\u51c6/\u99c1\u56de \u6309\u9215,\u53d7 `<Can>` + \u89d2\u8272\u6bd4\u5c0d\u96d9\u5c64 RBAC \u63a7\n- (b) \u9023\u7dda\u52a0\u65b9\u5411\u7bad\u982d `MarkerType.ArrowClosed`,\u4f9d source \u7bc0\u9ede state \u8457\u8272(pending \u7070 / approved \u7da0 / rejected \u7d05)\n- (c) Playwright e2e 3 \u689d\u8def\u5f91\u5be6\u969b\u8dd1\u901a(\u54e1\u5de5 0 \u500b approve \u6309\u9215\u3001\u6821\u9577\u53ea\u80fd\u6309 principal \u7bc0\u9ede\u3001\u7d44\u9577\u6309\u5b8c\u6309\u9215\u81ea\u52d5\u6d88\u5931)\u2014 \u5f9e\u4f86\u6c92\u8dd1\u904e\u7684 e2e \u7d42\u65bc\u5168\u7da0\n- \u540c\u6b65\u4fee\u597d Auth \u9810\u8a2d\u503c=employee \u5c0e\u81f4 picker \u6c38\u9060\u8df3\u8d70\u7684 bug,\u65b0\u589e `?as=role` URL \u53c3\u6578\u65b9\u4fbf QA \u8207\u6e2c\u8a66\n- vitest 21/21 \u904e\u3001vite build 0 \u932f\u8aa4\u3001Playwright 3/3 \u904e\n\n**\u72c0\u614b**\n- \u9810\u6e2c\u5206\u6578:75(\u5be6\u969b:\u5c1a\u672a\u4eba\u5de5\u8a55\u5206,\u9700 day-3 \u63a5 FastAPI+SQLite \u771f\u5f8c\u7aef\u5f8c\u81ea\u8a55)\n- SOP \u4fee\u6539:\u7121\n- requests_to_user:\u7121;3 \u500b e2e \u6e2c\u8a66\u622a\u5716\u7559\u65bc `docs/`(day-1 \u4e00\u5f35 + day-2 \u4e00\u5f35)",
       "last_delivery_error": null,
       "deliver": "telegram",
       "origin": null,
@@ -597,15 +597,15 @@
       "schedule_display": "every 30m",
       "repeat": {
         "times": null,
-        "completed": 210
+        "completed": 212
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-10-04T16:13:26.930278+08:00",
-      "next_run_at": "2026-10-09T02:22:51.057093+08:00",
-      "last_run_at": "2026-10-09T01:52:51.057093+08:00",
+      "next_run_at": "2026-10-09T03:22:51.500195+08:00",
+      "last_run_at": "2026-10-09T02:52:51.500195+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -654,5 +654,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-10-09T02:00:50.984912+08:00"
+  "updated_at": "2026-10-09T03:00:51.429359+08:00"
 }
