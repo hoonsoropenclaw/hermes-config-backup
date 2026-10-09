@@ -255,7 +255,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-06T14:48:00.047140+08:00",
-      "next_run_at": "2026-10-10T03:00:00+08:00",
+      "next_run_at": "2026-10-11T03:00:00+08:00",
       "last_run_at": "2026-10-09T03:03:01.591183+08:00",
       "last_status": "ok",
       "last_error": null,
@@ -286,7 +286,7 @@
       "schedule_display": "0 2 * * *",
       "repeat": {
         "times": null,
-        "completed": 123
+        "completed": 124
       },
       "enabled": true,
       "state": "scheduled",
@@ -294,7 +294,7 @@
       "paused_reason": null,
       "created_at": "2026-06-07T13:33:27.569449+08:00",
       "next_run_at": "2026-10-11T02:00:00+08:00",
-      "last_run_at": "2026-10-09T02:00:58.296775+08:00",
+      "last_run_at": "2026-10-10T02:00:08.287274+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -324,15 +324,15 @@
       "schedule_display": "30 2 * * *",
       "repeat": {
         "times": null,
-        "completed": 122
+        "completed": 123
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-07T13:33:27.569485+08:00",
-      "next_run_at": "2026-10-10T02:30:00+08:00",
-      "last_run_at": "2026-10-09T02:32:58.546572+08:00",
+      "next_run_at": "2026-10-11T02:30:00+08:00",
+      "last_run_at": "2026-10-10T02:32:08.457277+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -559,17 +559,17 @@
       "schedule_display": "13 2,5,8 * * *",
       "repeat": {
         "times": null,
-        "completed": 15
+        "completed": 16
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-10-04T16:13:26.473573+08:00",
-      "next_run_at": "2026-10-10T02:13:00+08:00",
-      "last_run_at": "2026-10-09T08:14:46.459035+08:00",
-      "last_status": "ok",
-      "last_error": null,
+      "next_run_at": "2026-10-10T05:13:00+08:00",
+      "last_run_at": "2026-10-10T02:18:58.135399+08:00",
+      "last_status": "error",
+      "last_error": "RuntimeError: \u5df2\u7528\u5b8c\u5de5\u5177\u547c\u53eb\u984d\u5ea6\uff0c\u4eca\u5929\u5230\u6b64\u70ba\u6b62\u3002\u4ee5\u4e0b\u662f 5 \u884c\u5167\u6458\u8981\uff1a\n\n**\u4eca\u65e5\u5b8c\u6210**\n1. **learn**\uff1a4 \u5f35\u65b0\u6982\u5ff5\u5361\uff08OAuth 2.0 Device Flow / Google Calendar API / Telegram Bot webhook / Whisper \u6279\u6b21\u8f49\u5beb\uff09\uff0c`novelty` \u5168\u901a\u904e\u3002\n2. **\u8de8\u5929\u5c08\u6848 day-3 \u6536\u5c3e**\uff08`proj-20261008-021500-deb0`\uff0cdeadline \u4eca\u5929\uff09\uff1a\n   - FastAPI + SQLite \u771f\u5f8c\u7aef `server/app.py`\uff08/api/flows CRUD\uff09\u5df2\u555f\u52d5\u65bc :8000 \u4e26\u624b\u6e2c\u901a\u904e\u3002\n   - \u524d\u7aef `src/server/apiClient.ts`\uff08\u700f\u89bd\u5668/Node \u96d9 BASE\uff09+ `vite.config.ts` \u52a0 proxy\u3002\n   - `FlowEditor` \u52a0 mount GET hydrate \u8207 debounced PUT save\uff0c\u4e26\u986f\u793a `save-status` \u72c0\u614b\u3002\n   - \u65e2\u6709 21 \u500b unit test \u5168\u7da0\u3001`vite build` \u6210\u529f\u3001\u65b0\u589e 5 \u500b FastAPI integration tests\u3002\n3. **\u672a\u5b8c\u6210**\uff08\u984d\u5ea6\u5df2\u6eff\uff09\uff1a\u65b0 integration tests \u6709 4 \u500b\u5728 `apiFlowDelete` \u89e3\u6790\u8655\u5931\u6557\uff08\u56de\u50b3 `data.deleted` \u4f46 expect \u7d50\u69cb\u4e0d\u4e00\u81f4\uff09\uff0c\u5c1a\u672a\u4fee\uff1be2e\u300c\u91cd\u65b0\u6574\u7406\u5f8c\u8cc7\u6599\u4ecd\u5728\u300d\u3001`artifact add` \u9001\u8a55\u50f9\u3001`evaluate/reflect/metacognition/scout/publish` \u6b65\u9a5f\u5747\u672a\u8dd1\u3002\n4. **SOP**\uff1a\u672a\u63d0\u51fa\u4fee\u6539\uff1b\u843d\u5f8c\u9032\u5ea6\u5df2\u5beb\u9032\u5c08\u6848 log \u5167\u5f85\u660e\u5929\u63a5\u7e8c\u3002\n5. \u660e\u65e5\u958b\u6a5f\u8acb\u5148 `python -m harness run start --owner hermes`\uff0c\u5f9e\u65b7\u9ede\uff08\u4fee integration tests + e2e + finish project\uff09\u63a5\u7e8c\u3002",
       "last_delivery_error": null,
       "deliver": "telegram",
       "origin": null,
@@ -597,15 +597,15 @@
       "schedule_display": "every 30m",
       "repeat": {
         "times": null,
-        "completed": 258
+        "completed": 260
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-10-04T16:13:26.930278+08:00",
-      "next_run_at": "2026-10-10T02:25:01.387106+08:00",
-      "last_run_at": "2026-10-10T01:55:01.387106+08:00",
+      "next_run_at": "2026-10-10T03:25:01.821599+08:00",
+      "last_run_at": "2026-10-10T02:55:01.821599+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -654,5 +654,5 @@
       "profile": null
     }
   ],
-  "updated_at": "2026-10-10T02:00:01.288715+08:00"
+  "updated_at": "2026-10-10T03:00:01.722939+08:00"
 }

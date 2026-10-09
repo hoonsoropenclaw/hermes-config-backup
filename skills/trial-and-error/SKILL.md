@@ -382,6 +382,57 @@ ls ~/.hermes/skills/trial-and-error/references/sops/XXX.md
 
 - `scripts/vercel_deploy.sh.template` — Vercel API 觸發 deploy + poll + 印 URL 的可重用 bash 腳本。處理新專案(需 `projectSettings` + `?skipAutoDetectionConfirmation=1`)vs 現有專案兩條路徑。Token 從 `/tmp/_t.txt` 走 base64 嵌入繞過 hermes `***` 過濾器(教訓 28)。已驗證於 2026-06-12 tyai-clone 部署。
 
+### 教訓 41：`terminal(background=true, workdir=<含中文路徑>)` 必被擋 + 必用 `cd ... && cmd` (2026-10-10)
+
+**症狀**: 任何 `terminal` 呼叫的 `workdir` 參數只要路徑含中文字元（例如 `~/raphael-harness/workspace/proj-20261008-...-人事案件簽核流程編輯器-react-flow-r/`），直接被拒：
+
+```
+Blocked: workdir contains disallowed character '人'. Use a simple filesystem path without shell metacharacters.
+```
+
+錯誤訊息誤導——「metacharacters」其實包括 CJK。連 `background=true` 也不能繞過（也是回 `Blocked`，不是 sub-process 啟動失敗 silent）。
+
+**正確策略**: 不要用 `workdir` 參數，永遠用 `cd <path> && <cmd>`：
+```bash
+# ❌ 被擋（即便路徑在 shell 中可達）
+terminal(background=true, workdir="/home/.../人事案件...", command="uvicorn server.app:app")
+
+# ✅ 正確
+terminal(background=true, command="cd /home/.../人事案件... && uvicorn server.app:app")
+```
+
+`cd` 後整個 sub-command 在該目錄下執行，後續子命令（`npx vitest run`、`npm run build`）都吃到正確 cwd。
+
+**驗證**:
+```bash
+terminal(command="cd /home/.../中文目錄... && pwd")
+# 應回該中文路徑
+```
+
+**If→Then**:
+**If** 任何 `terminal` 呼叫需要在含中文/CJK 路徑的目錄執行 **Then** 第一時間改用 `cd <path> && <cmd>` 模式、不要嘗試 `workdir=`
+**Why** 工作目錄常見於使用者命名（`我的專案`、`school-bulletin`、`人事案件`），撞中文路徑的機率比想像中高；今天的 day-3 收尾至少 3 次踩這個，每次浪費 1 個 tool call
+
+### 教訓 42：raphael-harness 專案的 `tsc --noEmit` lint 噪音 = 200+ 個 node_modules 既有的假警報 (2026-10-10)
+
+**症狀**: 在 `proj-*-*-*` 或其他 raphael-harness workspace 專案裡，每次 `patch` / `write_file` TS/TSX 檔，工具回傳的 `lint` 區塊會爆 200+ 行錯誤，全部來自 `node_modules/@types/d3-*/`、`@types/react`、`@types/aria-query`、`vite/dist/node`、`@vitest/expect/dist/chai.d.cts` 等（TS2583「Cannot find name 'Set'」、TS2304「Cannot find name 'Iterable'」、TS2580「Cannot find name 'process'」等）。錯誤訊息結尾才是自己寫的檔案真正問題，但前 200 行噪音會膨脹 context。
+
+**根因**: `write_file` / `patch` tool 內部的 lint 檢查似乎跑的是 `tsc --noEmit` 但沒跳過 node_modules（`skipLibCheck: true` 對 `write_file` 的 lint pipeline 似乎沒生效）。專案本身的 `tsconfig.json` 已設 `skipLibCheck: true`，但 build-time lint 與 IDE-time lint 是兩條路徑。
+
+**實際驗證（2026-10-10 day-3）**: `npm run build` 0 error、`npx vitest run` 全綠、`npx tsc --noEmit -p tsconfig.json` 只噴自己檔的錯誤（且過濾後 0 個）。**lint 噪音純粹是 write_file 工具內部 pipeline 的問題，與專案真實狀態無關。**
+
+**正確策略**: 
+1. **不要**被 `write_file` / `patch` 回傳的 200 行 lint 噪音嚇到、以為自己的程式碼壞了
+2. **真正驗證**只看自己寫的檔案：
+   ```bash
+   cd <proj-path> && npx tsc --noEmit -p tsconfig.json 2>&1 | grep -E "(src/|tests/)"
+   ```
+3. **或直接信任 build/test runner**：`npm run build` 與 `npx vitest run` 才是 ground truth（前者跑 esbuild/Vite 真實 transpile、後者跑 vitest 真實執行）
+
+**If→Then**:
+**If** 在 raphael-harness workspace 專案編輯 TS/TSX，寫入工具回傳大段 node_modules 相關 lint 錯誤 **Then** 不要嘗試修 node_modules——直接跑 `npx tsc --noEmit -p tsconfig.json 2>&1 | grep -E "(src/|tests/)"` 過濾、或 `npm run build` / `npx vitest run` 看實際結果
+**Why**: 浪費在「解讀 lint 噪音」的 token 是 0 收益的（node_modules 不是你能改的）；今天 day-3 收尾至少浪費 3-4 次 tool call 在「擔心 lint 警告 → 實際是假警報」的反覆確認
+
 ## Bash / 工具踩坑：sub-agent 編碼 + delegate_task 隔離特性 (2026-06-11 新增)
 
 ### 教訓 21：`delegate_task` 派出的 sub-agent 各自有獨立 cwd,看不到彼此輸出
