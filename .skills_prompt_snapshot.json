@@ -1266,8 +1266,8 @@
       25463
     ],
     "autonomous-learning-2026-10-08-learnings/SKILL.md": [
-      1791397441865383662,
-      8102
+      1791494465653357803,
+      12010
     ],
     "autonomous-learning/SKILL.md": [
       1791205198000000000,
@@ -3466,8 +3466,8 @@
       8009
     ],
     "trial-and-error/SKILL.md": [
-      1786176656795282465,
-      66032
+      1791483927882090172,
+      66432
     ],
     "user-collaboration-style/SKILL.md": [
       1783876771312061651,
@@ -7735,7 +7735,7 @@
       "skill_name": "autonomous-learning-2026-10-08-learnings",
       "category": "autonomous-learning-2026-10-08-learnings",
       "frontmatter_name": "autonomous-learning-2026-10-08-learnings",
-      "description": "2026-10-08 cron 跑 day-1 跨天專案時撞到的 6 條 pitfall（tool-call 預算...",
+      "description": "2026-10-08 + 2026-10-09 跨天專案 cron 累積的 pitfalls（tool-call ...",
       "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
