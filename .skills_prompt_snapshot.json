@@ -1266,8 +1266,12 @@
       25463
     ],
     "autonomous-learning-2026-10-08-learnings/SKILL.md": [
-      1791494465653357803,
-      12010
+      1791591483606371995,
+      12393
+    ],
+    "autonomous-learning-2026-10-10-learnings/SKILL.md": [
+      1791591480483206206,
+      8925
     ],
     "autonomous-learning/SKILL.md": [
       1791205198000000000,
@@ -3466,8 +3470,8 @@
       8009
     ],
     "trial-and-error/SKILL.md": [
-      1791483927882090172,
-      66432
+      1791569980125849388,
+      70291
     ],
     "user-collaboration-style/SKILL.md": [
       1783876771312061651,
@@ -7736,6 +7740,19 @@
       "category": "autonomous-learning-2026-10-08-learnings",
       "frontmatter_name": "autonomous-learning-2026-10-08-learnings",
       "description": "2026-10-08 + 2026-10-09 跨天專案 cron 累積的 pitfalls（tool-call ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "autonomous-learning-2026-10-10-learnings",
+      "category": "autonomous-learning-2026-10-10-learnings",
+      "frontmatter_name": "autonomous-learning-2026-10-10-learnings",
+      "description": "2026-10-10 cron 跑全十步循環的 pitfalls（OPENROUTER_API_KEY readi...",
       "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
