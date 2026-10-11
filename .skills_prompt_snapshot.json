@@ -1265,17 +1265,9 @@
       1786176706102817866,
       25463
     ],
-    "autonomous-learning-2026-10-08-learnings/SKILL.md": [
-      1791591483606371995,
-      12393
-    ],
-    "autonomous-learning-2026-10-10-learnings/SKILL.md": [
-      1791591480483206206,
-      8925
-    ],
     "autonomous-learning/SKILL.md": [
-      1791205198000000000,
-      4868
+      1791630147124613950,
+      7479
     ],
     "autonomous-learning/autonomous-learning-raphael-harness-pitfalls/SKILL.md": [
       1791224594167309609,
@@ -1541,6 +1533,10 @@
       1779975072842338591,
       4524
     ],
+    "learning/autonomous-learning/SKILL.md": [
+      1791656411179347291,
+      9190
+    ],
     "mcp/native-mcp/SKILL.md": [
       1780109239591526046,
       12365
@@ -1660,10 +1656,6 @@
     "python-resilience/SKILL.md": [
       1780405274873377011,
       11159
-    ],
-    "raphael-harness-daily-loop-gotchas/SKILL.md": [
-      1791321560078461606,
-      2517
     ],
     "react-native-dev/SKILL.md": [
       1780110403193954019,
@@ -7736,32 +7728,6 @@
       }
     },
     {
-      "skill_name": "autonomous-learning-2026-10-08-learnings",
-      "category": "autonomous-learning-2026-10-08-learnings",
-      "frontmatter_name": "autonomous-learning-2026-10-08-learnings",
-      "description": "2026-10-08 + 2026-10-09 跨天專案 cron 累積的 pitfalls（tool-call ...",
-      "platforms": [],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
-      "skill_name": "autonomous-learning-2026-10-10-learnings",
-      "category": "autonomous-learning-2026-10-10-learnings",
-      "frontmatter_name": "autonomous-learning-2026-10-10-learnings",
-      "description": "2026-10-10 cron 跑全十步循環的 pitfalls（OPENROUTER_API_KEY readi...",
-      "platforms": [],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
       "skill_name": "autonomous-learning",
       "category": "autonomous-learning",
       "frontmatter_name": "autonomous-learning",
@@ -8747,6 +8713,26 @@
       }
     },
     {
+      "skill_name": "autonomous-learning",
+      "category": "learning",
+      "frontmatter_name": "autonomous-learning",
+      "description": "每日在使用者指定領域內自主學習、練習產出、自評與跨模型評價、修正自己的 SOP、偵察 GitHub 工具，並發布心...",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [
+          "terminal",
+          "web"
+        ],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
       "skill_name": "native-mcp",
       "category": "mcp",
       "frontmatter_name": "native-mcp",
@@ -9173,19 +9159,6 @@
       "category": "python-resilience",
       "frontmatter_name": "python-resilience",
       "description": "Python resilience patterns including automatic retries, e...",
-      "platforms": [],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
-      "skill_name": "raphael-harness-daily-loop-gotchas",
-      "category": "raphael-harness-daily-loop-gotchas",
-      "frontmatter_name": "raphael-harness-daily-loop-gotchas",
-      "description": "Raphael Harness 每日循環中 journal/SOP/卡片系統的隱藏欄位與欄位驗證規則（card I...",
       "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
