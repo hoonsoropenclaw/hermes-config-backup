@@ -1297,6 +1297,10 @@
       1780110403137952298,
       16382
     ],
+    "code-sop-cli-argparse-pitfall/SKILL.md": [
+      1791829325270686625,
+      4209
+    ],
     "code/SKILL.md": [
       1775910538790296406,
       3205
@@ -7832,6 +7836,19 @@
       "category": "buddy-sings",
       "frontmatter_name": "buddy-sings",
       "description": "Use when user wants their Claude Code pet (/buddy) to sin...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "code-sop-cli-argparse-pitfall",
+      "category": "code-sop-cli-argparse-pitfall",
+      "frontmatter_name": "code-sop-cli-argparse-pitfall",
+      "description": "Pitfall + reference for argparse positional/subparser int...",
       "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],

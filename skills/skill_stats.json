@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-13T00:00:37.100357",
-  "total_skills": 227,
+  "generated_at": "2026-10-14T00:00:47.447725",
+  "total_skills": 228,
   "daily": {
     "2026-06-01": {
       "__all__": 1
@@ -131,7 +131,8 @@
     "2026-10-10": {},
     "2026-10-11": {},
     "2026-10-12": {},
-    "2026-10-13": {}
+    "2026-10-13": {},
+    "2026-10-14": {}
   },
   "cumulative": {
     "Agent Browser": 28,
@@ -195,6 +196,7 @@
     "claude-design": 11,
     "code-assist": 3,
     "code-review": 13,
+    "code-sop-cli-argparse-pitfall": 0,
     "codebase-inspection": 8,
     "codex": 1,
     "coding-agent-clis": 1,
@@ -362,5 +364,5 @@
     "xurl": 6,
     "yuanbao": 7
   },
-  "last_updated": "2026-10-13 00:00:37"
+  "last_updated": "2026-10-14 00:00:47"
 }
