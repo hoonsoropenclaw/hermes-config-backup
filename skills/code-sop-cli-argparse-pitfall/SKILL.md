@@ -65,6 +65,11 @@ will break. Either keep **both** layouts (top-level positional that
 errors if absent, plus subparser positional) or **ship a CHANGELOG
 note** in RUNLOG.md.
 
+> **Follow-up (2026-10-14)**: the fix above is technically correct but
+> UX-hostile — flags only work before the subcommand. See
+> "The follow-up UX gap" below for the `parents=[common]` upgrade
+> that makes both orderings work.
+
 ## Verification checklist (run before commit)
 
 1. `python prog.py --help` shows `audio` listed only under `run` subparser, not as top-level.
@@ -83,3 +88,51 @@ note** in RUNLOG.md.
 - File: `workspace/proj-20261011-021613-8016-會議錄音轉行事曆待辦-pipeline/meeting_pipeline.py`
 - RUNLOG Day 3 section, T1–T5 tests.
 - raphael-harness SOP path: `sops/code/SOP.md` should reference this file when CLI work happens.
+
+---
+
+## The follow-up UX gap (2026-10-14)
+
+The fix above is **technically correct** but **UX-hostile**: it forces the user to put all flags before the subcommand, which is the opposite of how most CLIs work (`git log --oneline`, `docker run -d nginx`, etc.). First-time users who try the natural order will hit:
+
+```bash
+$ python meeting_pipeline.py run /tmp/audio.wav --dry-run
+usage: meeting_pipeline.py [-h] [--db-inspect] [--db DB] [--work-dir WORK_DIR]
+                           [--dry-run] [--retry RETRY]
+                           {run,inspect} ...
+meeting_pipeline.py: error: unrecognized arguments: --dry-run
+```
+
+This defect will show up in self-eval as `first_run_ux < 4` and in user feedback as "照 README 抄就壞". The proper fix is `parents=` so flags work in BOTH positions:
+
+```python
+# Common flags as a parent parser
+common = argparse.ArgumentParser(add_help=False)
+common.add_argument("--dry-run", action="store_true")
+common.add_argument("--db", default=str(DEFAULT_DB))
+common.add_argument("--retry", type=int, default=1)
+common.add_argument("--work-dir", default="~/.local/share/meeting-pipeline")
+
+ap = argparse.ArgumentParser(description="會議錄音到行事曆待辦 pipeline")
+sub = ap.add_subparsers(dest="cmd", required=True)
+
+run_p = sub.add_parser("run", parents=[common], help="執行 pipeline")
+run_p.add_argument("audio", help="輸入 mp3 / wav / m4a 檔")
+run_p.set_defaults(func=cmd_run)
+
+insp = sub.add_parser("inspect", parents=[common], help="印出 trace DB 摘要")
+insp.set_defaults(func=cmd_db_inspect)
+```
+
+After this change, all four invocation orders work:
+
+| Order | Result |
+|---|---|
+| `prog --dry-run run /tmp/x.wav` | ✓ |
+| `prog run /tmp/x.wav --dry-run` | ✓ |
+| `prog --db /tmp/x.db inspect` | ✓ |
+| `prog inspect --db /tmp/x.db` | ✓ |
+
+**When to upgrade**: any CLI shipped to a non-author user. Internal one-shot scripts are fine with the simpler "flags before subcommand" pattern. Add an entry to the verification checklist above:
+
+5. After adding `parents=[common]`, run **all four** orderings above and confirm none fail with `unrecognized arguments`.
