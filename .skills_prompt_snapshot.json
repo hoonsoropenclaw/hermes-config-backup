@@ -1537,10 +1537,6 @@
       1779975072842338591,
       4524
     ],
-    "learning/autonomous-learning/SKILL.md": [
-      1791656411179347291,
-      9190
-    ],
     "mcp/native-mcp/SKILL.md": [
       1780109239591526046,
       12365
@@ -8725,26 +8721,6 @@
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
-      "skill_name": "autonomous-learning",
-      "category": "learning",
-      "frontmatter_name": "autonomous-learning",
-      "description": "每日在使用者指定領域內自主學習、練習產出、自評與跨模型評價、修正自己的 SOP、偵察 GitHub 工具，並發布心...",
-      "platforms": [
-        "linux",
-        "macos",
-        "windows"
-      ],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [
-          "terminal",
-          "web"
-        ],
         "fallback_for_tools": [],
         "requires_tools": []
       }

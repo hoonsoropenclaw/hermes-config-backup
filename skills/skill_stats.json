@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-15T00:00:57.750350",
-  "total_skills": 228,
+  "generated_at": "2026-10-16T00:00:08.000718",
+  "total_skills": 229,
   "daily": {
     "2026-06-01": {
       "__all__": 1
@@ -133,7 +133,8 @@
     "2026-10-12": {},
     "2026-10-13": {},
     "2026-10-14": {},
-    "2026-10-15": {}
+    "2026-10-15": {},
+    "2026-10-16": {}
   },
   "cumulative": {
     "Agent Browser": 28,
@@ -178,7 +179,7 @@
     "autonomous-ai-agents/metacognitive-learner": 5,
     "autonomous-ai-agents/persistent-subagent": 1,
     "autonomous-ai-agents:metacognitive-learner": 2,
-    "autonomous-learning": 34,
+    "autonomous-learning": 3,
     "autonomous-learning-2026-10-08-learnings": 3,
     "autonomous-learning-2026-10-10-learnings": 2,
     "autonomous-learning-raphael-harness-pitfalls": 6,
@@ -258,7 +259,7 @@
     "hermes-deployment-sop": 7,
     "hermes-internal": 9,
     "hermes-resident-agent": 19,
-    "hermes-self-improvement": 35,
+    "hermes-self-improvement": 36,
     "hermes-status-site": 5,
     "hermes-tier-router": 10,
     "hermes-user-guide": 6,
@@ -273,6 +274,7 @@
     "kanban-orchestrator": 9,
     "kanban-worker": 8,
     "lb-nextjs16-skill": 2,
+    "learning/autonomous-learning": 1,
     "linear": 3,
     "linear-hr-workflow": 17,
     "llama-cpp": 7,
@@ -365,5 +367,5 @@
     "xurl": 6,
     "yuanbao": 7
   },
-  "last_updated": "2026-10-15 00:00:57"
+  "last_updated": "2026-10-16 00:00:08"
 }
