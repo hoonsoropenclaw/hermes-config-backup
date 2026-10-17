@@ -1,6 +1,9 @@
----
-name: code-sop-cli-argparse-pitfall
-description: Pitfall + reference for argparse positional/subparser interactions, observed 2026-10-13 on raphael-harness meeting_pipeline.py.
+# Python argparse 踩坑 — positional + subparser 互動雷區
+
+> **來源**:從 `code-sop-cli-argparse-pitfall` skill(2026-10-13 raphael-harness meeting_pipeline.py session 觀察)吸收;2026-10-14 補充 UX follow-up。
+> **觸發詞**:`argparse` / `subparsers` / `add_subparsers` / `add_argument` / `python CLI` / `positional CLI 壞掉` / `invalid choice: /tmp/...` / `argument cmd: invalid choice`
+> **分類**:Python sandbox / CLI 設計
+
 ---
 
 # CLI arg parser — positional + subparser pitfall
@@ -136,3 +139,17 @@ After this change, all four invocation orders work:
 **When to upgrade**: any CLI shipped to a non-author user. Internal one-shot scripts are fine with the simpler "flags before subcommand" pattern. Add an entry to the verification checklist above:
 
 5. After adding `parents=[common]`, run **all four** orderings above and confirm none fail with `unrecognized arguments`.
+
+
+---
+
+## When this triggers
+
+**If** 任何 CLI 工具 (`meeting_pipeline.py` 等) 即將重構 argparse 結構 / 加 subparser / 改 positional 位置 **Then** 跑上面 4 步驗證清單,**不要**只 echo "看起來對"
+
+**If** 已踩坑、production 報 `error: argument cmd: invalid choice: '/tmp/...'` **Then** 跳到「Pitfalls observed」找當下 layout 對應的修正
+
+**配套**:
+- `references/by-category/python-sandbox.md` — Python sandbox 通用坑 (`execute_code` 的 `***` filter、`/tmp/inspect.py` 遮蔽等)
+- `references/by-category/stdlib-production-tool-pattern.md` — stdlib-first CLI / long-polling / signal handler 模式
+- `references/by-category/bash-defensive-patterns.md` — Bash 端 CLI script 踩坑

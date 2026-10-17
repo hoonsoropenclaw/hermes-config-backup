@@ -1297,10 +1297,6 @@
       1780110403137952298,
       16382
     ],
-    "code-sop-cli-argparse-pitfall/SKILL.md": [
-      1791915471983220578,
-      6565
-    ],
     "code/SKILL.md": [
       1775910538790296406,
       3205
@@ -3462,8 +3458,8 @@
       8009
     ],
     "trial-and-error/SKILL.md": [
-      1791569980125849388,
-      70291
+      1792236941214864899,
+      70693
     ],
     "user-collaboration-style/SKILL.md": [
       1783876771312061651,
@@ -7841,19 +7837,6 @@
       }
     },
     {
-      "skill_name": "code-sop-cli-argparse-pitfall",
-      "category": "code-sop-cli-argparse-pitfall",
-      "frontmatter_name": "code-sop-cli-argparse-pitfall",
-      "description": "Pitfall + reference for argparse positional/subparser int...",
-      "platforms": [],
-      "conditions": {
-        "fallback_for_toolsets": [],
-        "requires_toolsets": [],
-        "fallback_for_tools": [],
-        "requires_tools": []
-      }
-    },
-    {
       "skill_name": "code",
       "category": "code",
       "frontmatter_name": "Code",
@@ -8162,7 +8145,7 @@
       "skill_name": "kanban",
       "category": "devops",
       "frontmatter_name": "kanban",
-      "description": "",
+      "description": "Hermes Kanban — multi-agent work-queue class covering bot...",
       "platforms": [
         "linux",
         "macos",

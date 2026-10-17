@@ -3,4 +3,6 @@
 # 由 install-hermes.sh 複製到 ~/.hermes/scripts/raphael-notify.sh 後排程。
 cd "/home/hoonsoropenclaw/raphael-harness" || exit 0
 [ -f .venv/bin/activate ] && source .venv/bin/activate
+# 先同步網站上的核准/取消/提醒，再輸出 raphael-notify；輸出不可混進通知內容
+python -m harness proposal sync-inbox >/dev/null 2>&1 || true
 python -m harness proposal notify

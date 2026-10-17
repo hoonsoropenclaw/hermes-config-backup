@@ -36,6 +36,7 @@ description: "赫米斯踩過的坑目錄 — **MUST LOAD BEFORE EXECUTION**。�
 - **雲端備份**：`rclone` / `Drive` / `備份` / `backup` / `purge` / `crypt` → `references/by-category/hermes-backup-strategy.md` + `hermes-backup-design-pitfalls.md`
 - **環境變數**：`token` / `.env` / `process.env` / `API key` → `references/by-category/secrets-and-env.md`
 - **Python sandbox**：`execute_code` / `python3.12` / `subprocess` / `sandbox` → `references/by-category/python-sandbox.md`
+- **Python argparse / CLI subparser 坑**：`argparse` / `add_subparsers` / `argument cmd: invalid choice` / `positional CLI 壞掉` / `argparse refactor` → `references/by-category/python-argparse-pitfalls.md`（**2026-10-13 新增**：來自 raphael-harness meeting_pipeline.py session，positional + subparser 互動雷區 + 4 步驗證清單 + 2026-10-14 UX follow-up `parents=[common]` 解法）
 - **瀏覽器自動化**：`browser` / `playwright` / `headless` / `camofox` → `references/by-category/browser-automation.md`
 - **Bash 腳本**：`for f in` / `2>&1` / `pipefail` / `array` / `set -e` → `references/by-category/bash-defensive-patterns.md`
 - **Python 生產工具**：`python3` / `urllib` / `telegram bot` / `wttr` / `weather api` / `stdlib` / `long-polling` / `signal handler` → `references/by-category/stdlib-production-tool-pattern.md`
